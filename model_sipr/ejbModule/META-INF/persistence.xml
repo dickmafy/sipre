@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+	<persistence-unit name="model_sipre">
+		<jta-data-source>java:jboss/datasources/xeDS</jta-data-source>
+		<class>pe.mil.ejercito.sipr.model.SipreActividad</class>
+		<class>pe.mil.ejercito.sipr.model.SipreBoletaCabecera</class>
+		<class>pe.mil.ejercito.sipr.model.SipreBoletaCabeceraPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreBoletaDetalle</class>
+		<class>pe.mil.ejercito.sipr.model.SipreBoletaDetallePK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreConceptoDescuento</class>
+		<class>pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLey</class>
+		<class>pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLeyPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreConceptoIngreso</class>
+		<class>pe.mil.ejercito.sipr.model.SipreDescuentoLey</class>
+		<class>pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet</class>
+		<class>pe.mil.ejercito.sipr.model.SipreDescuentoLeyDetPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreEntidadCrediticia</class>
+		<class>pe.mil.ejercito.sipr.model.SipreGrado</class>
+		<class>pe.mil.ejercito.sipr.model.SipreGrupoGrado</class>
+		<class>pe.mil.ejercito.sipr.model.SipreIngresoGrado</class>
+		<class>pe.mil.ejercito.sipr.model.SipreIngresoGradoPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreNucleo</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePersona</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanilla</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanillaPK</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanillaAdicional</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanillaDetalle</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTipoPlanilla</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpBanco</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpBonificacion</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticia</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticiaPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpGuardia</class>
+		<class>pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK</class>
+		<class>pe.mil.ejercito.sipr.model.SipreUnidad</class>
+		<class>pe.mil.ejercito.sipr.model.SipreUsuario</class>
+		<properties>
+			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
+		</properties>
+	</persistence-unit>
+</persistence>
