@@ -1,0 +1,81 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+<h:head>
+	<link href="styles/css_auth.css" type="text/css" rel="stylesheet" />
+	<title><h:outputText value="#{mensajeMb.ttloStma}" /></title>
+</h:head>
+<body>
+	<h:form id="frmLogin">
+		<div id="formulario_login">
+			<div id="banner_login">
+				<img src="images/bn_saic.jpg" />
+			</div>
+			<div id="contenido_formulario_login">
+				<span><h:outputText value="#{mensajeMb.msjeInciarSsion}" />
+				</span>
+				<div style="margin: 30px 0px 0px 0px;">
+					<div style="width: 355px;">
+						<p:messages id="msgError" closable="true" />
+					</div>
+					<p:inputText styleClass="login_textfield" id="txtUsuario"
+						required="true" requiredMessage="#{mensajeMb.rqredMsjeUsrio}"
+						value="#{indexBean.usuarioDto.nickname}">
+					</p:inputText>
+					<p:watermark value="#{mensajeMb.wterMkerUsrio}" for="txtUsuario" />
+					<p:tooltip for="txtUsuario" value="#{mensajeMb.tttUsrio}"
+						showEffect="slide" hideEffect="slide" />
+				</div>
+				<div style="margin: 10px 0px 0px 0px;">
+					<p:password styleClass="login_textfield" id="txtContrasena"
+						required="true" requiredMessage="#{mensajeMb.rqredMsjeCtsna}"
+						value="#{indexBean.usuarioDto.clave}">
+					</p:password>
+					<p:watermark value="#{mensajeMb.wterMkerClve}" for="txtContrasena" />
+					<p:tooltip for="txtContrasena" value="#{mensajeMb.tttCtsna}"
+						showEffect="slide" hideEffect="slide" />
+				</div>
+				<div style="margin: 4px 0px">
+					<p:ajaxStatus style="width:220px;height:16px;" id="ajaxStatusPanel">
+						<f:facet name="start">
+							<h:graphicImage value="images/icons/loader-circle.gif" />
+							<p:spacer width="5" height="10" />
+							<h:outputText value="#{mensajeMb.msjeAjaxCdcles}" />
+						</f:facet>
+						<f:facet name="complete">
+						</f:facet>
+					</p:ajaxStatus>
+				</div>
+				<div style="margin: 50px 0px 0px 0px;">
+					<p:commandButton update="frmLogin"
+						styleClass="boton_login right_position"
+						action="#{indexBean.validarIngreso}" style="margin-right: 90px;"
+						icon="ui-icon-check" value="#{mensajeMb.btnIgsar}" />
+				</div>
+
+				<div style="margin: 130px 0px 0px 0px; width: 100%">
+					<p:commandLink value="#{mensajeMb.linkNacdeCtea}"
+						styleClass="enlace_formulario" />
+				</div>
+			</div>
+
+			<div id="footer_login">
+				<table align="center" width="100%">
+					<tr>
+						<td style="width: 184px; text-align: center;"><img
+							src="images/minedu_ft.jpg" /></td>
+					</tr>
+					<tr>
+						<td style="text-align: center;"><div>
+								<span><h:outputText value="#{mensajeMb.msjeFter}" /> </span>
+							</div></td>
+					</tr>
+				</table>
+			</div>
+		</div>
+	</h:form>
+</body>
+</html>

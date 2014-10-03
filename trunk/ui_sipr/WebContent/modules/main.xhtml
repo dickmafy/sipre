@@ -1,0 +1,96 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:pe="http://primefaces.org/ui/extensions">
+<h:head>
+	<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+	<title><h:outputText value="#{mensajeMb.ttloStma}" /></title>
+	<link
+		href="${pageContext.request.contextPath}/ui_saic/styles/css_default.css"
+		type="text/css" rel="stylesheet" />
+</h:head>
+<body>
+	<pe:layout id="fullPage" stateCookie="true" widgetVar="fpLayoutWidget"
+		fullPage="true">
+		<pe:layoutPane position="north" resizable="false" closable="false"
+			id="lyNorth">
+			<div style="width: 100%; min-width: 1280px;">
+				<table cellpadding="0" cellspacing="0" style="width: 100%;">
+					<tr>
+						<td style="width: 30%; min-width: 300px;"><p:graphicImage
+								value="/images/bn_saic_main.png" id="imgBanner" /></td>
+						<td
+							style="width: 50%; min-width: 640px; vertical-align: bottom; text-align: center;">
+							<h:form id="frm_menu">
+								<p:menubar id="mnuPersonal" styleClass="mnuPersonal">
+									<p:menuitem value="MI CUENTA"
+										actionListener="#{mainMb.redireccionaMnu(0)}" ajax="true" async="true"
+										update=":frm_opciones, :pnlContenido" />
+									<p:submenu label="ADMINISTRACIÓN DRE">
+										<p:menuitem value="Expedientes"
+											actionListener="#{mainMb.redireccionaMnu(1)}" ajax="true"
+											update=":frm_opciones, :pnlContenido" async="true"
+											icon="ui-icon-arrowreturnthick-1-w" />
+										<p:menuitem value="Aprobaciones" url="#"
+											icon="ui-icon-arrowreturnthick-1-e" />
+									</p:submenu>
+									<p:submenu label="ADMINISTRACION">
+										<p:menuitem value="Institutos" url="#"
+											icon="ui-icon-arrowreturnthick-1-w" />
+										<p:menuitem value="Aprobaciones" url="#"
+											icon="ui-icon-arrowreturnthick-1-e" />
+									</p:submenu>
+									<p:submenu label="ADMINISTRACION DEL SISTEMA">
+										<p:menuitem value="Usuarios" url="#"
+											icon="ui-icon-arrowreturnthick-1-w" />
+										<p:menuitem value="Roles" url="#"
+											icon="ui-icon-arrowreturnthick-1-e" />
+										<p:menuitem value="Permisos" url="#"
+											icon="ui-icon-arrowreturnthick-1-e" />
+									</p:submenu>
+								</p:menubar>
+							</h:form>
+						</td>
+						<td style="width: 20%; vertical-align: top; min-width: 340px;">
+							<table cellpadding="0" cellspacing="0" border="0" id="tbl_perfil">
+								<tr>
+									<td rowspan="2"><p:graphicImage
+											value="/images/user_man.png" /></td>
+									<td class="perfil_bnr">ADMINISTRADOR</td>
+								</tr>
+								<tr>
+									<td class="nombre_usuario_bnr">Ericson Huamani Mantilla <p:commandLink>(cerrar sesión)</p:commandLink>
+									</td>
+								</tr>
+							</table>
+						</td>
+					</tr>
+				</table>
+			</div>
+		</pe:layoutPane>
+		<pe:layoutPane position="west" id="lyLeft" closable="true"
+			resizable="false">
+			<ui:include src="#{mainMb.menuLateral}.xhtml" />
+		</pe:layoutPane>
+		<pe:layoutPane position="center" id="lyCenter">
+			<p:panel id="pnlContenido">
+				<ui:include src="#{mainMb.contenidoDefault}.xhtml" />
+			</p:panel>
+		</pe:layoutPane>
+		<pe:layoutPane position="south" resizable="false" closable="false"
+			id="lySouth">
+			<table cellspacing="0" cellpadding="0" align="center">
+				<tr>
+					<td><p:graphicImage value="/images/minedu_foot_tpl.png" /></td>
+					<td><p:spacer width="5" /> <h:outputText
+							value="#{mensajeMb.msjeFter}" /></td>
+				</tr>
+			</table>
+
+		</pe:layoutPane>
+	</pe:layout>
+</body>
+</html>

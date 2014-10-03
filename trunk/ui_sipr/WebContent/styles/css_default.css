@@ -1,0 +1,845 @@
+/*
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+*/
+/* 
+    Created on : 02/02/2014, 05:28:41 PM
+    Author     : ericson
+*/
+body {
+	margin: 0px;
+	padding: 0px;
+	font-family: SegoeUI-Regular-final, "Segoe UI", Segoe, Tahoma, Helvetica,
+		Arial, Sans-Serif;
+	font-size: 11px;
+}
+
+#lySouth {
+	height: 18px !important;
+	padding: 9px 0px 3px 0px;
+	color: #ffffff;
+	text-align: center;
+	background-image: url("../images/fndo_fter.jpg");
+}
+
+#lyNorth {
+	height: 60px !important;
+	max-height: 60px !important;
+	background-image: url("../images/fnd_bnner.jpg");
+	background-repeat: repeat-x;
+	z-index: 3 !important;
+	overflow: visible !important;
+	background-image: url("../images/fnd_bnner.jpg");
+}
+
+#lyLeft {
+	z-index: 2 !important;
+	overflow: visible !important;
+}
+
+#lyNorth.ui-widget-content {
+	border: none;
+	color: #ffffff;
+}
+
+#lyLeft.ui-widget-content,#lyCenter.ui-widget-content {
+	border-top: none;
+	border-bottom: none;
+	border-right: none;
+	background: #ffffff;
+	color: #4f4f4f;
+	background: #ffffff;
+}
+
+#lyLeft.ui-widget-content {
+	border-left: none;
+}
+
+#lyRight.ui-widget-content {
+	border-right: none;
+}
+
+#imgBanner {
+	position: relative;
+	left: 4px;
+}
+
+#lySouth.ui-corner-all,#lyNorth.ui-corner-all,#lyLeft.ui-corner-all,#lyCenter.ui-corner-all
+	{
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+#lySouth.ui-widget-content {
+	border: none;
+}
+
+#lyLeft {
+	max-width: 180px;
+	width: 180px;
+}
+
+.pe-layout-pane-content {
+	padding: 0px;
+}
+
+.subtables {
+	border: none;
+	margin: 0px;
+	padding: 0px;
+}
+
+.subtables tr {
+	margin: 0px;
+	padding: 0px;
+}
+
+.subtables td {
+	margin: 0px;
+	padding: 0px;
+}
+
+.ui-datatable-header {
+	background: #4169E1 !important;
+	color: #FFF !important;
+	text-shadow: none !important;
+	font-weight: normal !important;
+	text-align: left !important;
+}
+
+.banner_main {
+	width: 100%;
+	height: 30px;
+	background-color: #0072C6;
+	color: #FFF;
+}
+
+.banner_main #spn_pf_usuario {
+	font-size: 13px;
+	float: right;
+	margin: 5px 10px 4px 0px;
+}
+
+.banner_main #dvSeparador {
+	width: 30px;
+	height: 30px;
+	margin: 0px 3px 0px 3px;
+	float: right;
+	background-image: url('../images/icons/puntos_bl_30.png');
+}
+
+.banner_main .a_link_banner {
+	font-family: SegoeUI-Regular-final, "Segoe UI", Segoe, Tahoma, Helvetica,
+		Arial, Sans-Serif !important;
+	margin: 0px;
+	padding: 5px 10px 5px 10px;
+	font-size: 13px;
+	float: right;
+	text-decoration: none;
+	color: #FFF;
+	height: 20px;
+}
+
+.logo_banner {
+	width: 550px;
+	height: 30px;
+	margin: 0px 5px 0px 10px;
+	background-image: url('../images/sigpro_bl_30.png');
+	background-repeat: no-repeat;
+	float: left;
+}
+
+.texto_logo_banner {
+	margin: 6px 0px 0px 35px;
+	font-size: 14px;
+	float: left;
+	overflow: hidden;
+}
+
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 30px;
+	background-color: #EAECEE;
+}
+
+.footer_img {
+	float: left;
+	margin: 0px 0px 0px 20px;
+	width: 84px;
+	height: 30px;
+	background-image: url('../images/log_csi_btn.jpg');
+}
+
+#copyright,#copyright_ {
+	color: #666;
+	font-family: SegoeUI-Regular-final, "Segoe UI", Segoe, Tahoma, Helvetica,
+		Arial, Sans-Serif;
+	font-size: 11px;
+	font-weight: normal;
+	letter-spacing: .01em;
+	line-height: normal;
+	white-space: nowrap;
+	margin: 8px 0px 0px 10px;
+	float: left;
+}
+
+#copyright_ {
+	margin: 8px 10px 0px 0px;
+	float: right;
+}
+
+.nombre_usuario {
+	width: 230px;
+	height: 30px;
+	float: right;
+	background-color: #F0F0F0;
+}
+
+.mnuPersonal.ui-menu {
+	padding: 0px;
+	background: none;
+}
+
+.mnuPersonal ul li ul li a span.ui-menuitem-text {
+	color: #4f4f4f;
+}
+
+.mnuPersonal.ui-widget-content {
+	border: none;
+}
+
+.mnuPersonal.ui-widget-content a {
+	color: #ffffff;
+}
+
+.ui-menu .ui-menuitem {
+	padding: 0px 4px 0px 4px;
+}
+
+.
+menu_configuracion {
+	width: 80px;
+	height: 44px;
+	padding: 2px 0px 2px 0px;
+	position: absolute;
+	float: left;
+	margin-left: 910px;
+}
+
+.ui-menu .ui-menuitem-link {
+	border: none;
+}
+
+.ui-menu {
+	padding: 0px;
+	background: #F0F0F0;
+}
+
+.ui-menu .ui-menuitem {
+	margin: 0px;
+}
+
+/*
+.ui-menubar {
+	width: 60px;
+}
+*/
+.ui-menu .ui-menu-child {
+	background: #FFFFFF;
+}
+
+div.nombre_usuario div.ui-widget-content {
+	border: none;
+}
+
+input.login_textfield {
+	height: 28px;
+	padding-left: 3px;
+	margin: 0px;
+	border: 1px solid #B8B8B8;
+	z-index: 3;
+	margin-right: 100px;
+	margin-left: 0px;
+	background: transparent;
+	color: #000000;
+	width: 350px;
+	font-size: 16px;
+}
+
+#frm_opciones .ui-menu {
+	border: none;
+	background: #ffffff;
+	padding: 0px;
+}
+
+form#frm_opciones div ul li.ui-widget-header {
+	background: url("../images/fndo_mnu.jpg");
+	width: 100%;
+	margin: 0px;
+	border: none;
+}
+
+form#frm_opciones div ul li.ui-widget-header h3 {
+	text-shadow: none;;
+	font-weight: normal;
+	color: #ffffff;
+}
+
+form#frm_opciones div ul li.ui-corner-all {
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+/* # Extensiones primerfaces # */
+.ui-messages-error {
+	color: #b94a48;
+	background-color: #FFF;
+	border-color: #FFF;
+}
+
+.ui-messages-error-summary {
+	font-weight: normal;
+}
+
+.ui-messages-error-icon {
+	background: url("../images/icons/error_16.png") no-repeat;
+	display: block;
+	float: left;
+	margin: 0;
+	padding: 0;
+	position: relative;
+}
+
+.ui-state-error {
+	border: 1px solid #cd0a0a !important;
+}
+
+.right_position {
+	position: relative;
+	float: right;
+}
+
+.boton_inner_form,.ui-fileupload-buttonbar .ui-button {
+	background: #4169E1 !important;
+	border: none !important;
+	padding: 1px !important;
+	margin-left: 4px;
+}
+
+.boton_inner_form span {
+	font-size: 11px;
+	color: #FFF;
+}
+
+button.ui-state-hover {
+	font-weight: normal;
+	background: #3B9CF8 !important;
+}
+
+.ui-state-default {
+	text-shadow: none !important;
+	font-weight: normal !important;
+}
+
+._ui-icon-check {
+	background: url("../images/icons/login_24.png") no-repeat !important;
+}
+
+._ui-icon-add {
+	background: url("../images/icons/plus_12.png") no-repeat !important;
+}
+
+._ui-icon-xls {
+	background: url("../images/icons/xls_12.png") no-repeat !important;
+}
+
+._ui-icon-pencil {
+	background: url("../images/icons/pencil_12.png") no-repeat !important;
+}
+
+._ui-icon-save {
+	background: url("../images/icons/save_12.png") no-repeat !important;
+}
+
+._ui-icon-trash {
+	background: url("../images/icons/trash_12.png") no-repeat !important;
+}
+
+._ui-icon-back {
+	background: url("../images/icons/back_12.png") no-repeat !important;
+}
+
+._ui-icon-logout {
+	background: url("../images/icons/logout_12.png") no-repeat !important;
+}
+
+._ui-icon-download {
+	background: url("../images/icons/download_12.png") no-repeat !important;
+}
+
+._ui-icon-document {
+	background: url("../images/icons/document_12.png") no-repeat !important;
+}
+
+._ui-icon-add {
+	background: url("../images/icons/add_12.png") no-repeat !important;
+}
+
+._ui-icon-delete {
+	background: url("../images/icons/delete_12.png") no-repeat !important;
+}
+
+._ui-icon-rotate {
+	background: url("../images/icons/rotate_12.png") no-repeat !important;
+}
+
+.ui-button-text-icon-left .ui-icon {
+	top: 60%;
+}
+
+button span.ui-icon {
+	width: 12px;
+	height: 12px;
+}
+
+div#titulo_formulario span#texto_titulo {
+	font-family: Tahoma, Helvetica, Arial, Sans-Serif;
+	font-size: 18px;
+	top: 6px;
+	position: relative;
+}
+
+div#titulo_formulario div#botonera {
+	float: right;
+	position: relative;
+	height: 34px;
+}
+
+.ui-fieldset {
+	padding: 4px;
+}
+
+th.ui-state-default {
+	background: #4169E1 !important;
+}
+
+th.ui-state-default span {
+	font-weight: normal;
+	color: #FFF;
+	text-shadow: none;
+}
+
+.ui-commandlink {
+	text-decoration: none;
+	padding: 0px 5px 0px 0px;
+	margin: 0px;
+}
+
+.ui-commandlink img {
+	border: none;
+}
+
+.ui-tabs .ui-tabs-nav {
+	background: #FFF;
+}
+
+li.ui-tabs-selected a {
+	color: #000 !important;
+}
+
+li.ui-tabs-selected a,ul.ui-tabs-nav li.ui-state-default a {
+	font-weight: normal;
+	text-shadow: none;
+}
+
+ul.ui-tabs-nav li.ui-state-default a {
+	color: #FFF;
+}
+
+ul.ui-tabs-nav li.ui-state-default {
+	background: #4169E1;
+}
+
+.date_list {
+	border: none;
+}
+
+.ui-datalist .ui-widget-content {
+	border: none;
+}
+
+ul.ui-datalist-data {
+	-webkit-margin-before: 0em;
+	-webkit-margin-after: 0em;
+	-webkit-margin-start: 0px;
+	-webkit-margin-end: 0px;
+	-webkit-padding-start: 40px;
+}
+
+.right {
+	text-align: right;
+}
+
+tr.ui-widget-header {
+	background: #4169E1 !important;
+}
+
+td.ui-datatable-subtable-header {
+	text-shadow: none;
+	color: #FFF;
+	font-weight: normal;
+	text-transform: capitalize;
+}
+
+.tab_formulario_bandeja {
+	min-height: 500px;
+	max-height: 500px;
+}
+
+.scroll_formulario_bandeja {
+	min-height: 300px;
+	max-height: 445px;
+	width: 101%;
+}
+
+.carousel_foto {
+	width: 500px;
+	height: 400px;
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+.carousel_foto_style {
+	width: 500px;
+	height: 350px;
+	/*border: none;*/
+	margin: 0px;
+	padding: 0px;
+	overflow: hidden;
+}
+
+.foto_carousel {
+	width: 486px;
+	height: 300px;
+}
+
+.ui-carousel .ui-carousel-header {
+	margin: 0px;
+	height: 13px;
+	overflow: hidden;
+	padding-top: 3px;
+	padding-bottom: 8px;
+	padding-right: 10px;
+	padding-left: 10px;
+}
+
+.ui-carousel .ui-widget-header {
+	background: #3E92CF;
+	border: 1px solid #0072C6;
+}
+
+select.ui-state-default {
+	text-shadow: none !important;
+	background: #FFF !important;
+	font-weight: normal;
+}
+
+.alert_popup {
+	background: url("../images/icons/question_32.png") no-repeat !important;
+}
+
+.ui-dialog-content .ui-icon {
+	width: 32px;
+	height: 32px;
+}
+
+.ui-confirm-dialog-message {
+	display: inline-block;
+	margin-top: 10px;
+	margin-left: 10px;
+}
+
+.ui-dialog-titlebar {
+	background: #4169E1;
+}
+
+.ui-dialog-title {
+	color: #FFF;
+}
+
+.ui-confirm-dialog .ui-widget-header,.ui-dialog .ui-widget-header {
+	text-shadow: none;
+}
+
+.form_contrasena {
+	margin: 20px 0px 0px 40px;
+}
+
+table.form_contrasena tr td {
+	padding: 5px;
+	vertical-align: middle;
+}
+
+table.form_contrasena tr td#msgErrores {
+	padding: 5px;
+	vertical-align: middle;
+	height: 30px;
+}
+
+table.form_contrasena tr td span {
+	font-size: 15px;
+}
+
+table.form_contrasena tr td input {
+	font-size: 15px;
+	width: 200px;
+}
+
+table#cntDialog tr td {
+	padding: 4px;
+}
+
+.menu_opciones {
+	height: 30px;
+	float: right;
+}
+
+.menu_opciones div {
+	vertical-align: middle;
+	height: 20px;
+	font-size: 12px;
+	padding: 6px 5px 4px 8px;
+}
+
+.menu_opciones div:hover {
+	background-color: #0BBBDD;
+}
+
+.menu_opciones div:hover {
+	background-color: #0BBBDD;
+}
+
+.menu_opciones div:ACTIVE {
+	background-color: #008CF4;
+}
+
+.menu_opciones div a {
+	color: #FFF;
+	text-decoration: none;
+}
+
+table#tblFrmInfrm {
+	width: 100%;
+}
+
+input.hasDatepicker {
+	width: 90px;
+}
+
+table#tblFrmInfrm tr td {
+	padding: 2px;
+}
+
+.ui-inputfield {
+	background: #ffffff !important;
+	-moz-box-shadow: none !important;
+	-webkit-box-shadow: none !important;
+	box-shadow: none !important;
+	color: #313131 !important;
+	padding: 2px !important;
+}
+
+.tamanio-1 {
+	width: 95% !important;
+}
+
+.tamanio-1 .ui-inputfield {
+	width: 95% !important;
+}
+
+.tamanio-2 {
+	width: 85% !important;
+}
+
+.tamanio-2 .ui-inputfield {
+	width: 85% !important;
+}
+
+.tamanio-3 {
+	width: 75% !important;
+}
+
+.tamanio-3 .ui-inputfield {
+	width: 75% !important;
+}
+
+.tamanio-4 {
+	width: 65%!iportant;
+}
+
+.tamanio-4 .ui-inputfield {
+	width: 95% !important;
+}
+
+.tamanio-5 {
+	width: 55% !important;
+}
+
+.tamanio-6 {
+	width: 45% !important;
+}
+
+.tamanio-8 {
+	width: 25% !important;
+}
+
+.ui-dialog-buttonpane {
+	text-align: right !important;
+}
+
+.ui-messages-close .ui-icon {
+	width: 16px !important;
+	height: 16px !important;
+}
+
+.tbl_separador {
+	margin: 0px;
+	padding: 0px;
+	border-collapse: collapse;
+	border: none;
+}
+
+.tbl_separador td {
+	padding: 0px;
+}
+
+.ui-fileupload-choose .ui-icon {
+	width: 16px !important;
+	height: 16px !important;
+	background: url("../images/icons/plus_12.png") no-repeat !important;
+}
+
+.ui-fileupload-choose .ui-button-text {
+	color: #FFF;
+}
+
+.ui-fileupload-buttonbar {
+	background: #C4D2FF;
+}
+
+.perfil_bnr {
+	font-size: 20px;
+	height: 28px;
+	vertical-align: bottom;
+}
+
+.nombre_usuario_bnr {
+	font-size: 15px;
+	height: 20px;
+	vertical-align: top;
+}
+
+#tbl_perfil {
+	min-width: 340px;
+	position: relative;
+	top: 5px;
+}
+
+#tbl_perfil tr td a {
+	color: #FFFFFF;
+	text-decoration: underline;
+	font-size: 12px;
+}
+
+#tbl_perfil tr td a:hover {
+	color: #B8FF00;
+}
+
+#contenido_formulario {
+	position: relative;
+	margin-left: 20px;
+	margin-right: 20px;
+	margin-top: 20px;
+	min-width: 1060px;
+}
+
+#page_flow {
+	width: 100%;
+	text-align: right;
+	color: #1430CC;
+	font-size: 10px;
+	text-transform: uppercase;
+	font-weight: bold;
+	padding: 0px 0px 4px 0px;
+}
+
+div#titulo_formulario {
+	width: 100%;
+	border-bottom: solid 3px #D2D2D2;
+	height: 34px;
+	vertical-align: bottom;
+	color: #4f4f4f;
+	font-size: 25px;
+	padding: 0px 0px 4px 0px;
+}
+
+div#contenido {
+	position: relative;
+	margin-top: 20px;
+}
+
+table.separador tr td {
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+.botonera {
+	padding: 10px 0px 5px 0px !important;
+	text-align: right;
+}
+
+.btn_confirm {
+	background: #2693FF !important;
+	border: none !important;
+	padding: 3px !important;
+}
+
+.btn_confirm:hover {
+	background: #CC5514 !important;
+}
+
+.btn_confirm span {
+	font-size: 12px;
+	color: #FFF;
+}
+
+.btn_cancel {
+	color: #1814CC !important;
+	text-decoration: underline;
+	padding: 0px 10px 0px 0px;
+}
+
+.btn_cancel:hover {
+	color: #CC5514;
+}
+
+#pnlContenido.ui-widget-content {
+	border: none;
+}
+
+#pnlContenido.ui-corner-all {
+	-moz-border-radius: 0px;
+	-webkit-border-radius: 0px;
+	border-radius: 0px;
+}
+
+#pnlContenido.ui-panel{
+	padding: 0px;
+}
