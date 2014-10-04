@@ -9,13 +9,10 @@ import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @Remote
-public interface UsuarioEjbRemote {
-	/**
-	 * Retorna el objeto usuario si el usuario y contraseña es correcta, caso contrario retorna un objeto nulo
-	 * @param usuario
-	 * @return El objeto Usrio
-	 */
-		SipreUsuario getUsuario(UsuarioDto usuario); 
+public interface GrupoGradoEjbRemote {
+	
+	List<SipreGrupoGrado> listGrupoGrado(SipreGrupoGrado sipreGrupoGrado);
+
 	
 
 	

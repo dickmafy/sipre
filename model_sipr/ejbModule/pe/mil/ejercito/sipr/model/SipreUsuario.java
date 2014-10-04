@@ -9,7 +9,7 @@ import java.util.Date;
  * The persistent class for the SIPRE_USUARIO database table.
  * 
  */
-@Entity
+@Entity(name="SipreUsuario")
 @Table(name="SIPRE_USUARIO")
 @NamedQuery(name="SipreUsuario.validarUsuario", query="SELECT s FROM SipreUsuario s where s.vusuarioNom=:nickname and s.vusuarioPass=:clave")
 public class SipreUsuario implements Serializable {

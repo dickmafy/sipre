@@ -24,11 +24,11 @@ public class SiprePlanillaAdicional implements Serializable {
 	//bi-directional many-to-one association to SiprePlanillaDetalle
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CCI_CODIGO", referencedColumnName="CCI_CODIGO"),
-		@JoinColumn(name="CPERSONA_NRO_ADM", referencedColumnName="CPERSONA_NRO_ADM"),
-		@JoinColumn(name="CPLANILLA_MES_PROCESO", referencedColumnName="CPLANILLA_MES_PROCESO"),
-		@JoinColumn(name="CTP_CODIGO", referencedColumnName="CTP_CODIGO"),
-		@JoinColumn(name="NPLANILLA_NUM_PROCESO", referencedColumnName="NPLANILLA_NUM_PROCESO")
+		@JoinColumn(name="CCI_CODIGO", referencedColumnName="CCI_CODIGO",insertable = false, updatable = false),
+		@JoinColumn(name="CPERSONA_NRO_ADM", referencedColumnName="CPERSONA_NRO_ADM",insertable = false, updatable = false),
+		@JoinColumn(name="CPLANILLA_MES_PROCESO", referencedColumnName="CPLANILLA_MES_PROCESO",insertable = false, updatable = false),
+		@JoinColumn(name="CTP_CODIGO", referencedColumnName="CTP_CODIGO",insertable = false, updatable = false),
+		@JoinColumn(name="NPLANILLA_NUM_PROCESO", referencedColumnName="NPLANILLA_NUM_PROCESO",insertable = false, updatable = false)
 		})
 	private SiprePlanillaDetalle siprePlanillaDetalle;
 

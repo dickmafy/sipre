@@ -1,12 +1,15 @@
 package pe.mil.ejercito.sipr.ejb;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
+import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
@@ -15,7 +18,7 @@ import pe.mil.ejercito.sipr.model.SipreUsuario;
  * Session Bean implementation class UsuarioEjbBean
  */
 @Stateless
-public class UsuarioEjbBean implements UsuarioEjbRemote {
+public class GrupoGradoEjbBean implements GrupoGradoEjbRemote {
 
 	@PersistenceContext(name = "model_sipre")
 	EntityManager em;
@@ -23,24 +26,21 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 	/**
 	 * Default constructor.
 	 */
-	public UsuarioEjbBean() {
+	public GrupoGradoEjbBean() {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
-	public SipreUsuario getUsuario(UsuarioDto usuario) {
-		SipreUsuario usrio = null;
+	public List<SipreGrupoGrado> listGrupoGrado(SipreGrupoGrado sipreGrupoGrado) {
+		List<SipreGrupoGrado> list = new ArrayList<SipreGrupoGrado>();
 		try {
-			usrio = (SipreUsuario) em.createNamedQuery("SipreUsuario.validarUsuario")
-					.setParameter("nickname", "a")
-					.setParameter("clave", "a")
-					//.setParameter("nickname", usuario.getNickname())
-					//.setParameter("clave", usuario.getClave())
-					.getSingleResult();
+			list = (List<SipreGrupoGrado>) em.createNamedQuery("SipreGrupoGrado.findAll")
+					.getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return usrio;
+		return list;
 	}
 
 	

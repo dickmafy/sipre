@@ -32,12 +32,12 @@ public class SipreIngresoGrado implements Serializable {
 
 	//bi-directional many-to-one association to SipreConceptoIngreso
 	@ManyToOne
-	@JoinColumn(name="CCI_CODIGO")
+	@JoinColumn(name="CCI_CODIGO",insertable = false, updatable = false)
 	private SipreConceptoIngreso sipreConceptoIngreso;
 
 	//bi-directional many-to-one association to SipreGrado
 	@ManyToOne
-	@JoinColumn(name="CGRADO_CODIGO")
+	@JoinColumn(name="CGRADO_CODIGO",insertable = false, updatable = false)
 	private SipreGrado sipreGrado;
 
 	public SipreIngresoGrado() {

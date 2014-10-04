@@ -23,7 +23,7 @@ public class SipreTmpBanco implements Serializable {
 
 	//bi-directional one-to-one association to SiprePersona
 	@OneToOne
-	@JoinColumn(name="CPERSONA_NRO_ADM")
+	@JoinColumn(name="CPERSONA_NRO_ADM",insertable = false, updatable = false)
 	private SiprePersona siprePersona;
 
 	public SipreTmpBanco() {
