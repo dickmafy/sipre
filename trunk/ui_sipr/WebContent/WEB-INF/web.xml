@@ -37,4 +37,9 @@
     <filter-name>SessionFilter</filter-name>
     <url-pattern>/faces/index.xhtml</url-pattern>
   </filter-mapping>
+   
+   <context-param>
+    <param-name>primefaces.THEME</param-name>
+    <param-value>start</param-value>
+  </context-param>
 </web-app>

@@ -114,12 +114,12 @@ public class SiprePersona implements Serializable {
 
 	//bi-directional many-to-one association to SipreGrado
 	@ManyToOne
-	@JoinColumn(name="CGRADO_CODIGO")
+	@JoinColumn(name="CGRADO_CODIGO",insertable = false, updatable = false)
 	private SipreGrado sipreGrado;
 
 	//bi-directional many-to-one association to SipreUnidad
 	@ManyToOne
-	@JoinColumn(name="CUNIDAD_CODIGO")
+	@JoinColumn(name="CUNIDAD_CODIGO",insertable = false, updatable = false)
 	private SipreUnidad sipreUnidad;
 
 	//bi-directional many-to-one association to SiprePlanilla

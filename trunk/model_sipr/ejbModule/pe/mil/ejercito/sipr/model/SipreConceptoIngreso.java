@@ -33,7 +33,7 @@ public class SipreConceptoIngreso implements Serializable {
 
 	//bi-directional many-to-one association to SipreTipoPlanilla
 	@ManyToOne
-	@JoinColumn(name="CTP_CODIGO")
+	@JoinColumn(name="CTP_CODIGO",insertable = false, updatable = false)
 	private SipreTipoPlanilla sipreTipoPlanilla;
 
 	//bi-directional many-to-many association to SipreConceptoDescuento
@@ -41,10 +41,10 @@ public class SipreConceptoIngreso implements Serializable {
 	@JoinTable(
 		name="SIPRE_DESCUENTO_INGRESO"
 		, joinColumns={
-			@JoinColumn(name="CCI_CODIGO")
+			@JoinColumn(name="CCI_CODIGO",insertable = false, updatable = false)
 			}
 		, inverseJoinColumns={
-			@JoinColumn(name="CCD_CODIGO")
+			@JoinColumn(name="CCD_CODIGO",insertable = false, updatable = false)
 			}
 		)
 	private List<SipreConceptoDescuento> sipreConceptoDescuentos;

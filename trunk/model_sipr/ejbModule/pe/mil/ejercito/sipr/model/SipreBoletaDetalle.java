@@ -42,9 +42,9 @@ public class SipreBoletaDetalle implements Serializable {
 	//bi-directional many-to-one association to SipreBoletaCabecera
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CBC_MES_PROCESO", referencedColumnName="CBC_MES_PROCESO"),
-		@JoinColumn(name="CBC_NRO_ADM", referencedColumnName="CBC_NRO_ADM"),
-		@JoinColumn(name="NBC_NUM_PROCESO", referencedColumnName="NBC_NUM_PROCESO")
+		@JoinColumn(name="CBC_MES_PROCESO", referencedColumnName="CBC_MES_PROCESO",insertable = false, updatable = false),
+		@JoinColumn(name="CBC_NRO_ADM", referencedColumnName="CBC_NRO_ADM",insertable = false, updatable = false),
+		@JoinColumn(name="NBC_NUM_PROCESO", referencedColumnName="NBC_NUM_PROCESO",insertable = false, updatable = false)
 		})
 	private SipreBoletaCabecera sipreBoletaCabecera;
 

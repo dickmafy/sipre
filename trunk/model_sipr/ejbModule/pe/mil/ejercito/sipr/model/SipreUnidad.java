@@ -34,12 +34,12 @@ public class SipreUnidad implements Serializable {
 
 	//bi-directional many-to-one association to SipreActividad
 	@ManyToOne
-	@JoinColumn(name="CACTIVIDAD_CODIGO")
+	@JoinColumn(name="CACTIVIDAD_CODIGO",insertable = false, updatable = false)
 	private SipreActividad sipreActividad;
 
 	//bi-directional many-to-one association to SipreNucleo
 	@ManyToOne
-	@JoinColumn(name="CNUCLEO_CODIGO")
+	@JoinColumn(name="CNUCLEO_CODIGO",insertable = false, updatable = false)
 	private SipreNucleo sipreNucleo;
 
 	public SipreUnidad() {

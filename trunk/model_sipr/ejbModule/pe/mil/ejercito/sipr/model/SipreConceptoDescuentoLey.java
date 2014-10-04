@@ -41,20 +41,20 @@ public class SipreConceptoDescuentoLey implements Serializable {
 
 	//bi-directional many-to-one association to SipreConceptoDescuento
 	@ManyToOne
-	@JoinColumn(name="CCD_CODIGO")
+	@JoinColumn(name="CCD_CODIGO",insertable = false, updatable = false)
 	private SipreConceptoDescuento sipreConceptoDescuento;
 
 	//bi-directional many-to-one association to SipreDescuentoLeyDet
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CDL_CODIGO", referencedColumnName="CDL_CODIGO"),
-		@JoinColumn(name="CDLD_CODIGO", referencedColumnName="CDLD_CODIGO")
+		@JoinColumn(name="CDL_CODIGO", referencedColumnName="CDL_CODIGO",insertable = false, updatable = false),
+		@JoinColumn(name="CDLD_CODIGO", referencedColumnName="CDLD_CODIGO",insertable = false, updatable = false)
 		})
 	private SipreDescuentoLeyDet sipreDescuentoLeyDet;
 
 	//bi-directional many-to-one association to SipreEntidadCrediticia
 	@ManyToOne
-	@JoinColumn(name="CEC_CODIGO")
+	@JoinColumn(name="CEC_CODIGO",insertable = false, updatable = false)
 	private SipreEntidadCrediticia sipreEntidadCrediticia;
 
 	public SipreConceptoDescuentoLey() {

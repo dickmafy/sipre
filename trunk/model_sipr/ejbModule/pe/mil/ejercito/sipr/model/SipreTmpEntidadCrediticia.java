@@ -26,12 +26,12 @@ public class SipreTmpEntidadCrediticia implements Serializable {
 
 	//bi-directional many-to-one association to SipreEntidadCrediticia
 	@ManyToOne
-	@JoinColumn(name="CEC_CODIGO")
+	@JoinColumn(name="CEC_CODIGO",insertable = false, updatable = false)
 	private SipreEntidadCrediticia sipreEntidadCrediticia;
 
 	//bi-directional many-to-one association to SiprePersona
 	@ManyToOne
-	@JoinColumn(name="CPERSONA_NRO_ADM")
+	@JoinColumn(name="CPERSONA_NRO_ADM",insertable = false, updatable = false)
 	private SiprePersona siprePersona;
 
 	public SipreTmpEntidadCrediticia() {

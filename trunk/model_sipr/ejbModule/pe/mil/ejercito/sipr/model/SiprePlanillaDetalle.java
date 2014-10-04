@@ -31,21 +31,21 @@ public class SiprePlanillaDetalle implements Serializable {
 
 	//bi-directional many-to-one association to SipreConceptoIngreso
 	@ManyToOne
-	@JoinColumn(name="CCI_CODIGO")
+	@JoinColumn(name="CCI_CODIGO",insertable = false, updatable = false)
 	private SipreConceptoIngreso sipreConceptoIngreso;
 
 	//bi-directional many-to-one association to SiprePlanilla
 	@ManyToOne
 	@JoinColumns({
-		@JoinColumn(name="CPERSONA_NRO_ADM", referencedColumnName="CPERSONA_NRO_ADM"),
-		@JoinColumn(name="CPLANILLA_MES_PROCESO", referencedColumnName="CPLANILLA_MES_PROCESO"),
-		@JoinColumn(name="NPLANILLA_NUM_PROCESO", referencedColumnName="NPLANILLA_NUM_PROCESO")
+		@JoinColumn(name="CPERSONA_NRO_ADM", referencedColumnName="CPERSONA_NRO_ADM",insertable = false, updatable = false),
+		@JoinColumn(name="CPLANILLA_MES_PROCESO", referencedColumnName="CPLANILLA_MES_PROCESO",insertable = false, updatable = false),
+		@JoinColumn(name="NPLANILLA_NUM_PROCESO", referencedColumnName="NPLANILLA_NUM_PROCESO",insertable = false, updatable = false)
 		})
 	private SiprePlanilla siprePlanilla;
 
 	//bi-directional many-to-one association to SipreTipoPlanilla
 	@ManyToOne
-	@JoinColumn(name="CTP_CODIGO")
+	@JoinColumn(name="CTP_CODIGO",insertable = false, updatable = false)
 	private SipreTipoPlanilla sipreTipoPlanilla;
 
 	public SiprePlanillaDetalle() {

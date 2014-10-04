@@ -27,7 +27,7 @@ public class SipreGrado implements Serializable {
 
 	//bi-directional many-to-one association to SipreGrupoGrado
 	@ManyToOne
-	@JoinColumn(name="CGG_CODIGO")
+	@JoinColumn(name="CGG_CODIGO",insertable = false, updatable = false)
 	private SipreGrupoGrado sipreGrupoGrado;
 
 	//bi-directional many-to-one association to SipreIngresoGrado

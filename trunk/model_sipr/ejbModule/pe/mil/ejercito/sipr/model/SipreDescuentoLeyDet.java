@@ -27,7 +27,7 @@ public class SipreDescuentoLeyDet implements Serializable {
 
 	//bi-directional many-to-one association to SipreDescuentoLey
 	@ManyToOne
-	@JoinColumn(name="CDL_CODIGO")
+	@JoinColumn(name="CDL_CODIGO",insertable = false, updatable = false)
 	private SipreDescuentoLey sipreDescuentoLey;
 
 	public SipreDescuentoLeyDet() {
