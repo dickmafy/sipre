@@ -33,7 +33,7 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/blank_page";
 			break;
 		case 1:
-			menuLateral = "/modules/menu/adm_dre_expedientes";
+			menuLateral = "/modules/menu/parametrizacion";
 			contenidoDefault = "/modules/blank_page";
 			break;
 		}
@@ -47,6 +47,9 @@ public class Main extends MainContext {
 			break;
 		case 20:
 			contenidoDefault = "/modules/blank_page";
+			break;
+		case 30:
+			contenidoDefault = "/modules/registro/familiaEC__list";
 			break;
 		}
 		return "";
