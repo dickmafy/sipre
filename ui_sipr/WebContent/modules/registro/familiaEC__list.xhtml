@@ -1,40 +1,38 @@
-<ui:composition
-	xmlns="http://www.w3.org/1999/xhtml"
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Parametrización / Gestionar Grupo Grado</div>
+			<div id="titulo_formulario">Gestionar Grupo-Grado</div>
+			<div id="contenido">
+				<p:dataTable id="itemList" var="item" value="#{grupoGrado.list}"
+					paginatorPosition="bottom" resizableColumns="true" paginator="true"
+					rows="8"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-   	<h:form id="frmList" ajaxSubmit="false">
-   		<p:growl id="msgSystem" showDetail="false" life="5000" escape="true"/>   
-  		<p:toolbar>  
-	    	<p:toolbarGroup align="left">  
-		          
-			</p:toolbarGroup>  
-  		</p:toolbar>    		
-      	<p:spacer height="4px"/>
-      	
-   		<p:dataTable id="itemList" var="item" value="#{grupoGrado.list}"  paginatorPosition="bottom" 
-   			resizableColumns="true"  
-   			paginator="true" rows="8"  
-        	 paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
-     		
-     		<f:facet name="header">
-				<h:outputText value="Lista de Grupo Grado" />  
-			</f:facet>
-			
-			<p:column headerText="Id" style="width:70%; align:center;" sortBy="#{item.cggCodigo}" >   
-				<h:outputText value="#{item.cggCodigo}" />  
-			</p:column>	
-			<p:column headerText="Descripcion" style="width:10%; text-align:center" sortBy="#{item.vggDsc}" >   
-				<h:outputText value="#{item.vggDsc}" />
-			</p:column>
-			
-			<p:column headerText="Opciones" style="width:10%">  
-				
-        	</p:column>      	        
-		</p:dataTable> 
+					<f:facet name="header">
+						<h:outputText value="Lista de Grupo Grado" />
+					</f:facet>
+
+					<p:column headerText="Id" style="width:70%; align:center;"
+						sortBy="#{item.cggCodigo}">
+						<h:outputText value="#{item.cggCodigo}" />
+					</p:column>
+					<p:column headerText="Descripcion"
+						style="width:10%; text-align:center" sortBy="#{item.vggDsc}">
+						<h:outputText value="#{item.vggDsc}" />
+					</p:column>
+
+					<p:column headerText="Opciones" style="width:10%">
+
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
 	</h:form>
-		
-	
+
+
 </ui:composition>
