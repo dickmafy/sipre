@@ -32,10 +32,8 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 		SipreUsuario usrio = null;
 		try {
 			usrio = (SipreUsuario) em.createNamedQuery("SipreUsuario.validarUsuario")
-					.setParameter("nickname", "a")
-					.setParameter("clave", "a")
-					//.setParameter("nickname", usuario.getNickname())
-					//.setParameter("clave", usuario.getClave())
+					.setParameter("nickname", usuario.getNickname())
+					.setParameter("clave", usuario.getClave())
 					.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
