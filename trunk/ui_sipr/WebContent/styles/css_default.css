@@ -765,7 +765,7 @@ table#tblFrmInfrm tr td {
 	position: relative;
 	margin-left: 20px;
 	margin-right: 20px;
-	margin-top: 20px;
+	margin-top: 10px;
 	min-width: 1060px;
 }
 
@@ -840,6 +840,10 @@ table.separador tr td {
 	border-radius: 0px;
 }
 
-#pnlContenido.ui-panel{
+#pnlContenido.ui-panel {
 	padding: 0px;
+}
+
+.ui-widget-header {
+	background: #4169E1 !important
 }

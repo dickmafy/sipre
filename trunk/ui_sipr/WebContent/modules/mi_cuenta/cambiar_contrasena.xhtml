@@ -9,10 +9,15 @@
 			<div id="contenido">
 				<table class="separador">
 					<tr>
+						<td><p:messages id="msgContrasena" closable="true"/></td>
+					</tr>
+					<tr>
 						<td><h:outputText value="Contraseña" /></td>
 					</tr>
 					<tr>
-						<td><p:password id="txtOldPassword" style="width:250px;"/></td>
+						<td><p:password id="txtOldPassword" style="width:250px;"
+								value="#{cambiarContrasena.contrasenaActual}" required="true"
+								requiredMessage="Contraseña actual es requerida" /></td>
 					</tr>
 					<tr>
 						<td><p:spacer width="10" height="10" /></td>
@@ -21,9 +26,13 @@
 						<td><h:outputText value="Nueva contraseña" /></td>
 					</tr>
 					<tr>
-						<td><p:password id="txtNewPassword" feedback="true" style="width:250px;"
-								weakLabel="Contraseña insegura" goodLabel="Contraseña segura" promptLabel="Ingrese su contraseña"
-								strongLabel="Contraseña muy segura" /></td>
+						<td><p:password id="txtNewPassword" feedback="true"
+								style="width:250px;"
+								value="#{cambiarContrasena.contrasenaNueva}"
+								weakLabel="Contraseña insegura" goodLabel="Contraseña segura"
+								promptLabel="Ingrese su contraseña"
+								strongLabel="Contraseña muy segura" required="true"
+								requiredMessage="Contraseña nueva es requerida" /></td>
 					</tr>
 					<tr>
 						<td><p:spacer width="10" height="5" /></td>
@@ -32,13 +41,15 @@
 						<td><h:outputText value="Confirmar contraseña" /></td>
 					</tr>
 					<tr>
-						<td><p:password id="txtConfirmPassword" style="width:250px;"/></td>
+						<td><p:password id="txtConfirmPassword" required="true"
+								requiredMessage="Confirmación de contraseña es requerida"
+								value="#{cambiarContrasena.confirmarContrasena}"
+								style="width:250px;" /></td>
 					</tr>
 					<tr>
-						<td class="botonera">
-							<p:commandLink styleClass="btn_cancel" value="cancelar" />
-							<p:commandButton styleClass="btn_confirm" value="Cambiar contraseña"/>
-						</td>
+						<td class="botonera"><p:commandButton styleClass="btn_confirm"
+								value="Cambiar contraseña"
+								action="#{cambiarContrasena.cambiarContrasena}" update=":frm_cambiar_contrasena"/></td>
 					</tr>
 				</table>
 			</div>
