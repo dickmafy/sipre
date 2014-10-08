@@ -5,10 +5,10 @@ import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 /**
@@ -31,7 +31,8 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 	public SipreUsuario getUsuario(UsuarioDto usuario) {
 		SipreUsuario usrio = null;
 		try {
-			usrio = (SipreUsuario) em.createNamedQuery("SipreUsuario.validarUsuario")
+			usrio = (SipreUsuario) em
+					.createNamedQuery("SipreUsuario.validarUsuario")
 					.setParameter("nickname", usuario.getNickname())
 					.setParameter("clave", usuario.getClave())
 					.getSingleResult();
@@ -41,6 +42,19 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 		return usrio;
 	}
 
-	
+	@Override
+	public Integer cambiarContrasena(String contrasena, String idUsuario) {
+		try {
+			String sql = "update SipreUsuario s set s.vusuarioPass=:vusuarioPass where s.cusuarioCodigo=:cusuarioCodigo";
+			Query q = em.createQuery(sql);
+			q.setParameter("vusuarioPass", contrasena);
+			q.setParameter("cusuarioCodigo", idUsuario);
+			q.executeUpdate();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return 1;
+	}
 
 }
