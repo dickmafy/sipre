@@ -36,6 +36,10 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/parametrizacion";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 2:
+			menuLateral = "/modules/menu/seguridad";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		}
 		return "";
 	}
@@ -50,6 +54,15 @@ public class Main extends MainContext {
 			break;
 		case 30:
 			contenidoDefault = "/modules/registro/familiaEC__list";
+			break;
+		case 40:
+			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
+			break;
+		case 41:
+			contenidoDefault = "/modules/seguridad/gestionar_perfil/perfil";
+			break;
+		case 42:
+			contenidoDefault="/modules/seguridad/auditoria/auditoria";
 			break;
 		}
 		return "";

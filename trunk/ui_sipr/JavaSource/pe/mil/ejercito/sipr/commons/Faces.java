@@ -43,12 +43,14 @@ public class Faces extends FacesMessage {
 				.getSessionMap().remove(nombre);
 	}
 
-	public static void cerrarSesion() {
+	public static String cerrarSesion() {
 		FacesContext.getCurrentInstance().getExternalContext().getSessionMap()
 				.clear();
 		HttpSession session = (HttpSession) FacesContext.getCurrentInstance()
 				.getExternalContext().getSession(false);
 		session.invalidate();
+		return redirecciona("/index");
+		
 	}
 
 	public static String redirecciona(String url) {

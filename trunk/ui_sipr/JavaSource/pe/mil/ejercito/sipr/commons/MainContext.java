@@ -1,6 +1,5 @@
 package pe.mil.ejercito.sipr.commons;
 
-import pe.mil.ejercito.sipr.commons.UParametro;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 public class MainContext extends ServiceLocator{
