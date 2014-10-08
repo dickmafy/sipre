@@ -6,9 +6,6 @@ import javax.naming.Context;
 import javax.naming.InitialContext;
 import javax.naming.NamingException;
 
-import pe.mil.ejercito.sipr.commons.UParametro;
-import pe.mil.ejercito.sipr.commons.UProperties;
-
 public class ServiceLocator extends Faces{
 	private static final long serialVersionUID = 1L;
 	

@@ -1,19 +1,14 @@
 package pe.mil.ejercito.sipr.registro;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 
-import org.primefaces.component.log.Log;
-
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
-import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name="grupoGrado")
 @ViewScoped

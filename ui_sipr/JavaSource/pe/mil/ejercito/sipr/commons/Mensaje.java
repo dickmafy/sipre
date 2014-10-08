@@ -3,9 +3,6 @@ package pe.mil.ejercito.sipr.commons;
 import javax.faces.bean.ApplicationScoped;
 import javax.faces.bean.ManagedBean;
 
-import pe.mil.ejercito.sipr.commons.UParametro;
-import pe.mil.ejercito.sipr.commons.UProperties;
-
 @ApplicationScoped
 @ManagedBean(name = "mensajeMb")
 public class Mensaje {
