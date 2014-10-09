@@ -2,17 +2,12 @@ package pe.mil.ejercito.sipr.ejb;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-
-import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
-import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 /**
  * Session Bean implementation class UsuarioEjbBean

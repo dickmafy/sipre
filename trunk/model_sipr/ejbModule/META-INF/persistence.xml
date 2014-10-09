@@ -37,6 +37,8 @@
 		<class>pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK</class>
 		<class>pe.mil.ejercito.sipr.model.SipreUnidad</class>
 		<class>pe.mil.ejercito.sipr.model.SipreUsuario</class>
+		<class>pe.mil.ejercito.sipr.model.SipreAuditoria</class>
+		<class>pe.mil.ejercito.sipr.model.SiprePerfil</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect"/>
 		</properties>
