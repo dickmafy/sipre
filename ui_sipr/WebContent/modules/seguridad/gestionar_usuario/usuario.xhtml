@@ -11,7 +11,7 @@
 
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-					value="Agregar Perfil" actionListener="#{usuarioMb.nuevoUsuario}"
+					value="Agregar Usuario" actionListener="#{usuarioMb.nuevoUsuario}"
 					oncomplete="PF('wdialogNew').show()" />
 
 
@@ -26,6 +26,11 @@
 						<h:outputText value="#{item.cusuarioCodigo}" />
 					</p:column>
 
+					<p:column headerText="Estado"
+						style="width:10%; align:center;">
+						<h:outputText value="#{item.cusuarioEst}" />
+					</p:column>
+					
 					<p:column headerText="Nombre" style="width:20%; align:center;">
 						<h:outputText value="#{item.vusuarioNom}" />
 					</p:column>
@@ -34,15 +39,15 @@
 						<h:outputText value="#{item.vusuarioPass}" />
 					</p:column>
 
-					<p:column headerText="ACCION" width="10%">
-						<p:commandLink oncomplete="PF('wdialogNew').show()"
+					<p:column headerText="Opciones" width="10%">
+						<p:commandLink oncomplete="PF('wdialogNew').show()" 
 							update=":frmAddEditUsuario">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{usuarioMb.beanSelected}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wdialogDelete').show()"
+						<p:commandLink oncomplete="PF('wdialogDelete').show()" 
 							update=":frmwdialogDelete">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{usuarioMb.beanSelected}" />
@@ -65,9 +70,9 @@
 		<h:form id="frmAddEditUsuario">
 			<p:panelGrid columns="2">
 
-				<p:outputLabel value="cusuarioCodigo" />
-				<p:inputText value="#{usuarioMb.beanSelected.cusuarioCodigo}" />
-
+				<p:outputLabel value="Codigo" />
+				<p:outputLabel value="#{usuarioMb.beanSelected.cusuarioCodigo}" />
+				
 				<p:outputLabel value="Nombre" />
 				<p:inputText value="#{usuarioMb.beanSelected.vusuarioNom}" />
 
@@ -87,9 +92,9 @@
 
 
 	<!-- Elimina-->
-	<p:confirmDialog widgetVar="wdialogDelete" width="350"
-		header="Mensaje de Confirmacion"
-		message="¿Estas seguro de eliminar el usuario" style="font-size:13px;">
+	<p:dialog widgetVar="wdialogDelete" id="dialogDelete" showEffect="fade"
+		hideEffect="fade" header="Cerrar sesión" modal="true" appendTo="@(body)"
+		resizable="false">
 		<h:form id="frmwdialogDelete">
 
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
@@ -98,9 +103,9 @@
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
 				oncomplete="PF('wdialogDelete').hide();"
 				update=":frm_gestionar_usuario:dtmensual" icon="_ui-icon-logout"
-				action="#{usuarioMb.disable}" ajax="false" />
+				actionListener="#{usuarioMb.disable}" ajax="false" />
 
 		</h:form>
-	</p:confirmDialog>
+	</p:dialog>
 
 </ui:composition>
