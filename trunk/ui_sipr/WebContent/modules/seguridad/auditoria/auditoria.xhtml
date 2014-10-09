@@ -1,14 +1,102 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
-	<h:form id="frm_consultar_auditoria">
-		<div id="contenido_formulario">
-			<div id="page_flow">Seguridad / Auditoria</div>
-			<div id="titulo_formulario">Auditoria</div>
-			<div id="contenido">
-				Aqui va el contenido de la auditoria
-			</div>
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<div id="contenido_formulario">
+		<div id="page_flow">Seguridad / Auditoria</div>
+		<div id="titulo_formulario">Auditoria</div>
+		<div id="contenido">
+			<p:fieldset style="height:55px;">
+				<h:form id="frm_consultar_auditoria">
+					<span class="titulo_fieldset">Opciones de filtro</span>
+					<table class="contenido_fieldset">
+						<tr>
+							<td>Acción</td>
+							<td><p:selectOneMenu id="lstBusqueda" value="#{auditoriaMb.accion}">
+									<f:selectItem itemLabel="-- seleccione --" itemValue="" />
+									<f:selectItem itemLabel="REGISTRO" itemValue="REGISTRO" />
+									<f:selectItem itemLabel="MODIFICACION" itemValue="MODIFICACION" />
+									<f:selectItem itemLabel="ELIMINACION" itemValue="ELIMINACION" />
+									<f:selectItem itemLabel="INGRESO AL SISTEMA"
+										itemValue="INGRESO AL SISTEMA" />
+								</p:selectOneMenu></td>
+							<td><p:spacer width="20" height="10"></p:spacer></td>
+							<td>Tabla</td>
+							<td><p:selectOneMenu id="lstTabla" value="#{auditoriaMb.tabla}">
+									<f:selectItem itemLabel="-- seleccione --" itemValue="" />
+									<f:selectItem itemLabel="ACTIVIDAD" itemValue="ACTIVIDAD" />
+									<f:selectItem itemLabel="BOLETA" itemValue="BOLETA" />
+									<f:selectItem itemLabel="CONCEPTO" itemValue="CONCEPTO" />
+									<f:selectItem itemLabel="DESCUENTO" itemValue="DESCUENTO" />
+									<f:selectItem itemLabel="ENTIDAD CREDITICIA"
+										itemValue="ENTIDAD CREDITICIA" />
+									<f:selectItem itemLabel="GRADO" itemValue="GRADO" />
+									<f:selectItem itemLabel="GRUPO GRADO" itemValue="GRUPO GRADO" />
+									<f:selectItem itemLabel="INGRESO GRADO"
+										itemValue="INGRESO GRADO" />
+									<f:selectItem itemLabel="NUCLEO" itemValue="NUCLEO" />
+									<f:selectItem itemLabel="PERSONA" itemValue="PERSONA" />
+									<f:selectItem itemLabel="PLANILLA" itemValue="PLANILLA" />
+									<f:selectItem itemLabel="TIPO PLANILLA"
+										itemValue="TIPO PLANILLA" />
+									<f:selectItem itemLabel="BANCO" itemValue="BANCO" />
+									<f:selectItem itemLabel="BONIFICACION" itemValue="BONIFICACION" />
+									<f:selectItem itemLabel="ENTIDAD CREDITICIA"
+										itemValue="ENTIDAD CREDITICIA" />
+									<f:selectItem itemLabel="TMP GUARDIA" itemValue="TMP GUARDIA" />
+									<f:selectItem itemLabel="UNIDAD" itemValue="UNIDAD" />
+									<f:selectItem itemLabel="USUARIO" itemValue="USUARIO" />
+									<f:selectItem itemLabel="PERFIL" itemValue="PERFIL" />
+								</p:selectOneMenu></td>
+							<td><p:spacer width="20" height="10"></p:spacer></td>
+							<td>Resul. Acción</td>
+							<td><p:selectOneMenu id="lstResutado" value="#{auditoriaMb.resultado}">
+									<f:selectItem itemLabel="-- seleccione --" itemValue="" />
+									<f:selectItem itemLabel="REG. SATISFACTORIO"
+										itemValue="REGISTRO SATISFACTORIO" />
+									<f:selectItem itemLabel="MOD. SATISFACTORIA"
+										itemValue="MODIFICACION SATISFACTORIA" />
+									<f:selectItem itemLabel="ELIM. SATISFACTORIA"
+										itemValue="ELIMINACION SATISFACTORIA" />
+									<f:selectItem itemLabel="CRED. INCORRECTAS"
+										itemValue="CREDENCIALES INCORRECTAS" />
+									<f:selectItem itemLabel="ACCESO AL SISTEMA"
+										itemValue="ACCESO AL SISTEMA" />
+								</p:selectOneMenu></td>
+							<td><p:spacer width="20" height="10"></p:spacer></td>
+							<td><p:commandButton value="CONSULTAR"
+									icon="_ui-icon-search"
+									action="#{auditoriaMb.consultarAuditoria}"
+									update=":tblAuditoria" /></td>
+						</tr>
+					</table>
+				</h:form>
+			</p:fieldset>
+			<p:spacer width="100%" height="10" id="spTblAuditoria" />
+			<p:dataTable id="tblAuditoria"
+				emptyMessage="No se encontraron registros"
+				value="#{auditoriaMb.audList}" var="a">
+				<p:column headerText="FECHA" width="10%">
+				#{a.audFecha}
+				</p:column>
+				<p:column headerText="TABLA" width="15%">
+				#{a.audTabla}
+				</p:column>
+				<p:column headerText="ACCION" width="15%">
+				#{a.audAccion}
+				</p:column>
+				<p:column headerText="VALOR NUEVO" width="20%">
+				#{a.audValorNuevo}
+				</p:column>
+				<p:column headerText="VALOR ANTERIOR" width="20%">
+				#{a.audValorAntiguo}
+				</p:column>
+				<p:column headerText="RESULTADO ACCIÓN" width="20%">
+				#{a.audResultadoAccion}
+				</p:column>
+			</p:dataTable>
 		</div>
-	</h:form>
+	</div>
 </ui:composition>

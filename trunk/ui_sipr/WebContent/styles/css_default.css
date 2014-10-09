@@ -386,6 +386,10 @@ button.ui-state-hover {
 	background: url("../images/icons/document_12.png") no-repeat !important;
 }
 
+._ui-icon-search {
+	background: url("../images/icons/search_12.png") no-repeat !important;
+}
+
 ._ui-icon-add {
 	background: url("../images/icons/add_12.png") no-repeat !important;
 }
@@ -846,4 +850,28 @@ table.separador tr td {
 
 .ui-widget-header {
 	background: #4169E1 !important
+}
+
+.titulo_fieldset{
+	position: relative;
+	top: 4px;
+	left: 10px;
+	font-weight: bold;
+	color: #332F2E;
+}
+
+.contenido_fieldset{
+	position: relative;
+	top:8px;
+	left: 20px;
+}
+
+.boton_botonera{
+	position: relative;
+	margin-top: 10px;
+}
+
+.boton_botonera .ui-button-text{
+	font-size: 12px !important;
+	text-transform: uppercase;
 }

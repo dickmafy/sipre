@@ -1,0 +1,28 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<p:dialog widgetVar="wvRemovePerfil" id="dlgRemovePerfil" showEffect="fade"
+		hideEffect="fade" header="Cerrar sesión" modal="true" appendTo="@(body)"
+		resizable="false">
+		<h:form id="frmRemovePerfil">
+			<table>
+				<tr>
+					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
+					<td>#{perfilMb.perfilSelected.nombrePerfil}, <b>¿Desea
+							eliminar el perfil?</b></td>
+				</tr>
+				<tr>
+					<td colspan="2"><p:commandButton value="Cancelar"
+							styleClass="boton_botonera" icon="_ui-icon-back"
+							onclick="PF('wvRemovePerfil').hide();" /> <p:commandButton
+							value="Eliminar" styleClass="boton_botonera"
+							oncomplete="PF('wvRemovePerfil').hide();" update=":frm_gestionar_perfil:tblPerfil"
+							icon="_ui-icon-logout" action="#{perfilMb.eliminarPerfil}"
+							ajax="false" /></td>
+				</tr>
+			</table>
+		</h:form>
+	</p:dialog>
+</ui:composition>
