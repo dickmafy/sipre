@@ -11,7 +11,15 @@ import java.util.Date;
  */
 @Entity(name="SipreUsuario")
 @Table(name="SIPRE_USUARIO")
-@NamedQuery(name="SipreUsuario.validarUsuario", query="SELECT s FROM SipreUsuario s where s.vusuarioNom=:nickname and s.vusuarioPass=:clave")
+
+@NamedQueries({
+	@NamedQuery(name="SipreUsuario.validarUsuario", query="SELECT s FROM SipreUsuario s where s.vusuarioNom=:nickname and s.vusuarioPass=:clave"),
+    @NamedQuery(name = "SipreUsuario.findAll", query = "SELECT s FROM SipreUsuario s"),
+    @NamedQuery(name = "SipreUsuario.findByCusuarioCodigo", query = "SELECT s FROM SipreUsuario s WHERE s.cusuarioCodigo = :cusuarioCodigo"),
+    @NamedQuery(name = "SipreUsuario.findByVusuarioNom", query = "SELECT s FROM SipreUsuario s WHERE s.vusuarioNom = :vusuarioNom"),
+    @NamedQuery(name = "SipreUsuario.findByVusuarioPass", query = "SELECT s FROM SipreUsuario s WHERE s.vusuarioPass = :vusuarioPass"),
+    @NamedQuery(name = "SipreUsuario.findByDusuarioFecReg", query = "SELECT s FROM SipreUsuario s WHERE s.dusuarioFecReg = :dusuarioFecReg"),
+    @NamedQuery(name = "SipreUsuario.findByCusuarioEst", query = "SELECT s FROM SipreUsuario s WHERE s.cusuarioEst = :cusuarioEst")})
 public class SipreUsuario implements Serializable {
 	private static final long serialVersionUID = 1L;
 

@@ -62,7 +62,7 @@ public class AuditoriaEjbBean implements AuditoriaEjbRemote {
 	public Long getMaxAuditoria() {
 		Long idretorno = null;
 		try {
-			String consulta = "select max(a.audCodigo) +1 from SipreAuditoria a";
+			String consulta = "select max(a.audCodigo)+1 from SipreAuditoria a";
 			Query q = em.createQuery(consulta);
 			idretorno = (Long) q.getSingleResult();
 		} catch (Exception e) {
