@@ -9,6 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+import pe.mil.ejercito.sipr.commons.Encripta;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
@@ -37,6 +38,8 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 					.createNamedQuery("SipreUsuario.validarUsuario")
 					.setParameter("nickname", usuario.getNickname())
 					.setParameter("clave", usuario.getClave())
+					/*.setParameter("nickname", "a")
+					.setParameter("clave", "a")*/
 					.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -75,11 +78,12 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 	public String getMax() {
 		String idretorno = null;
 		try {
-			String consulta = "select max(a.cusuarioCodigo = :cusuarioCodigo) +1 from SipreUsuario a";
+			String consulta = "select max(a.cusuarioCodigo) from SipreUsuario a";
 			Query q = em.createQuery(consulta);
 			idretorno = (String) q.getSingleResult();
+			idretorno  = String.valueOf(Integer.valueOf(idretorno.trim())+1);
 		} catch (Exception e) {
-
+			
 		}
 		return idretorno;
 	}
@@ -89,8 +93,10 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 		try{
 			if(usuario.getCusuarioCodigo()==null){
 				usuario.setCusuarioCodigo(getMax());
+				usuario.setVusuarioPass(Encripta.encripta(usuario.getVusuarioPass(),Encripta.HASH_SHA1));
 				em.persist(usuario);
 			}else{
+				usuario.setVusuarioPass(Encripta.encripta(usuario.getVusuarioPass(),Encripta.HASH_SHA1));
 				em.merge(usuario);
 			}
 		}catch(Exception e){
