@@ -20,9 +20,6 @@ public class SipreTmpBonificacion implements Serializable {
 	@Column(name = "CTB_CON_REAL")
 	private String ctbConReal;
 
-	@Column(name = "CTB_IND_SITUACION")
-	private String ctbIndSituacion;
-
 	@Column(name = "NTB_MONTO")
 	private BigDecimal ntbMonto;
 
@@ -32,6 +29,15 @@ public class SipreTmpBonificacion implements Serializable {
 	@Column(name = "VTB_APE_NOM")
 	private String vtbApeNom;
 
+	@Column(name = "CTB_MES_PROCESO", insertable = false, updatable = false)
+	private String ctbMesProceso;
+	
+	@Column(name = "CTB_MES_BONIFICACION", insertable = false, updatable = false)
+	private String ctbMesBonificacion;
+	
+	@Column(name = "CTB_IND_SITUACION")
+	private String ctbIndSituacion;
+	
 	// bi-directional many-to-one association to SipreConceptoIngreso
 	@ManyToOne
 	@JoinColumn(name = "CCI_CODIGO", insertable = false, updatable = false)
@@ -108,6 +114,22 @@ public class SipreTmpBonificacion implements Serializable {
 
 	public void setSiprePersona(SiprePersona siprePersona) {
 		this.siprePersona = siprePersona;
+	}
+
+	public String getCtbMesProceso() {
+		return ctbMesProceso;
+	}
+
+	public void setCtbMesProceso(String ctbMesProceso) {
+		this.ctbMesProceso = ctbMesProceso;
+	}
+
+	public String getCtbMesBonificacion() {
+		return ctbMesBonificacion;
+	}
+
+	public void setCtbMesBonificacion(String ctbMesBonificacion) {
+		this.ctbMesBonificacion = ctbMesBonificacion;
 	}
 
 }

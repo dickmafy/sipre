@@ -15,6 +15,42 @@ public interface UsuarioEjbRemote {
 	 * @return El objeto Usrio
 	 */
 		SipreUsuario getUsuario(UsuarioDto usuario); 
+		
+		/**
+		 * Retorna la lista de usuarios
+		 * @param usuario
+		 * @return 
+		 */
+		List<SipreUsuario> listUsuario(SipreUsuario usuario);
+		
+		
+		/**
+		 * inserta un usuario
+		 * @param usuario
+		 * @return 
+		 */
+		SipreUsuario insertUsuario(SipreUsuario usuario);
+		
+		/**
+		 * update un usuario
+		 * @param usuario
+		 * @return 
+		 */
+		Boolean updateUsuario(SipreUsuario usuario);
+		
+		/**
+		 * deshabilitar un usuario
+		 * @param usuario
+		 * @return 
+		 */
+		Boolean updateDeshabilitarUsuario(SipreUsuario usuario);
+		
+		/**
+		 * buscar un usuario
+		 * @param usuario
+		 * @return 
+		 */
+		SipreUsuario getBean(SipreUsuario usuario);
 	
 		Integer cambiarContrasena(String contrasena, String idUsuario);
 	
