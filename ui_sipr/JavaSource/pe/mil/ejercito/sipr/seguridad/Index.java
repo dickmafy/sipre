@@ -1,5 +1,7 @@
 package pe.mil.ejercito.sipr.seguridad;
 
+import java.util.Date;
+
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
 
@@ -10,6 +12,7 @@ import pe.mil.ejercito.sipr.commons.UParametro;
 import pe.mil.ejercito.sipr.commons.UProperties;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreAuditoria;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "indexBean")
@@ -34,9 +37,16 @@ public class Index extends MainContext {
 
 		if (usuario != null) {
 			registrarVariable(UParametro.SSION_VRBLE_USRIO, usuario);
+			ejbAuditoria.persist(getAuditoria("INGRESO AL SISTEMA", new Date(),
+					"USUARIO", usuarioDto.getNickname(), null,
+					"ACCESO AL SISTEMA", usuario.getCusuarioCodigo()));
+
 			rtnoPgna = redirecciona(UProperties.getMessage(
 					UParametro.PROP_CONFIGURACIONES, UParametro.PGNA_PCPAL));
 		} else {
+			ejbAuditoria.persist(getAuditoria("INGRESO AL SISTEMA", new Date(),
+					"USUARIO", usuarioDto.getNickname(), null,
+					"CREDENCIALES INCORRECTAS", null));
 			showMessage(UProperties.getMessage(UParametro.PROP_MENSAJES,
 					UParametro.MSJE_ERROR_USRIO_CVE_ICRTO),
 					Faces.SEVERITY_ERROR);
