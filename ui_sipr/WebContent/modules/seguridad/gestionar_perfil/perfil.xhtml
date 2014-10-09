@@ -1,14 +1,49 @@
 <ui:composition xmlns="http://www.w3.org/1999/xhtml"
 	xmlns:h="http://java.sun.com/jsf/html"
 	xmlns:ui="http://java.sun.com/jsf/facelets"
-	xmlns:p="http://primefaces.org/ui">
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form id="frm_gestionar_perfil">
 		<div id="contenido_formulario">
 			<div id="page_flow">Seguridad / Perfil</div>
-			<div id="titulo_formulario">Gestionar perfil</div>
+			<div id="titulo_formulario">
+				Gestionar perfil
+				<div id="botonera">
+					<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+						value="Agregar Perfil" actionListener="#{perfilMb.nuevoPerfil}"
+						oncomplete="PF('wvAddEditPerfil').show()" 
+						update=":dlgAddEditPerfil"/>
+				</div>
+			</div>
 			<div id="contenido">
-				Aqui va el contenido de la auditoria
+				<p:spacer width="100%" height="10" id="spTblAuditoria" />
+				<p:messages id="msgEstadoPerfil" closable="true"/>
+				<p:dataTable id="tblPerfil"
+					emptyMessage="No se encontraron registros"
+					value="#{perfilMb.perfilLst}" var="p">
+					<p:column headerText="FECHA" width="40%">
+				#{p.nombrePerfil}
+				</p:column>
+					<p:column headerText="TABLA" width="50%">
+				#{p.descripcionPerfil}
+				</p:column>
+					<p:column headerText="ACCION" width="10%">
+						<p:commandLink oncomplete="PF('wvAddEditPerfil').show()" update=":dlgAddEditPerfil">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{perfilMb.perfilSelected}" />
+							<p:graphicImage value="/images/icons/pencil_12.png" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink oncomplete="PF('wvRemovePerfil').show()" update=":dlgRemovePerfil">
+							<f:setPropertyActionListener value="#{p}"
+								target="#{perfilMb.perfilSelected}" />
+							<p:graphicImage value="/images/icons/trash_12.png" />
+						</p:commandLink>
+					</p:column>
+				</p:dataTable>
 			</div>
 		</div>
 	</h:form>
+	<ui:include src="/modules/seguridad/gestionar_perfil/dialog/removePerfil.xhtml" />
+	<ui:include src="/modules/seguridad/gestionar_perfil/dialog/addEditPerfil.xhtml" />
 </ui:composition>
