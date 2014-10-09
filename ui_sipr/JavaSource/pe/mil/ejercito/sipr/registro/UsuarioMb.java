@@ -60,13 +60,10 @@ public class UsuarioMb extends MainContext implements Serializable {
 		if (beanSelected.getCusuarioCodigo() != null) {
 			beanSelected = ejb.insertUsuario(beanSelected);
 			showMessage("Perfil editado satisfactoriamente", SEVERITY_INFO);
-
+			//beanList.add(beanSelected);
 		} else {
 			beanSelected = ejb.insertUsuario(beanSelected);
-			showMessage("Nuevo perfil creado satisfactoriamente", SEVERITY_INFO);
-
-			beanList.add(beanSelected);
-
+			showMessage("Perfil insertado satisfactoriamente", SEVERITY_INFO);
 		}
 		beanList = ejb.listUsuario(null);
 	}
