@@ -15,8 +15,8 @@ import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
 public class GrupoGrado extends MainContext implements Serializable{
 
 	private static final long serialVersionUID = 1L;
-	List<SipreGrupoGrado> list;
-	SipreGrupoGrado beanSelected;
+	private List<SipreGrupoGrado> list;
+	private SipreGrupoGrado beanSelected;
 	private GrupoGradoEjbRemote ejb;
 	
 	public GrupoGrado(){

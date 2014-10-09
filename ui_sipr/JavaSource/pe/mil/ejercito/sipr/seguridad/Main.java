@@ -55,6 +55,12 @@ public class Main extends MainContext {
 		case 30:
 			contenidoDefault = "/modules/registro/familiaEC__list";
 			break;
+		case 31:
+			contenidoDefault = "/modules/registro/reintegroPersonal_list";
+			break;
+		case 32:
+			contenidoDefault = "/modules/registro/reintegroPersonal_list";
+			break;
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
 			break;
