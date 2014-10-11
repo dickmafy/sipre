@@ -59,8 +59,9 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/registro/reintegroPersonal_list";
 			break;
 		case 32:
-			contenidoDefault = "/modules/registro/reintegroPersonal_list";
+			contenidoDefault = "/modules/registro/ingresoConceptoPersonal";
 			break;
+		
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
 			break;
@@ -70,6 +71,7 @@ public class Main extends MainContext {
 		case 42:
 			contenidoDefault="/modules/seguridad/auditoria/auditoria";
 			break;
+		
 		}
 		return "";
 	}
