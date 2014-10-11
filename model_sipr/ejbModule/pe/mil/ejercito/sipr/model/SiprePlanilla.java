@@ -66,7 +66,7 @@ public class SiprePlanilla implements Serializable {
 	private String vplanillaNroDocAlta;
 
 	//bi-directional many-to-one association to SiprePersona
-	@ManyToOne
+	@ManyToOne(optional = true)
 	@JoinColumn(name="CPERSONA_NRO_ADM",insertable = false, updatable = false)
 	private SiprePersona siprePersona;
 
