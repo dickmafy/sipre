@@ -28,7 +28,7 @@
 
 					<p:column headerText="Estado"
 						style="width:10%; align:center;">
-						<h:outputText value="#{item.cusuarioEst}" />
+						<h:outputText value="#{item.cusuarioEst eq 'A'? 'Activo':'Inactivo'}" />
 					</p:column>
 					
 					<p:column headerText="Nombre" style="width:20%; align:center;">
@@ -97,6 +97,13 @@
 		resizable="false">
 		<h:form id="frmwdialogDelete">
 
+				<table>
+				<tr>
+					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
+					<td>#{perfilMb.perfilSelected.nombrePerfil}, <b>¿Desea
+							eliminar el perfil?</b></td>
+				</tr>
+				</table>
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
 				icon="_ui-icon-back" onclick="PF('wdialogDelete').hide();" />
 

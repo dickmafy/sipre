@@ -12,67 +12,74 @@
 				<p:panel header="GESTIONAR REINTEGRO MENSUAL ">
 
 
+					<p:commandButton title="Nuevo" value="Nuevo" icon="icn_bar_save"
+						actionListener="#{reintegroPersonalMb.insertNuevo}" ajax="true" />
 
 					<p:tabView id="tab" style="border:none;">
-
-						<!-- Registro Peronal Mensual - TAB 1-->
-						<p:panel header="Registro Personal" footer="footer">
-							<p:panelGrid columns="2">
-								<p:outputLabel value="Numero Cip" />
-								<p:inputText
-									value="#{reintegroPersonalMb.bean.siprePersona.cpersonaNroAdm}"></p:inputText>
-
-								<p:outputLabel value="Grado" />
-								<p:inputText value=""></p:inputText>
-
-								<p:outputLabel value="Mes de Proceso" />
-								<p:calendar
-									value="#{reintegroPersonalMb.bean.ctbMesProceso}"
-									showOn="button" size="10" />
-
-
-								<p:commandButton title="Guardar" value="Guardar"
-									icon="icn_bar_save"
-									actionListener="#{reintegroPersonalMb.saveMensual}" ajax="true" />
-							</p:panelGrid>
-						</p:panel>
-
 						<!-- TAB1 -->
 						<p:tab id="tab1" title="Mensual">
+							<!-- Registro Peronal Mensual - TAB 1-->
+							<p:panel header="Registro Personal">
+								<p:panelGrid columns="2">
+									<p:outputLabel value="Numero CIP" />
+									<p:inputText
+										value="#{reintegroPersonalMb.beanPlanilla.id.cpersonaNroAdm}"></p:inputText>
 
-							<p:commandButton title="Nuevo" value="Nuevo" icon="icn_bar_save"
-								actionListener="#{reintegroPersonalMb.nuevoMensual}" ajax="true" />
-
-							<p:dataTable id="dtmensual" var="item"
-								value="#{reintegroPersonalMb.beanList}"
-								emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
-
-								<p:column headerText="N*" style="width:30%; align:center;">
-								</p:column>
-
-								<p:column headerText="CIP" style="width:20%; align:center;">
-									<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
-								</p:column>
-								<p:column headerText="MES PROCESO"
-									style="width:20%; align:center;">
-									<h:outputText value="#{item.ctbMesBonificacion}" />
-								</p:column>
-
-								<p:column headerText="OPCIONES" style="width:20%; align:center;">
-
-								</p:column>
-							</p:dataTable>
+									<p:outputLabel value="Grado" />
+									<p:selectOneMenu id="listGrado"
+										value="#{reintegroPersonalMb.beanPlanilla.cplanillaGraPension}"
+										style="position:relative;  top:3px; left:15px; width:300px">
+										<f:selectItem itemLabel="Coronel" itemValue="1" />
+										<f:selectItem itemLabel="Teniente" itemValue="2" />
+										<f:selectItem itemLabel="Tecnico" itemValue="3" />
+									</p:selectOneMenu>
 
 
+									<p:outputLabel value="Mes de Proceso" />
+									<p:calendar  navigator="true" pattern="dd/MM/yyyy"
+										value="#{reintegroPersonalMb.beanPlanilla.id.cplanillaMesProceso}" 
+										showOn="button" size="10" >
+									</p:calendar>
+
+
+									<p:commandButton title="Guardar" value="Guardar"
+										icon="icn_bar_save"
+										actionListener="#{reintegroPersonalMb.insertMensual}"
+										ajax="true" />
+								</p:panelGrid>
+
+
+
+								<p:dataTable id="dtmensual" var="item"
+									value="#{reintegroPersonalMb.beanList}"
+									emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
+
+									<p:column headerText="N*" style="width:30%; align:center;">
+									</p:column>
+
+									<p:column headerText="CIP" style="width:20%; align:center;">
+										<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
+									</p:column>
+									<p:column headerText="MES PROCESO"
+										style="width:20%; align:center;">
+										<h:outputText value="#{item.ctbMesBonificacion}" />
+									</p:column>
+
+									<p:column headerText="OPCIONES"
+										style="width:20%; align:center;">
+
+									</p:column>
+								</p:dataTable>
+
+							</p:panel>
 
 
 
 							<!-- Registro Peronal - Mensual - TAB 1-->
-							<p:panel header="Registro" footer="footer">
-								<p:panelGrid columns="3">
+							<p:panel header="Registro Pensiones">
+								<p:panelGrid columns="1">
 									<p:outputLabel value="Mes de Proceso" />
-									<p:calendar
-										value="#{reintegroPersonalMb.beanSelected.ctbMesProceso}"
+									<p:calendar 					
 										showOn="button" size="10" />
 
 
@@ -103,35 +110,33 @@
 										</p:column>
 									</p:dataTable>
 								</p:panelGrid>
+
+
+
+								<!-- Panel adicional -->
+								<p:dataTable id="dtDetalleRegistroPersonal" var="item"
+									value="#{reintegroPersonalMb.beanList}"
+									emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
+
+									<p:column headerText="N*" style="width:30%; align:center;">
+										<h:outputText value="#{item.id.cpersonaNroAdm}" />
+									</p:column>
+
+									<p:column headerText="CIP" style="width:20%; align:center;">
+										<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
+									</p:column>
+									<p:column headerText="MES PROCESO"
+										style="width:20%; align:center;">
+										<h:outputText value="#{item.ctbMesBonificacion}" />
+									</p:column>
+
+									<p:column headerText="OPCIONES"
+										style="width:20%; align:center;">
+
+									</p:column>
+								</p:dataTable>
 							</p:panel>
-
-
-							<!-- Panel adicional -->
-							<p:dataTable id="dtDetalleRegistroPersonal" var="item"
-								value="#{reintegroPersonalMb.beanList}"
-								emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
-
-								<p:column headerText="N*" style="width:30%; align:center;">
-									<h:outputText value="#{item.id.cpersonaNroAdm}" />
-								</p:column>
-
-								<p:column headerText="CIP" style="width:20%; align:center;">
-									<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
-								</p:column>
-								<p:column headerText="MES PROCESO"
-									style="width:20%; align:center;">
-									<h:outputText value="#{item.ctbMesBonificacion}" />
-								</p:column>
-
-								<p:column headerText="OPCIONES" style="width:20%; align:center;">
-
-								</p:column>
-							</p:dataTable>
-
-
-
 						</p:tab>
-
 					</p:tabView>
 				</p:panel>
 			</div>
