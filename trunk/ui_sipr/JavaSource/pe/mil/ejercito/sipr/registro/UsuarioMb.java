@@ -26,25 +26,15 @@ public class UsuarioMb extends MainContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private UsuarioEjbRemote ejb;
+
 	private List<SipreUsuario> beanList;
-
 	private SipreUsuario beanSelected;
-	private SipreUsuario beanUpdate = new SipreUsuario();
-	private SipreUsuario bean = new SipreUsuario();
-
-	private UsuarioDto beanSelected1;
-	private UsuarioDto beanUpdate1;
-	private UsuarioDto bean1;
+	
 
 	public UsuarioMb() {
 		super();
 		try {
-			beanSelected1 = new UsuarioDto();
-			beanUpdate1 = new UsuarioDto();
-			bean1 = new UsuarioDto();
-
 			ejb = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
-
 			beanList = ejb.listUsuario(null);
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
@@ -74,25 +64,6 @@ public class UsuarioMb extends MainContext implements Serializable {
 		beanList = ejb.listUsuario(null);
 	}
 
-	public void buscar(SipreUsuario bean) {
-
-		beanUpdate1.setSipreUsuario(bean);
-		bean1.setSipreUsuario(ejb.getBean(bean));
-		beanUpdate1.setSipreUsuario(bean);
-
-	}
-
-	public void buscar() {
-		beanUpdate1.setSipreUsuario(bean);
-		bean1.setSipreUsuario(ejb.getBean(bean));
-		beanUpdate1.setSipreUsuario(bean);
-	}
-
-	public void update() {
-		beanUpdate.setCusuarioEst("U");
-		ejb.updateUsuario(beanUpdate);
-		beanList = ejb.listUsuario(null);
-	}
 
 	public void disable(ActionEvent event) {
 		try {
@@ -111,23 +82,6 @@ public class UsuarioMb extends MainContext implements Serializable {
 		
 	}
 
-	public void irEditar() {
-		Faces.redirecciona("/modules/seguridad/gestionar_usuario/usuario_update.xhtml");
-	}
-
-	public void irNuevo() {
-		Faces.redirecciona("/seguridad/gestionar_usuario/usuario_new.xhtml");
-	}
-
-	/* Inicio de Atributos */
-	public SipreUsuario getBeanSelected() {
-		return beanSelected;
-	}
-
-	public void setBeanSelected(SipreUsuario beanSelected) {
-		this.beanSelected = beanSelected;
-	}
-
 	public List<SipreUsuario> getBeanList() {
 		return beanList;
 	}
@@ -136,44 +90,12 @@ public class UsuarioMb extends MainContext implements Serializable {
 		this.beanList = beanList;
 	}
 
-	public SipreUsuario getBeanUpdate() {
-		return beanUpdate;
+	public SipreUsuario getBeanSelected() {
+		return beanSelected;
 	}
 
-	public void setBeanUpdate(SipreUsuario beanUpdate) {
-		this.beanUpdate = beanUpdate;
-	}
-
-	public SipreUsuario getBean() {
-		return bean;
-	}
-
-	public void setBean(SipreUsuario bean) {
-		this.bean = bean;
-	}
-
-	public UsuarioDto getBeanSelected1() {
-		return beanSelected1;
-	}
-
-	public void setBeanSelected1(UsuarioDto beanSelected1) {
-		this.beanSelected1 = beanSelected1;
-	}
-
-	public UsuarioDto getBeanUpdate1() {
-		return beanUpdate1;
-	}
-
-	public void setBeanUpdate1(UsuarioDto beanUpdate1) {
-		this.beanUpdate1 = beanUpdate1;
-	}
-
-	public UsuarioDto getBean1() {
-		return bean1;
-	}
-
-	public void setBean1(UsuarioDto bean1) {
-		this.bean1 = bean1;
+	public void setBeanSelected(SipreUsuario beanSelected) {
+		this.beanSelected = beanSelected;
 	}
 
 }
