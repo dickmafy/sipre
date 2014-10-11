@@ -19,7 +19,7 @@ public class SiprePlanillaPK implements Serializable {
 	private String cpersonaNroAdm;
 
 	@Column(name="NPLANILLA_NUM_PROCESO")
-	private long nplanillaNumProceso;
+	private Long nplanillaNumProceso;
 
 	public SiprePlanillaPK() {
 	}
@@ -35,10 +35,10 @@ public class SiprePlanillaPK implements Serializable {
 	public void setCpersonaNroAdm(String cpersonaNroAdm) {
 		this.cpersonaNroAdm = cpersonaNroAdm;
 	}
-	public long getNplanillaNumProceso() {
-		return this.nplanillaNumProceso;
+	public Long getNplanillaNumProceso() {
+		return nplanillaNumProceso;
 	}
-	public void setNplanillaNumProceso(long nplanillaNumProceso) {
+	public void setNplanillaNumProceso(Long nplanillaNumProceso) {
 		this.nplanillaNumProceso = nplanillaNumProceso;
 	}
 
@@ -65,4 +65,5 @@ public class SiprePlanillaPK implements Serializable {
 		
 		return hash;
 	}
+	
 }
