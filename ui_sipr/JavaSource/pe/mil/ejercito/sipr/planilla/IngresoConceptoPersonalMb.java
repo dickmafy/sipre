@@ -1,4 +1,4 @@
-package pe.mil.ejercito.sipr.registro;
+package pe.mil.ejercito.sipr.planilla;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -11,20 +11,15 @@ import javax.faces.event.ActionEvent;
 
 import org.primefaces.component.log.Log;
 
-import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
-
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Faces;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.commons.UtilVal;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejb.GenericDAO;
-import pe.mil.ejercito.sipr.ejbremote.ConceptoIngresoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.IngresoConceptoPersonalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.ReintegroPersonalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreConceptoIngreso;
 import pe.mil.ejercito.sipr.model.SipreIngresoOtro;
 import pe.mil.ejercito.sipr.model.SipreIngresoOtroPK;
 import pe.mil.ejercito.sipr.model.SiprePerfil;
@@ -39,11 +34,8 @@ public class IngresoConceptoPersonalMb extends MainContext implements
 	@SuppressWarnings("unused")
 	private UsuarioEjbRemote ejbUsuario;
 	private IngresoConceptoPersonalEjbRemote ejb;
-	private ConceptoIngresoEjbRemote ejbConceptoIngreso;
 
 	private List<SipreIngresoOtro> beanList;
-	private List<SipreConceptoIngreso> conceptoList;
-		
 	private SipreIngresoOtro bean;
 
 	public IngresoConceptoPersonalMb() {
@@ -51,22 +43,18 @@ public class IngresoConceptoPersonalMb extends MainContext implements
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (IngresoConceptoPersonalEjbRemote) findServiceRemote(IngresoConceptoPersonalEjbRemote.class);
-			ejbConceptoIngreso = (ConceptoIngresoEjbRemote)findServiceRemote(ConceptoIngresoEjbRemote.class);
+
 			beanList = ejb.findAll(100);
-			conceptoList = ejbConceptoIngreso.findAll(100);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void newBean(ActionEvent event) {
-		clearBean();
-	}
-
-	private void clearBean() {
 		bean = new SipreIngresoOtro();
 		SipreIngresoOtroPK tmpId = new SipreIngresoOtroPK();
 		bean.setId(tmpId);
+
 	}
 
 	public void saveBean(ActionEvent event) {
@@ -86,25 +74,14 @@ public class IngresoConceptoPersonalMb extends MainContext implements
 					SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
-		clearBean();
 	}
-	
-		
-	
+
 	public List<SipreIngresoOtro> getBeanList() {
 		return beanList;
 	}
 
 	public void setBeanList(List<SipreIngresoOtro> beanList) {
 		this.beanList = beanList;
-	}
-
-	public List<SipreConceptoIngreso> getConceptoList() {
-		return conceptoList;
-	}
-
-	public void setConceptoList(List<SipreConceptoIngreso> conceptoList) {
-		this.conceptoList = conceptoList;
 	}
 
 	public SipreIngresoOtro getBean() {
@@ -115,8 +92,16 @@ public class IngresoConceptoPersonalMb extends MainContext implements
 		this.bean = bean;
 	}
 
-
-	
-	
+	/*
+	 * tabla no tiene estado public void disableBean(ActionEvent event) { try {
+	 * beanSelected.setCusuarioEst("D");
+	 * ejb.updateDeshabilitarUsuario(beanSelected);
+	 * showMessage("Se elminio con exito.", SEVERITY_INFO); } catch (Exception
+	 * e) { e.printStackTrace();
+	 * showMessage("Ocurrió un problema al intentar eliminar el perfil",
+	 * SEVERITY_ERROR);
+	 * 
+	 * }
+	 */
 
 }

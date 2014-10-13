@@ -46,23 +46,21 @@ public class UsuarioMb extends MainContext implements Serializable {
 	}
 
 	public void insert(ActionEvent event) {
-
+		
 		if (beanSelected.getCusuarioCodigo() != null) {
+			beanSelected.setCusuarioEst("U");
 			beanSelected = ejb.insertUsuario(beanSelected);
 			showMessage("Perfil editado satisfactoriamente", SEVERITY_INFO);
 			//beanList.add(beanSelected);
 		} else {
+			beanSelected.setCusuarioEst("I");
 			beanSelected = ejb.insertUsuario(beanSelected);
 			showMessage("Perfil insertado satisfactoriamente", SEVERITY_INFO);
 		}
 		beanList = ejb.listUsuario(null);
 	}
 
-	public void insert(SipreUsuario bean) {
-		bean.setCusuarioEst("I");
-		ejb.insertUsuario(bean);
-		beanList = ejb.listUsuario(null);
-	}
+
 
 
 	public void disable(ActionEvent event) {

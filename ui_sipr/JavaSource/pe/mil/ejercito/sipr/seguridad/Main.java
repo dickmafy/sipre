@@ -37,14 +37,22 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/blank_page";
 			break;
 		case 2:
+			menuLateral = "/modules/menu/gestion";
+			contenidoDefault = "/modules/blank_page";
+			break;
+		case 3:
+			menuLateral = "/modules/menu/planilla";
+			contenidoDefault = "/modules/blank_page";
+			break;
+		case 5:
 			menuLateral = "/modules/menu/seguridad";
 			contenidoDefault = "/modules/blank_page";
 			break;
 		}
 		return "";
 	}
-	
-	public String redireccionaContent(Long id){
+
+	public String redireccionaContent(Long id) {
 		switch (id.intValue()) {
 		case 11:
 			contenidoDefault = "/modules/mi_cuenta/cambiar_contrasena";
@@ -61,7 +69,6 @@ public class Main extends MainContext {
 		case 32:
 			contenidoDefault = "/modules/registro/ingresoConceptoPersonal";
 			break;
-		
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
 			break;
@@ -69,14 +76,26 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/seguridad/gestionar_perfil/perfil";
 			break;
 		case 42:
-			contenidoDefault="/modules/seguridad/auditoria/auditoria";
+			contenidoDefault = "/modules/seguridad/auditoria/auditoria";
 			break;
-		
+
+		// GESTION
+		case 50:
+			contenidoDefault = "/modules/gestion/verificarCodigoBanco";
+			break;
+		case 51:
+			contenidoDefault = "/modules/gestion/concepto";
+			break;
+		// PLANILLA
+		case 60:
+			contenidoDefault = "/modules/planilla/planilla";
+			break;
+
 		}
 		return "";
 	}
+
 	/* Fin: Para efectos de presentación, la logica se regenerará */
-	
 
 	public String getMenuLateral() {
 		return menuLateral;
