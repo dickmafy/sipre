@@ -9,28 +9,25 @@
 			<div id="titulo_formulario">Gestionar Usuario</div>
 			<div id="contenido">
 
+				<p:messages id="messages" autoUpdate="true" closable="true" />
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar Usuario" actionListener="#{usuarioMb.nuevoUsuario}"
 					oncomplete="PF('wdialogNew').show()" />
 
-
-
-
 				<p:dataTable id="dtmensual" var="item" widgetVar="wdtmensual"
 					value="#{usuarioMb.beanList}"
 					emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
 
-					<p:column headerText="Codigo"
-						style="width:10%; align:center;">
+					<p:column headerText="Codigo" style="width:10%; align:center;">
 						<h:outputText value="#{item.cusuarioCodigo}" />
 					</p:column>
 
-					<p:column headerText="Estado"
-						style="width:10%; align:center;">
-						<h:outputText value="#{item.cusuarioEst eq 'A'? 'Activo':'Inactivo'}" />
+					<p:column headerText="Estado" style="width:10%; align:center;">
+						<h:outputText
+							value="#{item.cusuarioEst eq 'A'? 'Activo':'Inactivo'}" />
 					</p:column>
-					
+
 					<p:column headerText="Nombre" style="width:20%; align:center;">
 						<h:outputText value="#{item.vusuarioNom}" />
 					</p:column>
@@ -38,16 +35,21 @@
 					<p:column headerText="Password" style="width:20%; align:center;">
 						<h:outputText value="#{item.vusuarioPass}" />
 					</p:column>
+					
+					<p:column headerText="Fecha" style="width:10%; align:center;">
+						<h:outputText
+							value="#{item.dusuarioFecReg}" />
+					</p:column>
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogNew').show()" 
+						<p:commandLink oncomplete="PF('wdialogNew').show()"
 							update=":frmAddEditUsuario">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{usuarioMb.beanSelected}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wdialogDelete').show()" 
+						<p:commandLink oncomplete="PF('wdialogDelete').show()"
 							update=":frmwdialogDelete">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{usuarioMb.beanSelected}" />
@@ -65,14 +67,15 @@
 	</h:form>
 
 	<!-- Nuevo-->
-	<p:dialog id="dialogNew" widgetVar="wdialogNew" header="Nuevo"
-		height="300" resizable="true" width="500px">
+	<p:dialog id="dialogNew" widgetVar="wdialogNew" header="Nuevo Usuario"
+		closable="true" showEffect="fade" appendTo="@(body)" height="300"
+		resizable="true" width="500px" closeOnEscape="true" modal="true">
 		<h:form id="frmAddEditUsuario">
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="Codigo" />
 				<p:outputLabel value="#{usuarioMb.beanSelected.cusuarioCodigo}" />
-				
+
 				<p:outputLabel value="Nombre" />
 				<p:inputText value="#{usuarioMb.beanSelected.vusuarioNom}" />
 
@@ -80,10 +83,9 @@
 				<p:inputText value="#{usuarioMb.beanSelected.vusuarioPass}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{usuarioMb.insert}" ajax="true" 
+					actionListener="#{usuarioMb.insert}" ajax="true"
 					oncomplete="PF('wdialogNew').hide();"
-					update=":frm_gestionar_usuario:dtmensual"
-					>
+					update=":frm_gestionar_usuario:dtmensual">
 				</p:commandButton>
 
 			</p:panelGrid>
@@ -93,17 +95,17 @@
 
 	<!-- Elimina-->
 	<p:dialog widgetVar="wdialogDelete" id="dialogDelete" showEffect="fade"
-		hideEffect="fade" header="Cerrar sesión" modal="true" appendTo="@(body)"
-		resizable="false">
+		hideEffect="fade" header="Cerrar sesión" modal="true"
+		appendTo="@(body)" resizable="false">
 		<h:form id="frmwdialogDelete">
 
-				<table>
+			<table>
 				<tr>
 					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
 					<td>#{perfilMb.perfilSelected.nombrePerfil}, <b>¿Desea
 							eliminar el perfil?</b></td>
 				</tr>
-				</table>
+			</table>
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
 				icon="_ui-icon-back" onclick="PF('wdialogDelete').hide();" />
 
