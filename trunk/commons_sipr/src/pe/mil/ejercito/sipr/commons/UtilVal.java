@@ -10,13 +10,22 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-public class FechaUtil {
+public class UtilVal {
 	private static SimpleDateFormat DATE_FORMAT = null;
 
-	public FechaUtil() {
+	public UtilVal() {
 
 	}
 
+	public static boolean esNuloOVacio(String valor) {
+		if (valor != null && !valor.equals("")) {
+			return false;
+		} else {
+			return true;
+		}
+
+	}
+	
 	public static String getMaskedDate(String mascara, Date fecha) {
 		DATE_FORMAT = new SimpleDateFormat(mascara, new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
@@ -65,8 +74,8 @@ public class FechaUtil {
 
 	public static int diasDiferencia(String sInicio, String sFin)
 			throws ParseException {
-		Date inicio = FechaUtil.getStringToDate(sInicio);
-		Date fin = FechaUtil.getStringToDate(sFin);
+		Date inicio = UtilVal.getStringToDate(sInicio);
+		Date fin = UtilVal.getStringToDate(sFin);
 
 		long segInicio = inicio.getTime();
 		long segFin = fin.getTime();
@@ -82,9 +91,9 @@ public class FechaUtil {
 		}
 
 		System.out.println("Chequeo Rango de Fechas -> Fecha:"
-				+ FechaUtil.getDateToString(fecha) + " en rango["
-				+ FechaUtil.getDateToString(rangoInicio) + "/"
-				+ FechaUtil.getDateToString(rangoFin) + "]");
+				+ UtilVal.getDateToString(fecha) + " en rango["
+				+ UtilVal.getDateToString(rangoInicio) + "/"
+				+ UtilVal.getDateToString(rangoFin) + "]");
 
 		long f = fecha.getTime();
 		long ri = rangoInicio.getTime();
