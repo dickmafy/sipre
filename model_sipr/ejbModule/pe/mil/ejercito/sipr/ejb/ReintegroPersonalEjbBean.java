@@ -9,7 +9,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import pe.mil.ejercito.sipr.commons.FechaUtil;
+import pe.mil.ejercito.sipr.commons.UtilVal;
 import pe.mil.ejercito.sipr.ejbremote.GradoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.ReintegroPersonalEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreGrado;
@@ -80,12 +80,12 @@ public class ReintegroPersonalEjbBean implements ReintegroPersonalEjbRemote {
 				//beanPlanilla.getId().setCpersonaNroAdm(); 
 				Date fechaTempDate;
 				try {
-					fechaTempDate = FechaUtil.fechaStringToDate(beanPlanilla.getId().getCplanillaMesProceso());
+					fechaTempDate = UtilVal.fechaStringToDate(beanPlanilla.getId().getCplanillaMesProceso());
 				} catch (Exception e) {
-					fechaTempDate = FechaUtil.StringToDate(beanPlanilla.getId().getCplanillaMesProceso());
+					fechaTempDate = UtilVal.StringToDate(beanPlanilla.getId().getCplanillaMesProceso());
 					e.printStackTrace();
 				}
-				String fechaTempString = FechaUtil.getDateToString(fechaTempDate);
+				String fechaTempString = UtilVal.getDateToString(fechaTempDate);
 				beanPlanilla.getId().setCplanillaMesProceso(fechaTempString);
 				
 				Long nplanillaNumProceso= getMaxLong("nplanillaNumProceso", "SiprePlanilla");
