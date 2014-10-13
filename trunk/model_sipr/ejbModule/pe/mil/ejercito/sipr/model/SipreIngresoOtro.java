@@ -3,6 +3,7 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -13,6 +14,7 @@ import javax.persistence.NamedQuery;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -60,6 +62,7 @@ public class SipreIngresoOtro implements Serializable {
 	@ManyToOne(optional = false)
 	private SipreConceptoIngreso sipreConceptoIngreso;
 
+		
 	public SipreIngresoOtro() {
 	}
 

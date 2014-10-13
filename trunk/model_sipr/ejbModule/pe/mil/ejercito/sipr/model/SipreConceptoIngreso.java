@@ -33,7 +33,7 @@ public class SipreConceptoIngreso implements Serializable {
 
 	//bi-directional many-to-one association to SipreTipoPlanilla
 	@ManyToOne
-	@JoinColumn(name="CTP_CODIGO",insertable = false, updatable = false)
+	@JoinColumn(name="CTP_CODIGO")
 	private SipreTipoPlanilla sipreTipoPlanilla;
 
 	//bi-directional many-to-many association to SipreConceptoDescuento
@@ -65,6 +65,9 @@ public class SipreConceptoIngreso implements Serializable {
 	@OneToMany(mappedBy="sipreConceptoIngreso")
 	private List<SipreTmpGuardia> sipreTmpGuardias;
 
+	@Transient
+	private Boolean check;
+	
 	public SipreConceptoIngreso() {
 	}
 
@@ -211,5 +214,9 @@ public class SipreConceptoIngreso implements Serializable {
 
 		return sipreTmpGuardia;
 	}
+	
+
+	public Boolean getCheck() 								{return check;}
+	public void setCheck(Boolean check) 					{this.check = check;}	
 
 }
