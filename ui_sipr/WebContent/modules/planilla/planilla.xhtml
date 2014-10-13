@@ -3,7 +3,6 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
-
 	<h:form id="frm">
 		<div id="contenido_formulario">
 			<div id="page_flow">Registro / Ingreso Concepto Personal</div>
@@ -19,25 +18,22 @@
 
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
 					value="#{ingresoConceptoPersonalMb.beanList}"
-					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
-					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
-					paginatorPosition="top"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+					emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
 
 					<p:column headerText="CIP" style="width:10%; align:center;">
 						<h:outputText value="#{item.id.cpersonaNroAdm}" />
 					</p:column>
 
-					<p:column headerText="Concepto"
+					<p:column headerText="Cod. Concepto"
 						style="width:10%; align:center;">
-						<h:outputText
-							value="#{item.sipreConceptoIngreso.vciDscLarga}">
-						</h:outputText>
+						<h:outputText value="#{item.id.cciCodigo}" />
 					</p:column>
 
 					<p:column headerText="Monto" style="width:20%; align:center;">
 						<h:outputText value="#{item.nioMto}" />
 					</p:column>
+
+
 
 					<p:column headerText="Opciones" width="10%">
 						<p:commandLink oncomplete="PF('wdialogNew').show()"
@@ -66,9 +62,8 @@
 
 	<!-- Nuevo-->
 	<p:dialog id="dialogNew" widgetVar="wdialogNew"
-		header="Guardar Concepto Personal" closable="true" showEffect="fade"
-		appendTo="@(body)" height="300" resizable="true" width="500px"
-		closeOnEscape="true" modal="true">
+		header="Guardar Concepto Personal" closable="true" appendToBody="true"
+		showEffect="fade" height="300" resizable="true" width="500px">
 		<h:form id="frmInsertUpdate">
 			<p:panelGrid columns="2">
 
@@ -76,13 +71,8 @@
 				<p:inputText
 					value="#{ingresoConceptoPersonalMb.bean.id.cpersonaNroAdm}" />
 
-				<p:outputLabel value="Concepto Ingreso" />
-				<p:selectOneMenu
-					value="#{ingresoConceptoPersonalMb.bean.id.cciCodigo}">
-					<f:selectItems value="#{ingresoConceptoPersonalMb.conceptoList}"
-						var="item" itemValue="#{item.cciCodigo}"
-						itemLabel="#{item.vciDscCorta} - #{item.vciDscLarga}" />
-				</p:selectOneMenu>
+				<p:outputLabel value="Codigo Concepto" />
+				<p:inputText value="#{ingresoConceptoPersonalMb.bean.id.cciCodigo}" />
 
 				<p:outputLabel value="Monto" />
 				<p:inputText value="#{ingresoConceptoPersonalMb.bean.nioMto}" />

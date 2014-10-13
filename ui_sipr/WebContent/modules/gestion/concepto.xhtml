@@ -6,51 +6,61 @@
 
 	<h:form id="frm">
 		<div id="contenido_formulario">
-			<div id="page_flow">Registro / Ingreso Concepto Personal</div>
-			<div id="titulo_formulario">Gestionar Ingreso Concepto Personal</div>
+			<div id="page_flow">Gestion / Gestionar Concepto</div>
+			<div id="titulo_formulario">Gestionar Concepto</div>
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-					value="Agregar Concepto personal"
-					actionListener="#{ingresoConceptoPersonalMb.newBean}"
+					value="Agregar Concepto" actionListener="#{conceptoMb.newBean}"
 					oncomplete="PF('wdialogNew').show()" />
 
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
-					value="#{ingresoConceptoPersonalMb.beanList}"
+					value="#{conceptoMb.beanList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
 					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
 					paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-					<p:column headerText="CIP" style="width:10%; align:center;">
-						<h:outputText value="#{item.id.cpersonaNroAdm}" />
-					</p:column>
 
-					<p:column headerText="Concepto"
+
+					<p:column headerText="Cod. Concepto Ingreso"
 						style="width:10%; align:center;">
-						<h:outputText
-							value="#{item.sipreConceptoIngreso.vciDscLarga}">
+						<h:outputText value="#{item.cciCodigo}">
 						</h:outputText>
 					</p:column>
 
-					<p:column headerText="Monto" style="width:20%; align:center;">
-						<h:outputText value="#{item.nioMto}" />
+					<p:column headerText="Descr.Corta" style="width:20%; align:center;">
+						<h:outputText value="#{item.vciDscCorta}" />
 					</p:column>
+
+					<p:column headerText="Descr.Larga" style="width:20%; align:center;">
+						<h:outputText value="#{item.vciDscLarga}" />
+					</p:column>
+
+					<p:column headerText="Tipo Planilla"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item.sipreTipoPlanilla.vtpDsc}" />
+					</p:column>
+
+					<p:column style="width:9%; align:center;">
+						<p:selectBooleanCheckbox value="#{item.check}" />
+					</p:column>
+
 
 					<p:column headerText="Opciones" width="10%">
 						<p:commandLink oncomplete="PF('wdialogNew').show()"
 							update=":frmInsertUpdate">
 							<f:setPropertyActionListener value="#{item}"
-								target="#{ingresoConceptoPersonalMb.bean}" />
+								target="#{conceptoMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
 						<p:commandLink oncomplete="PF('wdialogDelete').show()"
 							update=":frmDelete">
 							<f:setPropertyActionListener value="#{item}"
-								target="#{ingresoConceptoPersonalMb.bean}" />
+								target="#{conceptoMb.bean}" />
 							<p:graphicImage value="/images/icons/trash_12.png" />
 						</p:commandLink>
 
@@ -72,23 +82,24 @@
 		<h:form id="frmInsertUpdate">
 			<p:panelGrid columns="2">
 
-				<p:outputLabel value="CIP" />
-				<p:inputText
-					value="#{ingresoConceptoPersonalMb.bean.id.cpersonaNroAdm}" />
+				<p:outputLabel value="Cod. Concepto Ingreso" />
+				<p:inputText value="#{conceptoMb.bean.cciCodigo}" />
 
-				<p:outputLabel value="Concepto Ingreso" />
+				<p:outputLabel value="Descr.Corta" />
+				<p:inputText value="#{conceptoMb.bean.vciDscCorta}" />
+
+				<p:outputLabel value="Descr.Larga" />
+				<p:inputText value="#{conceptoMb.bean.vciDscLarga}" />
+
+				<p:outputLabel value="Tipo Planilla" />
 				<p:selectOneMenu
-					value="#{ingresoConceptoPersonalMb.bean.id.cciCodigo}">
-					<f:selectItems value="#{ingresoConceptoPersonalMb.conceptoList}"
-						var="item" itemValue="#{item.cciCodigo}"
-						itemLabel="#{item.vciDscCorta} - #{item.vciDscLarga}" />
+					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="item"
+						itemValue="#{item.ctpCodigo}" itemLabel="#{item.vtpDsc}" />
 				</p:selectOneMenu>
 
-				<p:outputLabel value="Monto" />
-				<p:inputText value="#{ingresoConceptoPersonalMb.bean.nioMto}" />
-
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{ingresoConceptoPersonalMb.saveBean}" ajax="true"
+					actionListener="#{conceptoMb.saveBean}" ajax="true"
 					oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
 				</p:commandButton>
 
@@ -106,8 +117,7 @@
 			<table>
 				<tr>
 					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
-					<td>#{perfilMb.perfilSelected.nombrePerfil}, <b>¿Desea
-							eliminar el perfil?</b></td>
+					<td><b>¿Desea eliminar el registro?</b></td>
 				</tr>
 			</table>
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
@@ -115,8 +125,8 @@
 
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
 				oncomplete="PF('wdialogDelete').hide();" update=":frm:dt"
-				icon="_ui-icon-logout"
-				actionListener="#{ingresoConceptoPersonalMb.disable}" ajax="false" />
+				icon="_ui-icon-logout" actionListener="#{conceptoMb.disable}"
+				ajax="false" />
 
 		</h:form>
 	</p:dialog>
