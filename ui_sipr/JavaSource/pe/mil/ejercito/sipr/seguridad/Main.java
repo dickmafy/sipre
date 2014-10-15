@@ -78,13 +78,16 @@ public class Main extends MainContext {
 		case 42:
 			contenidoDefault = "/modules/seguridad/auditoria/auditoria";
 			break;
-
+		
 		// GESTION
 		case 50:
 			contenidoDefault = "/modules/gestion/verificarCodigoBanco";
 			break;
 		case 51:
 			contenidoDefault = "/modules/gestion/concepto";
+			break;
+		case 52:
+			contenidoDefault = "/modules/gestion/familia";
 			break;
 		// PLANILLA
 		case 60:

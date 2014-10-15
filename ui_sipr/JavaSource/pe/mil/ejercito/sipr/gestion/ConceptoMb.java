@@ -14,7 +14,7 @@ import org.primefaces.component.log.Log;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Faces;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.commons.UtilVal;
+import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejb.GenericDAO;
 import pe.mil.ejercito.sipr.ejbremote.ConceptoIngresoEjbRemote;
@@ -69,7 +69,7 @@ public class ConceptoMb extends MainContext implements
 
 	public void saveBean(ActionEvent event) {
 		try {
-			if (UtilVal.esNuloOVacio(bean.getCciCodigo())) {
+			if (UValidacion.esNuloOVacio(bean.getCciCodigo())) {
 				bean = ejb.persist(bean);
 				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
 						SEVERITY_INFO);

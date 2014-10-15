@@ -16,7 +16,7 @@ import com.sun.corba.se.impl.javax.rmi.CORBA.Util;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Faces;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.commons.UtilVal;
+import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejb.GenericDAO;
 import pe.mil.ejercito.sipr.ejbremote.ConceptoIngresoEjbRemote;
