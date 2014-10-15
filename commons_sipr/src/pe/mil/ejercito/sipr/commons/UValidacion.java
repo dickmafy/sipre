@@ -10,10 +10,10 @@ import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
 
-public class UtilVal {
+public class UValidacion {
 	private static SimpleDateFormat DATE_FORMAT = null;
 
-	public UtilVal() {
+	public UValidacion() {
 
 	}
 
@@ -74,8 +74,8 @@ public class UtilVal {
 
 	public static int diasDiferencia(String sInicio, String sFin)
 			throws ParseException {
-		Date inicio = UtilVal.getStringToDate(sInicio);
-		Date fin = UtilVal.getStringToDate(sFin);
+		Date inicio = UValidacion.getStringToDate(sInicio);
+		Date fin = UValidacion.getStringToDate(sFin);
 
 		long segInicio = inicio.getTime();
 		long segFin = fin.getTime();
@@ -91,9 +91,9 @@ public class UtilVal {
 		}
 
 		System.out.println("Chequeo Rango de Fechas -> Fecha:"
-				+ UtilVal.getDateToString(fecha) + " en rango["
-				+ UtilVal.getDateToString(rangoInicio) + "/"
-				+ UtilVal.getDateToString(rangoFin) + "]");
+				+ UValidacion.getDateToString(fecha) + " en rango["
+				+ UValidacion.getDateToString(rangoInicio) + "/"
+				+ UValidacion.getDateToString(rangoFin) + "]");
 
 		long f = fecha.getTime();
 		long ri = rangoInicio.getTime();
