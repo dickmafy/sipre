@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -20,15 +22,19 @@ import javax.faces.event.ActionEvent;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.hssf.util.CellReference;
 import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
+
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.commons.Mensaje;
 import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
@@ -47,12 +53,14 @@ public class FamiliaMb extends MainContext implements Serializable {
 	private TipoPlanillaEjbRemote ejbTipoPlanilla;
 
 	private SipreTmpFamilia bean;
+
 	private List<SipreTmpFamilia> beanList;
 
 	private List<SipreTipoPlanilla> tipoPlanillaList;
 
 	public static final String JBOSS_CATALINA = "catalina.home";
 	public static final String JBOSS_TEMP = "tmpFiles";
+
 	public FamiliaMb() {
 		super();
 		try {
@@ -90,108 +98,190 @@ public class FamiliaMb extends MainContext implements Serializable {
 		beanList = ejb.findAll(100);
 	}
 
-	public void handleFileUpload(FileUploadEvent event) throws IOException {
+	public void handleFileUpload(FileUploadEvent event) {
 
-		event.getFile().getContentType();
-		String fileOldName = event.getFile().getFileName();
-		Workbook wb = null;
-		String fileExt = null;
-
-		if (FilenameUtils.isExtension(fileOldName, "xls")
-				|| FilenameUtils.isExtension(fileOldName, "XLS")) {
-			fileExt = "xls";
-		}
-		if (FilenameUtils.isExtension(fileOldName, "xlsx")
-				|| FilenameUtils.isExtension(fileOldName, "XLSX")) {
-			fileExt = "xlsx";
-		}
-		if (FilenameUtils.isExtension(fileOldName, "txt")
-				|| FilenameUtils.isExtension(fileOldName, "TXT")) {
-			fileExt = "txt";
-		}
-
-		File file = transferFile(event);
-		FileInputStream fileIS = null;
 		try {
+			String fileOldName = event.getFile().getFileName();
+			SipreTmpFamilia beanExcel = new SipreTmpFamilia();
+			Workbook wb = null;
+			String fileExt = null;
+
+			if (FilenameUtils.isExtension(fileOldName, "xls")
+					|| FilenameUtils.isExtension(fileOldName, "XLS")) {
+				fileExt = "xls";
+			}
+			if (FilenameUtils.isExtension(fileOldName, "xlsx")
+					|| FilenameUtils.isExtension(fileOldName, "XLSX")) {
+				fileExt = "xlsx";
+			}
+			if (FilenameUtils.isExtension(fileOldName, "txt")
+					|| FilenameUtils.isExtension(fileOldName, "TXT")) {
+				fileExt = "txt";
+			}
+
+			File file = transferFile(event);
+			FileInputStream fileIS = null;
+
 			fileIS = new FileInputStream(file);
+
+			if (("xlsx").equals(fileExt)) {
+				// Nuevo - Excel 2010
+				wb = new XSSFWorkbook(fileIS);
+				beanExcel = readExcelNew(wb, fileIS, beanExcel);
+			} else {
+				// Antiguo - Excel 90
+				wb = new HSSFWorkbook(fileIS);
+				beanExcel = readExcelOld(wb, fileIS, beanExcel);
+			}
+
 		} catch (FileNotFoundException e) {
+			showMessage("Archivo no encontrado.", SEVERITY_ERROR);
+		} catch (IOException e) {
+			showMessage("No se pudo leer el archivo.", SEVERITY_ERROR);
 			e.printStackTrace();
+		} catch (Exception e) {
+			showMessage("No copiar el contenido del Excel correctamente.",
+					SEVERITY_ERROR);
 		}
-
-		if (("xlsx").equals(fileExt)) {
-			//Nuevo  - Excel 2010
-			wb = new XSSFWorkbook(fileIS);
-			readExcelNew(wb,fileIS);
-		} else {
-			//Antiguo - Excel 90
-			wb = new HSSFWorkbook(fileIS);
-			readExcelOld(wb, fileIS);
-		}
-		System.out.println("Terminado");
+		beanList = ejb.findAll(100);
+		// event.getFile().getContentType();
+		// Excel Antiguo application/vnd.ms-excel
+		// Excel Nuevo
+		// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 	}
 
-	private void readExcelOld(Workbook wb, FileInputStream fileIS)
-			throws IOException {
-		Sheet sheet = wb.getSheetAt(0);
+	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS,
+			SipreTmpFamilia beanExcel) {
+		try {
 
-		Iterator<Row> rowIterator = sheet.iterator();
-		 while (rowIterator.hasNext()) 
-         {
-             Row row = rowIterator.next();
-             //For each row, iterate through all the columns
-             Iterator<Cell> cellIterator = row.cellIterator();
-              
-             while (cellIterator.hasNext()) 
-             {
-                 Cell cell = cellIterator.next();
-                 //Check the cell type and format accordingly
-                 switch (cell.getCellType()) 
-                 {
-                     case Cell.CELL_TYPE_NUMERIC:
-                         System.out.print(cell.getNumericCellValue() + "\t");
-                         break;
-                     case Cell.CELL_TYPE_STRING:
-                         System.out.print(cell.getStringCellValue() + "\t");
-                         break;
-                 }
-             }
-             System.out.println("");
-         }
+			String valorTmpCelda = "";
+			Sheet sheet = wb.getSheetAt(0);
+			Cell cell;
+			int rowCount = 0;
+			Iterator<Row> rowIterator = sheet.iterator();
+			Row row;
+			row = rowIterator.next();
+			while (rowIterator.hasNext()) {
+				row = rowIterator.next();
+				CellReference ref = new CellReference(0, 0);
+				cell = row.getCell(ref.getCol());
+				int filaInicio = cell.getRowIndex() + 1;
+				int columnaInicio = cell.getColumnIndex();
+				long numeroFilas = (long) sheet.getLastRowNum();
+				long numeroFilas2 = (long) sheet.getPhysicalNumberOfRows();
+				// no cuenta la cabecera
+				if (rowCount < numeroFilas2) {
+					rowCount++;
 
-		
+					// CIP
+					cell = row.getCell(0, Row.RETURN_NULL_AND_BLANK);
+					beanExcel.setCpersonaNroAdm(getValorCeldaExcel(cell));
+
+					// CIF
+					cell = row.getCell(1, Row.RETURN_NULL_AND_BLANK);
+					beanExcel.setCtfCif(getValorCeldaExcel(cell));
+
+					// NOMBRES
+					cell = row.getCell(2, Row.RETURN_NULL_AND_BLANK);
+					beanExcel.setVtfApeNom(getValorCeldaExcel(cell));
+
+					// SITUACION
+					cell = row.getCell(3, Row.RETURN_NULL_AND_BLANK);
+					beanExcel.setCtfSitFamilia(getValorCeldaExcel(cell));
+
+					beanExcel.setDtfFecNac(new Date());
+					beanExcel.setCtfFecRenovac(new Date());
+					/*
+					 * // FECHA NACIMIENTO cell = row.getCell(4,
+					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
+					 * getValorCeldaExcel(cell);
+					 * beanExcel.setDtfFecNac(UValidacion
+					 * .getStringToDate(valorTmpCelda));
+					 * 
+					 * // RENOVACION cell = row.getCell(5,
+					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
+					 * getValorCeldaExcel(cell);
+					 * beanExcel.setCtfFecRenovac(UValidacion
+					 * .getStringToDate(valorTmpCelda));
+					 */
+					// SEXO
+					cell = row.getCell(6, Row.RETURN_NULL_AND_BLANK);
+					beanExcel.setCtfSexo(getValorCeldaExcel(cell));
+
+					ejb.persist(beanExcel);
+
+					showMessage("Fila " + rowCount + " leida correctamente.",
+							SEVERITY_INFO);
+
+				}// if
+			}// while
+
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
+		} catch (Exception e) {
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL, SEVERITY_ERROR);
+		}
+		return beanExcel;
+
 	}
 
-	private void readExcelNew(Workbook wb, FileInputStream fileIS) throws IOException {
+	public String getValorCeldaExcel(Cell cell) {
+		String valorCelda = "";
+		try {
+			switch (cell.getCellType()) {
+			case Cell.CELL_TYPE_NUMERIC:
+				if (DateUtil.isCellDateFormatted(cell)) {
+					Date date = cell.getDateCellValue();
+					valorCelda = UValidacion.getDateToString(date);
+				} else {
+					Long i = (long) cell.getNumericCellValue();
+					valorCelda = String.valueOf((i));
+				}
+				break;
+			case Cell.CELL_TYPE_STRING:
+				System.out
+						.print("String : " + cell.getStringCellValue() + "\t");
+				valorCelda = cell.getStringCellValue();
+				break;
+			}
+			System.out.println("");
+		} catch (Exception e) {
+			System.out.println(e.getMessage());
+		}
+		return valorCelda.trim();
+
+	}
+
+	private SipreTmpFamilia readExcelNew(Workbook wb, FileInputStream fileIS,
+			SipreTmpFamilia beanExcel) throws IOException {
 		// Create Workbook .xlsx 2007- 2010 files
-		//XSSFWorkbook workbook = new XSSFWorkbook(fileIS);
+		// XSSFWorkbook workbook = new XSSFWorkbook(fileIS);
 		// Get first/desired sheet from the workbook
-		//XSSFSheet sheet = workbook.getSheetAt(0);
+		// XSSFSheet sheet = workbook.getSheetAt(0);
 		Sheet sheet = wb.getSheetAt(0);
 		// Iterate through each rows one by one
 		Iterator<Row> rowIterator = sheet.iterator();
-		 while (rowIterator.hasNext()) 
-         {
-             Row row = rowIterator.next();
-             //For each row, iterate through all the columns
-             Iterator<Cell> cellIterator = row.cellIterator();
-              
-             while (cellIterator.hasNext()) 
-             {
-                 Cell cell = cellIterator.next();
-                 //Check the cell type and format accordingly
-                 switch (cell.getCellType()) 
-                 {
-                     case Cell.CELL_TYPE_NUMERIC:
-                         System.out.print(cell.getNumericCellValue() + "\t");
-                         break;
-                     case Cell.CELL_TYPE_STRING:
-                         System.out.print(cell.getStringCellValue() + "\t");
-                         break;
-                 }
-             }
-             System.out.println("");
-         }
-	
+		while (rowIterator.hasNext()) {
+			Row row = rowIterator.next();
+			// For each row, iterate through all the columns
+			Iterator<Cell> cellIterator = row.cellIterator();
+
+			while (cellIterator.hasNext()) {
+				Cell cell = cellIterator.next();
+				// Check the cell type and format accordingly
+				switch (cell.getCellType()) {
+				case Cell.CELL_TYPE_NUMERIC:
+					System.out.print(cell.getNumericCellValue() + "\t");
+					break;
+				case Cell.CELL_TYPE_STRING:
+					System.out.print(cell.getStringCellValue() + "\t");
+					break;
+				}
+			}
+			System.out.println("");
+		}
+		return beanExcel;
+
 	}
 
 	/**

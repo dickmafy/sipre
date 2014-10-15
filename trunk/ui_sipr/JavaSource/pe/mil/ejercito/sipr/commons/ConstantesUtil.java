@@ -12,6 +12,9 @@ public class ConstantesUtil {
 	//Mensajes Constantes
 	public static final String MENSAJE_RESPUESTA_ERROR_GENERAL = "No se pudo completar la operacion, Intentelo mas tarde.";
 	public static final String MENSAJE_RESPUESTA_CORRECTA = "La operación se realizó correctamente.";
+	public static final String MENSAJE_FECHA_FORMATO_MAL= "La fecha encontrada tiene un formato incorrecto.";
+	
+	public static final String MENSAJE_EXCEL_ERROR= "No se leyeron correctamente los datos del excel.";
 	
 	public static final String MENSAJE_VACIO = "";
 	
