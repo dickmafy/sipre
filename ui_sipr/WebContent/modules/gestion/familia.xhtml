@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm" enctype="multipart/form-data">
+		<div id="contenido_formulario">
+			<div id="page_flow">Gestion / Gestionar Familia</div>
+			<div id="titulo_formulario">Gestionar Familia</div>
+			<div id="contenido">
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Fecha Proceso" />
+					<p:calendar  navigator="true" pattern="dd/MM/yyyy" 
+										showOn="button" size="10" >
+									</p:calendar>
+
+					<p:fileUpload sizeLimit="1000000" auto="true"
+						fileUploadListener="#{familiaMb.handleFileUpload}" mode="advanced"
+						allowTypes="/(\.|\/)(xlsx|xls)$/" update=":frm:dt" />
+
+					<p:commandButton title="Guardar" value="Guardar"
+						icon="icn_bar_save" actionListener="#{familiaMb.saveBean}"
+						ajax="true" oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
+					</p:commandButton>
+
+				</p:panelGrid>
+
+
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					value="#{familiaMb.beanList}"
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
+					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
+					paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<p:column headerText="CIF(Id Excel)" style="width:10%; align:center;">
+						<h:outputText value="#{item.ctfCif}" />
+					</p:column>
+
+					<p:column headerText="CIP" style="width:20%; align:center;">
+						<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
+					</p:column>
+
+
+					<p:column headerText="Fecha Nacimiento"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item.dtfFecNac}" />
+					</p:column>
+					<p:column headerText="Fecha Renovacion"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item.ctfFecRenovac}" />
+					</p:column>
+
+					<p:column headerText="Sexo" style="width:20%; align:center;">
+						<h:outputText
+							value="#{item.ctfSexo eq '1'? 'Masculito':'Femenino'}" />
+					</p:column>
+
+					<p:column headerText="Opciones" width="10%">
+						<p:commandLink oncomplete="PF('wdialogNew').show()">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{familiaMb.bean}" />
+							<p:graphicImage value="/images/icons/pencil_12.png" />
+						</p:commandLink>
+					</p:column>
+
+
+				</p:dataTable>
+
+			</div>
+		</div>
+
+	</h:form>
+
+</ui:composition>

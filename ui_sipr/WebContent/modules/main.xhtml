@@ -29,15 +29,17 @@
 									<p:menuitem value="MI CUENTA"
 										actionListener="#{mainMb.redireccionaMnu(0)}" ajax="true"
 										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:submenu label="PARAMETRIZACIÓN">
-										<p:menuitem value="Grupo o Grado" actionListener="#{mainMb.redireccionaMnu(1)}"
-											icon="ui-icon-tag" ajax="true" async="true" update=":frm_opciones, :pnlContenido"/>
-									</p:submenu>
-									<p:menuitem value="GESTION" actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
+									<p:menuitem value="PARAMETRIZACIÓN"
+										actionListener="#{mainMb.redireccionaMnu(1)}" ajax="true"
 										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:menuitem value="PLANILLA" actionListener="#{mainMb.redireccionaMnu(3)}" ajax="true"
+									<p:menuitem value="GESTION"
+										actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
 										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:menuitem value="SEGURIDAD" actionListener="#{mainMb.redireccionaMnu(5)}" ajax="true"
+									<p:menuitem value="PLANILLA"
+										actionListener="#{mainMb.redireccionaMnu(3)}" ajax="true"
+										async="true" update=":frm_opciones, :pnlContenido" />
+									<p:menuitem value="SEGURIDAD"
+										actionListener="#{mainMb.redireccionaMnu(5)}" ajax="true"
 										async="true" update=":frm_opciones, :pnlContenido" />
 								</p:menubar>
 							</h:form>
@@ -50,7 +52,8 @@
 									<td class="perfil_bnr">ADMINISTRADOR</td>
 								</tr>
 								<tr>
-									<td class="nombre_usuario_bnr">Ericson Huamani Mantilla <p:commandLink onclick="PF('wvCerrarSesion').show();">(cerrar sesión)</p:commandLink>
+									<td class="nombre_usuario_bnr">Ericson Huamani Mantilla <p:commandLink
+											onclick="PF('wvCerrarSesion').show();">(cerrar sesión)</p:commandLink>
 									</td>
 								</tr>
 							</table>
@@ -87,18 +90,17 @@
 		<h:form id="frmCerrarSesion">
 			<table>
 				<tr>
-					<td><p:graphicImage
-							value="/images/icons/logout_32.png" /></td>
-					<td>#{mainMb.sessionUser.vusuarioNom}, <b>¿Desea
-							cerrar su sesión actual?</b></td>
+					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
+					<td>#{mainMb.sessionUser.vusuarioNom}, <b>¿Desea cerrar su
+							sesión actual?</b></td>
 				</tr>
 				<tr>
 					<td colspan="2"><p:commandButton value="Cancelar"
 							styleClass="boton_botonera" icon="_ui-icon-back"
 							onclick="PF('wvCerrarSesion').hide();" /> <p:commandButton
 							value="Cerrar sesión" styleClass="boton_botonera"
-							icon="_ui-icon-logout" action="#{mainMb.cerrarSesion}" ajax="false" />
-					</td>
+							icon="_ui-icon-logout" action="#{mainMb.cerrarSesion}"
+							ajax="false" /></td>
 				</tr>
 			</table>
 		</h:form>
