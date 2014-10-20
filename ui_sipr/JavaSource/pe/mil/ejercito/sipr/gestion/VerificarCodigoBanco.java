@@ -9,8 +9,11 @@ import javax.faces.event.ActionEvent;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.ejbremote.BancoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.VerificarCodigoBancoEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreBanco;
+import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 
 @ManagedBean(name = "verificarCodigoBanco")
@@ -21,8 +24,10 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 	@SuppressWarnings("unused")
 	private UsuarioEjbRemote ejbUsuario;
 	private VerificarCodigoBancoEjbRemote ejb;
+	private BancoEjbRemote ejbBanco;
 
 	private List<SipreTmpBanco> beanList;
+	private List<SipreBanco> bancoList;
 	private SipreTmpBanco bean;
 
 	public VerificarCodigoBanco() {
@@ -30,31 +35,43 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (VerificarCodigoBancoEjbRemote) findServiceRemote(VerificarCodigoBancoEjbRemote.class);
+			ejbBanco = (BancoEjbRemote) findServiceRemote(BancoEjbRemote.class);
 
 			beanList = ejb.findAll(100);
+			bancoList = ejbBanco.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void newBean(ActionEvent event) {
+		SipreBanco sipreBancoPk = new SipreBanco();
+		SiprePersona siprePersonaPk = new SiprePersona();
+		// SipreTmpBancoPK sipreTmpBancoPK = new SipreTmpBancoPK();
 		bean = new SipreTmpBanco();
-
+		bean.setSipreBanco(sipreBancoPk);
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
-			if (null != bean.getCpersonaNroAdm()) {
-				bean = ejb.merge(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
-			} else {
-				bean = ejb.persist(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
-			}
+			bean = ejb.persist(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL,
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
+					SEVERITY_ERROR);
+		}
+		beanList = ejb.findAll(100);
+	}
+
+	public void updateBean(ActionEvent event) {
+		try {
+			bean = ejb.merge(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
+
+		} catch (Exception e) {
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
 					SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
@@ -74,6 +91,22 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 
 	public void setBean(SipreTmpBanco bean) {
 		this.bean = bean;
+	}
+
+	public BancoEjbRemote getEjbBanco() {
+		return ejbBanco;
+	}
+
+	public void setEjbBanco(BancoEjbRemote ejbBanco) {
+		this.ejbBanco = ejbBanco;
+	}
+
+	public List<SipreBanco> getBancoList() {
+		return bancoList;
+	}
+
+	public void setBancoList(List<SipreBanco> bancoList) {
+		this.bancoList = bancoList;
 	}
 
 }

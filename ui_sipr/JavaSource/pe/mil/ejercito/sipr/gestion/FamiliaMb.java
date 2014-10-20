@@ -39,6 +39,7 @@ import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
+import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 
@@ -69,40 +70,51 @@ public class FamiliaMb extends MainContext implements Serializable {
 			ejbTipoPlanilla = (TipoPlanillaEjbRemote) findServiceRemote(TipoPlanillaEjbRemote.class);
 
 			tipoPlanillaList = ejbTipoPlanilla.findAll(100);
-			beanList = ejb.findAll(100);
+			// listado y ordenamiento por codigo CIF
+			beanList = ejb.findAllSortDes(100, "ctfCif");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
 	public void newBean(ActionEvent event) {
+		cleanBean();
+	}
+
+	private void cleanBean() {
 		bean = new SipreTmpFamilia();
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
-			if (UValidacion.esNuloOVacio(bean.getCtfCif())) {
-				bean = ejb.persist(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
-			} else {
-				bean = ejb.merge(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
+			// bean = ejb.persist(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
 
-			}
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL,
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
+					SEVERITY_ERROR);
+		}
+		beanList = ejb.findAll(100);
+	}
+
+	public void updateBean(ActionEvent event) {
+		try {
+
+			bean = ejb.merge(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
+		} catch (Exception e) {
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
 					SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
-
 		try {
+			cleanBean();
 			String fileOldName = event.getFile().getFileName();
-			SipreTmpFamilia beanExcel = new SipreTmpFamilia();
 			Workbook wb = null;
 			String fileExt = null;
 
@@ -127,11 +139,11 @@ public class FamiliaMb extends MainContext implements Serializable {
 			if (("xlsx").equals(fileExt)) {
 				// Nuevo - Excel 2010
 				wb = new XSSFWorkbook(fileIS);
-				beanExcel = readExcelNew(wb, fileIS, beanExcel);
+				bean = readExcelNew(wb, fileIS, bean);
 			} else {
 				// Antiguo - Excel 90
 				wb = new HSSFWorkbook(fileIS);
-				beanExcel = readExcelOld(wb, fileIS, beanExcel);
+				bean = readExcelOld(wb, fileIS, bean);
 			}
 
 		} catch (FileNotFoundException e) {
@@ -140,7 +152,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 			showMessage("No se pudo leer el archivo.", SEVERITY_ERROR);
 			e.printStackTrace();
 		} catch (Exception e) {
-			showMessage("No copiar el contenido del Excel correctamente.",
+			showMessage("No se copio el contenido del Excel correctamente.",
 					SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
@@ -151,7 +163,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	}
 
 	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS,
-			SipreTmpFamilia beanExcel) {
+			SipreTmpFamilia bean) {
 		try {
 
 			String valorTmpCelda = "";
@@ -172,43 +184,49 @@ public class FamiliaMb extends MainContext implements Serializable {
 				// no cuenta la cabecera
 				if (rowCount < numeroFilas2) {
 					rowCount++;
+					// CIF
+					cell = row.getCell(0, Row.RETURN_NULL_AND_BLANK);
+					bean.setCtfCif(getValorCeldaExcel(cell));
 
 					// CIP
-					cell = row.getCell(0, Row.RETURN_NULL_AND_BLANK);
-					beanExcel.setCpersonaNroAdm(getValorCeldaExcel(cell));
-
-					// CIF
 					cell = row.getCell(1, Row.RETURN_NULL_AND_BLANK);
-					beanExcel.setCtfCif(getValorCeldaExcel(cell));
+					/*bean.getSiprePersona().setCpersonaNroAdm(
+							getValorCeldaExcel(cell));
+							*/
+					bean.setCpersonaNroAdm(getValorCeldaExcel(cell));
 
 					// NOMBRES
 					cell = row.getCell(2, Row.RETURN_NULL_AND_BLANK);
-					beanExcel.setVtfApeNom(getValorCeldaExcel(cell));
+					bean.setVtfApeNom(getValorCeldaExcel(cell));
 
 					// SITUACION
 					cell = row.getCell(3, Row.RETURN_NULL_AND_BLANK);
-					beanExcel.setCtfSitFamilia(getValorCeldaExcel(cell));
+					// bean.setCtfSitFamilia(getValorCeldaExcel(cell));
 
-					beanExcel.setDtfFecNac(new Date());
-					beanExcel.setCtfFecRenovac(new Date());
+					cell = row.getCell(4, Row.RETURN_NULL_AND_BLANK);
+					bean.setDtfFecNac(UValidacion
+							.getStringToDate(getValorCeldaExcel(cell)));
+
+					cell = row.getCell(5, Row.RETURN_NULL_AND_BLANK);
+					bean.setCtfFecRenovac(UValidacion
+							.getStringToDate(getValorCeldaExcel(cell)));
 					/*
 					 * // FECHA NACIMIENTO cell = row.getCell(4,
 					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
-					 * getValorCeldaExcel(cell);
-					 * beanExcel.setDtfFecNac(UValidacion
+					 * getValorCeldaExcel(cell); bean.setDtfFecNac(UValidacion
 					 * .getStringToDate(valorTmpCelda));
 					 * 
 					 * // RENOVACION cell = row.getCell(5,
 					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
 					 * getValorCeldaExcel(cell);
-					 * beanExcel.setCtfFecRenovac(UValidacion
+					 * bean.setCtfFecRenovac(UValidacion
 					 * .getStringToDate(valorTmpCelda));
 					 */
 					// SEXO
 					cell = row.getCell(6, Row.RETURN_NULL_AND_BLANK);
-					beanExcel.setCtfSexo(getValorCeldaExcel(cell));
+					// bean.setCtfSexo(getValorCeldaExcel(cell));
 
-					ejb.persist(beanExcel);
+					ejb.persist(bean);
 
 					showMessage("Fila " + rowCount + " leida correctamente.",
 							SEVERITY_INFO);
@@ -219,9 +237,10 @@ public class FamiliaMb extends MainContext implements Serializable {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
 					SEVERITY_INFO);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL, SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
+					SEVERITY_ERROR);
 		}
-		return beanExcel;
+		return bean;
 
 	}
 
@@ -253,7 +272,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	}
 
 	private SipreTmpFamilia readExcelNew(Workbook wb, FileInputStream fileIS,
-			SipreTmpFamilia beanExcel) throws IOException {
+			SipreTmpFamilia bean) throws IOException {
 		// Create Workbook .xlsx 2007- 2010 files
 		// XSSFWorkbook workbook = new XSSFWorkbook(fileIS);
 		// Get first/desired sheet from the workbook
@@ -280,7 +299,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 			}
 			System.out.println("");
 		}
-		return beanExcel;
+		return bean;
 
 	}
 
