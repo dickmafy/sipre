@@ -9,6 +9,7 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
+import javax.persistence.criteria.Root;
 
 public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	
@@ -58,6 +59,41 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 				.setMaxResults(maxRowReturn).getResultList();
 	}
 
+	
+	@Override
+	public List<T> findAllSort(int maxRowReturn,String propiedad1) {
+		List<T> list;
+		
+		CriteriaBuilder criteriaBuilder= em.getCriteriaBuilder();
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+		
+		Root<T> from = query.from(clazz);
+		query.orderBy(criteriaBuilder.asc(from.get(propiedad1)));
+		
+		query.select(from);
+		
+		list = em.createQuery(query).setMaxResults(maxRowReturn).getResultList();
+		return list;
+	}
+	
+
+	@Override
+	public List<T> findAllSortDes(int maxRowReturn,String propiedad1) {
+		List<T> list;
+		
+		CriteriaBuilder criteriaBuilder= em.getCriteriaBuilder();
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+		
+		Root<T> from = query.from(clazz);
+		query.orderBy(criteriaBuilder.desc(from.get(propiedad1)));
+		
+		query.select(from);
+		
+		list = em.createQuery(query).setMaxResults(maxRowReturn).getResultList();
+		return list;
+	}
+	
+	
 	@Override
 	public long countAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();

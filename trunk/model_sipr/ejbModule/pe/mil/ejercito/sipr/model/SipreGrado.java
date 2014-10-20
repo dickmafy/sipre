@@ -1,120 +1,144 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_GRADO database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_GRADO")
-@NamedQuery(name="SipreGrado.findAll", query="SELECT s FROM SipreGrado s")
+@Table(name = "SIPRE_GRADO")
+@NamedQueries({
+    @NamedQuery(name = "SipreGrado.findAll", query = "SELECT s FROM SipreGrado s")})
 public class SipreGrado implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "CGRADO_CODIGO")
+    private String cgradoCodigo;
+    @Size(max = 60)
+    @Column(name = "VGRADO_DSC_LARGA")
+    private String vgradoDscLarga;
+    @Size(max = 20)
+    @Column(name = "VGRADO_DSC_CORTA")
+    private String vgradoDscCorta;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreGrado")
+    private List<SiprePersona> siprePersonaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreGrado")
+    private List<SipreIngresoGrado> sipreIngresoGradoList;
+    @JoinColumn(name = "CGG_CODIGO", referencedColumnName = "CGG_CODIGO")
+    @ManyToOne(optional = false)
+    private SipreGrupoGrado sipreGrupoGrado;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreGrado")
+    private List<SiprePlanilla> siprePlanillaList;
 
-	@Id
-	@Column(name="CGRADO_CODIGO")
-	private String cgradoCodigo;
+    public SipreGrado() {
+    }
 
-	@Column(name="VGRADO_DSC_CORTA")
-	private String vgradoDscCorta;
+    public SipreGrado(String cgradoCodigo) {
+        this.cgradoCodigo = cgradoCodigo;
+    }
 
-	@Column(name="VGRADO_DSC_LARGA")
-	private String vgradoDscLarga;
+    public String getCgradoCodigo() {
+        return cgradoCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreGrupoGrado
-	@ManyToOne
-	@JoinColumn(name="CGG_CODIGO",insertable = false, updatable = false)
-	private SipreGrupoGrado sipreGrupoGrado;
+    public void setCgradoCodigo(String cgradoCodigo) {
+        this.cgradoCodigo = cgradoCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreIngresoGrado
-	@OneToMany(mappedBy="sipreGrado")
-	private List<SipreIngresoGrado> sipreIngresoGrados;
+    public String getVgradoDscLarga() {
+        return vgradoDscLarga;
+    }
 
-	//bi-directional many-to-one association to SiprePersona
-	@OneToMany(mappedBy="sipreGrado")
-	private List<SiprePersona> siprePersonas;
+    public void setVgradoDscLarga(String vgradoDscLarga) {
+        this.vgradoDscLarga = vgradoDscLarga;
+    }
 
-	public SipreGrado() {
-	}
+    public String getVgradoDscCorta() {
+        return vgradoDscCorta;
+    }
 
-	public String getCgradoCodigo() {
-		return this.cgradoCodigo;
-	}
+    public void setVgradoDscCorta(String vgradoDscCorta) {
+        this.vgradoDscCorta = vgradoDscCorta;
+    }
 
-	public void setCgradoCodigo(String cgradoCodigo) {
-		this.cgradoCodigo = cgradoCodigo;
-	}
+    public List<SiprePersona> getSiprePersonaList() {
+        return siprePersonaList;
+    }
 
-	public String getVgradoDscCorta() {
-		return this.vgradoDscCorta;
-	}
+    public void setSiprePersonaList(List<SiprePersona> siprePersonaList) {
+        this.siprePersonaList = siprePersonaList;
+    }
 
-	public void setVgradoDscCorta(String vgradoDscCorta) {
-		this.vgradoDscCorta = vgradoDscCorta;
-	}
+    public List<SipreIngresoGrado> getSipreIngresoGradoList() {
+        return sipreIngresoGradoList;
+    }
 
-	public String getVgradoDscLarga() {
-		return this.vgradoDscLarga;
-	}
+    public void setSipreIngresoGradoList(List<SipreIngresoGrado> sipreIngresoGradoList) {
+        this.sipreIngresoGradoList = sipreIngresoGradoList;
+    }
 
-	public void setVgradoDscLarga(String vgradoDscLarga) {
-		this.vgradoDscLarga = vgradoDscLarga;
-	}
+    public SipreGrupoGrado getSipreGrupoGrado() {
+        return sipreGrupoGrado;
+    }
 
-	public SipreGrupoGrado getSipreGrupoGrado() {
-		return this.sipreGrupoGrado;
-	}
+    public void setSipreGrupoGrado(SipreGrupoGrado sipreGrupoGrado) {
+        this.sipreGrupoGrado = sipreGrupoGrado;
+    }
 
-	public void setSipreGrupoGrado(SipreGrupoGrado sipreGrupoGrado) {
-		this.sipreGrupoGrado = sipreGrupoGrado;
-	}
+    public List<SiprePlanilla> getSiprePlanillaList() {
+        return siprePlanillaList;
+    }
 
-	public List<SipreIngresoGrado> getSipreIngresoGrados() {
-		return this.sipreIngresoGrados;
-	}
+    public void setSiprePlanillaList(List<SiprePlanilla> siprePlanillaList) {
+        this.siprePlanillaList = siprePlanillaList;
+    }
 
-	public void setSipreIngresoGrados(List<SipreIngresoGrado> sipreIngresoGrados) {
-		this.sipreIngresoGrados = sipreIngresoGrados;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cgradoCodigo != null ? cgradoCodigo.hashCode() : 0);
+        return hash;
+    }
 
-	public SipreIngresoGrado addSipreIngresoGrado(SipreIngresoGrado sipreIngresoGrado) {
-		getSipreIngresoGrados().add(sipreIngresoGrado);
-		sipreIngresoGrado.setSipreGrado(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreGrado)) {
+            return false;
+        }
+        SipreGrado other = (SipreGrado) object;
+        if ((this.cgradoCodigo == null && other.cgradoCodigo != null) || (this.cgradoCodigo != null && !this.cgradoCodigo.equals(other.cgradoCodigo))) {
+            return false;
+        }
+        return true;
+    }
 
-		return sipreIngresoGrado;
-	}
-
-	public SipreIngresoGrado removeSipreIngresoGrado(SipreIngresoGrado sipreIngresoGrado) {
-		getSipreIngresoGrados().remove(sipreIngresoGrado);
-		sipreIngresoGrado.setSipreGrado(null);
-
-		return sipreIngresoGrado;
-	}
-
-	public List<SiprePersona> getSiprePersonas() {
-		return this.siprePersonas;
-	}
-
-	public void setSiprePersonas(List<SiprePersona> siprePersonas) {
-		this.siprePersonas = siprePersonas;
-	}
-
-	public SiprePersona addSiprePersona(SiprePersona siprePersona) {
-		getSiprePersonas().add(siprePersona);
-		siprePersona.setSipreGrado(this);
-
-		return siprePersona;
-	}
-
-	public SiprePersona removeSiprePersona(SiprePersona siprePersona) {
-		getSiprePersonas().remove(siprePersona);
-		siprePersona.setSipreGrado(null);
-
-		return siprePersona;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreGrado[ cgradoCodigo=" + cgradoCodigo + " ]";
+    }
+    
 }

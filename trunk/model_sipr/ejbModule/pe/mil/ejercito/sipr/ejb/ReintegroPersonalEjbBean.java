@@ -88,8 +88,8 @@ public class ReintegroPersonalEjbBean implements ReintegroPersonalEjbRemote {
 				String fechaTempString = UValidacion.getDateToString(fechaTempDate);
 				beanPlanilla.getId().setCplanillaMesProceso(fechaTempString);
 				
-				Long nplanillaNumProceso= getMaxLong("nplanillaNumProceso", "SiprePlanilla");
-				beanPlanilla.getId().setNplanillaNumProceso(99L);
+				//Long nplanillaNumProceso= getMaxLong("nplanillaNumProceso", "SiprePlanilla");
+				beanPlanilla.getId().setNplanillaNumProceso(1);
 				
 				SiprePersona siprePersona = new SiprePersona();
 				siprePersona.setCpersonaNroAdm(beanPlanilla.getId().getCpersonaNroAdm());
@@ -119,6 +119,7 @@ public class ReintegroPersonalEjbBean implements ReintegroPersonalEjbRemote {
 	}
 	
 	public Long getMaxLong(String codigoDeTabla,String nombreTabla) {
+		//Long nplanillaNumProceso= getMaxLong("nplanillaNumProceso", "SiprePlanilla");
 		Long idretorno = null;
 		try {
 			String consulta = "select max(a." +codigoDeTabla+ ") from "+nombreTabla+" a";

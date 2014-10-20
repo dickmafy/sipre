@@ -1,79 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_TMP_GUARDIA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SipreTmpGuardiaPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "CPERSONA_NRO_ADM")
+    private String cpersonaNroAdm;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CCI_CODIGO")
+    private String cciCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "CTG_MES_GUARDIA")
+    private String ctgMesGuardia;
 
-	@Column(name="CTG_MES_PROCESO")
-	private String ctgMesProceso;
+    public SipreTmpGuardiaPK() {
+    }
 
-	@Column(name="CPERSONA_NRO_ADM", insertable=false, updatable=false)
-	private String cpersonaNroAdm;
+    public SipreTmpGuardiaPK(String cpersonaNroAdm, String cciCodigo, String ctgMesGuardia) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+        this.cciCodigo = cciCodigo;
+        this.ctgMesGuardia = ctgMesGuardia;
+    }
 
-	@Column(name="CCI_CODIGO", insertable=false, updatable=false)
-	private String cciCodigo;
+    public String getCpersonaNroAdm() {
+        return cpersonaNroAdm;
+    }
 
-	@Column(name="CTG_MES_GUARDIA")
-	private String ctgMesGuardia;
+    public void setCpersonaNroAdm(String cpersonaNroAdm) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+    }
 
-	public SipreTmpGuardiaPK() {
-	}
-	public String getCtgMesProceso() {
-		return this.ctgMesProceso;
-	}
-	public void setCtgMesProceso(String ctgMesProceso) {
-		this.ctgMesProceso = ctgMesProceso;
-	}
-	public String getCpersonaNroAdm() {
-		return this.cpersonaNroAdm;
-	}
-	public void setCpersonaNroAdm(String cpersonaNroAdm) {
-		this.cpersonaNroAdm = cpersonaNroAdm;
-	}
-	public String getCciCodigo() {
-		return this.cciCodigo;
-	}
-	public void setCciCodigo(String cciCodigo) {
-		this.cciCodigo = cciCodigo;
-	}
-	public String getCtgMesGuardia() {
-		return this.ctgMesGuardia;
-	}
-	public void setCtgMesGuardia(String ctgMesGuardia) {
-		this.ctgMesGuardia = ctgMesGuardia;
-	}
+    public String getCciCodigo() {
+        return cciCodigo;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SipreTmpGuardiaPK)) {
-			return false;
-		}
-		SipreTmpGuardiaPK castOther = (SipreTmpGuardiaPK)other;
-		return 
-			this.ctgMesProceso.equals(castOther.ctgMesProceso)
-			&& this.cpersonaNroAdm.equals(castOther.cpersonaNroAdm)
-			&& this.cciCodigo.equals(castOther.cciCodigo)
-			&& this.ctgMesGuardia.equals(castOther.ctgMesGuardia);
-	}
+    public void setCciCodigo(String cciCodigo) {
+        this.cciCodigo = cciCodigo;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.ctgMesProceso.hashCode();
-		hash = hash * prime + this.cpersonaNroAdm.hashCode();
-		hash = hash * prime + this.cciCodigo.hashCode();
-		hash = hash * prime + this.ctgMesGuardia.hashCode();
-		
-		return hash;
-	}
+    public String getCtgMesGuardia() {
+        return ctgMesGuardia;
+    }
+
+    public void setCtgMesGuardia(String ctgMesGuardia) {
+        this.ctgMesGuardia = ctgMesGuardia;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
+        hash += (ctgMesGuardia != null ? ctgMesGuardia.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreTmpGuardiaPK)) {
+            return false;
+        }
+        SipreTmpGuardiaPK other = (SipreTmpGuardiaPK) object;
+        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+            return false;
+        }
+        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
+            return false;
+        }
+        if ((this.ctgMesGuardia == null && other.ctgMesGuardia != null) || (this.ctgMesGuardia != null && !this.ctgMesGuardia.equals(other.ctgMesGuardia))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK[ cpersonaNroAdm=" + cpersonaNroAdm + ", cciCodigo=" + cciCodigo + ", ctgMesGuardia=" + ctgMesGuardia + " ]";
+    }
+    
 }

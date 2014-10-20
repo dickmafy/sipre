@@ -1,69 +1,102 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_PLANILLA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SiprePlanillaPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "CPERSONA_NRO_ADM")
+    private String cpersonaNroAdm;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "CPLANILLA_MES_PROCESO")
+    private String cplanillaMesProceso;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NPLANILLA_NUM_PROCESO")
+    private Integer nplanillaNumProceso;
 
-	@Column(name="CPLANILLA_MES_PROCESO")
-	private String cplanillaMesProceso;
+    public SiprePlanillaPK() {
+    }
 
-	@Column(name="CPERSONA_NRO_ADM", insertable=false, updatable=false)
-	private String cpersonaNroAdm;
+    public SiprePlanillaPK(String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+        this.cplanillaMesProceso = cplanillaMesProceso;
+        this.nplanillaNumProceso = nplanillaNumProceso;
+    }
 
-	@Column(name="NPLANILLA_NUM_PROCESO")
-	private Long nplanillaNumProceso;
+    public String getCpersonaNroAdm() {
+        return cpersonaNroAdm;
+    }
 
-	public SiprePlanillaPK() {
-	}
-	public String getCplanillaMesProceso() {
-		return this.cplanillaMesProceso;
-	}
-	public void setCplanillaMesProceso(String cplanillaMesProceso) {
-		this.cplanillaMesProceso = cplanillaMesProceso;
-	}
-	public String getCpersonaNroAdm() {
-		return this.cpersonaNroAdm;
-	}
-	public void setCpersonaNroAdm(String cpersonaNroAdm) {
-		this.cpersonaNroAdm = cpersonaNroAdm;
-	}
-	public Long getNplanillaNumProceso() {
-		return nplanillaNumProceso;
-	}
-	public void setNplanillaNumProceso(Long nplanillaNumProceso) {
-		this.nplanillaNumProceso = nplanillaNumProceso;
-	}
+    public void setCpersonaNroAdm(String cpersonaNroAdm) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SiprePlanillaPK)) {
-			return false;
-		}
-		SiprePlanillaPK castOther = (SiprePlanillaPK)other;
-		return 
-			this.cplanillaMesProceso.equals(castOther.cplanillaMesProceso)
-			&& this.cpersonaNroAdm.equals(castOther.cpersonaNroAdm)
-			&& (this.nplanillaNumProceso == castOther.nplanillaNumProceso);
-	}
+    public String getCplanillaMesProceso() {
+        return cplanillaMesProceso;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.cplanillaMesProceso.hashCode();
-		hash = hash * prime + this.cpersonaNroAdm.hashCode();
-		hash = hash * prime + ((int) (this.nplanillaNumProceso ^ (this.nplanillaNumProceso >>> 32)));
-		
-		return hash;
-	}
-	
+    public void setCplanillaMesProceso(String cplanillaMesProceso) {
+        this.cplanillaMesProceso = cplanillaMesProceso;
+    }
+
+    public Integer getNplanillaNumProceso() {
+        return nplanillaNumProceso;
+    }
+
+    public void setNplanillaNumProceso(Integer nplanillaNumProceso) {
+        this.nplanillaNumProceso = nplanillaNumProceso;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+        hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
+        hash += (int) nplanillaNumProceso;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SiprePlanillaPK)) {
+            return false;
+        }
+        SiprePlanillaPK other = (SiprePlanillaPK) object;
+        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+            return false;
+        }
+        if ((this.cplanillaMesProceso == null && other.cplanillaMesProceso != null) || (this.cplanillaMesProceso != null && !this.cplanillaMesProceso.equals(other.cplanillaMesProceso))) {
+            return false;
+        }
+        if (this.nplanillaNumProceso != other.nplanillaNumProceso) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SiprePlanillaPK[ cpersonaNroAdm=" + cpersonaNroAdm + ", cplanillaMesProceso=" + cplanillaMesProceso + ", nplanillaNumProceso=" + nplanillaNumProceso + " ]";
+    }
+    
 }

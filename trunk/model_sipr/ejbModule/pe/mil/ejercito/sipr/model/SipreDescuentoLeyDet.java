@@ -1,82 +1,122 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_DESCUENTO_LEY_DET database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_DESCUENTO_LEY_DET")
-@NamedQuery(name="SipreDescuentoLeyDet.findAll", query="SELECT s FROM SipreDescuentoLeyDet s")
+@Table(name = "SIPRE_DESCUENTO_LEY_DET")
+@NamedQueries({
+    @NamedQuery(name = "SipreDescuentoLeyDet.findAll", query = "SELECT s FROM SipreDescuentoLeyDet s")})
 public class SipreDescuentoLeyDet implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreDescuentoLeyDetPK sipreDescuentoLeyDetPK;
+    @Size(max = 50)
+    @Column(name = "VDLD_DSC")
+    private String vdldDsc;
+    @ManyToMany(mappedBy = "sipreDescuentoLeyDetList")
+    private List<SiprePersona> siprePersonaList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreDescuentoLeyDet")
+    private List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeyList;
+    @JoinColumn(name = "CDL_CODIGO", referencedColumnName = "CDL_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreDescuentoLey sipreDescuentoLey;
 
-	@EmbeddedId
-	private SipreDescuentoLeyDetPK id;
+    public SipreDescuentoLeyDet() {
+    }
 
-	@Column(name="VDLD_DSC")
-	private String vdldDsc;
+    public SipreDescuentoLeyDet(SipreDescuentoLeyDetPK sipreDescuentoLeyDetPK) {
+        this.sipreDescuentoLeyDetPK = sipreDescuentoLeyDetPK;
+    }
 
-	//bi-directional many-to-one association to SipreConceptoDescuentoLey
-	@OneToMany(mappedBy="sipreDescuentoLeyDet")
-	private List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeys;
+    public SipreDescuentoLeyDet(String cdldCodigo, String cdlCodigo) {
+        this.sipreDescuentoLeyDetPK = new SipreDescuentoLeyDetPK(cdldCodigo, cdlCodigo);
+    }
 
-	//bi-directional many-to-one association to SipreDescuentoLey
-	@ManyToOne
-	@JoinColumn(name="CDL_CODIGO",insertable = false, updatable = false)
-	private SipreDescuentoLey sipreDescuentoLey;
+    public SipreDescuentoLeyDetPK getSipreDescuentoLeyDetPK() {
+        return sipreDescuentoLeyDetPK;
+    }
 
-	public SipreDescuentoLeyDet() {
-	}
+    public void setSipreDescuentoLeyDetPK(SipreDescuentoLeyDetPK sipreDescuentoLeyDetPK) {
+        this.sipreDescuentoLeyDetPK = sipreDescuentoLeyDetPK;
+    }
 
-	public SipreDescuentoLeyDetPK getId() {
-		return this.id;
-	}
+    public String getVdldDsc() {
+        return vdldDsc;
+    }
 
-	public void setId(SipreDescuentoLeyDetPK id) {
-		this.id = id;
-	}
+    public void setVdldDsc(String vdldDsc) {
+        this.vdldDsc = vdldDsc;
+    }
 
-	public String getVdldDsc() {
-		return this.vdldDsc;
-	}
+    public List<SiprePersona> getSiprePersonaList() {
+        return siprePersonaList;
+    }
 
-	public void setVdldDsc(String vdldDsc) {
-		this.vdldDsc = vdldDsc;
-	}
+    public void setSiprePersonaList(List<SiprePersona> siprePersonaList) {
+        this.siprePersonaList = siprePersonaList;
+    }
 
-	public List<SipreConceptoDescuentoLey> getSipreConceptoDescuentoLeys() {
-		return this.sipreConceptoDescuentoLeys;
-	}
+    public List<SipreConceptoDescuentoLey> getSipreConceptoDescuentoLeyList() {
+        return sipreConceptoDescuentoLeyList;
+    }
 
-	public void setSipreConceptoDescuentoLeys(List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeys) {
-		this.sipreConceptoDescuentoLeys = sipreConceptoDescuentoLeys;
-	}
+    public void setSipreConceptoDescuentoLeyList(List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeyList) {
+        this.sipreConceptoDescuentoLeyList = sipreConceptoDescuentoLeyList;
+    }
 
-	public SipreConceptoDescuentoLey addSipreConceptoDescuentoLey(SipreConceptoDescuentoLey sipreConceptoDescuentoLey) {
-		getSipreConceptoDescuentoLeys().add(sipreConceptoDescuentoLey);
-		sipreConceptoDescuentoLey.setSipreDescuentoLeyDet(this);
+    public SipreDescuentoLey getSipreDescuentoLey() {
+        return sipreDescuentoLey;
+    }
 
-		return sipreConceptoDescuentoLey;
-	}
+    public void setSipreDescuentoLey(SipreDescuentoLey sipreDescuentoLey) {
+        this.sipreDescuentoLey = sipreDescuentoLey;
+    }
 
-	public SipreConceptoDescuentoLey removeSipreConceptoDescuentoLey(SipreConceptoDescuentoLey sipreConceptoDescuentoLey) {
-		getSipreConceptoDescuentoLeys().remove(sipreConceptoDescuentoLey);
-		sipreConceptoDescuentoLey.setSipreDescuentoLeyDet(null);
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreDescuentoLeyDetPK != null ? sipreDescuentoLeyDetPK.hashCode() : 0);
+        return hash;
+    }
 
-		return sipreConceptoDescuentoLey;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreDescuentoLeyDet)) {
+            return false;
+        }
+        SipreDescuentoLeyDet other = (SipreDescuentoLeyDet) object;
+        if ((this.sipreDescuentoLeyDetPK == null && other.sipreDescuentoLeyDetPK != null) || (this.sipreDescuentoLeyDetPK != null && !this.sipreDescuentoLeyDetPK.equals(other.sipreDescuentoLeyDetPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public SipreDescuentoLey getSipreDescuentoLey() {
-		return this.sipreDescuentoLey;
-	}
-
-	public void setSipreDescuentoLey(SipreDescuentoLey sipreDescuentoLey) {
-		this.sipreDescuentoLey = sipreDescuentoLey;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet[ sipreDescuentoLeyDetPK=" + sipreDescuentoLeyDetPK + " ]";
+    }
+    
 }

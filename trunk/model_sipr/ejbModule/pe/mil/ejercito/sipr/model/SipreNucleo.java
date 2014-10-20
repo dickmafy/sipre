@@ -1,118 +1,142 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_NUCLEO database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_NUCLEO")
-@NamedQuery(name="SipreNucleo.findAll", query="SELECT s FROM SipreNucleo s")
+@Table(name = "SIPRE_NUCLEO")
+@NamedQueries({
+    @NamedQuery(name = "SipreNucleo.findAll", query = "SELECT s FROM SipreNucleo s")})
 public class SipreNucleo implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "CNUCLEO_CODIGO")
+    private String cnucleoCodigo;
+    @Size(max = 60)
+    @Column(name = "VNUCLEO_DSC_LARGA")
+    private String vnucleoDscLarga;
+    @Size(max = 20)
+    @Column(name = "VNUCLEO_DSC_CORTA")
+    private String vnucleoDscCorta;
+    @Column(name = "CNUCLEO_ESTADO")
+    private Character cnucleoEstado;
+    @Size(max = 2)
+    @Column(name = "CNUCLEO_NRO_SEC")
+    private String cnucleoNroSec;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreNucleo")
+    private List<SipreUnidad> sipreUnidadList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreNucleo")
+    private List<SipreActividad> sipreActividadList;
 
-	@Id
-	@Column(name="CNUCLEO_CODIGO")
-	private String cnucleoCodigo;
+    public SipreNucleo() {
+    }
 
-	@Column(name="CNUCLEO_ESTADO")
-	private String cnucleoEstado;
+    public SipreNucleo(String cnucleoCodigo) {
+        this.cnucleoCodigo = cnucleoCodigo;
+    }
 
-	@Column(name="VNUCLEO_DSC_CORTA")
-	private String vnucleoDscCorta;
+    public String getCnucleoCodigo() {
+        return cnucleoCodigo;
+    }
 
-	@Column(name="VNUCLEO_DSC_LARGA")
-	private String vnucleoDscLarga;
+    public void setCnucleoCodigo(String cnucleoCodigo) {
+        this.cnucleoCodigo = cnucleoCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreActividad
-	@OneToMany(mappedBy="sipreNucleo")
-	private List<SipreActividad> sipreActividads;
+    public String getVnucleoDscLarga() {
+        return vnucleoDscLarga;
+    }
 
-	//bi-directional many-to-one association to SipreUnidad
-	@OneToMany(mappedBy="sipreNucleo")
-	private List<SipreUnidad> sipreUnidads;
+    public void setVnucleoDscLarga(String vnucleoDscLarga) {
+        this.vnucleoDscLarga = vnucleoDscLarga;
+    }
 
-	public SipreNucleo() {
-	}
+    public String getVnucleoDscCorta() {
+        return vnucleoDscCorta;
+    }
 
-	public String getCnucleoCodigo() {
-		return this.cnucleoCodigo;
-	}
+    public void setVnucleoDscCorta(String vnucleoDscCorta) {
+        this.vnucleoDscCorta = vnucleoDscCorta;
+    }
 
-	public void setCnucleoCodigo(String cnucleoCodigo) {
-		this.cnucleoCodigo = cnucleoCodigo;
-	}
+    public Character getCnucleoEstado() {
+        return cnucleoEstado;
+    }
 
-	public String getCnucleoEstado() {
-		return this.cnucleoEstado;
-	}
+    public void setCnucleoEstado(Character cnucleoEstado) {
+        this.cnucleoEstado = cnucleoEstado;
+    }
 
-	public void setCnucleoEstado(String cnucleoEstado) {
-		this.cnucleoEstado = cnucleoEstado;
-	}
+    public String getCnucleoNroSec() {
+        return cnucleoNroSec;
+    }
 
-	public String getVnucleoDscCorta() {
-		return this.vnucleoDscCorta;
-	}
+    public void setCnucleoNroSec(String cnucleoNroSec) {
+        this.cnucleoNroSec = cnucleoNroSec;
+    }
 
-	public void setVnucleoDscCorta(String vnucleoDscCorta) {
-		this.vnucleoDscCorta = vnucleoDscCorta;
-	}
+    public List<SipreUnidad> getSipreUnidadList() {
+        return sipreUnidadList;
+    }
 
-	public String getVnucleoDscLarga() {
-		return this.vnucleoDscLarga;
-	}
+    public void setSipreUnidadList(List<SipreUnidad> sipreUnidadList) {
+        this.sipreUnidadList = sipreUnidadList;
+    }
 
-	public void setVnucleoDscLarga(String vnucleoDscLarga) {
-		this.vnucleoDscLarga = vnucleoDscLarga;
-	}
+    public List<SipreActividad> getSipreActividadList() {
+        return sipreActividadList;
+    }
 
-	public List<SipreActividad> getSipreActividads() {
-		return this.sipreActividads;
-	}
+    public void setSipreActividadList(List<SipreActividad> sipreActividadList) {
+        this.sipreActividadList = sipreActividadList;
+    }
 
-	public void setSipreActividads(List<SipreActividad> sipreActividads) {
-		this.sipreActividads = sipreActividads;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cnucleoCodigo != null ? cnucleoCodigo.hashCode() : 0);
+        return hash;
+    }
 
-	public SipreActividad addSipreActividad(SipreActividad sipreActividad) {
-		getSipreActividads().add(sipreActividad);
-		sipreActividad.setSipreNucleo(this);
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreNucleo)) {
+            return false;
+        }
+        SipreNucleo other = (SipreNucleo) object;
+        if ((this.cnucleoCodigo == null && other.cnucleoCodigo != null) || (this.cnucleoCodigo != null && !this.cnucleoCodigo.equals(other.cnucleoCodigo))) {
+            return false;
+        }
+        return true;
+    }
 
-		return sipreActividad;
-	}
-
-	public SipreActividad removeSipreActividad(SipreActividad sipreActividad) {
-		getSipreActividads().remove(sipreActividad);
-		sipreActividad.setSipreNucleo(null);
-
-		return sipreActividad;
-	}
-
-	public List<SipreUnidad> getSipreUnidads() {
-		return this.sipreUnidads;
-	}
-
-	public void setSipreUnidads(List<SipreUnidad> sipreUnidads) {
-		this.sipreUnidads = sipreUnidads;
-	}
-
-	public SipreUnidad addSipreUnidad(SipreUnidad sipreUnidad) {
-		getSipreUnidads().add(sipreUnidad);
-		sipreUnidad.setSipreNucleo(this);
-
-		return sipreUnidad;
-	}
-
-	public SipreUnidad removeSipreUnidad(SipreUnidad sipreUnidad) {
-		getSipreUnidads().remove(sipreUnidad);
-		sipreUnidad.setSipreNucleo(null);
-
-		return sipreUnidad;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreNucleo[ cnucleoCodigo=" + cnucleoCodigo + " ]";
+    }
+    
 }

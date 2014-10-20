@@ -1,90 +1,138 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_PLANILLA_DETALLE database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SiprePlanillaDetallePK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "CTP_CODIGO")
+    private String ctpCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CCI_CODIGO")
+    private String cciCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "CPERSONA_NRO_ADM")
+    private String cpersonaNroAdm;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "CPLANILLA_MES_PROCESO")
+    private String cplanillaMesProceso;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NPLANILLA_NUM_PROCESO")
+    private short nplanillaNumProceso;
 
-	@Column(name="CPLANILLA_MES_PROCESO", insertable=false, updatable=false)
-	private String cplanillaMesProceso;
+    public SiprePlanillaDetallePK() {
+    }
 
-	@Column(name="CPERSONA_NRO_ADM", insertable=false, updatable=false)
-	private String cpersonaNroAdm;
+    public SiprePlanillaDetallePK(String ctpCodigo, String cciCodigo, String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+        this.ctpCodigo = ctpCodigo;
+        this.cciCodigo = cciCodigo;
+        this.cpersonaNroAdm = cpersonaNroAdm;
+        this.cplanillaMesProceso = cplanillaMesProceso;
+        this.nplanillaNumProceso = nplanillaNumProceso;
+    }
 
-	@Column(name="CTP_CODIGO", insertable=false, updatable=false)
-	private String ctpCodigo;
+    public String getCtpCodigo() {
+        return ctpCodigo;
+    }
 
-	@Column(name="NPLANILLA_NUM_PROCESO", insertable=false, updatable=false)
-	private long nplanillaNumProceso;
+    public void setCtpCodigo(String ctpCodigo) {
+        this.ctpCodigo = ctpCodigo;
+    }
 
-	@Column(name="CCI_CODIGO", insertable=false, updatable=false)
-	private String cciCodigo;
+    public String getCciCodigo() {
+        return cciCodigo;
+    }
 
-	public SiprePlanillaDetallePK() {
-	}
-	public String getCplanillaMesProceso() {
-		return this.cplanillaMesProceso;
-	}
-	public void setCplanillaMesProceso(String cplanillaMesProceso) {
-		this.cplanillaMesProceso = cplanillaMesProceso;
-	}
-	public String getCpersonaNroAdm() {
-		return this.cpersonaNroAdm;
-	}
-	public void setCpersonaNroAdm(String cpersonaNroAdm) {
-		this.cpersonaNroAdm = cpersonaNroAdm;
-	}
-	public String getCtpCodigo() {
-		return this.ctpCodigo;
-	}
-	public void setCtpCodigo(String ctpCodigo) {
-		this.ctpCodigo = ctpCodigo;
-	}
-	public long getNplanillaNumProceso() {
-		return this.nplanillaNumProceso;
-	}
-	public void setNplanillaNumProceso(long nplanillaNumProceso) {
-		this.nplanillaNumProceso = nplanillaNumProceso;
-	}
-	public String getCciCodigo() {
-		return this.cciCodigo;
-	}
-	public void setCciCodigo(String cciCodigo) {
-		this.cciCodigo = cciCodigo;
-	}
+    public void setCciCodigo(String cciCodigo) {
+        this.cciCodigo = cciCodigo;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SiprePlanillaDetallePK)) {
-			return false;
-		}
-		SiprePlanillaDetallePK castOther = (SiprePlanillaDetallePK)other;
-		return 
-			this.cplanillaMesProceso.equals(castOther.cplanillaMesProceso)
-			&& this.cpersonaNroAdm.equals(castOther.cpersonaNroAdm)
-			&& this.ctpCodigo.equals(castOther.ctpCodigo)
-			&& (this.nplanillaNumProceso == castOther.nplanillaNumProceso)
-			&& this.cciCodigo.equals(castOther.cciCodigo);
-	}
+    public String getCpersonaNroAdm() {
+        return cpersonaNroAdm;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.cplanillaMesProceso.hashCode();
-		hash = hash * prime + this.cpersonaNroAdm.hashCode();
-		hash = hash * prime + this.ctpCodigo.hashCode();
-		hash = hash * prime + ((int) (this.nplanillaNumProceso ^ (this.nplanillaNumProceso >>> 32)));
-		hash = hash * prime + this.cciCodigo.hashCode();
-		
-		return hash;
-	}
+    public void setCpersonaNroAdm(String cpersonaNroAdm) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+    }
+
+    public String getCplanillaMesProceso() {
+        return cplanillaMesProceso;
+    }
+
+    public void setCplanillaMesProceso(String cplanillaMesProceso) {
+        this.cplanillaMesProceso = cplanillaMesProceso;
+    }
+
+    public short getNplanillaNumProceso() {
+        return nplanillaNumProceso;
+    }
+
+    public void setNplanillaNumProceso(short nplanillaNumProceso) {
+        this.nplanillaNumProceso = nplanillaNumProceso;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (ctpCodigo != null ? ctpCodigo.hashCode() : 0);
+        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
+        hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+        hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
+        hash += (int) nplanillaNumProceso;
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SiprePlanillaDetallePK)) {
+            return false;
+        }
+        SiprePlanillaDetallePK other = (SiprePlanillaDetallePK) object;
+        if ((this.ctpCodigo == null && other.ctpCodigo != null) || (this.ctpCodigo != null && !this.ctpCodigo.equals(other.ctpCodigo))) {
+            return false;
+        }
+        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
+            return false;
+        }
+        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+            return false;
+        }
+        if ((this.cplanillaMesProceso == null && other.cplanillaMesProceso != null) || (this.cplanillaMesProceso != null && !this.cplanillaMesProceso.equals(other.cplanillaMesProceso))) {
+            return false;
+        }
+        if (this.nplanillaNumProceso != other.nplanillaNumProceso) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK[ ctpCodigo=" + ctpCodigo + ", cciCodigo=" + cciCodigo + ", cpersonaNroAdm=" + cpersonaNroAdm + ", cplanillaMesProceso=" + cplanillaMesProceso + ", nplanillaNumProceso=" + nplanillaNumProceso + " ]";
+    }
+    
 }

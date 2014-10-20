@@ -1,126 +1,165 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_BOLETA_DETALLE database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_BOLETA_DETALLE")
-@NamedQuery(name="SipreBoletaDetalle.findAll", query="SELECT s FROM SipreBoletaDetalle s")
+@Table(name = "SIPRE_BOLETA_DETALLE")
+@NamedQueries({
+    @NamedQuery(name = "SipreBoletaDetalle.findAll", query = "SELECT s FROM SipreBoletaDetalle s")})
 public class SipreBoletaDetalle implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreBoletaDetallePK sipreBoletaDetallePK;
+    @Size(max = 4)
+    @Column(name = "CBD_COD_ING_DESC")
+    private String cbdCodIngDesc;
+    @Size(max = 80)
+    @Column(name = "VBD_DSC_ING_DESC")
+    private String vbdDscIngDesc;
+    @Column(name = "CBD_TIP_CONCPTO")
+    private Character cbdTipConcpto;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NBD_MONTO")
+    private BigDecimal nbdMonto;
+    @Column(name = "NBD_NUM_CUO_TOTAL")
+    private Short nbdNumCuoTotal;
+    @Column(name = "NBD_NUM_CUO_PAGADA")
+    private Short nbdNumCuoPagada;
+    @Column(name = "CBD_IND_SUBTITULO")
+    private Character cbdIndSubtitulo;
+    @JoinColumns({
+        @JoinColumn(name = "CBC_MES_PROCESO", referencedColumnName = "CBC_MES_PROCESO", insertable = false, updatable = false),
+        @JoinColumn(name = "NBC_NUM_PROCESO", referencedColumnName = "NBC_NUM_PROCESO", insertable = false, updatable = false),
+        @JoinColumn(name = "CBC_NRO_ADM", referencedColumnName = "CBC_NRO_ADM", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private SipreBoletaCabecera sipreBoletaCabecera;
 
-	@EmbeddedId
-	private SipreBoletaDetallePK id;
+    public SipreBoletaDetalle() {
+    }
 
-	@Column(name="CBD_COD_ING_DESC")
-	private String cbdCodIngDesc;
+    public SipreBoletaDetalle(SipreBoletaDetallePK sipreBoletaDetallePK) {
+        this.sipreBoletaDetallePK = sipreBoletaDetallePK;
+    }
 
-	@Column(name="CBD_IND_TIPO")
-	private String cbdIndTipo;
+    public SipreBoletaDetalle(String cbcMesProceso, String cbcNroAdm, short nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
+        this.sipreBoletaDetallePK = new SipreBoletaDetallePK(cbcMesProceso, cbcNroAdm, nbcNumProceso, cbdTipPlanilla, nbdSec);
+    }
 
-	@Column(name="CBD_TIP_CONCPTO")
-	private String cbdTipConcpto;
+    public SipreBoletaDetallePK getSipreBoletaDetallePK() {
+        return sipreBoletaDetallePK;
+    }
 
-	@Column(name="NBD_MONTO")
-	private BigDecimal nbdMonto;
+    public void setSipreBoletaDetallePK(SipreBoletaDetallePK sipreBoletaDetallePK) {
+        this.sipreBoletaDetallePK = sipreBoletaDetallePK;
+    }
 
-	@Column(name="NBD_NUM_CUO_PAGADA")
-	private BigDecimal nbdNumCuoPagada;
+    public String getCbdCodIngDesc() {
+        return cbdCodIngDesc;
+    }
 
-	@Column(name="NBD_NUM_CUO_TOTAL")
-	private BigDecimal nbdNumCuoTotal;
+    public void setCbdCodIngDesc(String cbdCodIngDesc) {
+        this.cbdCodIngDesc = cbdCodIngDesc;
+    }
 
-	@Column(name="VBD_DSC_ING_DESC")
-	private String vbdDscIngDesc;
+    public String getVbdDscIngDesc() {
+        return vbdDscIngDesc;
+    }
 
-	//bi-directional many-to-one association to SipreBoletaCabecera
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="CBC_MES_PROCESO", referencedColumnName="CBC_MES_PROCESO",insertable = false, updatable = false),
-		@JoinColumn(name="CBC_NRO_ADM", referencedColumnName="CBC_NRO_ADM",insertable = false, updatable = false),
-		@JoinColumn(name="NBC_NUM_PROCESO", referencedColumnName="NBC_NUM_PROCESO",insertable = false, updatable = false)
-		})
-	private SipreBoletaCabecera sipreBoletaCabecera;
+    public void setVbdDscIngDesc(String vbdDscIngDesc) {
+        this.vbdDscIngDesc = vbdDscIngDesc;
+    }
 
-	public SipreBoletaDetalle() {
-	}
+    public Character getCbdTipConcpto() {
+        return cbdTipConcpto;
+    }
 
-	public SipreBoletaDetallePK getId() {
-		return this.id;
-	}
+    public void setCbdTipConcpto(Character cbdTipConcpto) {
+        this.cbdTipConcpto = cbdTipConcpto;
+    }
 
-	public void setId(SipreBoletaDetallePK id) {
-		this.id = id;
-	}
+    public BigDecimal getNbdMonto() {
+        return nbdMonto;
+    }
 
-	public String getCbdCodIngDesc() {
-		return this.cbdCodIngDesc;
-	}
+    public void setNbdMonto(BigDecimal nbdMonto) {
+        this.nbdMonto = nbdMonto;
+    }
 
-	public void setCbdCodIngDesc(String cbdCodIngDesc) {
-		this.cbdCodIngDesc = cbdCodIngDesc;
-	}
+    public Short getNbdNumCuoTotal() {
+        return nbdNumCuoTotal;
+    }
 
-	public String getCbdIndTipo() {
-		return this.cbdIndTipo;
-	}
+    public void setNbdNumCuoTotal(Short nbdNumCuoTotal) {
+        this.nbdNumCuoTotal = nbdNumCuoTotal;
+    }
 
-	public void setCbdIndTipo(String cbdIndTipo) {
-		this.cbdIndTipo = cbdIndTipo;
-	}
+    public Short getNbdNumCuoPagada() {
+        return nbdNumCuoPagada;
+    }
 
-	public String getCbdTipConcpto() {
-		return this.cbdTipConcpto;
-	}
+    public void setNbdNumCuoPagada(Short nbdNumCuoPagada) {
+        this.nbdNumCuoPagada = nbdNumCuoPagada;
+    }
 
-	public void setCbdTipConcpto(String cbdTipConcpto) {
-		this.cbdTipConcpto = cbdTipConcpto;
-	}
+    public Character getCbdIndSubtitulo() {
+        return cbdIndSubtitulo;
+    }
 
-	public BigDecimal getNbdMonto() {
-		return this.nbdMonto;
-	}
+    public void setCbdIndSubtitulo(Character cbdIndSubtitulo) {
+        this.cbdIndSubtitulo = cbdIndSubtitulo;
+    }
 
-	public void setNbdMonto(BigDecimal nbdMonto) {
-		this.nbdMonto = nbdMonto;
-	}
+    public SipreBoletaCabecera getSipreBoletaCabecera() {
+        return sipreBoletaCabecera;
+    }
 
-	public BigDecimal getNbdNumCuoPagada() {
-		return this.nbdNumCuoPagada;
-	}
+    public void setSipreBoletaCabecera(SipreBoletaCabecera sipreBoletaCabecera) {
+        this.sipreBoletaCabecera = sipreBoletaCabecera;
+    }
 
-	public void setNbdNumCuoPagada(BigDecimal nbdNumCuoPagada) {
-		this.nbdNumCuoPagada = nbdNumCuoPagada;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreBoletaDetallePK != null ? sipreBoletaDetallePK.hashCode() : 0);
+        return hash;
+    }
 
-	public BigDecimal getNbdNumCuoTotal() {
-		return this.nbdNumCuoTotal;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreBoletaDetalle)) {
+            return false;
+        }
+        SipreBoletaDetalle other = (SipreBoletaDetalle) object;
+        if ((this.sipreBoletaDetallePK == null && other.sipreBoletaDetallePK != null) || (this.sipreBoletaDetallePK != null && !this.sipreBoletaDetallePK.equals(other.sipreBoletaDetallePK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setNbdNumCuoTotal(BigDecimal nbdNumCuoTotal) {
-		this.nbdNumCuoTotal = nbdNumCuoTotal;
-	}
-
-	public String getVbdDscIngDesc() {
-		return this.vbdDscIngDesc;
-	}
-
-	public void setVbdDscIngDesc(String vbdDscIngDesc) {
-		this.vbdDscIngDesc = vbdDscIngDesc;
-	}
-
-	public SipreBoletaCabecera getSipreBoletaCabecera() {
-		return this.sipreBoletaCabecera;
-	}
-
-	public void setSipreBoletaCabecera(SipreBoletaCabecera sipreBoletaCabecera) {
-		this.sipreBoletaCabecera = sipreBoletaCabecera;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreBoletaDetalle[ sipreBoletaDetallePK=" + sipreBoletaDetallePK + " ]";
+    }
+    
 }

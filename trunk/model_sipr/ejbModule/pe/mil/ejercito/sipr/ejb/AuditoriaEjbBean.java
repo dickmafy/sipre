@@ -51,9 +51,9 @@ public class AuditoriaEjbBean implements AuditoriaEjbRemote {
 		}
 		return audList;
 	}
-	
+
 	@Override
-	public SipreAuditoria persist(SipreAuditoria s){
+	public SipreAuditoria persist(SipreAuditoria s) {
 		s.setAudCodigo(getMaxAuditoria());
 		em.persist(s);
 		return s;
@@ -62,11 +62,11 @@ public class AuditoriaEjbBean implements AuditoriaEjbRemote {
 	public Long getMaxAuditoria() {
 		Long idretorno = null;
 		try {
-			String consulta = "select max(a.audCodigo)+1 from SipreAuditoria a";
-			Query q = em.createQuery(consulta);
-			idretorno = (Long) q.getSingleResult();
+			idretorno = (Long) em.createQuery(
+					"select max(u.audCodigo)+1 from SipreAuditoria u")
+					.getSingleResult();
 		} catch (Exception e) {
-
+			e.printStackTrace();
 		}
 		return idretorno;
 	}

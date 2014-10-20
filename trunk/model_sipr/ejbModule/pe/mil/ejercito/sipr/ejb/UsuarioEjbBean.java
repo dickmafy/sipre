@@ -38,8 +38,7 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 					.createNamedQuery("SipreUsuario.validarUsuario")
 					.setParameter("nickname", usuario.getNickname())
 					.setParameter("clave", usuario.getClave())
-					/*.setParameter("nickname", "a")
-					.setParameter("clave", "a")*/
+					// .setParameter("nickname", "a").setParameter("clave", "a")
 					.getSingleResult();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -52,7 +51,8 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 	public List<SipreUsuario> listUsuario(SipreUsuario usuario) {
 		List<SipreUsuario> list = null;
 		try {
-			list = (List<SipreUsuario> ) em.createNamedQuery("SipreUsuario.findAll").getResultList();
+			list = (List<SipreUsuario>) em.createNamedQuery(
+					"SipreUsuario.findAll").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -74,32 +74,33 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 		return 1;
 	}
 
-	
 	public String getMax() {
 		String idretorno = null;
 		try {
 			String consulta = "select max(a.cusuarioCodigo) from SipreUsuario a";
 			Query q = em.createQuery(consulta);
 			idretorno = (String) q.getSingleResult();
-			idretorno  = String.valueOf(Integer.valueOf(idretorno.trim())+1);
+			idretorno = String.valueOf(Integer.valueOf(idretorno.trim()) + 1);
 		} catch (Exception e) {
-			
+
 		}
 		return idretorno;
 	}
-	
+
 	@Override
 	public SipreUsuario insertUsuario(SipreUsuario usuario) {
-		try{
-			if(usuario.getCusuarioCodigo()==null){
+		try {
+			if (usuario.getCusuarioCodigo() == null) {
 				usuario.setCusuarioCodigo(getMax());
-				usuario.setVusuarioPass(Encripta.encripta(usuario.getVusuarioPass(),Encripta.HASH_SHA1));
+				usuario.setVusuarioPass(Encripta.encripta(
+						usuario.getVusuarioPass(), Encripta.HASH_SHA1));
 				em.persist(usuario);
-			}else{
-				usuario.setVusuarioPass(Encripta.encripta(usuario.getVusuarioPass(),Encripta.HASH_SHA1));
+			} else {
+				usuario.setVusuarioPass(Encripta.encripta(
+						usuario.getVusuarioPass(), Encripta.HASH_SHA1));
 				em.merge(usuario);
 			}
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 			return usuario;
 		}
@@ -122,7 +123,7 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 			q.setParameter("vusuarioNom", usuario.getVusuarioNom());
 			q.setParameter("vusuarioPass", usuario.getVusuarioPass());
 			q.setParameter("cusuarioCodigo", usuario.getCusuarioCodigo());
-			
+
 			q.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -138,7 +139,7 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 			Query q = em.createQuery(sql);
 			q.setParameter("cusuarioEst", usuario.getCusuarioEst());
 			q.setParameter("cusuarioCodigo", usuario.getCusuarioCodigo());
-			
+
 			q.executeUpdate();
 			return true;
 		} catch (Exception e) {
@@ -160,7 +161,5 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 		}
 		return usrio;
 	}
-
-	
 
 }

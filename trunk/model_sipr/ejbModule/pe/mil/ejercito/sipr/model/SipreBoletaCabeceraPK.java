@@ -1,68 +1,102 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_BOLETA_CABECERA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SipreBoletaCabeceraPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "CBC_MES_PROCESO")
+    private String cbcMesProceso;
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "NBC_NUM_PROCESO")
+    private short nbcNumProceso;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "CBC_NRO_ADM")
+    private String cbcNroAdm;
 
-	@Column(name="CBC_MES_PROCESO")
-	private String cbcMesProceso;
+    public SipreBoletaCabeceraPK() {
+    }
 
-	@Column(name="NBC_NUM_PROCESO")
-	private long nbcNumProceso;
+    public SipreBoletaCabeceraPK(String cbcMesProceso, short nbcNumProceso, String cbcNroAdm) {
+        this.cbcMesProceso = cbcMesProceso;
+        this.nbcNumProceso = nbcNumProceso;
+        this.cbcNroAdm = cbcNroAdm;
+    }
 
-	@Column(name="CBC_NRO_ADM")
-	private String cbcNroAdm;
+    public String getCbcMesProceso() {
+        return cbcMesProceso;
+    }
 
-	public SipreBoletaCabeceraPK() {
-	}
-	public String getCbcMesProceso() {
-		return this.cbcMesProceso;
-	}
-	public void setCbcMesProceso(String cbcMesProceso) {
-		this.cbcMesProceso = cbcMesProceso;
-	}
-	public long getNbcNumProceso() {
-		return this.nbcNumProceso;
-	}
-	public void setNbcNumProceso(long nbcNumProceso) {
-		this.nbcNumProceso = nbcNumProceso;
-	}
-	public String getCbcNroAdm() {
-		return this.cbcNroAdm;
-	}
-	public void setCbcNroAdm(String cbcNroAdm) {
-		this.cbcNroAdm = cbcNroAdm;
-	}
+    public void setCbcMesProceso(String cbcMesProceso) {
+        this.cbcMesProceso = cbcMesProceso;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SipreBoletaCabeceraPK)) {
-			return false;
-		}
-		SipreBoletaCabeceraPK castOther = (SipreBoletaCabeceraPK)other;
-		return 
-			this.cbcMesProceso.equals(castOther.cbcMesProceso)
-			&& (this.nbcNumProceso == castOther.nbcNumProceso)
-			&& this.cbcNroAdm.equals(castOther.cbcNroAdm);
-	}
+    public short getNbcNumProceso() {
+        return nbcNumProceso;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.cbcMesProceso.hashCode();
-		hash = hash * prime + ((int) (this.nbcNumProceso ^ (this.nbcNumProceso >>> 32)));
-		hash = hash * prime + this.cbcNroAdm.hashCode();
-		
-		return hash;
-	}
+    public void setNbcNumProceso(short nbcNumProceso) {
+        this.nbcNumProceso = nbcNumProceso;
+    }
+
+    public String getCbcNroAdm() {
+        return cbcNroAdm;
+    }
+
+    public void setCbcNroAdm(String cbcNroAdm) {
+        this.cbcNroAdm = cbcNroAdm;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cbcMesProceso != null ? cbcMesProceso.hashCode() : 0);
+        hash += (int) nbcNumProceso;
+        hash += (cbcNroAdm != null ? cbcNroAdm.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreBoletaCabeceraPK)) {
+            return false;
+        }
+        SipreBoletaCabeceraPK other = (SipreBoletaCabeceraPK) object;
+        if ((this.cbcMesProceso == null && other.cbcMesProceso != null) || (this.cbcMesProceso != null && !this.cbcMesProceso.equals(other.cbcMesProceso))) {
+            return false;
+        }
+        if (this.nbcNumProceso != other.nbcNumProceso) {
+            return false;
+        }
+        if ((this.cbcNroAdm == null && other.cbcNroAdm != null) || (this.cbcNroAdm != null && !this.cbcNroAdm.equals(other.cbcNroAdm))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreBoletaCabeceraPK[ cbcMesProceso=" + cbcMesProceso + ", nbcNumProceso=" + nbcNumProceso + ", cbcNroAdm=" + cbcNroAdm + " ]";
+    }
+    
 }
