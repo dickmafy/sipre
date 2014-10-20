@@ -1,79 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_TMP_BONIFICACION database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SipreTmpBonificacionPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 9)
+    @Column(name = "CPERSONA_NRO_ADM")
+    private String cpersonaNroAdm;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CCI_CODIGO")
+    private String cciCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 6)
+    @Column(name = "CTB_MES_BONIFICACION")
+    private String ctbMesBonificacion;
 
-	@Column(name="CPERSONA_NRO_ADM", insertable=false, updatable=false)
-	private String cpersonaNroAdm;
+    public SipreTmpBonificacionPK() {
+    }
 
-	@Column(name="CCI_CODIGO", insertable=false, updatable=false)
-	private String cciCodigo;
+    public SipreTmpBonificacionPK(String cpersonaNroAdm, String cciCodigo, String ctbMesBonificacion) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+        this.cciCodigo = cciCodigo;
+        this.ctbMesBonificacion = ctbMesBonificacion;
+    }
 
-	@Column(name="CTB_MES_PROCESO")
-	private String ctbMesProceso;
+    public String getCpersonaNroAdm() {
+        return cpersonaNroAdm;
+    }
 
-	@Column(name="CTB_MES_BONIFICACION")
-	private String ctbMesBonificacion;
+    public void setCpersonaNroAdm(String cpersonaNroAdm) {
+        this.cpersonaNroAdm = cpersonaNroAdm;
+    }
 
-	public SipreTmpBonificacionPK() {
-	}
-	public String getCpersonaNroAdm() {
-		return this.cpersonaNroAdm;
-	}
-	public void setCpersonaNroAdm(String cpersonaNroAdm) {
-		this.cpersonaNroAdm = cpersonaNroAdm;
-	}
-	public String getCciCodigo() {
-		return this.cciCodigo;
-	}
-	public void setCciCodigo(String cciCodigo) {
-		this.cciCodigo = cciCodigo;
-	}
-	public String getCtbMesProceso() {
-		return this.ctbMesProceso;
-	}
-	public void setCtbMesProceso(String ctbMesProceso) {
-		this.ctbMesProceso = ctbMesProceso;
-	}
-	public String getCtbMesBonificacion() {
-		return this.ctbMesBonificacion;
-	}
-	public void setCtbMesBonificacion(String ctbMesBonificacion) {
-		this.ctbMesBonificacion = ctbMesBonificacion;
-	}
+    public String getCciCodigo() {
+        return cciCodigo;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SipreTmpBonificacionPK)) {
-			return false;
-		}
-		SipreTmpBonificacionPK castOther = (SipreTmpBonificacionPK)other;
-		return 
-			this.cpersonaNroAdm.equals(castOther.cpersonaNroAdm)
-			&& this.cciCodigo.equals(castOther.cciCodigo)
-			&& this.ctbMesProceso.equals(castOther.ctbMesProceso)
-			&& this.ctbMesBonificacion.equals(castOther.ctbMesBonificacion);
-	}
+    public void setCciCodigo(String cciCodigo) {
+        this.cciCodigo = cciCodigo;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.cpersonaNroAdm.hashCode();
-		hash = hash * prime + this.cciCodigo.hashCode();
-		hash = hash * prime + this.ctbMesProceso.hashCode();
-		hash = hash * prime + this.ctbMesBonificacion.hashCode();
-		
-		return hash;
-	}
+    public String getCtbMesBonificacion() {
+        return ctbMesBonificacion;
+    }
+
+    public void setCtbMesBonificacion(String ctbMesBonificacion) {
+        this.ctbMesBonificacion = ctbMesBonificacion;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
+        hash += (ctbMesBonificacion != null ? ctbMesBonificacion.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreTmpBonificacionPK)) {
+            return false;
+        }
+        SipreTmpBonificacionPK other = (SipreTmpBonificacionPK) object;
+        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+            return false;
+        }
+        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
+            return false;
+        }
+        if ((this.ctbMesBonificacion == null && other.ctbMesBonificacion != null) || (this.ctbMesBonificacion != null && !this.ctbMesBonificacion.equals(other.ctbMesBonificacion))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK[ cpersonaNroAdm=" + cpersonaNroAdm + ", cciCodigo=" + cciCodigo + ", ctbMesBonificacion=" + ctbMesBonificacion + " ]";
+    }
+    
 }

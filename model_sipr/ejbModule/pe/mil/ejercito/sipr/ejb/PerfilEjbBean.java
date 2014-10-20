@@ -1,5 +1,6 @@
 package pe.mil.ejercito.sipr.ejb;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Stateless;

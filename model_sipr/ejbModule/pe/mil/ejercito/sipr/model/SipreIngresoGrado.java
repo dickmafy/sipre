@@ -1,102 +1,139 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 /**
- * The persistent class for the SIPRE_INGRESO_GRADO database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_INGRESO_GRADO")
-@NamedQuery(name="SipreIngresoGrado.findAll", query="SELECT s FROM SipreIngresoGrado s")
+@Table(name = "SIPRE_INGRESO_GRADO")
+@NamedQueries({
+    @NamedQuery(name = "SipreIngresoGrado.findAll", query = "SELECT s FROM SipreIngresoGrado s")})
 public class SipreIngresoGrado implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreIngresoGradoPK sipreIngresoGradoPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NIG_MONTO")
+    private BigDecimal nigMonto;
+    @Column(name = "CIG_IND_INGRESO")
+    private Character cigIndIngreso;
+    @Column(name = "CIG_IND_CALCULO")
+    private Character cigIndCalculo;
+    @Column(name = "CIG_IND_SITUACION")
+    private Character cigIndSituacion;
+    @JoinColumn(name = "CGRADO_CODIGO", referencedColumnName = "CGRADO_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreGrado sipreGrado;
+    @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreConceptoIngreso sipreConceptoIngreso;
 
-	@EmbeddedId
-	private SipreIngresoGradoPK id;
+    public SipreIngresoGrado() {
+    }
 
-	@Column(name="CIG_IND_CALCULO")
-	private String cigIndCalculo;
+    public SipreIngresoGrado(SipreIngresoGradoPK sipreIngresoGradoPK) {
+        this.sipreIngresoGradoPK = sipreIngresoGradoPK;
+    }
 
-	@Column(name="CIG_IND_INGRESO")
-	private String cigIndIngreso;
+    public SipreIngresoGrado(String cgradoCodigo, String cciCodigo, String cigSituacion) {
+        this.sipreIngresoGradoPK = new SipreIngresoGradoPK(cgradoCodigo, cciCodigo, cigSituacion);
+    }
 
-	@Column(name="CIG_IND_SITUACION")
-	private String cigIndSituacion;
+    public SipreIngresoGradoPK getSipreIngresoGradoPK() {
+        return sipreIngresoGradoPK;
+    }
 
-	@Column(name="NIG_MONTO")
-	private BigDecimal nigMonto;
+    public void setSipreIngresoGradoPK(SipreIngresoGradoPK sipreIngresoGradoPK) {
+        this.sipreIngresoGradoPK = sipreIngresoGradoPK;
+    }
 
-	//bi-directional many-to-one association to SipreConceptoIngreso
-	@ManyToOne
-	@JoinColumn(name="CCI_CODIGO",insertable = false, updatable = false)
-	private SipreConceptoIngreso sipreConceptoIngreso;
+    public BigDecimal getNigMonto() {
+        return nigMonto;
+    }
 
-	//bi-directional many-to-one association to SipreGrado
-	@ManyToOne
-	@JoinColumn(name="CGRADO_CODIGO",insertable = false, updatable = false)
-	private SipreGrado sipreGrado;
+    public void setNigMonto(BigDecimal nigMonto) {
+        this.nigMonto = nigMonto;
+    }
 
-	public SipreIngresoGrado() {
-	}
+    public Character getCigIndIngreso() {
+        return cigIndIngreso;
+    }
 
-	public SipreIngresoGradoPK getId() {
-		return this.id;
-	}
+    public void setCigIndIngreso(Character cigIndIngreso) {
+        this.cigIndIngreso = cigIndIngreso;
+    }
 
-	public void setId(SipreIngresoGradoPK id) {
-		this.id = id;
-	}
+    public Character getCigIndCalculo() {
+        return cigIndCalculo;
+    }
 
-	public String getCigIndCalculo() {
-		return this.cigIndCalculo;
-	}
+    public void setCigIndCalculo(Character cigIndCalculo) {
+        this.cigIndCalculo = cigIndCalculo;
+    }
 
-	public void setCigIndCalculo(String cigIndCalculo) {
-		this.cigIndCalculo = cigIndCalculo;
-	}
+    public Character getCigIndSituacion() {
+        return cigIndSituacion;
+    }
 
-	public String getCigIndIngreso() {
-		return this.cigIndIngreso;
-	}
+    public void setCigIndSituacion(Character cigIndSituacion) {
+        this.cigIndSituacion = cigIndSituacion;
+    }
 
-	public void setCigIndIngreso(String cigIndIngreso) {
-		this.cigIndIngreso = cigIndIngreso;
-	}
+    public SipreGrado getSipreGrado() {
+        return sipreGrado;
+    }
 
-	public String getCigIndSituacion() {
-		return this.cigIndSituacion;
-	}
+    public void setSipreGrado(SipreGrado sipreGrado) {
+        this.sipreGrado = sipreGrado;
+    }
 
-	public void setCigIndSituacion(String cigIndSituacion) {
-		this.cigIndSituacion = cigIndSituacion;
-	}
+    public SipreConceptoIngreso getSipreConceptoIngreso() {
+        return sipreConceptoIngreso;
+    }
 
-	public BigDecimal getNigMonto() {
-		return this.nigMonto;
-	}
+    public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
+        this.sipreConceptoIngreso = sipreConceptoIngreso;
+    }
 
-	public void setNigMonto(BigDecimal nigMonto) {
-		this.nigMonto = nigMonto;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreIngresoGradoPK != null ? sipreIngresoGradoPK.hashCode() : 0);
+        return hash;
+    }
 
-	public SipreConceptoIngreso getSipreConceptoIngreso() {
-		return this.sipreConceptoIngreso;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreIngresoGrado)) {
+            return false;
+        }
+        SipreIngresoGrado other = (SipreIngresoGrado) object;
+        if ((this.sipreIngresoGradoPK == null && other.sipreIngresoGradoPK != null) || (this.sipreIngresoGradoPK != null && !this.sipreIngresoGradoPK.equals(other.sipreIngresoGradoPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
-		this.sipreConceptoIngreso = sipreConceptoIngreso;
-	}
-
-	public SipreGrado getSipreGrado() {
-		return this.sipreGrado;
-	}
-
-	public void setSipreGrado(SipreGrado sipreGrado) {
-		this.sipreGrado = sipreGrado;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreIngresoGrado[ sipreIngresoGradoPK=" + sipreIngresoGradoPK + " ]";
+    }
+    
 }

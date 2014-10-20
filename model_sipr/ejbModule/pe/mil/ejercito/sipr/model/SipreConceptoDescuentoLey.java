@@ -1,151 +1,205 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-
+import java.util.List;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinColumns;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
 
 /**
- * The persistent class for the SIPRE_CONCEPTO_DESCUENTO_LEY database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_CONCEPTO_DESCUENTO_LEY")
-@NamedQuery(name="SipreConceptoDescuentoLey.findAll", query="SELECT s FROM SipreConceptoDescuentoLey s")
+@Table(name = "SIPRE_CONCEPTO_DESCUENTO_LEY")
+@NamedQueries({
+    @NamedQuery(name = "SipreConceptoDescuentoLey.findAll", query = "SELECT s FROM SipreConceptoDescuentoLey s")})
 public class SipreConceptoDescuentoLey implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreConceptoDescuentoLeyPK sipreConceptoDescuentoLeyPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NCDL_POR_EMPLEADOR")
+    private BigDecimal ncdlPorEmpleador;
+    @Column(name = "NCDL_POR_EMPLEADO")
+    private BigDecimal ncdlPorEmpleado;
+    @Column(name = "CCDL_TIPO_PERSONA")
+    private Character ccdlTipoPersona;
+    @Column(name = "CCDL_IND_POR_MONTO")
+    private Character ccdlIndPorMonto;
+    @Column(name = "NCDL_MIN_APLICABLE")
+    private BigDecimal ncdlMinAplicable;
+    @Column(name = "NCDL_MAX_APLICABLE")
+    private BigDecimal ncdlMaxAplicable;
+    @Column(name = "CCDL_ESTADO")
+    private Character ccdlEstado;
+    @JoinColumn(name = "CEC_CODIGO", referencedColumnName = "CEC_CODIGO")
+    @ManyToOne
+    private SipreEntidadCrediticia sipreEntidadCrediticia;
+    @JoinColumns({
+        @JoinColumn(name = "CDL_CODIGO", referencedColumnName = "CDL_CODIGO", insertable = false, updatable = false),
+        @JoinColumn(name = "CDLD_CODIGO", referencedColumnName = "CDLD_CODIGO", insertable = false, updatable = false)})
+    @ManyToOne(optional = false)
+    private SipreDescuentoLeyDet sipreDescuentoLeyDet;
+    @JoinColumn(name = "CCD_CODIGO", referencedColumnName = "CCD_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreConceptoDescuento sipreConceptoDescuento;
+    @OneToMany(mappedBy = "sipreConceptoDescuentoLey")
+    private List<SipreTmpPlanillaDescuento> sipreTmpPlanillaDescuentoList;
+    @OneToMany(mappedBy = "sipreConceptoDescuentoLey")
+    private List<SiprePlanillaDescuento> siprePlanillaDescuentoList;
 
-	@EmbeddedId
-	private SipreConceptoDescuentoLeyPK id;
+    public SipreConceptoDescuentoLey() {
+    }
 
-	@Column(name="CCDL_ESTADO")
-	private String ccdlEstado;
+    public SipreConceptoDescuentoLey(SipreConceptoDescuentoLeyPK sipreConceptoDescuentoLeyPK) {
+        this.sipreConceptoDescuentoLeyPK = sipreConceptoDescuentoLeyPK;
+    }
 
-	@Column(name="CCDL_IND_POR_MONTO")
-	private String ccdlIndPorMonto;
+    public SipreConceptoDescuentoLey(String cdldCodigo, String cdlCodigo, String ccdCodigo) {
+        this.sipreConceptoDescuentoLeyPK = new SipreConceptoDescuentoLeyPK(cdldCodigo, cdlCodigo, ccdCodigo);
+    }
 
-	@Column(name="CCDL_SITUACION")
-	private String ccdlSituacion;
+    public SipreConceptoDescuentoLeyPK getSipreConceptoDescuentoLeyPK() {
+        return sipreConceptoDescuentoLeyPK;
+    }
 
-	@Column(name="NCDL_MAX_APLICABLE")
-	private BigDecimal ncdlMaxAplicable;
+    public void setSipreConceptoDescuentoLeyPK(SipreConceptoDescuentoLeyPK sipreConceptoDescuentoLeyPK) {
+        this.sipreConceptoDescuentoLeyPK = sipreConceptoDescuentoLeyPK;
+    }
 
-	@Column(name="NCDL_MIN_APLICABLE")
-	private BigDecimal ncdlMinAplicable;
+    public BigDecimal getNcdlPorEmpleador() {
+        return ncdlPorEmpleador;
+    }
 
-	@Column(name="NCDL_POR_EMPLEADO")
-	private BigDecimal ncdlPorEmpleado;
+    public void setNcdlPorEmpleador(BigDecimal ncdlPorEmpleador) {
+        this.ncdlPorEmpleador = ncdlPorEmpleador;
+    }
 
-	@Column(name="NCDL_POR_EMPLEADOR")
-	private BigDecimal ncdlPorEmpleador;
+    public BigDecimal getNcdlPorEmpleado() {
+        return ncdlPorEmpleado;
+    }
 
-	//bi-directional many-to-one association to SipreConceptoDescuento
-	@ManyToOne
-	@JoinColumn(name="CCD_CODIGO",insertable = false, updatable = false)
-	private SipreConceptoDescuento sipreConceptoDescuento;
+    public void setNcdlPorEmpleado(BigDecimal ncdlPorEmpleado) {
+        this.ncdlPorEmpleado = ncdlPorEmpleado;
+    }
 
-	//bi-directional many-to-one association to SipreDescuentoLeyDet
-	@ManyToOne
-	@JoinColumns({
-		@JoinColumn(name="CDL_CODIGO", referencedColumnName="CDL_CODIGO",insertable = false, updatable = false),
-		@JoinColumn(name="CDLD_CODIGO", referencedColumnName="CDLD_CODIGO",insertable = false, updatable = false)
-		})
-	private SipreDescuentoLeyDet sipreDescuentoLeyDet;
+    public Character getCcdlTipoPersona() {
+        return ccdlTipoPersona;
+    }
 
-	//bi-directional many-to-one association to SipreEntidadCrediticia
-	@ManyToOne
-	@JoinColumn(name="CEC_CODIGO",insertable = false, updatable = false)
-	private SipreEntidadCrediticia sipreEntidadCrediticia;
+    public void setCcdlTipoPersona(Character ccdlTipoPersona) {
+        this.ccdlTipoPersona = ccdlTipoPersona;
+    }
 
-	public SipreConceptoDescuentoLey() {
-	}
+    public Character getCcdlIndPorMonto() {
+        return ccdlIndPorMonto;
+    }
 
-	public SipreConceptoDescuentoLeyPK getId() {
-		return this.id;
-	}
+    public void setCcdlIndPorMonto(Character ccdlIndPorMonto) {
+        this.ccdlIndPorMonto = ccdlIndPorMonto;
+    }
 
-	public void setId(SipreConceptoDescuentoLeyPK id) {
-		this.id = id;
-	}
+    public BigDecimal getNcdlMinAplicable() {
+        return ncdlMinAplicable;
+    }
 
-	public String getCcdlEstado() {
-		return this.ccdlEstado;
-	}
+    public void setNcdlMinAplicable(BigDecimal ncdlMinAplicable) {
+        this.ncdlMinAplicable = ncdlMinAplicable;
+    }
 
-	public void setCcdlEstado(String ccdlEstado) {
-		this.ccdlEstado = ccdlEstado;
-	}
+    public BigDecimal getNcdlMaxAplicable() {
+        return ncdlMaxAplicable;
+    }
 
-	public String getCcdlIndPorMonto() {
-		return this.ccdlIndPorMonto;
-	}
+    public void setNcdlMaxAplicable(BigDecimal ncdlMaxAplicable) {
+        this.ncdlMaxAplicable = ncdlMaxAplicable;
+    }
 
-	public void setCcdlIndPorMonto(String ccdlIndPorMonto) {
-		this.ccdlIndPorMonto = ccdlIndPorMonto;
-	}
+    public Character getCcdlEstado() {
+        return ccdlEstado;
+    }
 
-	public String getCcdlSituacion() {
-		return this.ccdlSituacion;
-	}
+    public void setCcdlEstado(Character ccdlEstado) {
+        this.ccdlEstado = ccdlEstado;
+    }
 
-	public void setCcdlSituacion(String ccdlSituacion) {
-		this.ccdlSituacion = ccdlSituacion;
-	}
+    public SipreEntidadCrediticia getSipreEntidadCrediticia() {
+        return sipreEntidadCrediticia;
+    }
 
-	public BigDecimal getNcdlMaxAplicable() {
-		return this.ncdlMaxAplicable;
-	}
+    public void setSipreEntidadCrediticia(SipreEntidadCrediticia sipreEntidadCrediticia) {
+        this.sipreEntidadCrediticia = sipreEntidadCrediticia;
+    }
 
-	public void setNcdlMaxAplicable(BigDecimal ncdlMaxAplicable) {
-		this.ncdlMaxAplicable = ncdlMaxAplicable;
-	}
+    public SipreDescuentoLeyDet getSipreDescuentoLeyDet() {
+        return sipreDescuentoLeyDet;
+    }
 
-	public BigDecimal getNcdlMinAplicable() {
-		return this.ncdlMinAplicable;
-	}
+    public void setSipreDescuentoLeyDet(SipreDescuentoLeyDet sipreDescuentoLeyDet) {
+        this.sipreDescuentoLeyDet = sipreDescuentoLeyDet;
+    }
 
-	public void setNcdlMinAplicable(BigDecimal ncdlMinAplicable) {
-		this.ncdlMinAplicable = ncdlMinAplicable;
-	}
+    public SipreConceptoDescuento getSipreConceptoDescuento() {
+        return sipreConceptoDescuento;
+    }
 
-	public BigDecimal getNcdlPorEmpleado() {
-		return this.ncdlPorEmpleado;
-	}
+    public void setSipreConceptoDescuento(SipreConceptoDescuento sipreConceptoDescuento) {
+        this.sipreConceptoDescuento = sipreConceptoDescuento;
+    }
 
-	public void setNcdlPorEmpleado(BigDecimal ncdlPorEmpleado) {
-		this.ncdlPorEmpleado = ncdlPorEmpleado;
-	}
+    public List<SipreTmpPlanillaDescuento> getSipreTmpPlanillaDescuentoList() {
+        return sipreTmpPlanillaDescuentoList;
+    }
 
-	public BigDecimal getNcdlPorEmpleador() {
-		return this.ncdlPorEmpleador;
-	}
+    public void setSipreTmpPlanillaDescuentoList(List<SipreTmpPlanillaDescuento> sipreTmpPlanillaDescuentoList) {
+        this.sipreTmpPlanillaDescuentoList = sipreTmpPlanillaDescuentoList;
+    }
 
-	public void setNcdlPorEmpleador(BigDecimal ncdlPorEmpleador) {
-		this.ncdlPorEmpleador = ncdlPorEmpleador;
-	}
+    public List<SiprePlanillaDescuento> getSiprePlanillaDescuentoList() {
+        return siprePlanillaDescuentoList;
+    }
 
-	public SipreConceptoDescuento getSipreConceptoDescuento() {
-		return this.sipreConceptoDescuento;
-	}
+    public void setSiprePlanillaDescuentoList(List<SiprePlanillaDescuento> siprePlanillaDescuentoList) {
+        this.siprePlanillaDescuentoList = siprePlanillaDescuentoList;
+    }
 
-	public void setSipreConceptoDescuento(SipreConceptoDescuento sipreConceptoDescuento) {
-		this.sipreConceptoDescuento = sipreConceptoDescuento;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreConceptoDescuentoLeyPK != null ? sipreConceptoDescuentoLeyPK.hashCode() : 0);
+        return hash;
+    }
 
-	public SipreDescuentoLeyDet getSipreDescuentoLeyDet() {
-		return this.sipreDescuentoLeyDet;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreConceptoDescuentoLey)) {
+            return false;
+        }
+        SipreConceptoDescuentoLey other = (SipreConceptoDescuentoLey) object;
+        if ((this.sipreConceptoDescuentoLeyPK == null && other.sipreConceptoDescuentoLeyPK != null) || (this.sipreConceptoDescuentoLeyPK != null && !this.sipreConceptoDescuentoLeyPK.equals(other.sipreConceptoDescuentoLeyPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setSipreDescuentoLeyDet(SipreDescuentoLeyDet sipreDescuentoLeyDet) {
-		this.sipreDescuentoLeyDet = sipreDescuentoLeyDet;
-	}
-
-	public SipreEntidadCrediticia getSipreEntidadCrediticia() {
-		return this.sipreEntidadCrediticia;
-	}
-
-	public void setSipreEntidadCrediticia(SipreEntidadCrediticia sipreEntidadCrediticia) {
-		this.sipreEntidadCrediticia = sipreEntidadCrediticia;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLey[ sipreConceptoDescuentoLeyPK=" + sipreConceptoDescuentoLeyPK + " ]";
+    }
+    
 }

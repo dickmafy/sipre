@@ -1,118 +1,190 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_TIPO_PLANILLA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_TIPO_PLANILLA")
-@NamedQuery(name="SipreTipoPlanilla.findAll", query="SELECT s FROM SipreTipoPlanilla s")
+@Table(name = "SIPRE_TIPO_PLANILLA")
+@NamedQueries({
+    @NamedQuery(name = "SipreTipoPlanilla.findAll", query = "SELECT s FROM SipreTipoPlanilla s")})
 public class SipreTipoPlanilla implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "CTP_CODIGO")
+    private String ctpCodigo;
+    @Size(max = 50)
+    @Column(name = "VTP_DSC")
+    private String vtpDsc;
+    @Column(name = "CTP_IND_AFE_NETO")
+    private Character ctpIndAfeNeto;
+    @Column(name = "CTP_IND_AFE_IRENTA")
+    private Character ctpIndAfeIrenta;
+    @OneToMany(mappedBy = "sipreTipoPlanilla")
+    private List<SipreConceptoIngreso> sipreConceptoIngresoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SipreDescuentoNoprocesado> sipreDescuentoNoprocesadoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SiprePlanillaDescuento> siprePlanillaDescuentoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SiprePlanillaOtro> siprePlanillaOtroList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SipreTmpJudicial> sipreTmpJudicialList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SipreExcepcion> sipreExcepcionList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
+    private List<SiprePlanillaDetalle> siprePlanillaDetalleList;
 
-	@Id
-	@Column(name="CTP_CODIGO")
-	private String ctpCodigo;
+    public SipreTipoPlanilla() {
+    }
 
-	@Column(name="CTP_IND_AFE_IRENTA")
-	private String ctpIndAfeIrenta;
+    public SipreTipoPlanilla(String ctpCodigo) {
+        this.ctpCodigo = ctpCodigo;
+    }
 
-	@Column(name="CTP_IND_AFE_NETO")
-	private String ctpIndAfeNeto;
+    public String getCtpCodigo() {
+        return ctpCodigo;
+    }
 
-	@Column(name="VTP_DSC")
-	private String vtpDsc;
+    public void setCtpCodigo(String ctpCodigo) {
+        this.ctpCodigo = ctpCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreConceptoIngreso
-	@OneToMany(mappedBy="sipreTipoPlanilla")
-	private List<SipreConceptoIngreso> sipreConceptoIngresos;
+    public String getVtpDsc() {
+        return vtpDsc;
+    }
 
-	//bi-directional many-to-one association to SiprePlanillaDetalle
-	@OneToMany(mappedBy="sipreTipoPlanilla")
-	private List<SiprePlanillaDetalle> siprePlanillaDetalles;
+    public void setVtpDsc(String vtpDsc) {
+        this.vtpDsc = vtpDsc;
+    }
 
-	public SipreTipoPlanilla() {
-	}
+    public Character getCtpIndAfeNeto() {
+        return ctpIndAfeNeto;
+    }
 
-	public String getCtpCodigo() {
-		return this.ctpCodigo;
-	}
+    public void setCtpIndAfeNeto(Character ctpIndAfeNeto) {
+        this.ctpIndAfeNeto = ctpIndAfeNeto;
+    }
 
-	public void setCtpCodigo(String ctpCodigo) {
-		this.ctpCodigo = ctpCodigo;
-	}
+    public Character getCtpIndAfeIrenta() {
+        return ctpIndAfeIrenta;
+    }
 
-	public String getCtpIndAfeIrenta() {
-		return this.ctpIndAfeIrenta;
-	}
+    public void setCtpIndAfeIrenta(Character ctpIndAfeIrenta) {
+        this.ctpIndAfeIrenta = ctpIndAfeIrenta;
+    }
 
-	public void setCtpIndAfeIrenta(String ctpIndAfeIrenta) {
-		this.ctpIndAfeIrenta = ctpIndAfeIrenta;
-	}
+    public List<SipreConceptoIngreso> getSipreConceptoIngresoList() {
+        return sipreConceptoIngresoList;
+    }
 
-	public String getCtpIndAfeNeto() {
-		return this.ctpIndAfeNeto;
-	}
+    public void setSipreConceptoIngresoList(List<SipreConceptoIngreso> sipreConceptoIngresoList) {
+        this.sipreConceptoIngresoList = sipreConceptoIngresoList;
+    }
 
-	public void setCtpIndAfeNeto(String ctpIndAfeNeto) {
-		this.ctpIndAfeNeto = ctpIndAfeNeto;
-	}
+    public List<SipreDescuentoNoprocesado> getSipreDescuentoNoprocesadoList() {
+        return sipreDescuentoNoprocesadoList;
+    }
 
-	public String getVtpDsc() {
-		return this.vtpDsc;
-	}
+    public void setSipreDescuentoNoprocesadoList(List<SipreDescuentoNoprocesado> sipreDescuentoNoprocesadoList) {
+        this.sipreDescuentoNoprocesadoList = sipreDescuentoNoprocesadoList;
+    }
 
-	public void setVtpDsc(String vtpDsc) {
-		this.vtpDsc = vtpDsc;
-	}
+    public List<SipreCalculoDescuentoLey> getSipreCalculoDescuentoLeyList() {
+        return sipreCalculoDescuentoLeyList;
+    }
 
-	public List<SipreConceptoIngreso> getSipreConceptoIngresos() {
-		return this.sipreConceptoIngresos;
-	}
+    public void setSipreCalculoDescuentoLeyList(List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList) {
+        this.sipreCalculoDescuentoLeyList = sipreCalculoDescuentoLeyList;
+    }
 
-	public void setSipreConceptoIngresos(List<SipreConceptoIngreso> sipreConceptoIngresos) {
-		this.sipreConceptoIngresos = sipreConceptoIngresos;
-	}
+    public List<SiprePlanillaDescuento> getSiprePlanillaDescuentoList() {
+        return siprePlanillaDescuentoList;
+    }
 
-	public SipreConceptoIngreso addSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
-		getSipreConceptoIngresos().add(sipreConceptoIngreso);
-		sipreConceptoIngreso.setSipreTipoPlanilla(this);
+    public void setSiprePlanillaDescuentoList(List<SiprePlanillaDescuento> siprePlanillaDescuentoList) {
+        this.siprePlanillaDescuentoList = siprePlanillaDescuentoList;
+    }
 
-		return sipreConceptoIngreso;
-	}
+    public List<SiprePlanillaOtro> getSiprePlanillaOtroList() {
+        return siprePlanillaOtroList;
+    }
 
-	public SipreConceptoIngreso removeSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
-		getSipreConceptoIngresos().remove(sipreConceptoIngreso);
-		sipreConceptoIngreso.setSipreTipoPlanilla(null);
+    public void setSiprePlanillaOtroList(List<SiprePlanillaOtro> siprePlanillaOtroList) {
+        this.siprePlanillaOtroList = siprePlanillaOtroList;
+    }
 
-		return sipreConceptoIngreso;
-	}
+    public List<SipreTmpJudicial> getSipreTmpJudicialList() {
+        return sipreTmpJudicialList;
+    }
 
-	public List<SiprePlanillaDetalle> getSiprePlanillaDetalles() {
-		return this.siprePlanillaDetalles;
-	}
+    public void setSipreTmpJudicialList(List<SipreTmpJudicial> sipreTmpJudicialList) {
+        this.sipreTmpJudicialList = sipreTmpJudicialList;
+    }
 
-	public void setSiprePlanillaDetalles(List<SiprePlanillaDetalle> siprePlanillaDetalles) {
-		this.siprePlanillaDetalles = siprePlanillaDetalles;
-	}
+    public List<SipreExcepcion> getSipreExcepcionList() {
+        return sipreExcepcionList;
+    }
 
-	public SiprePlanillaDetalle addSiprePlanillaDetalle(SiprePlanillaDetalle siprePlanillaDetalle) {
-		getSiprePlanillaDetalles().add(siprePlanillaDetalle);
-		siprePlanillaDetalle.setSipreTipoPlanilla(this);
+    public void setSipreExcepcionList(List<SipreExcepcion> sipreExcepcionList) {
+        this.sipreExcepcionList = sipreExcepcionList;
+    }
 
-		return siprePlanillaDetalle;
-	}
+    public List<SiprePlanillaDetalle> getSiprePlanillaDetalleList() {
+        return siprePlanillaDetalleList;
+    }
 
-	public SiprePlanillaDetalle removeSiprePlanillaDetalle(SiprePlanillaDetalle siprePlanillaDetalle) {
-		getSiprePlanillaDetalles().remove(siprePlanillaDetalle);
-		siprePlanillaDetalle.setSipreTipoPlanilla(null);
+    public void setSiprePlanillaDetalleList(List<SiprePlanillaDetalle> siprePlanillaDetalleList) {
+        this.siprePlanillaDetalleList = siprePlanillaDetalleList;
+    }
 
-		return siprePlanillaDetalle;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (ctpCodigo != null ? ctpCodigo.hashCode() : 0);
+        return hash;
+    }
 
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreTipoPlanilla)) {
+            return false;
+        }
+        SipreTipoPlanilla other = (SipreTipoPlanilla) object;
+        if ((this.ctpCodigo == null && other.ctpCodigo != null) || (this.ctpCodigo != null && !this.ctpCodigo.equals(other.ctpCodigo))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreTipoPlanilla[ ctpCodigo=" + ctpCodigo + " ]";
+    }
+    
 }

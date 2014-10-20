@@ -1,235 +1,309 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import java.util.Date;
 import java.util.List;
-
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.persistence.Temporal;
+import javax.persistence.TemporalType;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_BOLETA_CABECERA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_BOLETA_CABECERA")
-@NamedQuery(name="SipreBoletaCabecera.findAll", query="SELECT s FROM SipreBoletaCabecera s")
+@Table(name = "SIPRE_BOLETA_CABECERA")
+@NamedQueries({
+    @NamedQuery(name = "SipreBoletaCabecera.findAll", query = "SELECT s FROM SipreBoletaCabecera s")})
 public class SipreBoletaCabecera implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreBoletaCabeceraPK sipreBoletaCabeceraPK;
+    @Column(name = "CBC_IND_ACT_PENS")
+    private Character cbcIndActPens;
+    @Column(name = "NBC_NUM_BOLETA")
+    private Integer nbcNumBoleta;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NBC_MTO_INGRESO")
+    private BigDecimal nbcMtoIngreso;
+    @Column(name = "NBC_MTO_EGRESO")
+    private BigDecimal nbcMtoEgreso;
+    @Size(max = 3)
+    @Column(name = "CBC_COD_GRA_EFEC")
+    private String cbcCodGraEfec;
+    @Size(max = 10)
+    @Column(name = "VBC_DES_GRA_EFEC")
+    private String vbcDesGraEfec;
+    @Size(max = 3)
+    @Column(name = "CBC_COD_GRA_PENS")
+    private String cbcCodGraPens;
+    @Size(max = 10)
+    @Column(name = "VBC_DES_GRA_PENS")
+    private String vbcDesGraPens;
+    @Size(max = 6)
+    @Column(name = "CBC_COD_UNIDAD")
+    private String cbcCodUnidad;
+    @Size(max = 30)
+    @Column(name = "VBC_DES_UNIDAD")
+    private String vbcDesUnidad;
+    @Column(name = "TCB_TIP_PERSONA")
+    private Character tcbTipPersona;
+    @Size(max = 30)
+    @Column(name = "VBC_LUGAR")
+    private String vbcLugar;
+    @Size(max = 8)
+    @Column(name = "CBC_DNI")
+    private String cbcDni;
+    @Size(max = 30)
+    @Column(name = "VBC_DES_BANCO")
+    private String vbcDesBanco;
+    @Size(max = 40)
+    @Column(name = "VBC_REG_REMUN")
+    private String vbcRegRemun;
+    @Size(max = 40)
+    @Column(name = "VBC_REG_PENS")
+    private String vbcRegPens;
+    @Size(max = 9)
+    @Column(name = "CBC_USU_MOD")
+    private String cbcUsuMod;
+    @Column(name = "DBC_FEC_REG")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dbcFecReg;
+    @Column(name = "DBC_FEC_MOD")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date dbcFecMod;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreBoletaCabecera")
+    private List<SipreBoletaDetalle> sipreBoletaDetalleList;
+    @JoinColumn(name = "CUSUARIO_CODIGO", referencedColumnName = "CUSUARIO_CODIGO")
+    @ManyToOne(optional = false)
+    private SipreUsuario sipreUsuario;
 
-	@EmbeddedId
-	private SipreBoletaCabeceraPK id;
+    public SipreBoletaCabecera() {
+    }
 
-	@Column(name="CBC_COD_GRA_EFEC")
-	private String cbcCodGraEfec;
+    public SipreBoletaCabecera(SipreBoletaCabeceraPK sipreBoletaCabeceraPK) {
+        this.sipreBoletaCabeceraPK = sipreBoletaCabeceraPK;
+    }
 
-	@Column(name="CBC_COD_GRA_PENS")
-	private String cbcCodGraPens;
+    public SipreBoletaCabecera(String cbcMesProceso, short nbcNumProceso, String cbcNroAdm) {
+        this.sipreBoletaCabeceraPK = new SipreBoletaCabeceraPK(cbcMesProceso, nbcNumProceso, cbcNroAdm);
+    }
 
-	@Column(name="CBC_COD_UNIDAD")
-	private String cbcCodUnidad;
+    public SipreBoletaCabeceraPK getSipreBoletaCabeceraPK() {
+        return sipreBoletaCabeceraPK;
+    }
 
-	@Column(name="CBC_DNI")
-	private String cbcDni;
+    public void setSipreBoletaCabeceraPK(SipreBoletaCabeceraPK sipreBoletaCabeceraPK) {
+        this.sipreBoletaCabeceraPK = sipreBoletaCabeceraPK;
+    }
 
-	@Column(name="CBC_IND_ACT_PENS")
-	private String cbcIndActPens;
+    public Character getCbcIndActPens() {
+        return cbcIndActPens;
+    }
 
-	@Column(name="NBC_MTO_EGRESO")
-	private BigDecimal nbcMtoEgreso;
+    public void setCbcIndActPens(Character cbcIndActPens) {
+        this.cbcIndActPens = cbcIndActPens;
+    }
 
-	@Column(name="NBC_MTO_INGRESO")
-	private BigDecimal nbcMtoIngreso;
+    public Integer getNbcNumBoleta() {
+        return nbcNumBoleta;
+    }
 
-	@Column(name="NBC_NUM_BOLETA")
-	private BigDecimal nbcNumBoleta;
+    public void setNbcNumBoleta(Integer nbcNumBoleta) {
+        this.nbcNumBoleta = nbcNumBoleta;
+    }
 
-	@Column(name="TCB_TIP_PERSONA")
-	private String tcbTipPersona;
+    public BigDecimal getNbcMtoIngreso() {
+        return nbcMtoIngreso;
+    }
 
-	@Column(name="VBC_DES_BANCO")
-	private String vbcDesBanco;
+    public void setNbcMtoIngreso(BigDecimal nbcMtoIngreso) {
+        this.nbcMtoIngreso = nbcMtoIngreso;
+    }
 
-	@Column(name="VBC_DES_GRA_EFEC")
-	private String vbcDesGraEfec;
+    public BigDecimal getNbcMtoEgreso() {
+        return nbcMtoEgreso;
+    }
 
-	@Column(name="VBC_DES_GRA_PENS")
-	private String vbcDesGraPens;
+    public void setNbcMtoEgreso(BigDecimal nbcMtoEgreso) {
+        this.nbcMtoEgreso = nbcMtoEgreso;
+    }
 
-	@Column(name="VBC_DES_UNIDAD")
-	private String vbcDesUnidad;
+    public String getCbcCodGraEfec() {
+        return cbcCodGraEfec;
+    }
 
-	@Column(name="VBC_LUGAR")
-	private String vbcLugar;
+    public void setCbcCodGraEfec(String cbcCodGraEfec) {
+        this.cbcCodGraEfec = cbcCodGraEfec;
+    }
 
-	@Column(name="VBC_REG_PENS")
-	private String vbcRegPens;
+    public String getVbcDesGraEfec() {
+        return vbcDesGraEfec;
+    }
 
-	@Column(name="VBC_REG_REMUN")
-	private String vbcRegRemun;
+    public void setVbcDesGraEfec(String vbcDesGraEfec) {
+        this.vbcDesGraEfec = vbcDesGraEfec;
+    }
 
-	//bi-directional many-to-one association to SipreBoletaDetalle
-	@OneToMany(mappedBy="sipreBoletaCabecera")
-	private List<SipreBoletaDetalle> sipreBoletaDetalles;
+    public String getCbcCodGraPens() {
+        return cbcCodGraPens;
+    }
 
-	public SipreBoletaCabecera() {
-	}
+    public void setCbcCodGraPens(String cbcCodGraPens) {
+        this.cbcCodGraPens = cbcCodGraPens;
+    }
 
-	public SipreBoletaCabeceraPK getId() {
-		return this.id;
-	}
+    public String getVbcDesGraPens() {
+        return vbcDesGraPens;
+    }
 
-	public void setId(SipreBoletaCabeceraPK id) {
-		this.id = id;
-	}
+    public void setVbcDesGraPens(String vbcDesGraPens) {
+        this.vbcDesGraPens = vbcDesGraPens;
+    }
 
-	public String getCbcCodGraEfec() {
-		return this.cbcCodGraEfec;
-	}
+    public String getCbcCodUnidad() {
+        return cbcCodUnidad;
+    }
 
-	public void setCbcCodGraEfec(String cbcCodGraEfec) {
-		this.cbcCodGraEfec = cbcCodGraEfec;
-	}
+    public void setCbcCodUnidad(String cbcCodUnidad) {
+        this.cbcCodUnidad = cbcCodUnidad;
+    }
 
-	public String getCbcCodGraPens() {
-		return this.cbcCodGraPens;
-	}
+    public String getVbcDesUnidad() {
+        return vbcDesUnidad;
+    }
 
-	public void setCbcCodGraPens(String cbcCodGraPens) {
-		this.cbcCodGraPens = cbcCodGraPens;
-	}
+    public void setVbcDesUnidad(String vbcDesUnidad) {
+        this.vbcDesUnidad = vbcDesUnidad;
+    }
 
-	public String getCbcCodUnidad() {
-		return this.cbcCodUnidad;
-	}
+    public Character getTcbTipPersona() {
+        return tcbTipPersona;
+    }
 
-	public void setCbcCodUnidad(String cbcCodUnidad) {
-		this.cbcCodUnidad = cbcCodUnidad;
-	}
+    public void setTcbTipPersona(Character tcbTipPersona) {
+        this.tcbTipPersona = tcbTipPersona;
+    }
 
-	public String getCbcDni() {
-		return this.cbcDni;
-	}
+    public String getVbcLugar() {
+        return vbcLugar;
+    }
 
-	public void setCbcDni(String cbcDni) {
-		this.cbcDni = cbcDni;
-	}
+    public void setVbcLugar(String vbcLugar) {
+        this.vbcLugar = vbcLugar;
+    }
 
-	public String getCbcIndActPens() {
-		return this.cbcIndActPens;
-	}
+    public String getCbcDni() {
+        return cbcDni;
+    }
 
-	public void setCbcIndActPens(String cbcIndActPens) {
-		this.cbcIndActPens = cbcIndActPens;
-	}
+    public void setCbcDni(String cbcDni) {
+        this.cbcDni = cbcDni;
+    }
 
-	public BigDecimal getNbcMtoEgreso() {
-		return this.nbcMtoEgreso;
-	}
+    public String getVbcDesBanco() {
+        return vbcDesBanco;
+    }
 
-	public void setNbcMtoEgreso(BigDecimal nbcMtoEgreso) {
-		this.nbcMtoEgreso = nbcMtoEgreso;
-	}
+    public void setVbcDesBanco(String vbcDesBanco) {
+        this.vbcDesBanco = vbcDesBanco;
+    }
 
-	public BigDecimal getNbcMtoIngreso() {
-		return this.nbcMtoIngreso;
-	}
+    public String getVbcRegRemun() {
+        return vbcRegRemun;
+    }
 
-	public void setNbcMtoIngreso(BigDecimal nbcMtoIngreso) {
-		this.nbcMtoIngreso = nbcMtoIngreso;
-	}
+    public void setVbcRegRemun(String vbcRegRemun) {
+        this.vbcRegRemun = vbcRegRemun;
+    }
 
-	public BigDecimal getNbcNumBoleta() {
-		return this.nbcNumBoleta;
-	}
+    public String getVbcRegPens() {
+        return vbcRegPens;
+    }
 
-	public void setNbcNumBoleta(BigDecimal nbcNumBoleta) {
-		this.nbcNumBoleta = nbcNumBoleta;
-	}
+    public void setVbcRegPens(String vbcRegPens) {
+        this.vbcRegPens = vbcRegPens;
+    }
 
-	public String getTcbTipPersona() {
-		return this.tcbTipPersona;
-	}
+    public String getCbcUsuMod() {
+        return cbcUsuMod;
+    }
 
-	public void setTcbTipPersona(String tcbTipPersona) {
-		this.tcbTipPersona = tcbTipPersona;
-	}
+    public void setCbcUsuMod(String cbcUsuMod) {
+        this.cbcUsuMod = cbcUsuMod;
+    }
 
-	public String getVbcDesBanco() {
-		return this.vbcDesBanco;
-	}
+    public Date getDbcFecReg() {
+        return dbcFecReg;
+    }
 
-	public void setVbcDesBanco(String vbcDesBanco) {
-		this.vbcDesBanco = vbcDesBanco;
-	}
+    public void setDbcFecReg(Date dbcFecReg) {
+        this.dbcFecReg = dbcFecReg;
+    }
 
-	public String getVbcDesGraEfec() {
-		return this.vbcDesGraEfec;
-	}
+    public Date getDbcFecMod() {
+        return dbcFecMod;
+    }
 
-	public void setVbcDesGraEfec(String vbcDesGraEfec) {
-		this.vbcDesGraEfec = vbcDesGraEfec;
-	}
+    public void setDbcFecMod(Date dbcFecMod) {
+        this.dbcFecMod = dbcFecMod;
+    }
 
-	public String getVbcDesGraPens() {
-		return this.vbcDesGraPens;
-	}
+    public List<SipreBoletaDetalle> getSipreBoletaDetalleList() {
+        return sipreBoletaDetalleList;
+    }
 
-	public void setVbcDesGraPens(String vbcDesGraPens) {
-		this.vbcDesGraPens = vbcDesGraPens;
-	}
+    public void setSipreBoletaDetalleList(List<SipreBoletaDetalle> sipreBoletaDetalleList) {
+        this.sipreBoletaDetalleList = sipreBoletaDetalleList;
+    }
 
-	public String getVbcDesUnidad() {
-		return this.vbcDesUnidad;
-	}
+    public SipreUsuario getSipreUsuario() {
+        return sipreUsuario;
+    }
 
-	public void setVbcDesUnidad(String vbcDesUnidad) {
-		this.vbcDesUnidad = vbcDesUnidad;
-	}
+    public void setSipreUsuario(SipreUsuario sipreUsuario) {
+        this.sipreUsuario = sipreUsuario;
+    }
 
-	public String getVbcLugar() {
-		return this.vbcLugar;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreBoletaCabeceraPK != null ? sipreBoletaCabeceraPK.hashCode() : 0);
+        return hash;
+    }
 
-	public void setVbcLugar(String vbcLugar) {
-		this.vbcLugar = vbcLugar;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreBoletaCabecera)) {
+            return false;
+        }
+        SipreBoletaCabecera other = (SipreBoletaCabecera) object;
+        if ((this.sipreBoletaCabeceraPK == null && other.sipreBoletaCabeceraPK != null) || (this.sipreBoletaCabeceraPK != null && !this.sipreBoletaCabeceraPK.equals(other.sipreBoletaCabeceraPK))) {
+            return false;
+        }
+        return true;
+    }
 
-	public String getVbcRegPens() {
-		return this.vbcRegPens;
-	}
-
-	public void setVbcRegPens(String vbcRegPens) {
-		this.vbcRegPens = vbcRegPens;
-	}
-
-	public String getVbcRegRemun() {
-		return this.vbcRegRemun;
-	}
-
-	public void setVbcRegRemun(String vbcRegRemun) {
-		this.vbcRegRemun = vbcRegRemun;
-	}
-
-	public List<SipreBoletaDetalle> getSipreBoletaDetalles() {
-		return this.sipreBoletaDetalles;
-	}
-
-	public void setSipreBoletaDetalles(List<SipreBoletaDetalle> sipreBoletaDetalles) {
-		this.sipreBoletaDetalles = sipreBoletaDetalles;
-	}
-
-	public SipreBoletaDetalle addSipreBoletaDetalle(SipreBoletaDetalle sipreBoletaDetalle) {
-		getSipreBoletaDetalles().add(sipreBoletaDetalle);
-		sipreBoletaDetalle.setSipreBoletaCabecera(this);
-
-		return sipreBoletaDetalle;
-	}
-
-	public SipreBoletaDetalle removeSipreBoletaDetalle(SipreBoletaDetalle sipreBoletaDetalle) {
-		getSipreBoletaDetalles().remove(sipreBoletaDetalle);
-		sipreBoletaDetalle.setSipreBoletaCabecera(null);
-
-		return sipreBoletaDetalle;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreBoletaCabecera[ sipreBoletaCabeceraPK=" + sipreBoletaCabeceraPK + " ]";
+    }
+    
 }

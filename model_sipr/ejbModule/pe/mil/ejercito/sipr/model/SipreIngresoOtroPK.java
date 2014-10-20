@@ -1,4 +1,10 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
+
 import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
@@ -12,30 +18,22 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class SipreIngresoOtroPK implements Serializable {
-   
-	private static final long serialVersionUID = 1L;
-    
-	@Size(min = 1, max = 4)
-    @Column(name = "CCI_CODIGO")
-    private String cciCodigo;
-    
+    @Basic(optional = false)
+    @NotNull
     @Size(min = 1, max = 9)
     @Column(name = "CPERSONA_NRO_ADM")
     private String cpersonaNroAdm;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CCI_CODIGO")
+    private String cciCodigo;
 
     public SipreIngresoOtroPK() {
     }
 
-    public SipreIngresoOtroPK(String cciCodigo, String cpersonaNroAdm) {
-        this.cciCodigo = cciCodigo;
+    public SipreIngresoOtroPK(String cpersonaNroAdm, String cciCodigo) {
         this.cpersonaNroAdm = cpersonaNroAdm;
-    }
-
-    public String getCciCodigo() {
-        return cciCodigo;
-    }
-
-    public void setCciCodigo(String cciCodigo) {
         this.cciCodigo = cciCodigo;
     }
 
@@ -47,11 +45,19 @@ public class SipreIngresoOtroPK implements Serializable {
         this.cpersonaNroAdm = cpersonaNroAdm;
     }
 
+    public String getCciCodigo() {
+        return cciCodigo;
+    }
+
+    public void setCciCodigo(String cciCodigo) {
+        this.cciCodigo = cciCodigo;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
         hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
         return hash;
     }
 
@@ -62,10 +68,10 @@ public class SipreIngresoOtroPK implements Serializable {
             return false;
         }
         SipreIngresoOtroPK other = (SipreIngresoOtroPK) object;
-        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
+        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
             return false;
         }
-        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
             return false;
         }
         return true;
@@ -73,7 +79,7 @@ public class SipreIngresoOtroPK implements Serializable {
 
     @Override
     public String toString() {
-        return "SIPRE.SipreIngresoOtroPK[ cciCodigo=" + cciCodigo + ", cpersonaNroAdm=" + cpersonaNroAdm + " ]";
+        return "pe.mil.ejercito.sipr.model.SipreIngresoOtroPK[ cpersonaNroAdm=" + cpersonaNroAdm + ", cciCodigo=" + cciCodigo + " ]";
     }
     
 }

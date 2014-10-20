@@ -1,105 +1,131 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
-import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_ACTIVIDAD database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_ACTIVIDAD")
-@NamedQuery(name="SipreActividad.findAll", query="SELECT s FROM SipreActividad s")
+@Table(name = "SIPRE_ACTIVIDAD")
+@NamedQueries({
+    @NamedQuery(name = "SipreActividad.findAll", query = "SELECT s FROM SipreActividad s")})
 public class SipreActividad implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CACTIVIDAD_CODIGO")
+    private String cactividadCodigo;
+    @Size(max = 60)
+    @Column(name = "VACTIVIDAD_DSC_LARGA")
+    private String vactividadDscLarga;
+    @Size(max = 20)
+    @Column(name = "VACTIVIDAD_DSC_CORTA")
+    private String vactividadDscCorta;
+    @Column(name = "CACTIVIDAD_ESTADO")
+    private Character cactividadEstado;
+    @Column(name = "CACTIVIDAD_IND_LIM_PROV")
+    private Character cactividadIndLimProv;
+    @JoinColumn(name = "CNUCLEO_CODIGO", referencedColumnName = "CNUCLEO_CODIGO")
+    @ManyToOne(optional = false)
+    private SipreNucleo sipreNucleo;
 
-	@Id
-	@Column(name="CACTIVIDAD_CODIGO")
-	private String cactividadCodigo;
+    public SipreActividad() {
+    }
 
-	@Column(name="CACTIVIDAD_ESTADO")
-	private String cactividadEstado;
+    public SipreActividad(String cactividadCodigo) {
+        this.cactividadCodigo = cactividadCodigo;
+    }
 
-	@Column(name="VACTIVIDAD_DSC_CORTA")
-	private String vactividadDscCorta;
+    public String getCactividadCodigo() {
+        return cactividadCodigo;
+    }
 
-	@Column(name="VACTIVIDAD_DSC_LARGA")
-	private String vactividadDscLarga;
+    public void setCactividadCodigo(String cactividadCodigo) {
+        this.cactividadCodigo = cactividadCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreNucleo
-	@ManyToOne
-	@JoinColumn(name="CNUCLEO_CODIGO",insertable = false, updatable = false)
-	private SipreNucleo sipreNucleo;
+    public String getVactividadDscLarga() {
+        return vactividadDscLarga;
+    }
 
-	//bi-directional many-to-one association to SipreUnidad
-	@OneToMany(mappedBy="sipreActividad")
-	private List<SipreUnidad> sipreUnidads;
+    public void setVactividadDscLarga(String vactividadDscLarga) {
+        this.vactividadDscLarga = vactividadDscLarga;
+    }
 
-	public SipreActividad() {
-	}
+    public String getVactividadDscCorta() {
+        return vactividadDscCorta;
+    }
 
-	public String getCactividadCodigo() {
-		return this.cactividadCodigo;
-	}
+    public void setVactividadDscCorta(String vactividadDscCorta) {
+        this.vactividadDscCorta = vactividadDscCorta;
+    }
 
-	public void setCactividadCodigo(String cactividadCodigo) {
-		this.cactividadCodigo = cactividadCodigo;
-	}
+    public Character getCactividadEstado() {
+        return cactividadEstado;
+    }
 
-	public String getCactividadEstado() {
-		return this.cactividadEstado;
-	}
+    public void setCactividadEstado(Character cactividadEstado) {
+        this.cactividadEstado = cactividadEstado;
+    }
 
-	public void setCactividadEstado(String cactividadEstado) {
-		this.cactividadEstado = cactividadEstado;
-	}
+    public Character getCactividadIndLimProv() {
+        return cactividadIndLimProv;
+    }
 
-	public String getVactividadDscCorta() {
-		return this.vactividadDscCorta;
-	}
+    public void setCactividadIndLimProv(Character cactividadIndLimProv) {
+        this.cactividadIndLimProv = cactividadIndLimProv;
+    }
 
-	public void setVactividadDscCorta(String vactividadDscCorta) {
-		this.vactividadDscCorta = vactividadDscCorta;
-	}
+    public SipreNucleo getSipreNucleo() {
+        return sipreNucleo;
+    }
 
-	public String getVactividadDscLarga() {
-		return this.vactividadDscLarga;
-	}
+    public void setSipreNucleo(SipreNucleo sipreNucleo) {
+        this.sipreNucleo = sipreNucleo;
+    }
 
-	public void setVactividadDscLarga(String vactividadDscLarga) {
-		this.vactividadDscLarga = vactividadDscLarga;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cactividadCodigo != null ? cactividadCodigo.hashCode() : 0);
+        return hash;
+    }
 
-	public SipreNucleo getSipreNucleo() {
-		return this.sipreNucleo;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreActividad)) {
+            return false;
+        }
+        SipreActividad other = (SipreActividad) object;
+        if ((this.cactividadCodigo == null && other.cactividadCodigo != null) || (this.cactividadCodigo != null && !this.cactividadCodigo.equals(other.cactividadCodigo))) {
+            return false;
+        }
+        return true;
+    }
 
-	public void setSipreNucleo(SipreNucleo sipreNucleo) {
-		this.sipreNucleo = sipreNucleo;
-	}
-
-	public List<SipreUnidad> getSipreUnidads() {
-		return this.sipreUnidads;
-	}
-
-	public void setSipreUnidads(List<SipreUnidad> sipreUnidads) {
-		this.sipreUnidads = sipreUnidads;
-	}
-
-	public SipreUnidad addSipreUnidad(SipreUnidad sipreUnidad) {
-		getSipreUnidads().add(sipreUnidad);
-		sipreUnidad.setSipreActividad(this);
-
-		return sipreUnidad;
-	}
-
-	public SipreUnidad removeSipreUnidad(SipreUnidad sipreUnidad) {
-		getSipreUnidads().remove(sipreUnidad);
-		sipreUnidad.setSipreActividad(null);
-
-		return sipreUnidad;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreActividad[ cactividadCodigo=" + cactividadCodigo + " ]";
+    }
+    
 }

@@ -1,5 +1,7 @@
 package pe.mil.ejercito.sipr.ejb;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -17,23 +19,17 @@ public class VerificarCodigoBancoEjbBean extends GenericDAOImpl<SipreTmpBanco>
 	@PersistenceContext(name = "model_sipre")
 	EntityManager em;
 
-	/*
+	@SuppressWarnings("unchecked")
 	@Override
-	public Boolean registrarIngresoConceptoPersonal(SipreTmpBanco bean) {
-		boolean bandera = false;
+	public List<SipreTmpBanco> listBean(SipreTmpBanco bean) {
+		List<SipreTmpBanco> list = null;
 		try {
-			if (null != bean.getCpersonaNroAdm()) {
-				em.merge(bean);
-				bandera = true;
-			} else {
-				em.persist(bean);
-				bandera = true;
-			}
+			list = (List<SipreTmpBanco>) em.createNamedQuery(
+					"SipreTmpBanco.findAll").getResultList();
 		} catch (Exception e) {
-			bandera = false;
 			e.printStackTrace();
 		}
-		return bandera;
+		return list;
 	}
-*/
+
 }

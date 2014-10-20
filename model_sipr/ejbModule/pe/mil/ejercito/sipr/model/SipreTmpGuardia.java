@@ -1,80 +1,141 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_TMP_GUARDIA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
 @Table(name = "SIPRE_TMP_GUARDIA")
-@NamedQuery(name = "SipreTmpGuardia.findAll", query = "SELECT s FROM SipreTmpGuardia s")
+@NamedQueries({
+    @NamedQuery(name = "SipreTmpGuardia.findAll", query = "SELECT s FROM SipreTmpGuardia s")})
 public class SipreTmpGuardia implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreTmpGuardiaPK sipreTmpGuardiaPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NTG_MTO_GESTION")
+    private BigDecimal ntgMtoGestion;
+    @Column(name = "NTG_MTO_PAGADO")
+    private BigDecimal ntgMtoPagado;
+    @Size(max = 80)
+    @Column(name = "VTG_APE_NOM")
+    private String vtgApeNom;
+    @Column(name = "CTG_IND_SITUACION")
+    private Character ctgIndSituacion;
+    @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SiprePersona siprePersona;
+    @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreConceptoIngreso sipreConceptoIngreso;
 
-	@EmbeddedId
-	private SipreTmpGuardiaPK id;
+    public SipreTmpGuardia() {
+    }
 
-	@Column(name = "CTG_TIPO")
-	private String ctgTipo;
+    public SipreTmpGuardia(SipreTmpGuardiaPK sipreTmpGuardiaPK) {
+        this.sipreTmpGuardiaPK = sipreTmpGuardiaPK;
+    }
 
-	@Column(name = "NTG_MONTO")
-	private BigDecimal ntgMonto;
+    public SipreTmpGuardia(String cpersonaNroAdm, String cciCodigo, String ctgMesGuardia) {
+        this.sipreTmpGuardiaPK = new SipreTmpGuardiaPK(cpersonaNroAdm, cciCodigo, ctgMesGuardia);
+    }
 
-	// bi-directional many-to-one association to SipreConceptoIngreso
-	@ManyToOne
-	@JoinColumn(name = "CCI_CODIGO", insertable = false, updatable = false)
-	private SipreConceptoIngreso sipreConceptoIngreso;
+    public SipreTmpGuardiaPK getSipreTmpGuardiaPK() {
+        return sipreTmpGuardiaPK;
+    }
 
-	// bi-directional many-to-one association to SiprePersona
-	@ManyToOne
-	@JoinColumn(name = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
-	private SiprePersona siprePersona;
+    public void setSipreTmpGuardiaPK(SipreTmpGuardiaPK sipreTmpGuardiaPK) {
+        this.sipreTmpGuardiaPK = sipreTmpGuardiaPK;
+    }
 
-	public SipreTmpGuardia() {
-	}
+    public BigDecimal getNtgMtoGestion() {
+        return ntgMtoGestion;
+    }
 
-	public SipreTmpGuardiaPK getId() {
-		return this.id;
-	}
+    public void setNtgMtoGestion(BigDecimal ntgMtoGestion) {
+        this.ntgMtoGestion = ntgMtoGestion;
+    }
 
-	public void setId(SipreTmpGuardiaPK id) {
-		this.id = id;
-	}
+    public BigDecimal getNtgMtoPagado() {
+        return ntgMtoPagado;
+    }
 
-	public String getCtgTipo() {
-		return this.ctgTipo;
-	}
+    public void setNtgMtoPagado(BigDecimal ntgMtoPagado) {
+        this.ntgMtoPagado = ntgMtoPagado;
+    }
 
-	public void setCtgTipo(String ctgTipo) {
-		this.ctgTipo = ctgTipo;
-	}
+    public String getVtgApeNom() {
+        return vtgApeNom;
+    }
 
-	public BigDecimal getNtgMonto() {
-		return this.ntgMonto;
-	}
+    public void setVtgApeNom(String vtgApeNom) {
+        this.vtgApeNom = vtgApeNom;
+    }
 
-	public void setNtgMonto(BigDecimal ntgMonto) {
-		this.ntgMonto = ntgMonto;
-	}
+    public Character getCtgIndSituacion() {
+        return ctgIndSituacion;
+    }
 
-	public SipreConceptoIngreso getSipreConceptoIngreso() {
-		return this.sipreConceptoIngreso;
-	}
+    public void setCtgIndSituacion(Character ctgIndSituacion) {
+        this.ctgIndSituacion = ctgIndSituacion;
+    }
 
-	public void setSipreConceptoIngreso(
-			SipreConceptoIngreso sipreConceptoIngreso) {
-		this.sipreConceptoIngreso = sipreConceptoIngreso;
-	}
+    public SiprePersona getSiprePersona() {
+        return siprePersona;
+    }
 
-	public SiprePersona getSiprePersona() {
-		return this.siprePersona;
-	}
+    public void setSiprePersona(SiprePersona siprePersona) {
+        this.siprePersona = siprePersona;
+    }
 
-	public void setSiprePersona(SiprePersona siprePersona) {
-		this.siprePersona = siprePersona;
-	}
+    public SipreConceptoIngreso getSipreConceptoIngreso() {
+        return sipreConceptoIngreso;
+    }
 
+    public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
+        this.sipreConceptoIngreso = sipreConceptoIngreso;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreTmpGuardiaPK != null ? sipreTmpGuardiaPK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreTmpGuardia)) {
+            return false;
+        }
+        SipreTmpGuardia other = (SipreTmpGuardia) object;
+        if ((this.sipreTmpGuardiaPK == null && other.sipreTmpGuardiaPK != null) || (this.sipreTmpGuardiaPK != null && !this.sipreTmpGuardiaPK.equals(other.sipreTmpGuardiaPK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreTmpGuardia[ sipreTmpGuardiaPK=" + sipreTmpGuardiaPK + " ]";
+    }
+    
 }

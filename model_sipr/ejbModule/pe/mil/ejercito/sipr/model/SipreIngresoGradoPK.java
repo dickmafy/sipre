@@ -1,68 +1,103 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The primary key class for the SIPRE_INGRESO_GRADO database table.
- * 
+ *
+ * @author DIEGO
  */
 @Embeddable
 public class SipreIngresoGradoPK implements Serializable {
-	//default serial version id, required for serializable classes.
-	private static final long serialVersionUID = 1L;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "CGRADO_CODIGO")
+    private String cgradoCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 4)
+    @Column(name = "CCI_CODIGO")
+    private String cciCodigo;
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 18)
+    @Column(name = "CIG_SITUACION")
+    private String cigSituacion;
 
-	@Column(name="CGRADO_CODIGO", insertable=false, updatable=false)
-	private String cgradoCodigo;
+    public SipreIngresoGradoPK() {
+    }
 
-	@Column(name="CCI_CODIGO", insertable=false, updatable=false)
-	private String cciCodigo;
+    public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo, String cigSituacion) {
+        this.cgradoCodigo = cgradoCodigo;
+        this.cciCodigo = cciCodigo;
+        this.cigSituacion = cigSituacion;
+    }
 
-	@Column(name="CIG_SITUACION")
-	private String cigSituacion;
+    public String getCgradoCodigo() {
+        return cgradoCodigo;
+    }
 
-	public SipreIngresoGradoPK() {
-	}
-	public String getCgradoCodigo() {
-		return this.cgradoCodigo;
-	}
-	public void setCgradoCodigo(String cgradoCodigo) {
-		this.cgradoCodigo = cgradoCodigo;
-	}
-	public String getCciCodigo() {
-		return this.cciCodigo;
-	}
-	public void setCciCodigo(String cciCodigo) {
-		this.cciCodigo = cciCodigo;
-	}
-	public String getCigSituacion() {
-		return this.cigSituacion;
-	}
-	public void setCigSituacion(String cigSituacion) {
-		this.cigSituacion = cigSituacion;
-	}
+    public void setCgradoCodigo(String cgradoCodigo) {
+        this.cgradoCodigo = cgradoCodigo;
+    }
 
-	public boolean equals(Object other) {
-		if (this == other) {
-			return true;
-		}
-		if (!(other instanceof SipreIngresoGradoPK)) {
-			return false;
-		}
-		SipreIngresoGradoPK castOther = (SipreIngresoGradoPK)other;
-		return 
-			this.cgradoCodigo.equals(castOther.cgradoCodigo)
-			&& this.cciCodigo.equals(castOther.cciCodigo)
-			&& this.cigSituacion.equals(castOther.cigSituacion);
-	}
+    public String getCciCodigo() {
+        return cciCodigo;
+    }
 
-	public int hashCode() {
-		final int prime = 31;
-		int hash = 17;
-		hash = hash * prime + this.cgradoCodigo.hashCode();
-		hash = hash * prime + this.cciCodigo.hashCode();
-		hash = hash * prime + this.cigSituacion.hashCode();
-		
-		return hash;
-	}
+    public void setCciCodigo(String cciCodigo) {
+        this.cciCodigo = cciCodigo;
+    }
+
+    public String getCigSituacion() {
+        return cigSituacion;
+    }
+
+    public void setCigSituacion(String cigSituacion) {
+        this.cigSituacion = cigSituacion;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cgradoCodigo != null ? cgradoCodigo.hashCode() : 0);
+        hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
+        hash += (cigSituacion != null ? cigSituacion.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreIngresoGradoPK)) {
+            return false;
+        }
+        SipreIngresoGradoPK other = (SipreIngresoGradoPK) object;
+        if ((this.cgradoCodigo == null && other.cgradoCodigo != null) || (this.cgradoCodigo != null && !this.cgradoCodigo.equals(other.cgradoCodigo))) {
+            return false;
+        }
+        if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
+            return false;
+        }
+        if ((this.cigSituacion == null && other.cigSituacion != null) || (this.cigSituacion != null && !this.cigSituacion.equals(other.cigSituacion))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo + ", cigSituacion=" + cigSituacion + " ]";
+    }
+    
 }

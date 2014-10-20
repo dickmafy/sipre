@@ -1,70 +1,100 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_DESCUENTO_LEY database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_DESCUENTO_LEY")
-@NamedQuery(name="SipreDescuentoLey.findAll", query="SELECT s FROM SipreDescuentoLey s")
+@Table(name = "SIPRE_DESCUENTO_LEY")
+@NamedQueries({
+    @NamedQuery(name = "SipreDescuentoLey.findAll", query = "SELECT s FROM SipreDescuentoLey s")})
 public class SipreDescuentoLey implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 3)
+    @Column(name = "CDL_CODIGO")
+    private String cdlCodigo;
+    @Size(max = 40)
+    @Column(name = "VDL_DSC")
+    private String vdlDsc;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreDescuentoLey")
+    private List<SipreDescuentoLeyDet> sipreDescuentoLeyDetList;
 
-	@Id
-	@Column(name="CDL_CODIGO")
-	private String cdlCodigo;
+    public SipreDescuentoLey() {
+    }
 
-	@Column(name="VDL_DSC")
-	private String vdlDsc;
+    public SipreDescuentoLey(String cdlCodigo) {
+        this.cdlCodigo = cdlCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreDescuentoLeyDet
-	@OneToMany(mappedBy="sipreDescuentoLey")
-	private List<SipreDescuentoLeyDet> sipreDescuentoLeyDets;
+    public String getCdlCodigo() {
+        return cdlCodigo;
+    }
 
-	public SipreDescuentoLey() {
-	}
+    public void setCdlCodigo(String cdlCodigo) {
+        this.cdlCodigo = cdlCodigo;
+    }
 
-	public String getCdlCodigo() {
-		return this.cdlCodigo;
-	}
+    public String getVdlDsc() {
+        return vdlDsc;
+    }
 
-	public void setCdlCodigo(String cdlCodigo) {
-		this.cdlCodigo = cdlCodigo;
-	}
+    public void setVdlDsc(String vdlDsc) {
+        this.vdlDsc = vdlDsc;
+    }
 
-	public String getVdlDsc() {
-		return this.vdlDsc;
-	}
+    public List<SipreDescuentoLeyDet> getSipreDescuentoLeyDetList() {
+        return sipreDescuentoLeyDetList;
+    }
 
-	public void setVdlDsc(String vdlDsc) {
-		this.vdlDsc = vdlDsc;
-	}
+    public void setSipreDescuentoLeyDetList(List<SipreDescuentoLeyDet> sipreDescuentoLeyDetList) {
+        this.sipreDescuentoLeyDetList = sipreDescuentoLeyDetList;
+    }
 
-	public List<SipreDescuentoLeyDet> getSipreDescuentoLeyDets() {
-		return this.sipreDescuentoLeyDets;
-	}
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cdlCodigo != null ? cdlCodigo.hashCode() : 0);
+        return hash;
+    }
 
-	public void setSipreDescuentoLeyDets(List<SipreDescuentoLeyDet> sipreDescuentoLeyDets) {
-		this.sipreDescuentoLeyDets = sipreDescuentoLeyDets;
-	}
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreDescuentoLey)) {
+            return false;
+        }
+        SipreDescuentoLey other = (SipreDescuentoLey) object;
+        if ((this.cdlCodigo == null && other.cdlCodigo != null) || (this.cdlCodigo != null && !this.cdlCodigo.equals(other.cdlCodigo))) {
+            return false;
+        }
+        return true;
+    }
 
-	public SipreDescuentoLeyDet addSipreDescuentoLeyDet(SipreDescuentoLeyDet sipreDescuentoLeyDet) {
-		getSipreDescuentoLeyDets().add(sipreDescuentoLeyDet);
-		sipreDescuentoLeyDet.setSipreDescuentoLey(this);
-
-		return sipreDescuentoLeyDet;
-	}
-
-	public SipreDescuentoLeyDet removeSipreDescuentoLeyDet(SipreDescuentoLeyDet sipreDescuentoLeyDet) {
-		getSipreDescuentoLeyDets().remove(sipreDescuentoLeyDet);
-		sipreDescuentoLeyDet.setSipreDescuentoLey(null);
-
-		return sipreDescuentoLeyDet;
-	}
-
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreDescuentoLey[ cdlCodigo=" + cdlCodigo + " ]";
+    }
+    
 }

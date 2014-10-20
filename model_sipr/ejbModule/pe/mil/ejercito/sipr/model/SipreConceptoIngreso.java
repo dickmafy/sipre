@@ -1,78 +1,74 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
+import javax.persistence.*;
 
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_CONCEPTO_INGRESO database table.
  * 
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_CONCEPTO_INGRESO")
-@NamedQuery(name="SipreConceptoIngreso.findAll", query="SELECT s FROM SipreConceptoIngreso s")
+@Table(name = "SIPRE_CONCEPTO_INGRESO")
+@NamedQueries({ @NamedQuery(name = "SipreConceptoIngreso.findAll", query = "SELECT s FROM SipreConceptoIngreso s") })
 public class SipreConceptoIngreso implements Serializable {
 	private static final long serialVersionUID = 1L;
-
 	@Id
-	@Column(name="CCI_CODIGO")
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 4)
+	@Column(name = "CCI_CODIGO")
 	private String cciCodigo;
-
-	@Column(name="CCI_COD_DESTINO")
+	@Size(max = 4)
+	@Column(name = "CCI_COD_DESTINO")
 	private String cciCodDestino;
-
-	@Column(name="CCI_COD_MEF")
-	private String cciCodMef;
-
-	@Column(name="VCI_DSC_CORTA")
-	private String vciDscCorta;
-
-	@Column(name="VCI_DSC_LARGA")
+	@Size(max = 80)
+	@Column(name = "VCI_DSC_LARGA")
 	private String vciDscLarga;
-
-	//bi-directional many-to-one association to SipreTipoPlanilla
+	@Size(max = 40)
+	@Column(name = "VCI_DSC_CORTA")
+	private String vciDscCorta;
+	@Size(max = 6)
+	@Column(name = "CCI_COD_MEF")
+	private String cciCodMef;
+	@ManyToMany(mappedBy = "sipreConceptoIngresoList")
+	private List<SipreConceptoDescuento> sipreConceptoDescuentoList;
+	@JoinColumn(name = "CTP_CODIGO", referencedColumnName = "CTP_CODIGO")
 	@ManyToOne
-	@JoinColumn(name="CTP_CODIGO")
 	private SipreTipoPlanilla sipreTipoPlanilla;
-
-	//bi-directional many-to-many association to SipreConceptoDescuento
-	@ManyToMany
-	@JoinTable(
-		name="SIPRE_DESCUENTO_INGRESO"
-		, joinColumns={
-			@JoinColumn(name="CCI_CODIGO",insertable = false, updatable = false)
-			}
-		, inverseJoinColumns={
-			@JoinColumn(name="CCD_CODIGO",insertable = false, updatable = false)
-			}
-		)
-	private List<SipreConceptoDescuento> sipreConceptoDescuentos;
-
-	//bi-directional many-to-one association to SipreIngresoGrado
-	@OneToMany(mappedBy="sipreConceptoIngreso")
-	private List<SipreIngresoGrado> sipreIngresoGrados;
-
-	//bi-directional many-to-one association to SiprePlanillaDetalle
-	@OneToMany(mappedBy="sipreConceptoIngreso")
-	private List<SiprePlanillaDetalle> siprePlanillaDetalles;
-
-	//bi-directional many-to-one association to SipreTmpBonificacion
-	@OneToMany(mappedBy="sipreConceptoIngreso")
-	private List<SipreTmpBonificacion> sipreTmpBonificacions;
-
-	//bi-directional many-to-one association to SipreTmpGuardia
-	@OneToMany(mappedBy="sipreConceptoIngreso")
-	private List<SipreTmpGuardia> sipreTmpGuardias;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SipreTmpBonificacion> sipreTmpBonificacionList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SipreIngresoGrado> sipreIngresoGradoList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SipreIngresoOtro> sipreIngresoOtroList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SipreTmpGuardia> sipreTmpGuardiaList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SipreExcepcion> sipreExcepcionList;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
+	private List<SiprePlanillaDetalle> siprePlanillaDetalleList;
 
 	@Transient
 	private Boolean check;
-	
+
 	public SipreConceptoIngreso() {
 	}
 
+	public SipreConceptoIngreso(String cciCodigo) {
+		this.cciCodigo = cciCodigo;
+	}
+
 	public String getCciCodigo() {
-		return this.cciCodigo;
+		return cciCodigo;
 	}
 
 	public void setCciCodigo(String cciCodigo) {
@@ -80,143 +76,141 @@ public class SipreConceptoIngreso implements Serializable {
 	}
 
 	public String getCciCodDestino() {
-		return this.cciCodDestino;
+		return cciCodDestino;
 	}
 
 	public void setCciCodDestino(String cciCodDestino) {
 		this.cciCodDestino = cciCodDestino;
 	}
 
-	public String getCciCodMef() {
-		return this.cciCodMef;
-	}
-
-	public void setCciCodMef(String cciCodMef) {
-		this.cciCodMef = cciCodMef;
-	}
-
-	public String getVciDscCorta() {
-		return this.vciDscCorta;
-	}
-
-	public void setVciDscCorta(String vciDscCorta) {
-		this.vciDscCorta = vciDscCorta;
-	}
-
 	public String getVciDscLarga() {
-		return this.vciDscLarga;
+		return vciDscLarga;
 	}
 
 	public void setVciDscLarga(String vciDscLarga) {
 		this.vciDscLarga = vciDscLarga;
 	}
 
+	public String getVciDscCorta() {
+		return vciDscCorta;
+	}
+
+	public void setVciDscCorta(String vciDscCorta) {
+		this.vciDscCorta = vciDscCorta;
+	}
+
+	public String getCciCodMef() {
+		return cciCodMef;
+	}
+
+	public void setCciCodMef(String cciCodMef) {
+		this.cciCodMef = cciCodMef;
+	}
+
+	public List<SipreConceptoDescuento> getSipreConceptoDescuentoList() {
+		return sipreConceptoDescuentoList;
+	}
+
+	public void setSipreConceptoDescuentoList(
+			List<SipreConceptoDescuento> sipreConceptoDescuentoList) {
+		this.sipreConceptoDescuentoList = sipreConceptoDescuentoList;
+	}
+
 	public SipreTipoPlanilla getSipreTipoPlanilla() {
-		return this.sipreTipoPlanilla;
+		return sipreTipoPlanilla;
 	}
 
 	public void setSipreTipoPlanilla(SipreTipoPlanilla sipreTipoPlanilla) {
 		this.sipreTipoPlanilla = sipreTipoPlanilla;
 	}
 
-	public List<SipreConceptoDescuento> getSipreConceptoDescuentos() {
-		return this.sipreConceptoDescuentos;
+	public List<SipreTmpBonificacion> getSipreTmpBonificacionList() {
+		return sipreTmpBonificacionList;
 	}
 
-	public void setSipreConceptoDescuentos(List<SipreConceptoDescuento> sipreConceptoDescuentos) {
-		this.sipreConceptoDescuentos = sipreConceptoDescuentos;
+	public void setSipreTmpBonificacionList(
+			List<SipreTmpBonificacion> sipreTmpBonificacionList) {
+		this.sipreTmpBonificacionList = sipreTmpBonificacionList;
 	}
 
-	public List<SipreIngresoGrado> getSipreIngresoGrados() {
-		return this.sipreIngresoGrados;
+	public List<SipreIngresoGrado> getSipreIngresoGradoList() {
+		return sipreIngresoGradoList;
 	}
 
-	public void setSipreIngresoGrados(List<SipreIngresoGrado> sipreIngresoGrados) {
-		this.sipreIngresoGrados = sipreIngresoGrados;
+	public void setSipreIngresoGradoList(
+			List<SipreIngresoGrado> sipreIngresoGradoList) {
+		this.sipreIngresoGradoList = sipreIngresoGradoList;
 	}
 
-	public SipreIngresoGrado addSipreIngresoGrado(SipreIngresoGrado sipreIngresoGrado) {
-		getSipreIngresoGrados().add(sipreIngresoGrado);
-		sipreIngresoGrado.setSipreConceptoIngreso(this);
-
-		return sipreIngresoGrado;
+	public List<SipreIngresoOtro> getSipreIngresoOtroList() {
+		return sipreIngresoOtroList;
 	}
 
-	public SipreIngresoGrado removeSipreIngresoGrado(SipreIngresoGrado sipreIngresoGrado) {
-		getSipreIngresoGrados().remove(sipreIngresoGrado);
-		sipreIngresoGrado.setSipreConceptoIngreso(null);
-
-		return sipreIngresoGrado;
+	public void setSipreIngresoOtroList(
+			List<SipreIngresoOtro> sipreIngresoOtroList) {
+		this.sipreIngresoOtroList = sipreIngresoOtroList;
 	}
 
-	public List<SiprePlanillaDetalle> getSiprePlanillaDetalles() {
-		return this.siprePlanillaDetalles;
+	public List<SipreTmpGuardia> getSipreTmpGuardiaList() {
+		return sipreTmpGuardiaList;
 	}
 
-	public void setSiprePlanillaDetalles(List<SiprePlanillaDetalle> siprePlanillaDetalles) {
-		this.siprePlanillaDetalles = siprePlanillaDetalles;
+	public void setSipreTmpGuardiaList(List<SipreTmpGuardia> sipreTmpGuardiaList) {
+		this.sipreTmpGuardiaList = sipreTmpGuardiaList;
 	}
 
-	public SiprePlanillaDetalle addSiprePlanillaDetalle(SiprePlanillaDetalle siprePlanillaDetalle) {
-		getSiprePlanillaDetalles().add(siprePlanillaDetalle);
-		siprePlanillaDetalle.setSipreConceptoIngreso(this);
-
-		return siprePlanillaDetalle;
+	public List<SipreExcepcion> getSipreExcepcionList() {
+		return sipreExcepcionList;
 	}
 
-	public SiprePlanillaDetalle removeSiprePlanillaDetalle(SiprePlanillaDetalle siprePlanillaDetalle) {
-		getSiprePlanillaDetalles().remove(siprePlanillaDetalle);
-		siprePlanillaDetalle.setSipreConceptoIngreso(null);
-
-		return siprePlanillaDetalle;
+	public void setSipreExcepcionList(List<SipreExcepcion> sipreExcepcionList) {
+		this.sipreExcepcionList = sipreExcepcionList;
 	}
 
-	public List<SipreTmpBonificacion> getSipreTmpBonificacions() {
-		return this.sipreTmpBonificacions;
+	public List<SiprePlanillaDetalle> getSiprePlanillaDetalleList() {
+		return siprePlanillaDetalleList;
 	}
 
-	public void setSipreTmpBonificacions(List<SipreTmpBonificacion> sipreTmpBonificacions) {
-		this.sipreTmpBonificacions = sipreTmpBonificacions;
+	public void setSiprePlanillaDetalleList(
+			List<SiprePlanillaDetalle> siprePlanillaDetalleList) {
+		this.siprePlanillaDetalleList = siprePlanillaDetalleList;
 	}
 
-	public SipreTmpBonificacion addSipreTmpBonificacion(SipreTmpBonificacion sipreTmpBonificacion) {
-		getSipreTmpBonificacions().add(sipreTmpBonificacion);
-		sipreTmpBonificacion.setSipreConceptoIngreso(this);
-
-		return sipreTmpBonificacion;
+	public Boolean getCheck() {
+		return check;
 	}
 
-	public SipreTmpBonificacion removeSipreTmpBonificacion(SipreTmpBonificacion sipreTmpBonificacion) {
-		getSipreTmpBonificacions().remove(sipreTmpBonificacion);
-		sipreTmpBonificacion.setSipreConceptoIngreso(null);
-
-		return sipreTmpBonificacion;
+	public void setCheck(Boolean check) {
+		this.check = check;
 	}
 
-	public List<SipreTmpGuardia> getSipreTmpGuardias() {
-		return this.sipreTmpGuardias;
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
+		return hash;
 	}
 
-	public void setSipreTmpGuardias(List<SipreTmpGuardia> sipreTmpGuardias) {
-		this.sipreTmpGuardias = sipreTmpGuardias;
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are
+		// not set
+		if (!(object instanceof SipreConceptoIngreso)) {
+			return false;
+		}
+		SipreConceptoIngreso other = (SipreConceptoIngreso) object;
+		if ((this.cciCodigo == null && other.cciCodigo != null)
+				|| (this.cciCodigo != null && !this.cciCodigo
+						.equals(other.cciCodigo))) {
+			return false;
+		}
+		return true;
 	}
 
-	public SipreTmpGuardia addSipreTmpGuardia(SipreTmpGuardia sipreTmpGuardia) {
-		getSipreTmpGuardias().add(sipreTmpGuardia);
-		sipreTmpGuardia.setSipreConceptoIngreso(this);
-
-		return sipreTmpGuardia;
+	@Override
+	public String toString() {
+		return "pe.mil.ejercito.sipr.model.SipreConceptoIngreso[ cciCodigo="
+				+ cciCodigo + " ]";
 	}
-
-	public SipreTmpGuardia removeSipreTmpGuardia(SipreTmpGuardia sipreTmpGuardia) {
-		getSipreTmpGuardias().remove(sipreTmpGuardia);
-		sipreTmpGuardia.setSipreConceptoIngreso(null);
-
-		return sipreTmpGuardia;
-	}
-	
-
-	public Boolean getCheck() 								{return check;}
-	public void setCheck(Boolean check) 					{this.check = check;}	
 
 }

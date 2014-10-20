@@ -1,70 +1,131 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.util.List;
-
+import javax.persistence.Basic;
+import javax.persistence.CascadeType;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
+import javax.persistence.Table;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_GRUPO_GRADO database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_GRUPO_GRADO")
-@NamedQuery(name="SipreGrupoGrado.findAll", query="SELECT s FROM SipreGrupoGrado s")
+@Table(name = "SIPRE_GRUPO_GRADO")
+@NamedQueries({
+    @NamedQuery(name = "SipreGrupoGrado.findAll", query = "SELECT s FROM SipreGrupoGrado s")})
 public class SipreGrupoGrado implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @Id
+    @Basic(optional = false)
+    @NotNull
+    @Size(min = 1, max = 2)
+    @Column(name = "CGG_CODIGO")
+    private String cggCodigo;
+    @Size(max = 60)
+    @Column(name = "VGG_DSC_LARGA")
+    private String vggDscLarga;
+    @Size(max = 20)
+    @Column(name = "VGG_DSC_CORTA")
+    private String vggDscCorta;
+    @Column(name = "CGG_TIPO_PERSONA")
+    private String cggTipoPersona;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreGrupoGrado")
+    private List<SipreEspealteMonto> sipreEspealteMontoList;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreGrupoGrado")
+    private List<SipreGrado> sipreGradoList;
 
-	@Id
-	@Column(name="CGG_CODIGO")
-	private String cggCodigo;
+    public SipreGrupoGrado() {
+    }
 
-	@Column(name="VGG_DSC")
-	private String vggDsc;
+    public SipreGrupoGrado(String cggCodigo) {
+        this.cggCodigo = cggCodigo;
+    }
 
-	//bi-directional many-to-one association to SipreGrado
-	@OneToMany(mappedBy="sipreGrupoGrado")
-	private List<SipreGrado> sipreGrados;
+    public String getCggCodigo() {
+        return cggCodigo;
+    }
 
-	public SipreGrupoGrado() {
-	}
+    public void setCggCodigo(String cggCodigo) {
+        this.cggCodigo = cggCodigo;
+    }
 
-	public String getCggCodigo() {
-		return this.cggCodigo;
-	}
+    public String getVggDscLarga() {
+        return vggDscLarga;
+    }
 
-	public void setCggCodigo(String cggCodigo) {
-		this.cggCodigo = cggCodigo;
-	}
+    public void setVggDscLarga(String vggDscLarga) {
+        this.vggDscLarga = vggDscLarga;
+    }
 
-	public String getVggDsc() {
-		return this.vggDsc;
-	}
+    public String getVggDscCorta() {
+        return vggDscCorta;
+    }
 
-	public void setVggDsc(String vggDsc) {
-		this.vggDsc = vggDsc;
-	}
+    public void setVggDscCorta(String vggDscCorta) {
+        this.vggDscCorta = vggDscCorta;
+    }
 
-	public List<SipreGrado> getSipreGrados() {
-		return this.sipreGrados;
-	}
+    public String getCggTipoPersona() {
+        return cggTipoPersona;
+    }
 
-	public void setSipreGrados(List<SipreGrado> sipreGrados) {
-		this.sipreGrados = sipreGrados;
-	}
+    public void setCggTipoPersona(String cggTipoPersona) {
+        this.cggTipoPersona = cggTipoPersona;
+    }
 
-	public SipreGrado addSipreGrado(SipreGrado sipreGrado) {
-		getSipreGrados().add(sipreGrado);
-		sipreGrado.setSipreGrupoGrado(this);
+    public List<SipreEspealteMonto> getSipreEspealteMontoList() {
+        return sipreEspealteMontoList;
+    }
 
-		return sipreGrado;
-	}
+    public void setSipreEspealteMontoList(List<SipreEspealteMonto> sipreEspealteMontoList) {
+        this.sipreEspealteMontoList = sipreEspealteMontoList;
+    }
 
-	public SipreGrado removeSipreGrado(SipreGrado sipreGrado) {
-		getSipreGrados().remove(sipreGrado);
-		sipreGrado.setSipreGrupoGrado(null);
+    public List<SipreGrado> getSipreGradoList() {
+        return sipreGradoList;
+    }
 
-		return sipreGrado;
-	}
+    public void setSipreGradoList(List<SipreGrado> sipreGradoList) {
+        this.sipreGradoList = sipreGradoList;
+    }
 
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (cggCodigo != null ? cggCodigo.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreGrupoGrado)) {
+            return false;
+        }
+        SipreGrupoGrado other = (SipreGrupoGrado) object;
+        if ((this.cggCodigo == null && other.cggCodigo != null) || (this.cggCodigo != null && !this.cggCodigo.equals(other.cggCodigo))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreGrupoGrado[ cggCodigo=" + cggCodigo + " ]";
+    }
+    
 }

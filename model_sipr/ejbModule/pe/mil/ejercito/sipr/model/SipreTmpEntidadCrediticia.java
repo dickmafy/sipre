@@ -1,80 +1,141 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import javax.persistence.*;
 import java.math.BigDecimal;
-
+import javax.persistence.Column;
+import javax.persistence.EmbeddedId;
+import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.validation.constraints.Size;
 
 /**
- * The persistent class for the SIPRE_TMP_ENTIDAD_CREDITICIA database table.
- * 
+ *
+ * @author DIEGO
  */
 @Entity
-@Table(name="SIPRE_TMP_ENTIDAD_CREDITICIA")
-@NamedQuery(name="SipreTmpEntidadCrediticia.findAll", query="SELECT s FROM SipreTmpEntidadCrediticia s")
+@Table(name = "SIPRE_TMP_ENTIDAD_CREDITICIA")
+@NamedQueries({
+    @NamedQuery(name = "SipreTmpEntidadCrediticia.findAll", query = "SELECT s FROM SipreTmpEntidadCrediticia s")})
 public class SipreTmpEntidadCrediticia implements Serializable {
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    @EmbeddedId
+    protected SipreTmpEntidadCrediticiaPK sipreTmpEntidadCrediticiaPK;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NTEC_MONTO")
+    private BigDecimal ntecMonto;
+    @Column(name = "NTEC_NRO_CUOTA")
+    private Short ntecNroCuota;
+    @Size(max = 10)
+    @Column(name = "CTEC_NRO_CHEQUE")
+    private String ctecNroCheque;
+    @Column(name = "NTEC_MTO_ANTERIOR")
+    private BigDecimal ntecMtoAnterior;
+    @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SiprePersona siprePersona;
+    @JoinColumn(name = "CEC_CODIGO", referencedColumnName = "CEC_CODIGO", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private SipreEntidadCrediticia sipreEntidadCrediticia;
 
-	@EmbeddedId
-	private SipreTmpEntidadCrediticiaPK id;
+    public SipreTmpEntidadCrediticia() {
+    }
 
-	@Column(name="NTEC_MONTO")
-	private BigDecimal ntecMonto;
+    public SipreTmpEntidadCrediticia(SipreTmpEntidadCrediticiaPK sipreTmpEntidadCrediticiaPK) {
+        this.sipreTmpEntidadCrediticiaPK = sipreTmpEntidadCrediticiaPK;
+    }
 
-	@Column(name="NTEC_NRO_CUOTA")
-	private BigDecimal ntecNroCuota;
+    public SipreTmpEntidadCrediticia(String cpersonaNroAdm, String cecCodigo, String ctecMesProceso, Character ctecTipoMovim) {
+        this.sipreTmpEntidadCrediticiaPK = new SipreTmpEntidadCrediticiaPK(cpersonaNroAdm, cecCodigo, ctecMesProceso, ctecTipoMovim);
+    }
 
-	//bi-directional many-to-one association to SipreEntidadCrediticia
-	@ManyToOne
-	@JoinColumn(name="CEC_CODIGO",insertable = false, updatable = false)
-	private SipreEntidadCrediticia sipreEntidadCrediticia;
+    public SipreTmpEntidadCrediticiaPK getSipreTmpEntidadCrediticiaPK() {
+        return sipreTmpEntidadCrediticiaPK;
+    }
 
-	//bi-directional many-to-one association to SiprePersona
-	@ManyToOne
-	@JoinColumn(name="CPERSONA_NRO_ADM",insertable = false, updatable = false)
-	private SiprePersona siprePersona;
+    public void setSipreTmpEntidadCrediticiaPK(SipreTmpEntidadCrediticiaPK sipreTmpEntidadCrediticiaPK) {
+        this.sipreTmpEntidadCrediticiaPK = sipreTmpEntidadCrediticiaPK;
+    }
 
-	public SipreTmpEntidadCrediticia() {
-	}
+    public BigDecimal getNtecMonto() {
+        return ntecMonto;
+    }
 
-	public SipreTmpEntidadCrediticiaPK getId() {
-		return this.id;
-	}
+    public void setNtecMonto(BigDecimal ntecMonto) {
+        this.ntecMonto = ntecMonto;
+    }
 
-	public void setId(SipreTmpEntidadCrediticiaPK id) {
-		this.id = id;
-	}
+    public Short getNtecNroCuota() {
+        return ntecNroCuota;
+    }
 
-	public BigDecimal getNtecMonto() {
-		return this.ntecMonto;
-	}
+    public void setNtecNroCuota(Short ntecNroCuota) {
+        this.ntecNroCuota = ntecNroCuota;
+    }
 
-	public void setNtecMonto(BigDecimal ntecMonto) {
-		this.ntecMonto = ntecMonto;
-	}
+    public String getCtecNroCheque() {
+        return ctecNroCheque;
+    }
 
-	public BigDecimal getNtecNroCuota() {
-		return this.ntecNroCuota;
-	}
+    public void setCtecNroCheque(String ctecNroCheque) {
+        this.ctecNroCheque = ctecNroCheque;
+    }
 
-	public void setNtecNroCuota(BigDecimal ntecNroCuota) {
-		this.ntecNroCuota = ntecNroCuota;
-	}
+    public BigDecimal getNtecMtoAnterior() {
+        return ntecMtoAnterior;
+    }
 
-	public SipreEntidadCrediticia getSipreEntidadCrediticia() {
-		return this.sipreEntidadCrediticia;
-	}
+    public void setNtecMtoAnterior(BigDecimal ntecMtoAnterior) {
+        this.ntecMtoAnterior = ntecMtoAnterior;
+    }
 
-	public void setSipreEntidadCrediticia(SipreEntidadCrediticia sipreEntidadCrediticia) {
-		this.sipreEntidadCrediticia = sipreEntidadCrediticia;
-	}
+    public SiprePersona getSiprePersona() {
+        return siprePersona;
+    }
 
-	public SiprePersona getSiprePersona() {
-		return this.siprePersona;
-	}
+    public void setSiprePersona(SiprePersona siprePersona) {
+        this.siprePersona = siprePersona;
+    }
 
-	public void setSiprePersona(SiprePersona siprePersona) {
-		this.siprePersona = siprePersona;
-	}
+    public SipreEntidadCrediticia getSipreEntidadCrediticia() {
+        return sipreEntidadCrediticia;
+    }
 
+    public void setSipreEntidadCrediticia(SipreEntidadCrediticia sipreEntidadCrediticia) {
+        this.sipreEntidadCrediticia = sipreEntidadCrediticia;
+    }
+
+    @Override
+    public int hashCode() {
+        int hash = 0;
+        hash += (sipreTmpEntidadCrediticiaPK != null ? sipreTmpEntidadCrediticiaPK.hashCode() : 0);
+        return hash;
+    }
+
+    @Override
+    public boolean equals(Object object) {
+        // TODO: Warning - this method won't work in the case the id fields are not set
+        if (!(object instanceof SipreTmpEntidadCrediticia)) {
+            return false;
+        }
+        SipreTmpEntidadCrediticia other = (SipreTmpEntidadCrediticia) object;
+        if ((this.sipreTmpEntidadCrediticiaPK == null && other.sipreTmpEntidadCrediticiaPK != null) || (this.sipreTmpEntidadCrediticiaPK != null && !this.sipreTmpEntidadCrediticiaPK.equals(other.sipreTmpEntidadCrediticiaPK))) {
+            return false;
+        }
+        return true;
+    }
+
+    @Override
+    public String toString() {
+        return "pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticia[ sipreTmpEntidadCrediticiaPK=" + sipreTmpEntidadCrediticiaPK + " ]";
+    }
+    
 }
