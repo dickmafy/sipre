@@ -7,6 +7,7 @@ import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
+import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
 
 import org.primefaces.component.log.Log;
@@ -32,8 +33,7 @@ import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "conceptoMb")
 @ViewScoped
-public class ConceptoMb extends MainContext implements
-		Serializable {
+public class ConceptoMb extends MainContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
@@ -43,7 +43,7 @@ public class ConceptoMb extends MainContext implements
 
 	private List<SipreConceptoIngreso> beanList;
 	private List<SipreTipoPlanilla> tipoPlanillaList;
-	private SipreConceptoIngreso bean;
+	private SipreConceptoIngreso bean = new SipreConceptoIngreso();
 
 	public ConceptoMb() {
 		super();
@@ -51,7 +51,7 @@ public class ConceptoMb extends MainContext implements
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (ConceptoIngresoEjbRemote) findServiceRemote(ConceptoIngresoEjbRemote.class);
 			ejbTipoPlanilla = (TipoPlanillaEjbRemote) findServiceRemote(TipoPlanillaEjbRemote.class);
-			
+
 			tipoPlanillaList = ejbTipoPlanilla.findAll(100);
 			beanList = ejb.findAll(100);
 		} catch (Exception e) {
@@ -60,30 +60,42 @@ public class ConceptoMb extends MainContext implements
 	}
 
 	public void newBean(ActionEvent event) {
-		
+		cleanBean();
+	}
+
+	private void cleanBean() {
 		SipreTipoPlanilla sipreTipoPlanilla = new SipreTipoPlanilla();
 		bean = new SipreConceptoIngreso();
+		// en la nueva Bd se quito este campo
 		bean.setSipreTipoPlanilla(sipreTipoPlanilla);
-		
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
-			if (UValidacion.esNuloOVacio(bean.getCciCodigo())) {
 				bean = ejb.persist(bean);
 				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
 						SEVERITY_INFO);
-			} else {
-				bean = ejb.merge(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
-			
-			}
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL,
+			showMessage(
+					ConstantesUtil.MENSAJE_RESPUESTA_ERROR_CONCEPTO_INGRESO,
 					SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
+		cleanBean();
+	}
+
+	public void updateBean(ActionEvent event) {
+		try {
+				bean = ejb.merge(bean);
+				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+						SEVERITY_INFO);
+		} catch (Exception e) {
+			showMessage(
+					ConstantesUtil.MENSAJE_RESPUESTA_ERROR_CONCEPTO_INGRESO,
+					SEVERITY_ERROR);
+		}
+		beanList = ejb.findAll(100);
+		cleanBean();
 	}
 
 	public List<SipreConceptoIngreso> getBeanList() {
@@ -109,7 +121,5 @@ public class ConceptoMb extends MainContext implements
 	public void setTipoPlanillaList(List<SipreTipoPlanilla> tipoPlanillaList) {
 		this.tipoPlanillaList = tipoPlanillaList;
 	}
-
-	
 
 }

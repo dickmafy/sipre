@@ -27,6 +27,7 @@ public class Perfil extends MainContext {
 	}
 	
 	public String eliminarPerfil(){
+		
 		if(perfilSelected.getCodigoPerfil().compareTo(1L)==0){
 			showMessage("No se puede eliminar el perfil Administrador", SEVERITY_WARN);
 		}else{

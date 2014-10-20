@@ -12,6 +12,13 @@ public class Faces extends FacesMessage {
 	public static void showMessage(String texto, Severity severity) {
 		FacesMessage fm = new FacesMessage(severity, texto, null);
 		FacesContext.getCurrentInstance().addMessage(null, fm);
+		
+	}
+	
+	public static void showMessage(String texto, Severity severity,String detail) {
+		FacesMessage fm = new FacesMessage(severity, texto,detail);
+		FacesContext.getCurrentInstance().addMessage(null, fm);
+		
 	}
 
 	public static void showDialog(String widgetVar) {

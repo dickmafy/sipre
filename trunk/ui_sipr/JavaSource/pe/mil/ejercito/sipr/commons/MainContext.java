@@ -6,6 +6,8 @@ import pe.mil.ejercito.sipr.ejbremote.AuditoriaEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreAuditoria;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
+
+
 public class MainContext extends ServiceLocator {
 	private static final long serialVersionUID = 1L;
 	private SipreUsuario sessionUser;

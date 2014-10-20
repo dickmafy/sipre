@@ -61,7 +61,7 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/blank_page";
 			break;
 		case 30:
-			contenidoDefault = "/modules/registro/familiaEC__list";
+			contenidoDefault = "/modules/registro/grado";
 			break;
 		case 31:
 			contenidoDefault = "/modules/registro/reintegroPersonal_list";
