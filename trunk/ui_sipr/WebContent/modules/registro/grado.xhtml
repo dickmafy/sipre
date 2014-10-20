@@ -1,0 +1,133 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frm" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Parametrización / Gestionar Grupo Grado</div>
+			<div id="titulo_formulario">Gestionar Grupo-Grado</div>
+			<div id="contenido">
+
+				<p:messages id="messages" showIcon="true" showSummary="true"
+					autoUpdate="true" closable="true" />
+
+				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+					value="Agregar Concepto personal" actionListener="#{grado.newBean}"
+					oncomplete="PF('wdialogNew').show()" />
+
+
+				<p:dataTable widgetVar="dt" id="dt" var="item"
+					value="#{grado.beanList}" paginatorPosition="bottom"
+					resizableColumns="true" paginator="true" rows="8"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<f:facet name="header">
+						<h:outputText value="Lista de Grupo - Grado" />
+					</f:facet>
+
+					<p:column headerText="Id" style="width:20%; align:center;"
+						sortBy="#{item.cggCodigo}">
+						<h:outputText value="#{item.cggCodigo}" />
+					</p:column>
+					<p:column headerText="Desc. Corta"
+						style="width:70%; text-align:center">
+						<h:outputText value="#{item.vggDscCorta}" />
+					</p:column>
+					<p:column headerText="Desc. Larga"
+						style="width:70%; text-align:center">
+						<h:outputText value="#{item.vggDscLarga}" />
+					</p:column>
+
+					<p:column headerText="Opciones" style="width:10%">
+
+						<p:commandLink oncomplete="PF('wdialogUpdate').show()"
+							update=":frmUpdate">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{grado.bean}" />
+							<p:graphicImage value="/images/icons/pencil_12.png" />
+						</p:commandLink>
+
+						<p:spacer width="10" />
+
+					</p:column>
+				</p:dataTable>
+			</div>
+		</div>
+	</h:form>
+
+	<!-- Nuevo-->
+	<p:dialog id="dialogNew" widgetVar="wdialogNew" header="Guardar"
+		closable="true" closeOnEscape="true" showEffect="fade" height="300"
+		resizable="true" width="500px" modal="true" appendTo="@(body)">
+		<h:form id="frmNew">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="CIP" />
+				<p:inputText value="#{grado.bean.cggCodigo}" />
+
+				<p:outputLabel value="Desc. Corta" />
+				<p:inputText value="#{grado.bean.vggDscCorta}" />
+
+				<p:outputLabel value="Desc. Larga" />
+				<p:inputText value="#{grado.bean.vggDscLarga}" />
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{grado.saveBean}" ajax="true"
+					oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
+				</p:commandButton>
+
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<!-- Update-->
+	<p:dialog id="dialogUpdate" widgetVar="wdialogUpdate" header="Guardar"
+		closable="true" closeOnEscape="true" showEffect="fade" height="300"
+		resizable="true" width="500px" modal="true" appendTo="@(body)">
+		<h:form id="frmUpdate">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Codigo Grado" />
+				<p:inputText value="#{grado.bean.cggCodigo}" />
+
+				<p:outputLabel value="Desc. Corta" />
+				<p:inputText value="#{grado.bean.vggDscCorta}" />
+
+				<p:outputLabel value="Desc. Larga" />
+				<p:inputText value="#{grado.bean.vggDscLarga}" />
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{grado.updateBean}" ajax="true"
+					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
+				</p:commandButton>
+
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<!-- Elimina-->
+	<p:dialog widgetVar="wdialogDelete" id="dialogDelete" showEffect="fade"
+		hideEffect="fade" header="Eliminar" modal="true" appendTo="@(body)"
+		resizable="false">
+		<h:form id="frmDelete">
+			<table>
+				<tr>
+					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
+					<td>#{perfilMb.perfilSelected.nombrePerfil}, <b>¿Desea
+							eliminar el perfil?</b></td>
+				</tr>
+			</table>
+			<p:commandButton value="Cancelar" styleClass="boton_botonera"
+				icon="_ui-icon-back" onclick="PF('wdialogDelete').hide();" />
+
+			<p:commandButton value="Eliminar" styleClass="boton_botonera"
+				oncomplete="PF('wdialogDelete').hide();" update=":frm:dt"
+				icon="_ui-icon-logout" actionListener="#{grado.deleteBean}"
+				ajax="false" />
+
+		</h:form>
+	</p:dialog>
+
+
+</ui:composition>

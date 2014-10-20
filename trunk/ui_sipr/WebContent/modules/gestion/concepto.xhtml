@@ -14,7 +14,8 @@
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar Concepto" actionListener="#{conceptoMb.newBean}"
-					oncomplete="PF('wdialogNew').show()" />
+					oncomplete="PF('wdialogNew').show()" >
+					</p:commandButton>
 
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
 					value="#{conceptoMb.beanList}"
@@ -22,8 +23,6 @@
 					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
 					paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
-
-
 
 					<p:column headerText="Cod. Concepto Ingreso"
 						style="width:10%; align:center;">
@@ -50,8 +49,8 @@
 
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogNew').show()"
-							update=":frmInsertUpdate">
+						<p:commandLink oncomplete="PF('wdialogUpdate').show()"
+							update=":frmUpdate">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{conceptoMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
@@ -79,7 +78,7 @@
 		header="Guardar Concepto Personal" closable="true" showEffect="fade"
 		appendTo="@(body)" height="300" resizable="true" width="500px"
 		closeOnEscape="true" modal="true">
-		<h:form id="frmInsertUpdate">
+		<h:form id="frmInsert">
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="Cod. Concepto Ingreso" />
@@ -99,13 +98,47 @@
 				</p:selectOneMenu>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{conceptoMb.saveBean}" ajax="true"
+					actionListener="#{conceptoMb.saveBean}" ajax="false"
 					oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
 				</p:commandButton>
 
 			</p:panelGrid>
 		</h:form>
 	</p:dialog>
+
+<!-- UPDATE-->
+	<p:dialog id="dialogUpdate" widgetVar="wdialogUpdate"
+		header="Guardar Concepto Personal" closable="true" showEffect="fade"
+		appendTo="@(body)" height="300" resizable="true" width="500px"
+		closeOnEscape="true" modal="true">
+		<h:form id="frmUpdate">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Cod. Concepto Ingreso" />
+				<p:inputText value="#{conceptoMb.bean.cciCodigo}" />
+
+				<p:outputLabel value="Descr.Corta" />
+				<p:inputText value="#{conceptoMb.bean.vciDscCorta}" />
+
+				<p:outputLabel value="Descr.Larga" />
+				<p:inputText value="#{conceptoMb.bean.vciDscLarga}" />
+
+				<p:outputLabel value="Tipo Planilla" />
+				<p:selectOneMenu
+					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="item"
+						itemValue="#{item.ctpCodigo}" itemLabel="#{item.vtpDsc}" />
+				</p:selectOneMenu>
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{conceptoMb.updateBean}" ajax="false"
+					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
+				</p:commandButton>
+
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+	
 
 
 	<!-- Elimina-->
