@@ -28,7 +28,6 @@
 		<class>pe.mil.ejercito.sipr.model.SiprePlanillaDetalle</class>
 		<class>pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK</class>
 		<class>pe.mil.ejercito.sipr.model.SipreTipoPlanilla</class>
-		<class>pe.mil.ejercito.sipr.model.SipreTmpBanco</class>
 		<class>pe.mil.ejercito.sipr.model.SipreTmpBonificacion</class>
 		<class>pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK</class>
 		<class>pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticia</class>
