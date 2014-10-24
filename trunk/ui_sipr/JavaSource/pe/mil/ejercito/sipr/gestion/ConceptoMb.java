@@ -63,10 +63,9 @@ public class ConceptoMb extends MainContext implements Serializable {
 		cleanBean();
 	}
 
-	private void cleanBean() {
+	public void cleanBean() {
 		SipreTipoPlanilla sipreTipoPlanilla = new SipreTipoPlanilla();
 		bean = new SipreConceptoIngreso();
-		// en la nueva Bd se quito este campo
 		bean.setSipreTipoPlanilla(sipreTipoPlanilla);
 	}
 
