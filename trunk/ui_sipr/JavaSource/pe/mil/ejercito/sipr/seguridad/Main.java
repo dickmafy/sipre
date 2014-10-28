@@ -44,6 +44,10 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/planilla";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 4:
+			menuLateral = "/modules/menu/ingresoDescuento";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		case 5:
 			menuLateral = "/modules/menu/seguridad";
 			contenidoDefault = "/modules/blank_page";
@@ -78,7 +82,7 @@ public class Main extends MainContext {
 		case 42:
 			contenidoDefault = "/modules/seguridad/auditoria/auditoria";
 			break;
-		
+
 		// GESTION
 		case 50:
 			contenidoDefault = "/modules/gestion/verificarCodigoBanco";
@@ -92,6 +96,23 @@ public class Main extends MainContext {
 		// PLANILLA
 		case 60:
 			contenidoDefault = "/modules/planilla/planilla";
+			break;
+
+		// PLANILLA
+		case 70:
+			contenidoDefault = "/modules/ingresoDescuento/conceptoDescuentoLey";
+			break;
+		case 71:
+			contenidoDefault = "/modules/ingresoDescuento/conceptoDescuento";
+			break;
+		case 72:
+			contenidoDefault = "/modules/ingresoDescuento/descuentoIngreso";
+			break;
+		case 73:
+			contenidoDefault = "/modules/ingresoDescuento/descuentoLeyDetalle";
+			break;
+		case 74:
+			contenidoDefault = "/modules/ingresoDescuento/descuentoLey";
 			break;
 
 		}
