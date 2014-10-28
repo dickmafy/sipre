@@ -8,6 +8,9 @@ public class ConstantesUtil {
 	// Estados Tablas
 	public static final String TABLA_ESTADO_ACTIVO = "A";
 	public static final String TABLA_ESTADO_INACTIVO = "I";
+	
+	//FINDALL DE TODOS LOS REGISTROS
+	public static final Integer LISTAR_EJB_REMOTE = 500;
 
 	// Mensajes Constantes
 	public static final String MENSAJE_RESPUESTA_ERROR_GENERAL = "No se pudo completar la operacion.";
@@ -30,6 +33,11 @@ public class ConstantesUtil {
 	public static final String MENSAJE_RESPUESTA_ERROR_CONCEPTO_INGRESO = MENSAJE_RESPUESTA_ERROR_GENERAL
 			+ " No se puede repetir el Codigo Concepto."
 			+ " . Debe existir el Tipo Planilla";
+	
+	// 43 Descuent
+		public static final String MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY = MENSAJE_RESPUESTA_ERROR_GENERAL
+				+ " No se puede repetir el Codigo del Descuento Ley.";
+				
 
 	// Listas
 	public String getLIST_EMPTY() {
