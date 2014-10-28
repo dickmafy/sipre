@@ -7,13 +7,29 @@
 			<p:submenu label="Gestion">
 				<p:menuitem value="Verificar Codigo Banco" icon="ui-icon-key"
 					async="true" actionListener="#{mainMb.redireccionaContent(50)}"
-					ajax="true" update=":pnlContenido" />
+					ajax="false" update=":pnlContenido" />
+				
 				<p:menuitem value="Concepto" icon="ui-icon-key" async="true"
-					actionListener="#{mainMb.redireccionaContent(51)}" ajax="true"
+					actionListener="#{mainMb.redireccionaContent(51)}" ajax="false"
 					update=":pnlContenido" />
+				
 				<p:menuitem value="Familia(masivo)" icon="ui-icon-key" async="true"
-					actionListener="#{mainMb.redireccionaContent(52)}" ajax="true"
+					actionListener="#{mainMb.redireccionaContent(52)}" ajax="false"
 					update=":pnlContenido" />
+
+				<p:menuitem value="Gestionar Grupo-Grado" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(30)}"
+					ajax="false" update=":pnlContenido" />
+
+				<p:menuitem value="Gestionar Reintegro Personal" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(31)}"
+					ajax="false" update=":pnlContenido" />
+
+				<p:menuitem value="Gestionar Ingreso Concepto Personal"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(32)}" ajax="false"
+					update=":pnlContenido" />
+
 
 
 

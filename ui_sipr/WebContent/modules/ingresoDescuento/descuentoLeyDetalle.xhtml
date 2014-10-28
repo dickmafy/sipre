@@ -1,0 +1,157 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm">
+		<div id="contenido_formulario">
+			<div id="page_flow">Ingreso Descuento / Descuento Ley Detalle </div>
+			<div id="titulo_formulario">Descuento Ley Detalle </div>
+			<div id="contenido">
+
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+
+				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+					value="Agregar"
+					actionListener="#{descuentoLeyDetalleMb.newBean}"
+					oncomplete="PF('wdi').show()">
+				</p:commandButton>
+
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					value="#{descuentoLeyDetalleMb.beanList}"
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
+					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
+					paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<p:column headerText="Codigo Desc.Detalle Ley"
+						style="width:10%; align:center;">
+						<h:outputText value="#{item.sipreDescuentoLeyDetPK.cdldCodigo}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Descuento Ley" style="width:20%; align:center;">
+						<h:outputText value="#{item.sipreDescuentoLeyDetPK.cdlCodigo}" />
+					</p:column>
+					
+					<p:column headerText="Descuento Ley" style="width:20%; align:center;">
+						<h:outputText value="#{item.vdldDsc}" />
+					</p:column>
+
+
+					<p:column headerText="Opciones" width="10%">
+						<p:commandLink oncomplete="PF('wdu').show()" update=":frmUpdate">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{descuentoLeyDetalleMb.bean}" />
+							<p:graphicImage value="/images/icons/pencil_12.png" />
+						</p:commandLink>
+						<p:spacer width="10" />
+						<p:commandLink oncomplete="PF('wdd').show()" update=":frmDelete">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{descuentoLeyDetalleMb.bean}" />
+							<p:graphicImage value="/images/icons/trash_12.png" />
+						</p:commandLink>
+
+					</p:column>
+
+
+				</p:dataTable>
+
+			</div>
+		</div>
+
+	</h:form>
+
+	<!-- Insert-->
+	<p:dialog id="di" widgetVar="wdi" header="Nuevo"
+		closable="true" showEffect="fade" appendTo="@(body)" height="300"
+		resizable="true" width="500px" closeOnEscape="true" modal="true">
+		<h:form id="frmInsert">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Codigo Descuento Ley Detalle " />
+				<p:inputText
+					value="#{descuentoLeyDetalleMb.bean.sipreDescuentoLeyDetPK.cdldCodigo}" />
+
+				<p:outputLabel value="Descuento Ley" />
+				<p:selectOneMenu
+					value="#{descuentoLeyDetalleMb.bean.sipreDescuentoLeyDetPK.cdlCodigo}">
+					<f:selectItems
+						value="#{descuentoLeyDetalleMb.beanDescuentoLeyList}"
+						var="item" itemValue="#{item.cdlCodigo}"
+						itemLabel="#{item.vdlDsc}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Descripcion " />
+				<p:inputText value="#{descuentoLeyDetalleMb.bean.vdldDsc}" />
+
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{descuentoLeyDetalleMb.saveBean}" ajax="false"
+					oncomplete="PF('wdi').hide();" update=":frm:dt">
+				</p:commandButton>
+
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+	<!-- UPDATE-->
+	<p:dialog id="du" widgetVar="wdu" header="Actualizar"
+		closable="true" showEffect="fade" appendTo="@(body)" height="300"
+		resizable="true" width="500px" closeOnEscape="true" modal="true">
+
+		<h:form id="frmUpdate">
+			<p:panelGrid columns="2">
+
+				<p:outputLabel value="Codigo Descuento Ley Detalle " />
+				<p:outputLabel
+					value="#{descuentoLeyDetalleMb.bean.sipreDescuentoLeyDetPK.cdldCodigo}" />
+
+				<p:outputLabel value="Descuento Ley" />
+				<p:selectOneMenu disabled="true"
+					value="#{descuentoLeyDetalleMb.bean.sipreDescuentoLeyDetPK.cdlCodigo}">
+					<f:selectItems 
+						value="#{descuentoLeyDetalleMb.beanDescuentoLeyList}"
+						var="item" itemValue="#{item.cdlCodigo}"
+						itemLabel="#{item.vdlDsc}" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Descripcion " />
+				<p:inputText value="#{descuentoLeyDetalleMb.bean.vdldDsc}" />
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{descuentoLeyDetalleMb.updateBean}" ajax="false"
+					oncomplete="PF('wdu').hide();" update=":frm:dt">
+				</p:commandButton>
+
+			</p:panelGrid>
+		</h:form>
+	</p:dialog>
+
+
+
+	<!-- Elimina-->
+	<p:dialog id="dd" widgetVar="wdd" showEffect="fade" hideEffect="fade"
+		header="Eliminar Registro" modal="true" appendTo="@(body)"
+		resizable="false">
+		<h:form id="frmDelete">
+
+			<table>
+				<tr>
+					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
+					<td><b>¿Desea eliminar el registro?</b></td>
+				</tr>
+			</table>
+			<p:commandButton value="Cancelar" styleClass="boton_botonera"
+				icon="_ui-icon-back" onclick="PF('wdd').hide();" />
+
+			<p:commandButton value="Eliminar" styleClass="boton_botonera"
+				oncomplete="PF('wdd').hide();" update=":frm:dt"
+				icon="_ui-icon-logout"
+				actionListener="#{descuentoLeyDetalleMb.disable}" ajax="false" />
+
+		</h:form>
+	</p:dialog>
+
+</ui:composition>

@@ -14,7 +14,7 @@
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar Concepto personal"
 					actionListener="#{verificarCodigoBanco.newBean}"
-					oncomplete="PF('wdialogNew').show()" />
+					oncomplete="PF('wdiVcb').show()" />
 
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
 					value="#{verificarCodigoBanco.beanList}"
@@ -29,7 +29,7 @@
 					</p:column>
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogNew').show()"
+						<p:commandLink oncomplete="PF('wduVcb').show()"
 							update=":frmUpdate">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{verificarCodigoBanco.bean}" />
@@ -38,7 +38,7 @@
 						
 						<p:spacer width="10" />
 						
-						<p:commandLink oncomplete="PF('wdialogDelete').show()"
+						<p:commandLink oncomplete="PF('wddVcb').show()"
 							update=":frmDelete">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{verificarCodigoBanco.bean}" />
@@ -51,7 +51,7 @@
 	</h:form>
 
 	<!-- Nuevo-->
-	<p:dialog id="dialogNew" widgetVar="wdialogNew" header="Guardar"
+	<p:dialog id="diVcb" widgetVar="wdiVcb" header="Guardar"
 		closable="true" closeOnEscape="true" showEffect="fade" height="300"
 		resizable="true" width="500px">
 		<h:form id="frmInsert">
@@ -66,14 +66,14 @@
 				<p:outputLabel value="Codigo Banco" />
 				<p:selectOneMenu
 					value="#{verificarCodigoBanco.bean.sipreBanco.cbancoCodigo}">
-					<f:selectItems value="#{verificarCodigoBanco.bancoList}" var="item"
-						itemValue="#{item.cbancoCodigo}" itemLabel="#{item.vbancoDsc}" />
+					<f:selectItems value="#{verificarCodigoBanco.bancoList}" var="obancoList"
+						itemValue="#{obancoList.cbancoCodigo}" itemLabel="#{obancoList.vbancoDsc}" />
 				</p:selectOneMenu>
 				<span></span>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{verificarCodigoBanco.saveBean}" ajax="true"
-					oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
+					oncomplete="PF('wdiVcb').hide();" update=":frm:dt">
 				</p:commandButton>
 
 			</p:panelGrid>
@@ -81,7 +81,7 @@
 	</p:dialog>
 
 <!-- Update-->
-	<p:dialog id="dialogUpdate" widgetVar="wdialogUpdate" header="Guardar"
+	<p:dialog id="duVcb" widgetVar="wduVcb" header="Guardar"
 		closable="true" closeOnEscape="true" showEffect="fade" height="300"
 		resizable="true" width="500px">
 		<h:form id="frmUpdate">
@@ -96,14 +96,14 @@
 				<p:outputLabel value="Codigo Banco" />
 				<p:selectOneMenu
 					value="#{verificarCodigoBanco.bean.sipreBanco.cbancoCodigo}">
-					<f:selectItems value="#{verificarCodigoBanco.bancoList}" var="item"
-						itemValue="#{item.cbancoCodigo}" itemLabel="#{item.vbancoDsc}" />
+					<f:selectItems value="#{verificarCodigoBanco.bancoList}" var="obancoList"
+						itemValue="#{obancoList.cbancoCodigo}" itemLabel="#{obancoList.vbancoDsc}" />
 				</p:selectOneMenu>
 				<span></span>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{verificarCodigoBanco.updateBean}" ajax="true"
-					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
+					oncomplete="PF('wduVcb').hide();" update=":frm:dt">
 				</p:commandButton>
 
 			</p:panelGrid>
@@ -111,7 +111,7 @@
 	</p:dialog>
 
 	<!-- Elimina-->
-	<p:dialog widgetVar="wdialogDelete" id="dialogDelete" showEffect="fade"
+	<p:dialog widgetVar="wddVcb" id="ddVcb" showEffect="fade"
 		hideEffect="fade" header="Eliminar" modal="true" appendTo="@(body)"
 		resizable="false">
 		<h:form id="frmDelete">
@@ -123,10 +123,10 @@
 				</tr>
 			</table>
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
-				icon="_ui-icon-back" onclick="PF('wdialogDelete').hide();" />
+				icon="_ui-icon-back" onclick="PF('wddVcb').hide();" />
 
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
-				oncomplete="PF('wdialogDelete').hide();" update=":frm:dt"
+				oncomplete="PF('wddVcb').hide();" update=":frm:dt"
 				icon="_ui-icon-logout"
 				actionListener="#{verificarCodigoBanco.deleteBean}" ajax="false" />
 

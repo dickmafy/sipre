@@ -14,10 +14,10 @@
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar Concepto" actionListener="#{conceptoMb.newBean}"
-					oncomplete="PF('wdialogNew').show()" >
+					oncomplete="PF('wdiConcepto').show()" >
 					</p:commandButton>
 
-				<p:dataTable id="dt" var="item" widgetVar="wdt"
+				<p:dataTable id="dt" var="item2" widgetVar="wdt"
 					value="#{conceptoMb.beanList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
 					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
@@ -26,39 +26,39 @@
 
 					<p:column headerText="Cod. Concepto Ingreso"
 						style="width:10%; align:center;">
-						<h:outputText value="#{item.cciCodigo}">
+						<h:outputText value="#{item2.cciCodigo}">
 						</h:outputText>
 					</p:column>
 
 					<p:column headerText="Descr.Corta" style="width:20%; align:center;">
-						<h:outputText value="#{item.vciDscCorta}" />
+						<h:outputText value="#{item2.vciDscCorta}" />
 					</p:column>
 
 					<p:column headerText="Descr.Larga" style="width:20%; align:center;">
-						<h:outputText value="#{item.vciDscLarga}" />
+						<h:outputText value="#{item2.vciDscLarga}" />
 					</p:column>
 
 					<p:column headerText="Tipo Planilla"
 						style="width:20%; align:center;">
-						<h:outputText value="#{item.sipreTipoPlanilla.vtpDsc}" />
+						<h:outputText value="#{item2.sipreTipoPlanilla.vtpDsc}" />
 					</p:column>
 
 					<p:column style="width:9%; align:center;">
-						<p:selectBooleanCheckbox value="#{item.check}" />
+						<p:selectBooleanCheckbox value="#{item2.check}" />
 					</p:column>
 
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogUpdate').show()"
-							update=":frmUpdate">
-							<f:setPropertyActionListener value="#{item}"
+						<p:commandLink oncomplete="PF('wduConcepto').show()"
+							update=":fuConcepto">
+							<f:setPropertyActionListener value="#{item2}"
 								target="#{conceptoMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wdialogDelete').show()"
+						<p:commandLink oncomplete="PF('wddConcepto').show()"
 							update=":frmDelete">
-							<f:setPropertyActionListener value="#{item}"
+							<f:setPropertyActionListener value="#{item2}"
 								target="#{conceptoMb.bean}" />
 							<p:graphicImage value="/images/icons/trash_12.png" />
 						</p:commandLink>
@@ -74,7 +74,7 @@
 	</h:form>
 
 	<!-- Nuevo-->
-	<p:dialog id="dialogNew" widgetVar="wdialogNew"
+	<p:dialog id="diConcepto" widgetVar="wdiConcepto"
 		header="Guardar Concepto Personal" closable="true" showEffect="fade"
 		appendTo="@(body)" height="300" resizable="true" width="500px"
 		closeOnEscape="true" modal="true">
@@ -93,13 +93,13 @@
 				<p:outputLabel value="Tipo Planilla" />
 				<p:selectOneMenu
 					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
-					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="item"
-						itemValue="#{item.ctpCodigo}" itemLabel="#{item.vtpDsc}" />
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="otipoPlanillaList"
+						itemValue="#{otipoPlanillaList.ctpCodigo}" itemLabel="#{otipoPlanillaList.vtpDsc}" />
 				</p:selectOneMenu>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{conceptoMb.saveBean}" ajax="false"
-					oncomplete="PF('wdialogNew').hide();" update=":frm:dt">
+					oncomplete="PF('wdiConcepto').hide();" update=":frm:dt">
 				</p:commandButton>
 
 			</p:panelGrid>
@@ -107,11 +107,12 @@
 	</p:dialog>
 
 <!-- UPDATE-->
-	<p:dialog id="dialogUpdate" widgetVar="wdialogUpdate"
+	<p:dialog id="duConcepto" widgetVar="wduConcepto"
 		header="Guardar Concepto Personal" closable="true" showEffect="fade"
 		appendTo="@(body)" height="300" resizable="true" width="500px"
 		closeOnEscape="true" modal="true">
-		<h:form id="frmUpdate">
+		
+		<h:form id="fuConcepto">
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="Cod. Concepto Ingreso" />
@@ -126,13 +127,13 @@
 				<p:outputLabel value="Tipo Planilla" />
 				<p:selectOneMenu
 					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
-					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="item"
-						itemValue="#{item.ctpCodigo}" itemLabel="#{item.vtpDsc}" />
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="otipoPlanillaList"
+						itemValue="#{otipoPlanillaList.ctpCodigo}" itemLabel="#{otipoPlanillaList.vtpDsc}" />
 				</p:selectOneMenu>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{conceptoMb.updateBean}" ajax="false"
-					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
+					oncomplete="PF('wduConcepto').hide();" update=":frm:dt">
 				</p:commandButton>
 
 			</p:panelGrid>
@@ -142,7 +143,7 @@
 
 
 	<!-- Elimina-->
-	<p:dialog widgetVar="wdialogDelete" id="dialogDelete" showEffect="fade"
+	<p:dialog  id="ddConcepto" widgetVar="wddConcepto" showEffect="fade"
 		hideEffect="fade" header="Cerrar sesión" modal="true"
 		appendTo="@(body)" resizable="false">
 		<h:form id="frmDelete">
@@ -154,10 +155,10 @@
 				</tr>
 			</table>
 			<p:commandButton value="Cancelar" styleClass="boton_botonera"
-				icon="_ui-icon-back" onclick="PF('wdialogDelete').hide();" />
+				icon="_ui-icon-back" onclick="PF('wddConcepto').hide();" />
 
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
-				oncomplete="PF('wdialogDelete').hide();" update=":frm:dt"
+				oncomplete="PF('wddConcepto').hide();" update=":frm:dt"
 				icon="_ui-icon-logout" actionListener="#{conceptoMb.disable}"
 				ajax="false" />
 
