@@ -1,0 +1,113 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm">
+		<div id="contenido_formulario">
+			<div id="page_flow">Ingreso Descuento / Concepto Descuento Ley</div>
+			<div id="titulo_formulario">Concepto Descuento Ley</div>
+			<div id="contenido">
+
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+
+				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+					value="Agregar Concepto"
+					actionListener="#{conceptoDescuentoLeyMb.newBean}"
+					oncomplete="PF('wdi').show()">
+				</p:commandButton>
+				<p:panelGrid columns="2">
+					<p:outputLabel value="Codigo" />
+					<p:inputText
+						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.ccdCodigo}" />
+
+					<p:outputLabel value="Desc. Ley" />
+					<p:selectOneMenu
+						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.cdlCodigo}">
+						<f:selectItems
+							value="#{conceptoDescuentoLeyMb.beanDescuentoLeyList}"
+							var="itemDl" itemValue="#{itemDl.cdlCodigo}"
+							itemLabel="#{itemDl.vdlDsc}" />
+							<p:ajax event="change" update=":frm:somDescuentoLeyDetalle" listener="#{conceptoDescuentoLeyMb.updateDescuentoLeyDetalle}"/>
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Desc. Ley Detalle" />
+					<p:selectOneMenu id="somDescuentoLeyDetalle"
+						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.cdldCodigo}">
+						<f:selectItems
+							value="#{conceptoDescuentoLeyMb.beanDescuentoLeyDetList}"
+							var="itemdld"
+							itemValue="#{itemdld.sipreDescuentoLeyDetPK.cdldCodigo}"
+							itemLabel="#{itemdld.vdldDsc}" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+				<p:spacer height="20" />
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="Monto" />
+					<p:selectOneMenu
+						value="#{conceptoDescuentoLeyMb.bean.ccdlIndPorMonto}">
+						<f:selectItem itemValue="M" itemLabel="Monto" />
+						<f:selectItem itemValue="P" itemLabel="Porcentaje" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Empleado" />
+					<p:inputText value="#{conceptoDescuentoLeyMb.bean.ncdlPorEmpleado}" />
+
+					<p:outputLabel value="Empleador" />
+					<p:inputText
+						value="#{conceptoDescuentoLeyMb.bean.ncdlPorEmpleador}" />
+
+					<p:outputLabel value="Max Calculo" />
+					<p:inputText
+						value="#{conceptoDescuentoLeyMb.bean.ncdlMaxAplicable}" />
+
+
+					<p:outputLabel value="Min Calculo" />
+					<p:inputText
+						value="#{conceptoDescuentoLeyMb.bean.ncdlMinAplicable}" />
+
+
+				</p:panelGrid>
+				<p:spacer height="20" />
+
+				<p:panelGrid columns="2">
+
+					<p:outputLabel value="Situacion/Tipo Persona" />
+					<p:selectOneMenu
+						value="#{conceptoDescuentoLeyMb.bean.ccdlTipoPersona}">
+						<f:selectItem itemLabel="Actividad" itemValue="A" />
+						<f:selectItem itemLabel="Pensionista" itemValue="P" />
+						<f:selectItem itemLabel="Subsidio" itemValue="S" />
+					</p:selectOneMenu>
+
+					<p:outputLabel value="Estindades Crediticias" />
+					<p:selectOneMenu
+						value="#{conceptoDescuentoLeyMb.bean.sipreEntidadCrediticia.cecCodigo}">
+						<f:selectItems
+							value="#{conceptoDescuentoLeyMb.beanEntidadesCrediticiasList}"
+							var="itemec" itemValue="#{itemec.cecCodigo}"
+							itemLabel="#{itemec.vecDscLarga}" />
+					</p:selectOneMenu>
+
+
+					<p:outputLabel value="Estado" />
+					<p:selectOneMenu value="#{conceptoDescuentoLeyMb.bean.ccdlEstado}">
+						<f:selectItem itemValue="A" itemLabel="Activo" />
+						<f:selectItem itemValue="I" itemLabel="Inactivo" />
+					</p:selectOneMenu>
+				</p:panelGrid>
+
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{conceptoDescuentoLeyMb.saveBean}" ajax="false"
+					oncomplete="PF('wdi').hide();" update=":frm:dt">
+				</p:commandButton>
+
+
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

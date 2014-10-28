@@ -5,19 +5,9 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="PARAMETRIZACIÓN	">
-				<p:menuitem value="Gestionar Grupo-Grado" icon="ui-icon-key"
-					async="true" actionListener="#{mainMb.redireccionaContent(30)}"
-					ajax="true" update=":pnlContenido" />
-
-				<p:menuitem value="Gestionar Reintegro Personal" icon="ui-icon-key"
-					async="true" actionListener="#{mainMb.redireccionaContent(31)}"
-					ajax="true" update=":pnlContenido" />
-
-				<p:menuitem value="Gestionar Ingreso Concepto Personal"
-					icon="ui-icon-key" async="true"
-					actionListener="#{mainMb.redireccionaContent(32)}" ajax="true"
-					update=":pnlContenido" />
-
+				<p:menuitem value="Administracion del Personal" icon="ui-icon-key"
+					async="true" 
+					ajax="true" update=":pnlContenido"  url="http://10.64.88.8:8080/MILITAR/" />
 
 			</p:submenu>
 		</p:menu>
