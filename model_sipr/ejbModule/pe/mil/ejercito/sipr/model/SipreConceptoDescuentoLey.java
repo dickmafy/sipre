@@ -37,15 +37,15 @@ public class SipreConceptoDescuentoLey implements Serializable {
     @Column(name = "NCDL_POR_EMPLEADO")
     private BigDecimal ncdlPorEmpleado;
     @Column(name = "CCDL_TIPO_PERSONA")
-    private Character ccdlTipoPersona;
+    private String ccdlTipoPersona;
     @Column(name = "CCDL_IND_POR_MONTO")
-    private Character ccdlIndPorMonto;
+    private String ccdlIndPorMonto;
     @Column(name = "NCDL_MIN_APLICABLE")
     private BigDecimal ncdlMinAplicable;
     @Column(name = "NCDL_MAX_APLICABLE")
     private BigDecimal ncdlMaxAplicable;
     @Column(name = "CCDL_ESTADO")
-    private Character ccdlEstado;
+    private String ccdlEstado;
     @JoinColumn(name = "CEC_CODIGO", referencedColumnName = "CEC_CODIGO")
     @ManyToOne
     private SipreEntidadCrediticia sipreEntidadCrediticia;
@@ -97,19 +97,19 @@ public class SipreConceptoDescuentoLey implements Serializable {
         this.ncdlPorEmpleado = ncdlPorEmpleado;
     }
 
-    public Character getCcdlTipoPersona() {
+    public String getCcdlTipoPersona() {
         return ccdlTipoPersona;
     }
 
-    public void setCcdlTipoPersona(Character ccdlTipoPersona) {
+    public void setCcdlTipoPersona(String ccdlTipoPersona) {
         this.ccdlTipoPersona = ccdlTipoPersona;
     }
 
-    public Character getCcdlIndPorMonto() {
+    public String getCcdlIndPorMonto() {
         return ccdlIndPorMonto;
     }
 
-    public void setCcdlIndPorMonto(Character ccdlIndPorMonto) {
+    public void setCcdlIndPorMonto(String ccdlIndPorMonto) {
         this.ccdlIndPorMonto = ccdlIndPorMonto;
     }
 
@@ -129,11 +129,11 @@ public class SipreConceptoDescuentoLey implements Serializable {
         this.ncdlMaxAplicable = ncdlMaxAplicable;
     }
 
-    public Character getCcdlEstado() {
+    public String getCcdlEstado() {
         return ccdlEstado;
     }
 
-    public void setCcdlEstado(Character ccdlEstado) {
+    public void setCcdlEstado(String ccdlEstado) {
         this.ccdlEstado = ccdlEstado;
     }
 

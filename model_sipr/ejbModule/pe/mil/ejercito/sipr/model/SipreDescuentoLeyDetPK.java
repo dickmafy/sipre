@@ -18,7 +18,9 @@ import javax.validation.constraints.Size;
  */
 @Embeddable
 public class SipreDescuentoLeyDetPK implements Serializable {
-    @Basic(optional = false)
+   
+	private static final long serialVersionUID = 1L;
+	@Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
     @Column(name = "CDLD_CODIGO")
