@@ -8,6 +8,7 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -18,6 +19,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 /**
  *
@@ -54,9 +56,12 @@ public class SipreConceptoDescuentoLey implements Serializable {
         @JoinColumn(name = "CDLD_CODIGO", referencedColumnName = "CDLD_CODIGO", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private SipreDescuentoLeyDet sipreDescuentoLeyDet;
+    
+    @Transient
     @JoinColumn(name = "CCD_CODIGO", referencedColumnName = "CCD_CODIGO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private SipreConceptoDescuento sipreConceptoDescuento;
+    
     @OneToMany(mappedBy = "sipreConceptoDescuentoLey")
     private List<SipreTmpPlanillaDescuento> sipreTmpPlanillaDescuentoList;
     @OneToMany(mappedBy = "sipreConceptoDescuentoLey")
