@@ -5,9 +5,73 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form id="frm">
 		<div id="contenido_formulario">
-			<div id="page_flow">Planilla / Otro1 </div>
+			<div id="page_flow">Planilla / Otro1</div>
 			<div id="titulo_formulario">Otro1</div>
-			<div id="contenido"></div>
+			<div id="contenido">
+
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+
+
+				<p:panel header="PROCESAR PLANILLA" >
+
+					<p:panelGrid columns="3">
+
+
+						<p:outputLabel value="Numero de Hijos" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+
+
+						<p:outputLabel value="Otro1" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+
+
+						<p:outputLabel value="Otro10" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+					</p:panelGrid>
+					
+					<p:panelGrid columns="3" >
+
+
+						<p:outputLabel value="Numero de Hijos" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+
+
+						<p:outputLabel value="Otro1" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+
+
+						<p:outputLabel value="Otro10" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+						</p:commandButton>
+						<p:outputLabel value="Se proceso correctamente" />
+					</p:panelGrid>
+					
+					
+				</p:panel>
+
+			</div>
 		</div>
 	</h:form>
 </ui:composition>

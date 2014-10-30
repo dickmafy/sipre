@@ -7,13 +7,17 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
+import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
+
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.ejbremote.ConceptoDescuentoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.ConceptoDescuentoLeyEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.DescuentoLeyDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.DescuentoLeyEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.EntidadCrediticiaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreConceptoDescuento;
 import pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLey;
 import pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLeyPK;
 import pe.mil.ejercito.sipr.model.SipreDescuentoLey;
@@ -30,6 +34,7 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 	private EntidadCrediticiaEjbRemote ejbEntidadCrediticia;
 	private DescuentoLeyEjbRemote ejbDescuentoLey;
 	private DescuentoLeyDetalleEjbRemote ejbDescuentoLeyDetalle;
+	private ConceptoDescuentoEjbRemote ejbConceptoDescuento;
 	
 	
 	private SipreConceptoDescuentoLey bean;
@@ -38,6 +43,7 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 	private List<SipreDescuentoLeyDet> beanDescuentoLeyDetList;
 	private List<SipreConceptoDescuentoLey> beanList;
 	private List<SipreEntidadCrediticia> beanEntidadesCrediticiasList;
+	private List<SipreConceptoDescuento> beanConceptoDescuentoList;
 	
 
 	public ConceptoDescuentoLeyMb() {
@@ -48,11 +54,15 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 			ejbEntidadCrediticia 	= (EntidadCrediticiaEjbRemote) findServiceRemote(EntidadCrediticiaEjbRemote.class);
 			ejbDescuentoLey	= (DescuentoLeyEjbRemote) findServiceRemote(DescuentoLeyEjbRemote.class);
 			ejbDescuentoLeyDetalle= (DescuentoLeyDetalleEjbRemote) findServiceRemote(DescuentoLeyDetalleEjbRemote.class);
+			ejbConceptoDescuento= (ConceptoDescuentoEjbRemote) findServiceRemote(ConceptoDescuentoEjbRemote.class);
 			
 			beanList = ejb.findAll(ConstantesUtil.LISTAR_EJB_REMOTE);
 			beanEntidadesCrediticiasList =  ejbEntidadCrediticia.findAll();
 			beanDescuentoLeyDetList=  ejbDescuentoLeyDetalle.findAll();
 			beanDescuentoLeyList =  ejbDescuentoLey.findAll();
+			beanConceptoDescuentoList =  ejbConceptoDescuento.findAll();
+			
+			
 			cleanBean();
 
 		} catch (Exception e) {
@@ -61,7 +71,8 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 	}
 
 	public void updateDescuentoLeyDetalle(){
-		//beanDescuentoLeyList = ejbDescuentoLeyDetalle.findAllByIdDescuentoLey(bean.getSipreConceptoDescuentoLeyPK().getCdlCodigo());
+		beanDescuentoLeyDetList = ejbDescuentoLeyDetalle.findAllByIdDescuentoLey(bean.getSipreConceptoDescuentoLeyPK().getCdlCodigo());
+		System.out.println(beanDescuentoLeyList.size());
 	}
 	
 	
@@ -75,6 +86,8 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 		SipreEntidadCrediticia sipreEntidadCrediticia = new SipreEntidadCrediticia();
 		bean.setSipreConceptoDescuentoLeyPK(pk);
 		bean.setSipreEntidadCrediticia(sipreEntidadCrediticia);
+		SipreConceptoDescuento sipreConceptoDescuento = new SipreConceptoDescuento();
+		bean.setSipreConceptoDescuento(sipreConceptoDescuento);
 		
 	}
 
@@ -146,6 +159,15 @@ public class ConceptoDescuentoLeyMb extends MainContext implements Serializable 
 	public void setBeanEntidadesCrediticiasList(
 			List<SipreEntidadCrediticia> beanEntidadesCrediticiasList) {
 		this.beanEntidadesCrediticiasList = beanEntidadesCrediticiasList;
+	}
+
+	public List<SipreConceptoDescuento> getBeanConceptoDescuentoList() {
+		return beanConceptoDescuentoList;
+	}
+
+	public void setBeanConceptoDescuentoList(
+			List<SipreConceptoDescuento> beanConceptoDescuentoList) {
+		this.beanConceptoDescuentoList = beanConceptoDescuentoList;
 	}
 
 	
