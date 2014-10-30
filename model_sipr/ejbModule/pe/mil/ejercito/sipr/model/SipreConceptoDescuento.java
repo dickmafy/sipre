@@ -46,8 +46,9 @@ public class SipreConceptoDescuento implements Serializable {
         @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO")})
     @ManyToMany
     private List<SipreConceptoIngreso> sipreConceptoIngresoList;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoDescuento")
+    /*@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoDescuento")
     private List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeyList;
+    */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoDescuento")
     private List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList;
 
@@ -81,7 +82,7 @@ public class SipreConceptoDescuento implements Serializable {
     public void setSipreConceptoIngresoList(List<SipreConceptoIngreso> sipreConceptoIngresoList) {
         this.sipreConceptoIngresoList = sipreConceptoIngresoList;
     }
-
+/*
     public List<SipreConceptoDescuentoLey> getSipreConceptoDescuentoLeyList() {
         return sipreConceptoDescuentoLeyList;
     }
@@ -89,7 +90,7 @@ public class SipreConceptoDescuento implements Serializable {
     public void setSipreConceptoDescuentoLeyList(List<SipreConceptoDescuentoLey> sipreConceptoDescuentoLeyList) {
         this.sipreConceptoDescuentoLeyList = sipreConceptoDescuentoLeyList;
     }
-
+*/
     public List<SipreCalculoDescuentoLey> getSipreCalculoDescuentoLeyList() {
         return sipreCalculoDescuentoLeyList;
     }

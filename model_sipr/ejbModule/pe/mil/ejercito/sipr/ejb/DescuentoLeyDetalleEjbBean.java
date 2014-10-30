@@ -25,8 +25,8 @@ public class DescuentoLeyDetalleEjbBean extends
 	EntityManager em;
 
 	@SuppressWarnings("unchecked")
-	public List<SipreDescuentoLey> findAllByIdDescuentoLey(String propiedad1) {
-		String consulta = "SELECT s FROM SipreDescuentoLey s where s.cdlCodigo=:propiedad1";
+	public List<SipreDescuentoLeyDet> findAllByIdDescuentoLey(String propiedad1) {
+		String consulta = "SELECT s FROM SipreDescuentoLeyDet s where s.sipreDescuentoLeyDetPK.cdlCodigo=:propiedad1";
 		Query q = em.createQuery(consulta);
 		q = em.createQuery(consulta);
 		q.setParameter("propiedad1", propiedad1);

@@ -14,7 +14,7 @@ import pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet;
 @Remote
 public interface DescuentoLeyDetalleEjbRemote extends GenericDAO<SipreDescuentoLeyDet>{
 
-	List<SipreDescuentoLey> findAllByIdDescuentoLey(String propiedad1);
+	List<SipreDescuentoLeyDet> findAllByIdDescuentoLey(String propiedad1);
 	
 	
 	 
