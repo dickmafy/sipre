@@ -18,22 +18,34 @@
 					oncomplete="PF('wdi').show()">
 				</p:commandButton>
 				<p:panelGrid columns="2">
-					<p:outputLabel value="Codigo" />
-					<p:inputText
-						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.ccdCodigo}" />
+					<p:outputLabel value="Concepto de Ley" />
+
+
+					<p:selectOneMenu required="true" label="Desc. Ley"
+						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.ccdCodigo}">
+						<f:selectItems
+							value="#{conceptoDescuentoLeyMb.beanConceptoDescuentoList}"
+							var="itemDl" itemValue="#{itemDl.ccdCodigo}"
+							itemLabel="#{itemDl.vcdDsc}" />
+						<p:ajax event="change" update=":frm:somDescuentoLeyDetalle"
+							listener="#{conceptoDescuentoLeyMb.updateDescuentoLeyDetalle}" />
+					</p:selectOneMenu>
+
 
 					<p:outputLabel value="Desc. Ley" />
-					<p:selectOneMenu
+					<p:selectOneMenu required="true" label="Desc. Ley"
 						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.cdlCodigo}">
 						<f:selectItems
 							value="#{conceptoDescuentoLeyMb.beanDescuentoLeyList}"
 							var="itemDl" itemValue="#{itemDl.cdlCodigo}"
 							itemLabel="#{itemDl.vdlDsc}" />
-							<p:ajax event="change" update=":frm:somDescuentoLeyDetalle" listener="#{conceptoDescuentoLeyMb.updateDescuentoLeyDetalle}"/>
+						<p:ajax event="change" update=":frm:somDescuentoLeyDetalle"
+							listener="#{conceptoDescuentoLeyMb.updateDescuentoLeyDetalle}" />
 					</p:selectOneMenu>
 
 					<p:outputLabel value="Desc. Ley Detalle" />
-					<p:selectOneMenu id="somDescuentoLeyDetalle"
+					<p:selectOneMenu id="somDescuentoLeyDetalle" required="true"
+						label="Opcion DescuentoLeyDetalle"
 						value="#{conceptoDescuentoLeyMb.bean.sipreConceptoDescuentoLeyPK.cdldCodigo}">
 						<f:selectItems
 							value="#{conceptoDescuentoLeyMb.beanDescuentoLeyDetList}"
