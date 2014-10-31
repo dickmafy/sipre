@@ -205,11 +205,11 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 					cell = row.getCell(4, Row.RETURN_NULL_AND_BLANK);
 					bean.setDtfFecNac(UValidacion
-							.getStringToDate(getValorCeldaExcel(cell)));
+							.ConvertStringToDate2(getValorCeldaExcel(cell)));
 
 					cell = row.getCell(5, Row.RETURN_NULL_AND_BLANK);
 					bean.setCtfFecRenovac(UValidacion
-							.getStringToDate(getValorCeldaExcel(cell)));
+							.ConvertStringToDate2(getValorCeldaExcel(cell)));
 					/*
 					 * // FECHA NACIMIENTO cell = row.getCell(4,
 					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
@@ -251,7 +251,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 			case Cell.CELL_TYPE_NUMERIC:
 				if (DateUtil.isCellDateFormatted(cell)) {
 					Date date = cell.getDateCellValue();
-					valorCelda = UValidacion.getDateToString(date);
+					valorCelda = UValidacion.ConvertDateToString(date);
 				} else {
 					Long i = (long) cell.getNumericCellValue();
 					valorCelda = String.valueOf((i));

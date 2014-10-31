@@ -82,7 +82,6 @@ public class Main extends MainContext {
 		case 42:
 			contenidoDefault = "/modules/seguridad/auditoria/auditoria";
 			break;
-
 		// GESTION
 		case 50:
 			contenidoDefault = "/modules/gestion/verificarCodigoBanco";
@@ -95,9 +94,8 @@ public class Main extends MainContext {
 			break;
 		// PLANILLA
 		case 60:
-			contenidoDefault = "/modules/planilla/planilla";
+			contenidoDefault = "/modules/planilla/procesarPlanilla";
 			break;
-
 		// PLANILLA
 		case 70:
 			contenidoDefault = "/modules/ingresoDescuento/conceptoDescuentoLey";
