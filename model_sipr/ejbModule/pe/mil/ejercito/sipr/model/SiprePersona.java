@@ -67,7 +67,7 @@ public class SiprePersona implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dpersonaFecNac;
     @Column(name = "NPERSONA_NRO_HIJO")
-    private Short npersonaNroHijo;
+    private String npersonaNroHijo;
     @Size(max = 3)
     @Column(name = "CPERSONA_COD_GRA_PEN")
     private String cpersonaCodGraPen;
@@ -97,7 +97,7 @@ public class SiprePersona implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dpersonaFecPromo;
     @Column(name = "NPERSONA_RET_ASCENSO")
-    private Short npersonaRetAscenso;
+    private String npersonaRetAscenso;
     @Size(max = 2)
     @Column(name = "CPERSONA_IND_LICENCIA")
     private String cpersonaIndLicencia;
@@ -269,11 +269,11 @@ public class SiprePersona implements Serializable {
         this.dpersonaFecNac = dpersonaFecNac;
     }
 
-    public Short getNpersonaNroHijo() {
+    public String getNpersonaNroHijo() {
         return npersonaNroHijo;
     }
 
-    public void setNpersonaNroHijo(Short npersonaNroHijo) {
+    public void setNpersonaNroHijo(String npersonaNroHijo) {
         this.npersonaNroHijo = npersonaNroHijo;
     }
 
@@ -357,11 +357,11 @@ public class SiprePersona implements Serializable {
         this.dpersonaFecPromo = dpersonaFecPromo;
     }
 
-    public Short getNpersonaRetAscenso() {
+    public String getNpersonaRetAscenso() {
         return npersonaRetAscenso;
     }
 
-    public void setNpersonaRetAscenso(Short npersonaRetAscenso) {
+    public void setNpersonaRetAscenso(String npersonaRetAscenso) {
         this.npersonaRetAscenso = npersonaRetAscenso;
     }
 
