@@ -10,20 +10,14 @@
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
-
-
 				<p:panel header="PROCESAR PLANILLA" >
-
 					<p:panelGrid columns="3">
-
-
 						<p:outputLabel value="Numero de Hijos" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{conceptoDescuentoLeyMb.newBean}">
+							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}">
 						</p:commandButton>
 						<p:outputLabel value="Se proceso correctamente" />
-
 
 						<p:outputLabel value="Otro1" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
