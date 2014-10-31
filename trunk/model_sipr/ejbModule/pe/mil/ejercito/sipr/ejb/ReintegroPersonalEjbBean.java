@@ -80,12 +80,12 @@ public class ReintegroPersonalEjbBean implements ReintegroPersonalEjbRemote {
 				//beanPlanilla.getId().setCpersonaNroAdm(); 
 				Date fechaTempDate;
 				try {
-					fechaTempDate = UValidacion.fechaStringToDate(beanPlanilla.getId().getCplanillaMesProceso());
+					fechaTempDate = UValidacion.ConvertStringToDate3(beanPlanilla.getId().getCplanillaMesProceso());
 				} catch (Exception e) {
-					fechaTempDate = UValidacion.StringToDate(beanPlanilla.getId().getCplanillaMesProceso());
+					fechaTempDate = UValidacion.ConvertStringToDateConHora(beanPlanilla.getId().getCplanillaMesProceso());
 					e.printStackTrace();
 				}
-				String fechaTempString = UValidacion.getDateToString(fechaTempDate);
+				String fechaTempString = UValidacion.ConvertDateToString(fechaTempDate);
 				beanPlanilla.getId().setCplanillaMesProceso(fechaTempString);
 				
 				//Long nplanillaNumProceso= getMaxLong("nplanillaNumProceso", "SiprePlanilla");
