@@ -17,7 +17,7 @@
 					oncomplete="PF('wdiGrado').show()" />
 
 
-				<p:dataTable widgetVar="dt" id="dt" var="item1"
+				<p:dataTable widgetVar="dt" id="dt" var="item"
 					value="#{grado.beanList}" paginatorPosition="bottom"
 					resizableColumns="true" paginator="true" rows="8"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
@@ -27,28 +27,30 @@
 					</f:facet>
 
 					<p:column headerText="Id" style="width:20%; align:center;"
-						sortBy="#{item1.cggCodigo}">
-						<h:outputText value="#{item1.cggCodigo}" />
+						filterBy="#{item.cggCodigo}" 
+						filterMatchMode="contains" sortBy="#{item.cggCodigo}">
+						<h:outputText value="#{item.cggCodigo}" />
 					</p:column>
 					<p:column headerText="Desc. Corta"
-						style="width:70%; text-align:center">
-						<h:outputText value="#{item1.vggDscCorta}" />
+						style="width:50%; text-align:center">
+						<h:outputText value="#{item.vggDscCorta}" />
 					</p:column>
 					<p:column headerText="Desc. Larga"
-						style="width:70%; text-align:center">
-						<h:outputText value="#{item1.vggDscLarga}" />
+						style="width:50%; text-align:center">
+						<h:outputText value="#{item.vggDscLarga}" />
 					</p:column>
-					<p:column headerText="Cod. Tipo Persona"
-						style="width:70%; text-align:center">
-						<h:outputText value="#{item1.cggTipoPersona}" />
+					<p:column headerText="Cód. Tipo Persona"
+						filterBy="#{item.cggTipoPersona}" 
+						filterMatchMode="contains" style="width:30%; text-align:center">
+						<h:outputText value="#{item.cggTipoPersona}" />
 					</p:column>
 
-					<p:column headerText="Opciones" style="width:10%">
+					<p:column headerText="Opciones" style="width:20%">
 
 						<p:commandLink oncomplete="PF('wduGrado').show()"
-							update=":fuGrado" >
-							<f:setPropertyActionListener value="#{item1}"
-								target="#{grado.beanSelected}" />
+							update=":fuGrado">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{grado.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 
@@ -74,8 +76,8 @@
 				<p:inputText value="#{grado.bean.vggDscCorta}" />
 
 				<p:outputLabel value="Desc. Larga" />
-				<p:inputTextarea value="#{grado.bean.vggDscLarga}"
-				cols="25" rows="10"/>
+				<p:inputTextarea value="#{grado.bean.vggDscLarga}" cols="25"
+					rows="10" />
 
 				<p:outputLabel value="Cod Tipo Persona" />
 				<p:inputText value="#{grado.bean.cggTipoPersona}" />
@@ -93,22 +95,22 @@
 	<p:dialog id="duGrado" widgetVar="wduGrado" header="Guardar"
 		closable="true" closeOnEscape="true" showEffect="fade" height="300"
 		resizable="true" width="500px" modal="true" appendTo="@(body)">
-		
+
 		<h:form id="fuGrado">
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="Codigo Grado" />
-				<p:inputText value="#{grado.beanSelected.cggCodigo}" />
+				<p:inputText value="#{grado.bean.cggCodigo}" />
 
 				<p:outputLabel value="Desc. Corta" />
-				<p:inputText value="#{grado.beanSelected.vggDscCorta}" />
+				<p:inputText value="#{grado.bean.vggDscCorta}" />
 
 				<p:outputLabel value="Desc. Larga" />
-				<p:inputTextarea value="#{grado.beanSelected.vggDscLarga}"
-				cols="25" rows="10"/>
+				<p:inputTextarea value="#{grado.bean.vggDscLarga}" cols="25"
+					rows="10" />
 
 				<p:outputLabel value="Cod Tipo Persona" />
-				<p:inputText value="#{grado.beanSelected.cggTipoPersona}" />
+				<p:inputText value="#{grado.bean.cggTipoPersona}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{grado.updateBean}" ajax="true"
@@ -120,7 +122,7 @@
 	</p:dialog>
 
 	<!-- Elimina-->
-	<p:dialog  id="ddGrado" widgetVar="wddGrado" showEffect="fade"
+	<p:dialog id="ddGrado" widgetVar="wddGrado" showEffect="fade"
 		hideEffect="fade" header="Eliminar" modal="true" appendTo="@(body)"
 		resizable="false">
 		<h:form id="fdGrado">
