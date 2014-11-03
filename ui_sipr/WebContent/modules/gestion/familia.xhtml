@@ -11,16 +11,12 @@
 			<div id="contenido">
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<p:panelGrid columns="2">
-					<p:outputLabel value="Fecha Proceso" />
-					<p:calendar navigator="true" pattern="dd/MM/yyyy" showOn="button"
-						size="10">
-					</p:calendar>
-
-					<p:fileUpload sizeLimit="1000000" auto="true"
+					<p:fileUpload sizeLimit="1000000" auto="true" label="Subir Excel"
+						cancelLabel="cancel" uploadLabel="update"
 						fileUploadListener="#{familiaMb.handleFileUpload}" mode="advanced"
 						allowTypes="/(\.|\/)(xlsx|xls)$/" update=":frm:dt" />
 
-					<p:commandButton title="Guardar" value="Guardar"
+					<p:commandButton title="Guardar" value="Guardar" rendered="false"
 						icon="icn_bar_save" actionListener="#{familiaMb.saveBean}"
 						ajax="true" update=":frm:dt">
 					</p:commandButton>
@@ -35,7 +31,7 @@
 					paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-					<p:column headerText="CIF(Id Excel)"
+					<p:column headerText="CIF (ID Excel)"
 						style="width:10%; align:center;">
 						<h:outputText value="#{item.ctfCif}" />
 					</p:column>
@@ -59,6 +55,13 @@
 							value="#{item.ctfSexo eq '1'? 'Masculito':'Femenino'}" />
 					</p:column>
 
+					<p:column headerText="Causa Renovación"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item.ctfCauRenovac}" />
+					</p:column>
+
+
+
 					<p:column headerText="Opciones" width="10%">
 						<p:commandLink oncomplete="PF('wdialogUpdate').show()">
 							<f:setPropertyActionListener value="#{item}"
@@ -75,12 +78,39 @@
 
 	</h:form>
 
+
 	<!-- Update-->
 	<p:dialog id="dialogUpdate" widgetVar="wdialogUpdate" header="Guardar"
 		closable="true" closeOnEscape="true" showEffect="fade" height="300"
-		resizable="true" width="500px" modal="true" appendTo="@(body)">
+		resizable="true" width="500px">
 		<h:form id="frmUpdate">
 			<p:panelGrid columns="2">
+
+				<p:outputLabel value="CIF (ID Excel)" />
+				<p:outputLabel value="#{familiaMb.bean.ctfCif}" />
+
+				<p:outputLabel value="CIP" />
+				<p:inputText value="#{familiaMb.bean.siprePersona.cpersonaNroAdm}" />
+
+				<p:outputLabel value="Fecha Nacimiento" />
+				<p:inputText value="#{familiaMb.bean.dtfFecNac}" />
+
+				<p:outputLabel value="Fecha Renovacion" />
+				<p:inputText value="#{familiaMb.bean.ctfFecRenovac}" />
+
+				<p:outputLabel value="Sexo" />
+				<p:selectOneMenu value="#{familiaMb.bean.ctfSexo}">
+					<f:selectItem itemValue="1" itemLabel="Masculito" />
+					<f:selectItem itemValue="0" itemLabel="Femenino" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Causa Renovación" />
+				<p:inputText value="#{familiaMb.bean.ctfCauRenovac}" />
+
+				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
+					actionListener="#{familiaMb.updateBean}" ajax="true"
+					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
+				</p:commandButton>
 
 			</p:panelGrid>
 		</h:form>
