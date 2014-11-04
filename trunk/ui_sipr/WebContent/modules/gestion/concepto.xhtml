@@ -14,8 +14,8 @@
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar Concepto" actionListener="#{conceptoMb.newBean}"
-					oncomplete="PF('wdiConcepto').show()" >
-					</p:commandButton>
+					oncomplete="PF('wdiConcepto').show()">
+				</p:commandButton>
 
 				<p:dataTable id="dt" var="item2" widgetVar="wdt"
 					value="#{conceptoMb.beanList}"
@@ -38,12 +38,20 @@
 						<h:outputText value="#{item2.vciDscLarga}" />
 					</p:column>
 
+					<p:column headerText="CCI Destino" style="width:20%; align:center;">
+						<h:outputText value="#{item2.cciCodDestino}" />
+					</p:column>
+
+					<p:column headerText="CCI MEF" style="width:20%; align:center;">
+						<h:outputText value="#{item2.cciCodMef}" />
+					</p:column>
+
 					<p:column headerText="Tipo Planilla"
 						style="width:20%; align:center;">
 						<h:outputText value="#{item2.sipreTipoPlanilla.vtpDsc}" />
 					</p:column>
 
-					<p:column style="width:9%; align:center;"  rendered="false">
+					<p:column style="width:9%; align:center;" rendered="false">
 						<p:selectBooleanCheckbox value="#{item2.check}" />
 					</p:column>
 
@@ -90,11 +98,18 @@
 				<p:outputLabel value="Descr.Larga" />
 				<p:inputText value="#{conceptoMb.bean.vciDscLarga}" />
 
+				<p:outputLabel value="CCI Destino" />
+				<p:inputText value="#{conceptoMb.bean.cciCodDestino}" />
+
+				<p:outputLabel value="CCI MEF" />
+				<p:inputText value="#{conceptoMb.bean.cciCodMef}" />
+
 				<p:outputLabel value="Tipo Planilla" />
 				<p:selectOneMenu
 					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
-					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="otipoPlanillaList"
-						itemValue="#{otipoPlanillaList.ctpCodigo}" itemLabel="#{otipoPlanillaList.vtpDsc}" />
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}"
+						var="otipoPlanillaList" itemValue="#{otipoPlanillaList.ctpCodigo}"
+						itemLabel="#{otipoPlanillaList.vtpDsc}" />
 				</p:selectOneMenu>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
@@ -106,12 +121,12 @@
 		</h:form>
 	</p:dialog>
 
-<!-- UPDATE-->
+	<!-- UPDATE-->
 	<p:dialog id="duConcepto" widgetVar="wduConcepto"
 		header="Guardar Concepto Personal" closable="true" showEffect="fade"
 		appendTo="@(body)" height="300" resizable="true" width="500px"
 		closeOnEscape="true" modal="true">
-		
+
 		<h:form id="fuConcepto">
 			<p:panelGrid columns="2">
 
@@ -124,11 +139,18 @@
 				<p:outputLabel value="Descr.Larga" />
 				<p:inputText value="#{conceptoMb.bean.vciDscLarga}" />
 
+				<p:outputLabel value="CCI Destino" />
+				<p:inputText value="#{conceptoMb.bean.cciCodDestino}" />
+
+				<p:outputLabel value="CCI MEF" />
+				<p:inputText value="#{conceptoMb.bean.cciCodMef}" />
+
 				<p:outputLabel value="Tipo Planilla" />
 				<p:selectOneMenu
 					value="#{conceptoMb.bean.sipreTipoPlanilla.ctpCodigo}">
-					<f:selectItems value="#{conceptoMb.tipoPlanillaList}" var="otipoPlanillaList"
-						itemValue="#{otipoPlanillaList.ctpCodigo}" itemLabel="#{otipoPlanillaList.vtpDsc}" />
+					<f:selectItems value="#{conceptoMb.tipoPlanillaList}"
+						var="otipoPlanillaList" itemValue="#{otipoPlanillaList.ctpCodigo}"
+						itemLabel="#{otipoPlanillaList.vtpDsc}" />
 				</p:selectOneMenu>
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
@@ -139,11 +161,11 @@
 			</p:panelGrid>
 		</h:form>
 	</p:dialog>
-	
+
 
 
 	<!-- Elimina-->
-	<p:dialog  id="ddConcepto" widgetVar="wddConcepto" showEffect="fade"
+	<p:dialog id="ddConcepto" widgetVar="wddConcepto" showEffect="fade"
 		hideEffect="fade" header="Cerrar sesión" modal="true"
 		appendTo="@(body)" resizable="false">
 		<h:form id="frmDelete">

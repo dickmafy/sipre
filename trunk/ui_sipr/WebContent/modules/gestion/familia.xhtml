@@ -36,34 +36,34 @@
 						<h:outputText value="#{item.ctfCif}" />
 					</p:column>
 
-					<p:column headerText="CIP" style="width:20%; align:center;">
+					<p:column headerText="CIP" style="width:15%; align:center;">
 						<h:outputText value="#{item.siprePersona.cpersonaNroAdm}" />
 					</p:column>
 
 
 					<p:column headerText="Fecha Nacimiento"
-						style="width:20%; align:center;">
+						style="width:15%; align:center;">
 						<h:outputText value="#{item.dtfFecNac}" />
 					</p:column>
 					<p:column headerText="Fecha Renovacion"
-						style="width:20%; align:center;">
+						style="width:15%; align:center;">
 						<h:outputText value="#{item.ctfFecRenovac}" />
 					</p:column>
 
-					<p:column headerText="Sexo" style="width:20%; align:center;">
+					<p:column headerText="Sexo" style="width:15%; align:center;">
 						<h:outputText
 							value="#{item.ctfSexo eq '1'? 'Masculito':'Femenino'}" />
 					</p:column>
 
 					<p:column headerText="Causa Renovación"
-						style="width:20%; align:center;">
+						style="width:10%; align:center;">
 						<h:outputText value="#{item.ctfCauRenovac}" />
 					</p:column>
 
 
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogUpdate').show()">
+						<p:commandLink oncomplete="PF('wdialogUpdate').show()" update=":frmUpdate"> 
 							<f:setPropertyActionListener value="#{item}"
 								target="#{familiaMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
