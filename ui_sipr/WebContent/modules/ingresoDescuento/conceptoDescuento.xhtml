@@ -24,7 +24,7 @@
 					paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-					<p:column headerText="Codigo Concepto Descuento"
+					<p:column headerText="Código Concepto Descuento"
 						style="width:10%; align:center;">
 						<h:outputText value="#{item.ccdCodigo}">
 						</h:outputText>
@@ -60,10 +60,10 @@
 		<h:form id="frmInsert">
 			<p:panelGrid columns="2">
 
-				<p:outputLabel value="Codigo Concepto Descuento" />
+				<p:outputLabel value="Código Concepto Descuento" />
 				<p:inputText value="#{conceptoDescuentoMb.bean.ccdCodigo}" />
 
-				<p:outputLabel value="Descripcion" />
+				<p:outputLabel value="Descripción" />
 				<p:inputText value="#{conceptoDescuentoMb.bean.vcdDsc}" />
 
 
@@ -84,10 +84,10 @@
 		<h:form id="frmUpdate">
 			<p:panelGrid columns="2">
 
-				<p:outputLabel value="Codigo Concepto Descuento" />
+				<p:outputLabel value="Código Concepto Descuento" />
 				<p:inputText value="#{conceptoDescuentoMb.bean.ccdCodigo}" />
 
-				<p:outputLabel value="Descripcion" />
+				<p:outputLabel value="Descripción" />
 				<p:inputText value="#{conceptoDescuentoMb.bean.vcdDsc}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
