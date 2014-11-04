@@ -113,6 +113,14 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/ingresoDescuento/descuentoLey";
 			break;
 
+		// PARAMETRIZACION
+		case 80:
+			contenidoDefault = "/modules/parametro/parametro";
+			break;
+		case 81:
+			contenidoDefault = "/modules/parametro/parametroDetalle";
+			break;
+
 		}
 		return "";
 	}
