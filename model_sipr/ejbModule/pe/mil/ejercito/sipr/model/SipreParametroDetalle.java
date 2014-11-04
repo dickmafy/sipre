@@ -6,15 +6,15 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import java.util.List;
+import java.math.BigDecimal;
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -26,56 +26,57 @@ import javax.validation.constraints.Size;
 @Entity
 @Table(name = "SIPRE_PARAMETRO_DETALLE")
 @NamedQueries({
-    @NamedQuery(name = "SipreParametroDetalle.findAll", query = "SELECT s FROM SipreParametroDetalle s")})
+    @NamedQuery(name = "SipreParametroDetalle_1.findAll", query = "SELECT s FROM SipreParametroDetalle s")})
 public class SipreParametroDetalle implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
     @NotNull
-    @Size(min = 1, max = 3)
-    @Column(name = "CPD_CODIGO")
-    private String cpdCodigo;
-    @Size(max = 20)
-    @Column(name = "VPD_DSC")
-    private String vpdDsc;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreParametroDetalle")
-    private List<SipreParametro> sipreParametroList;
+    @Size(min = 1, max = 6)
+    @Column(name = "CPARAMETRO_MES_PROCESO")
+    private String cparametroMesProceso;
+    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+    @Column(name = "NPARAMETRO_VAL")
+    private BigDecimal nparametroVal;
+    @JoinColumn(name = "CPD_CODIGO", referencedColumnName = "CPD_CODIGO")
+    @ManyToOne(optional = false)
+    private SipreParametro cpdCodigo;
 
     public SipreParametroDetalle() {
     }
 
-    public SipreParametroDetalle(String cpdCodigo) {
-        this.cpdCodigo = cpdCodigo;
+    public SipreParametroDetalle(String cparametroMesProceso) {
+        this.cparametroMesProceso = cparametroMesProceso;
     }
 
-    public String getCpdCodigo() {
+    public String getCparametroMesProceso() {
+        return cparametroMesProceso;
+    }
+
+    public void setCparametroMesProceso(String cparametroMesProceso) {
+        this.cparametroMesProceso = cparametroMesProceso;
+    }
+
+    public BigDecimal getNparametroVal() {
+        return nparametroVal;
+    }
+
+    public void setNparametroVal(BigDecimal nparametroVal) {
+        this.nparametroVal = nparametroVal;
+    }
+
+    public SipreParametro getCpdCodigo() {
         return cpdCodigo;
     }
 
-    public void setCpdCodigo(String cpdCodigo) {
+    public void setCpdCodigo(SipreParametro cpdCodigo) {
         this.cpdCodigo = cpdCodigo;
-    }
-
-    public String getVpdDsc() {
-        return vpdDsc;
-    }
-
-    public void setVpdDsc(String vpdDsc) {
-        this.vpdDsc = vpdDsc;
-    }
-
-    public List<SipreParametro> getSipreParametroList() {
-        return sipreParametroList;
-    }
-
-    public void setSipreParametroList(List<SipreParametro> sipreParametroList) {
-        this.sipreParametroList = sipreParametroList;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (cpdCodigo != null ? cpdCodigo.hashCode() : 0);
+        hash += (cparametroMesProceso != null ? cparametroMesProceso.hashCode() : 0);
         return hash;
     }
 
@@ -86,7 +87,7 @@ public class SipreParametroDetalle implements Serializable {
             return false;
         }
         SipreParametroDetalle other = (SipreParametroDetalle) object;
-        if ((this.cpdCodigo == null && other.cpdCodigo != null) || (this.cpdCodigo != null && !this.cpdCodigo.equals(other.cpdCodigo))) {
+        if ((this.cparametroMesProceso == null && other.cparametroMesProceso != null) || (this.cparametroMesProceso != null && !this.cparametroMesProceso.equals(other.cparametroMesProceso))) {
             return false;
         }
         return true;
@@ -94,7 +95,7 @@ public class SipreParametroDetalle implements Serializable {
 
     @Override
     public String toString() {
-        return "pe.mil.ejercito.sipr.model.SipreParametroDetalle[ cpdCodigo=" + cpdCodigo + " ]";
+        return "pe.mil.ejercito.sipr.model.SipreParametroDetalle_1[ cparametroMesProceso=" + cparametroMesProceso + " ]";
     }
     
 }
