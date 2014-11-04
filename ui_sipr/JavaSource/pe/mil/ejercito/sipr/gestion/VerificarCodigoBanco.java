@@ -45,11 +45,11 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 	}
 
 	public void newBean(ActionEvent event) {
-		SipreBanco sipreBancoPk = new SipreBanco();
-		SiprePersona siprePersonaPk = new SiprePersona();
-		// SipreTmpBancoPK sipreTmpBancoPK = new SipreTmpBancoPK();
 		bean = new SipreTmpBanco();
-		bean.setSipreBanco(sipreBancoPk);
+		SiprePersona persona = new SiprePersona();
+		SipreBanco banco = new SipreBanco();
+		//bean.setSiprePersona(persona);
+		bean.setSipreBanco(banco);
 	}
 
 	public void saveBean(ActionEvent event) {
