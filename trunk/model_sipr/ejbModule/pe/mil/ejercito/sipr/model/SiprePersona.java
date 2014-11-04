@@ -169,8 +169,10 @@ public class SiprePersona implements Serializable {
     private List<SipreTmpBonificacion> sipreTmpBonificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private List<SipreDescuentoNoprocesado> sipreDescuentoNoprocesadoList;
+    /*
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private SipreTmpBanco sipreTmpBanco;
+    */
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private List<SipreIngresoOtro> sipreIngresoOtroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
@@ -548,7 +550,7 @@ public class SiprePersona implements Serializable {
     public void setSipreDescuentoNoprocesadoList(List<SipreDescuentoNoprocesado> sipreDescuentoNoprocesadoList) {
         this.sipreDescuentoNoprocesadoList = sipreDescuentoNoprocesadoList;
     }
-
+/*
     public SipreTmpBanco getSipreTmpBanco() {
         return sipreTmpBanco;
     }
@@ -556,7 +558,7 @@ public class SiprePersona implements Serializable {
     public void setSipreTmpBanco(SipreTmpBanco sipreTmpBanco) {
         this.sipreTmpBanco = sipreTmpBanco;
     }
-
+*/
     public List<SipreIngresoOtro> getSipreIngresoOtroList() {
         return sipreIngresoOtroList;
     }

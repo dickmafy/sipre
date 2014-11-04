@@ -35,9 +35,11 @@ public class SipreTmpBanco implements Serializable {
     @Size(min = 1, max = 9)
     @Column(name = "CPERSONA_NRO_ADM")
     private String cpersonaNroAdm;
+    /*
     @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
     @OneToOne(optional = false)
     private SiprePersona siprePersona;
+    */
     @JoinColumn(name = "CBANCO_CODIGO", referencedColumnName = "CBANCO_CODIGO")
     @ManyToOne
     private SipreBanco sipreBanco;
@@ -56,7 +58,7 @@ public class SipreTmpBanco implements Serializable {
     public void setCpersonaNroAdm(String cpersonaNroAdm) {
         this.cpersonaNroAdm = cpersonaNroAdm;
     }
-
+/*
     public SiprePersona getSiprePersona() {
         return siprePersona;
     }
@@ -64,7 +66,7 @@ public class SipreTmpBanco implements Serializable {
     public void setSiprePersona(SiprePersona siprePersona) {
         this.siprePersona = siprePersona;
     }
-
+*/
     public SipreBanco getSipreBanco() {
         return sipreBanco;
     }

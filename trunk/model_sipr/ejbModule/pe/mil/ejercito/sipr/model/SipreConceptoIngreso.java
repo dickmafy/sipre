@@ -44,18 +44,6 @@ public class SipreConceptoIngreso implements Serializable {
 	@JoinColumn(name = "CTP_CODIGO", referencedColumnName = "CTP_CODIGO")
 	@ManyToOne
 	private SipreTipoPlanilla sipreTipoPlanilla;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SipreTmpBonificacion> sipreTmpBonificacionList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SipreIngresoGrado> sipreIngresoGradoList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SipreIngresoOtro> sipreIngresoOtroList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SipreTmpGuardia> sipreTmpGuardiaList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SipreExcepcion> sipreExcepcionList;
-	@OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreConceptoIngreso")
-	private List<SiprePlanillaDetalle> siprePlanillaDetalleList;
 
 	@Transient
 	private Boolean check;
@@ -122,58 +110,6 @@ public class SipreConceptoIngreso implements Serializable {
 
 	public void setSipreTipoPlanilla(SipreTipoPlanilla sipreTipoPlanilla) {
 		this.sipreTipoPlanilla = sipreTipoPlanilla;
-	}
-
-	public List<SipreTmpBonificacion> getSipreTmpBonificacionList() {
-		return sipreTmpBonificacionList;
-	}
-
-	public void setSipreTmpBonificacionList(
-			List<SipreTmpBonificacion> sipreTmpBonificacionList) {
-		this.sipreTmpBonificacionList = sipreTmpBonificacionList;
-	}
-
-	public List<SipreIngresoGrado> getSipreIngresoGradoList() {
-		return sipreIngresoGradoList;
-	}
-
-	public void setSipreIngresoGradoList(
-			List<SipreIngresoGrado> sipreIngresoGradoList) {
-		this.sipreIngresoGradoList = sipreIngresoGradoList;
-	}
-
-	public List<SipreIngresoOtro> getSipreIngresoOtroList() {
-		return sipreIngresoOtroList;
-	}
-
-	public void setSipreIngresoOtroList(
-			List<SipreIngresoOtro> sipreIngresoOtroList) {
-		this.sipreIngresoOtroList = sipreIngresoOtroList;
-	}
-
-	public List<SipreTmpGuardia> getSipreTmpGuardiaList() {
-		return sipreTmpGuardiaList;
-	}
-
-	public void setSipreTmpGuardiaList(List<SipreTmpGuardia> sipreTmpGuardiaList) {
-		this.sipreTmpGuardiaList = sipreTmpGuardiaList;
-	}
-
-	public List<SipreExcepcion> getSipreExcepcionList() {
-		return sipreExcepcionList;
-	}
-
-	public void setSipreExcepcionList(List<SipreExcepcion> sipreExcepcionList) {
-		this.sipreExcepcionList = sipreExcepcionList;
-	}
-
-	public List<SiprePlanillaDetalle> getSiprePlanillaDetalleList() {
-		return siprePlanillaDetalleList;
-	}
-
-	public void setSiprePlanillaDetalleList(
-			List<SiprePlanillaDetalle> siprePlanillaDetalleList) {
-		this.siprePlanillaDetalleList = siprePlanillaDetalleList;
 	}
 
 	public Boolean getCheck() {
