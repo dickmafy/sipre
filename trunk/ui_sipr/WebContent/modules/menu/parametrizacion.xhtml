@@ -8,6 +8,15 @@
 				<p:menuitem value="Administracion del Personal" icon="ui-icon-key"
 					async="true" 
 					ajax="true" update=":pnlContenido"  url="http://10.64.88.8:8080/MILITAR/" />
+					
+					<p:menuitem value="Parametro" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(80)}"
+					ajax="true" update=":pnlContenido" />
+					
+					<p:menuitem value="Parametro Detalle" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(81)}"
+					ajax="true" update=":pnlContenido" />
+					
 
 			</p:submenu>
 		</p:menu>
