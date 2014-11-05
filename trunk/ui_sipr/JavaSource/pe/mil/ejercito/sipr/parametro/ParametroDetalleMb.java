@@ -9,6 +9,7 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
 
+
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
 import pe.mil.ejercito.sipr.commons.MainContext;
@@ -32,6 +33,7 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 	private SipreParametro beanParametro;
 	private GenericResponseBean<SipreParametro> sessionBean ; 
 	
+	@SuppressWarnings("unchecked")
 	public ParametroDetalleMb() {
 		super();
 		try {
