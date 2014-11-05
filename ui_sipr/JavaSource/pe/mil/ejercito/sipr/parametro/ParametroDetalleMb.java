@@ -8,7 +8,6 @@ import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.apache.poi.ss.formula.functions.T;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
@@ -31,11 +30,12 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 	private List<SipreParametroDetalle> beanList;
 	
 	private SipreParametro beanParametro;
+	private GenericResponseBean<SipreParametro> sessionBean ; 
 	
 	public ParametroDetalleMb() {
 		super();
 		try {
-			beanParametro= (SipreParametro) getVariable("vparametro");
+			beanParametro= ((GenericResponseBean<SipreParametro>) getVariable("vparametro")).getObjeto();
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (ParametroDetalleEjbRemote) findServiceRemote(ParametroDetalleEjbRemote.class);
 
