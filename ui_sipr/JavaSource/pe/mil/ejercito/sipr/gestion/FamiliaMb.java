@@ -100,7 +100,6 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	public void updateBean(ActionEvent event) {
 		try {
-
 			bean = ejb.merge(bean);
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
 					SEVERITY_INFO);
@@ -224,7 +223,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 					 */
 					// SEXO
 					cell = row.getCell(6, Row.RETURN_NULL_AND_BLANK);
-					// bean.setCtfSexo(getValorCeldaExcel(cell));
+					bean.setCtfSexo(getValorCeldaExcel(cell));
 
 					ejb.persist(bean);
 
