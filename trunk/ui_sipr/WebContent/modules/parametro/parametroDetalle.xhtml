@@ -11,6 +11,10 @@
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
+				
+				
+				<p:outputLabel value="Código Parametro : " />
+				<p:outputLabel value="#{parametroDetalleMb.beanParametro.cpdCodigo}" />
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar" actionListener="#{parametroDetalleMb.newBean}"
