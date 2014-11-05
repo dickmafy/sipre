@@ -36,10 +36,11 @@
 
 
 
-					<p:column headerText="Ir" width="10%">
+					<p:column headerText="Ir Detalle" width="10%">
 						<p:commandLink value="ir "
 							action="#{parametroMb.goParametroDetalleMb}" ajax="false"
-							update=":frm:pnlContenido">
+							actionListener="#{mainMb.redireccionaContent(81)}"
+							update=":pnlContenido" async="true">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{parametroMb.bean}" />
 						</p:commandLink>

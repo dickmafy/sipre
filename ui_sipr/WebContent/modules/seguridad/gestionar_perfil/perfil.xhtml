@@ -11,30 +11,32 @@
 				<div id="botonera">
 					<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 						value="Agregar Perfil" actionListener="#{perfilMb.nuevoPerfil}"
-						oncomplete="PF('wvAddEditPerfil').show()" 
-						update=":dlgAddEditPerfil"/>
+						oncomplete="PF('wvAddEditPerfil').show()"
+						update=":dlgAddEditPerfil" />
 				</div>
 			</div>
 			<div id="contenido">
 				<p:spacer width="100%" height="10" id="spTblAuditoria" />
-				<p:messages id="msgEstadoPerfil" closable="true"/>
+				<p:messages id="msgEstadoPerfil" closable="true" />
 				<p:dataTable id="tblPerfil"
 					emptyMessage="No se encontraron registros"
 					value="#{perfilMb.perfilLst}" var="p">
-					<p:column headerText="FECHA" width="40%">
+					<p:column headerText="Nombre Perfil" width="40%">
 				#{p.nombrePerfil}
 				</p:column>
-					<p:column headerText="TABLA" width="50%">
+					<p:column headerText="Descr. Perfil" width="50%">
 				#{p.descripcionPerfil}
 				</p:column>
 					<p:column headerText="ACCION" width="10%">
-						<p:commandLink oncomplete="PF('wvAddEditPerfil').show()" update=":dlgAddEditPerfil">
+						<p:commandLink oncomplete="PF('wvAddEditPerfil').show()"
+							update=":dlgAddEditPerfil">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{perfilMb.perfilSelected}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wvRemovePerfil').show()" update=":dlgRemovePerfil">
+						<p:commandLink oncomplete="PF('wvRemovePerfil').show()"
+							update=":dlgRemovePerfil">
 							<f:setPropertyActionListener value="#{p}"
 								target="#{perfilMb.perfilSelected}" />
 							<p:graphicImage value="/images/icons/trash_12.png" />
@@ -44,6 +46,8 @@
 			</div>
 		</div>
 	</h:form>
-	<ui:include src="/modules/seguridad/gestionar_perfil/dialog/removePerfil.xhtml" />
-	<ui:include src="/modules/seguridad/gestionar_perfil/dialog/addEditPerfil.xhtml" />
+	<ui:include
+		src="/modules/seguridad/gestionar_perfil/dialog/removePerfil.xhtml" />
+	<ui:include
+		src="/modules/seguridad/gestionar_perfil/dialog/addEditPerfil.xhtml" />
 </ui:composition>
