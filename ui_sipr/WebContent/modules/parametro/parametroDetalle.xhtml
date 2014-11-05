@@ -6,8 +6,8 @@
 
 	<h:form id="frm">
 		<div id="contenido_formulario">
-			<div id="page_flow">Ingreso Descuento / Concepto Descuento</div>
-			<div id="titulo_formulario">Concepto Descuento</div>
+			<div id="page_flow">Parametrización / Parametro Detalle</div>
+			<div id="titulo_formulario">Parametro Detalle</div>
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
@@ -24,26 +24,16 @@
 					paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
+					<p:column headerText="Código Parametro Detalle"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item.cpdCodigo}" />
+					</p:column>
+
 					<p:column headerText="Código Parametro Mes Proceso"
 						style="width:10%; align:center;">
 						<h:outputText value="#{item.cparametroMesProceso}">
 						</h:outputText>
 					</p:column>
-
-					<p:column headerText="Descripcion" style="width:20%; align:center;">
-						<h:outputText value="#{item.nparametroVal}" />
-					</p:column>
-
-					<p:column headerText="Parametro Detalle Código"
-						style="width:20%; align:center;">
-						<h:outputText value="#{item.sipreParametroDetalle.cpdCodigo}" />
-					</p:column>
-
-					<p:column headerText="Parametro Detalle Descripcion"
-						style="width:20%; align:center;">
-						<h:outputText value="#{item.sipreParametroDetalle.vpdDsc}" />
-					</p:column>
-
 
 					<p:column headerText="Opciones" width="10%">
 						<p:commandLink oncomplete="PF('wdu').show()" update=":frmUpdate">
@@ -52,7 +42,7 @@
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wdd').show()" update=":frmDelete">
+						<p:commandLink oncomplete="PF('wdd').show()" update=":frmDelete" rendered="false">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{parametroDetalleMb.bean}" />
 							<p:graphicImage value="/images/icons/trash_12.png" />
@@ -77,15 +67,8 @@
 				<p:outputLabel value="Descripcion" />
 				<p:inputText value="#{parametroDetalleMb.bean.nparametroVal}" />
 
-				<p:outputLabel value="Param. Detalle Código" />
-				<p:inputText
-					value="#{parametroDetalleMb.bean.sipreParametroDetalle.cpdCodigo}" />
-
-				<p:outputLabel value="Param. Detalle Descripcion" />
-				<p:inputText
-					value="#{parametroDetalleMb.bean.sipreParametroDetalle.vpdDsc}" />
-
-
+				<p:outputLabel value="Param. Detalle Codigo" />
+				<p:inputText value="#{parametroDetalleMb.bean.cpdCodigo}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{parametroDetalleMb.saveBean}" ajax="false"
@@ -110,13 +93,8 @@
 				<p:outputLabel value="Descripcion" />
 				<p:inputText value="#{parametroDetalleMb.bean.nparametroVal}" />
 
-				<p:outputLabel value="Descripcion" />
-				<p:inputText
-					value="#{parametroDetalleMb.bean.sipreParametroDetalle.cpdCodigo}" />
-
-				<p:outputLabel value="Descripcion" />
-				<p:inputText
-					value="#{parametroDetalleMb.bean.sipreParametroDetalle.vpdDsc}" />
+				<p:outputLabel value="Param. Detalle Codigo" />
+				<p:inputText value="#{parametroDetalleMb.bean.cpdCodigo}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
 					actionListener="#{parametroDetalleMb.updateBean}" ajax="false"
@@ -146,8 +124,8 @@
 
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
 				oncomplete="PF('wdd').hide();" update=":frm:dt"
-				icon="_ui-icon-logout" actionListener="#{parametroDetalleMb.disable}"
-				ajax="false" />
+				icon="_ui-icon-logout"
+				actionListener="#{parametroDetalleMb.disable}" ajax="false" />
 
 		</h:form>
 	</p:dialog>
