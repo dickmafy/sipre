@@ -48,7 +48,7 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/ingresoDescuento";
 			contenidoDefault = "/modules/blank_page";
 			break;
-		case 5:
+		case 10:
 			menuLateral = "/modules/menu/seguridad";
 			contenidoDefault = "/modules/blank_page";
 			break;
