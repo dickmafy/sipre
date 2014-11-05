@@ -15,6 +15,7 @@
 				
 				<p:outputLabel value="Código Parametro : " />
 				<p:outputLabel value="#{parametroDetalleMb.beanParametro.cpdCodigo}" />
+				<br></br>
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 					value="Agregar" actionListener="#{parametroDetalleMb.newBean}"
@@ -30,7 +31,7 @@
 
 					<p:column headerText="Código Parametro Detalle"
 						style="width:20%; align:center;">
-						<h:outputText value="#{item.cpdCodigo}" />
+						<h:outputText value="#{item.cpdCodigo.cpdCodigo}" />
 					</p:column>
 
 					<p:column headerText="Código Parametro Mes Proceso"

@@ -55,7 +55,7 @@
 							value="#{item.ctfSexo eq '1'? 'Masculito':'Femenino'}" />
 					</p:column>
 
-					<p:column headerText="Causa Renovación"
+					<p:column headerText="Causa Renovación" rendered="false"
 						style="width:10%; align:center;">
 						<h:outputText value="#{item.ctfCauRenovac}" />
 					</p:column>
@@ -93,10 +93,16 @@
 				<p:inputText value="#{familiaMb.bean.siprePersona.cpersonaNroAdm}" />
 
 				<p:outputLabel value="Fecha Nacimiento" />
-				<p:inputText value="#{familiaMb.bean.dtfFecNac}" />
+				<p:calendar  navigator="true" pattern="dd/MM/yyyy"
+										value="#{familiaMb.bean.dtfFecNac}" 
+										showOn="button" size="10" >
+									</p:calendar>
 
 				<p:outputLabel value="Fecha Renovacion" />
-				<p:inputText value="#{familiaMb.bean.ctfFecRenovac}" />
+				<p:calendar  navigator="true" pattern="dd/MM/yyyy"
+										value="#{familiaMb.bean.ctfFecRenovac}" 
+										showOn="button" size="10" >
+									</p:calendar>
 
 				<p:outputLabel value="Sexo" />
 				<p:selectOneMenu value="#{familiaMb.bean.ctfSexo}">
@@ -108,7 +114,7 @@
 				<p:inputText value="#{familiaMb.bean.ctfCauRenovac}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{familiaMb.updateBean}" ajax="true"
+					actionListener="#{familiaMb.updateBean}" ajax="false"
 					oncomplete="PF('wdialogUpdate').hide();" update=":frm:dt">
 				</p:commandButton>
 
