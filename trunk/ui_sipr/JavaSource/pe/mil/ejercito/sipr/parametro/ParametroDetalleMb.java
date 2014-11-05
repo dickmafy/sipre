@@ -29,11 +29,13 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 	private ParametroDetalleEjbRemote ejb;
 	private SipreParametroDetalle bean;
 	private List<SipreParametroDetalle> beanList;
-	private GenericResponseBean<T> sessionBean; 
+	
+	private SipreParametro beanParametro;
 	
 	public ParametroDetalleMb() {
 		super();
 		try {
+			beanParametro= (SipreParametro) getVariable("vparametro");
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (ParametroDetalleEjbRemote) findServiceRemote(ParametroDetalleEjbRemote.class);
 
@@ -87,6 +89,14 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 
 	public void setBean(SipreParametroDetalle bean) {
 		this.bean = bean;
+	}
+
+	public SipreParametro getBeanParametro() {
+		return beanParametro;
+	}
+
+	public void setBeanParametro(SipreParametro beanParametro) {
+		this.beanParametro = beanParametro;
 	}
 
 	

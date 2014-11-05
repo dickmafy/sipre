@@ -6,8 +6,6 @@ import javax.annotation.ManagedBean;
 import javax.faces.bean.SessionScoped;
 
 
-@ManagedBean
-@SessionScoped
 public class GenericResponseBean<T> {
 
 	private T objeto;
