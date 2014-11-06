@@ -5,9 +5,13 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="PARAMETRIZACIÓN	">
-				<p:menuitem value="Administracion del Personal" icon="ui-icon-key"
+				<p:menuitem value="Sistema de Personal Militar" icon="ui-icon-key"
 					async="true" 
-					ajax="true" update=":pnlContenido"  url="http://10.64.88.8:8080/MILITAR/" />
+					ajax="false" update=":pnlContenido"  url="http://10.64.88.8:8080/MILITAR2/" />
+					
+					<p:menuitem value="Sistema de Personal Civil" icon="ui-icon-key"
+					async="true" 
+					ajax="false" update=":pnlContenido"  url="http://10.64.88.8:8080/CIVIL2/" />
 					
 					<p:menuitem value="Parametro" icon="ui-icon-key"
 					async="true" actionListener="#{mainMb.redireccionaContent(80)}"
