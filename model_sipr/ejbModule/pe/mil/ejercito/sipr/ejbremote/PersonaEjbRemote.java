@@ -15,6 +15,7 @@ public interface PersonaEjbRemote extends
 		GenericDAO<SiprePersona> {
 	
 	List<SiprePersona> findAllBySituacionAdministrativaYActividad();
+	List<SiprePersona> findAllBySituacionAdministrativaDeListaRevista();
 
 	
 
