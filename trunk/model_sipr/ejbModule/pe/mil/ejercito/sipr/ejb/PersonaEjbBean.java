@@ -29,4 +29,31 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements
 		q.setParameter("csaCodigo", "70");
 		return q.getResultList();
 	}
+	
+	
+	@Override
+	public List<SiprePersona> findAllBySituacionAdministrativaDeListaRevista() {
+		StringBuilder sb = new StringBuilder();
+		sb.append("SELECT o FROM SiprePersona o ");
+		sb.append(" where o.sipreSituacionAdm.csaCodigo=:p1");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p2");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p3");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p4");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p5");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p6");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p8");
+		Query q = em.createQuery(sb.toString());
+		//situacion administrativa
+		q.setParameter("p1", "60");
+		q.setParameter("p2", "71");
+		q.setParameter("p3", "63");
+		q.setParameter("p4", "75");
+		q.setParameter("p5", "50");
+		q.setParameter("p6", "71");
+		q.setParameter("p7", "52");
+		q.setParameter("p8", "75");
+		return q.getResultList();
+	}
+	
 }
