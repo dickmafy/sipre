@@ -20,15 +20,15 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 @ViewScoped
 public class VerificarCodigoBanco extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long				serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
-	private VerificarCodigoBancoEjbRemote ejb;
-	private BancoEjbRemote ejbBanco;
+	private UsuarioEjbRemote				ejbUsuario;
+	private VerificarCodigoBancoEjbRemote	ejb;
+	private BancoEjbRemote					ejbBanco;
 
-	private List<SipreTmpBanco> beanList;
-	private List<SipreBanco> bancoList;
-	private SipreTmpBanco bean;
+	private List<SipreTmpBanco>				beanList;
+	private List<SipreBanco>				bancoList;
+	private SipreTmpBanco					bean;
 
 	public VerificarCodigoBanco() {
 		super();
@@ -48,18 +48,16 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 		bean = new SipreTmpBanco();
 		SiprePersona persona = new SiprePersona();
 		SipreBanco banco = new SipreBanco();
-		//bean.setSiprePersona(persona);
+		// bean.setSiprePersona(persona);
 		bean.setSipreBanco(banco);
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
 			bean = ejb.persist(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_ERROR);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
@@ -67,12 +65,10 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 	public void updateBean(ActionEvent event) {
 		try {
 			bean = ejb.merge(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}

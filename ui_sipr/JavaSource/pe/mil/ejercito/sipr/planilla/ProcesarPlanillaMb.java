@@ -2,61 +2,53 @@ package pe.mil.ejercito.sipr.planilla;
 
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
-import javax.faces.event.ActionEvent;
 
-import org.jboss.security.plugins.TmpFilePassword;
-import org.primefaces.component.log.Log;
+import org.apache.log4j.Logger;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
-import pe.mil.ejercito.sipr.commons.Faces;
+import pe.mil.ejercito.sipr.commons.GenericMessage;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UValidacion;
-import pe.mil.ejercito.sipr.dto.UsuarioDto;
-import pe.mil.ejercito.sipr.ejb.FamiliaEjbBean;
-import pe.mil.ejercito.sipr.ejb.GenericDAO;
 import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.IngresoConceptoPersonalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.ReintegroPersonalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreIngresoOtro;
-import pe.mil.ejercito.sipr.model.SipreIngresoOtroPK;
-import pe.mil.ejercito.sipr.model.SiprePerfil;
 import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
-import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "procesarPlanillaMb")
 @ViewScoped
 public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long					serialVersionUID	= 1L;
+	private static Logger						LOG					= Logger.getLogger(ProcesarPlanillaMb.class);
+	private List<GenericMessage<SiprePersona>>	beanGmList;
+	private GenericMessage<SiprePersona>		beanGm;
+
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
-	private FamiliaEjbRemote ejbTmpFamilia;
-	private PersonaEjbRemote ejbPersona;
+	private UsuarioEjbRemote					ejbUsuario;
+	private FamiliaEjbRemote					ejbTmpFamilia;
+	private PersonaEjbRemote					ejbPersona;
 
-	private List<SipreTmpFamilia> beanTmpFamiliaList;
-	private List<SiprePersona> beanPersonaList;
+	private List<SipreTmpFamilia>				beanTmpFamiliaList;
+	private List<SiprePersona>					beanPersonaList;
 
-	private SipreTmpFamilia beanTmpFamilia;
-	private SiprePersona beanPersona;
+	private SipreTmpFamilia						beanTmpFamilia;
+	private SiprePersona						beanPersona;
 
 	public ProcesarPlanillaMb() {
 		super();
+		LOG.info("###ProcesarPlanillaMb");
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejbTmpFamilia = (FamiliaEjbRemote) findServiceRemote(FamiliaEjbRemote.class);
 			ejbPersona = (PersonaEjbRemote) findServiceRemote(PersonaEjbRemote.class);
 
 			beanTmpFamiliaList = ejbTmpFamilia.findAll(100);
-			beanPersonaList = ejbPersona.findAll(100);
+			beanGmList = new ArrayList<>();
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -67,10 +59,11 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		beanPersona = new SiprePersona();
 		String numeroHijosPersona = null;
 		String cipPersona = null;
-		Integer obtenerEdad;
+		Integer vEdad;
 		String fechaNacimiento;
 		SipreTmpFamilia sipreTmpFamilia;
 		Integer procesoContadorHijos = null;
+		beanPersonaList = ejbPersona.findAllBySituacionAdministrativaYActividad();
 
 		for (SiprePersona itemPersona : beanPersonaList) {
 
@@ -78,12 +71,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			beanTmpFamiliaList = null;
 
 			try {
-				beanTmpFamiliaList = ejbTmpFamilia
-						.findAllByIdPersona(itemPersona.getCpersonaNroAdm());
+				beanTmpFamiliaList = ejbTmpFamilia.findAllByIdPersona(itemPersona.getCpersonaNroAdm());
 			} catch (Exception e) {
-				showMessage(
-						ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL
-								+ e.getMessage(), SEVERITY_ERROR);
+				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL + e.getMessage(), SEVERITY_ERROR);
 
 			}
 
@@ -92,37 +82,75 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				// si tiene datos
 				if (!UValidacion.esNuloOVacio(itemTmpFamilia.getCtfCif())) {
 					String codigoTmpFamilia = itemTmpFamilia.getCtfCif();
-					
+
 					// codigo 50,60
-					codigoTmpFamilia = codigoTmpFamilia.substring(
-							codigoTmpFamilia.length() - 2,
-							codigoTmpFamilia.length());
+					codigoTmpFamilia = codigoTmpFamilia.substring(codigoTmpFamilia.length() - 2, codigoTmpFamilia.length());
 
 					// 1. que tengan esos codigo son familia
-					if ("59".equals(codigoTmpFamilia)
-							|| "60".equals(codigoTmpFamilia)) {
-
-						// 2 fecha nacimiento menor a 18
-						fechaNacimiento = UValidacion
-								.ConvertDateToString(itemTmpFamilia
-										.getDtfFecNac());
-						obtenerEdad = UValidacion.getEdad(fechaNacimiento);
-
-						if (obtenerEdad > 18) {
-
-						} else if (obtenerEdad <= 18) {
-
-							procesoContadorHijos++;
-							updateProcesoNumeroHijo(cipPersona,
-									procesoContadorHijos);
-						}
-
+					boolean banderaNumeroHijos = false;
+					if ("50".equals(codigoTmpFamilia) || "60".equals(codigoTmpFamilia)) {
+						banderaNumeroHijos = true;
 					} else {
-						showMessage(
-								"No tiene los codigo 56 y 60 ,no tiene familiares.",
-								SEVERITY_ERROR);
+						banderaNumeroHijos = false;
+						addGenericMensaje("No tiene los codigo 56 y 60 ,no tiene familiares.",
+								ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+						return;
 					}
 
+					if (UValidacion.esNuloOVacio(itemTmpFamilia.getCtfSitFamilia())) {
+						addGenericMensaje("No se encontraron datos en TMP FAMILIA asociados al Personal.",
+								ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+						return;
+					} else {
+						banderaNumeroHijos = true;
+					}
+
+					if (banderaNumeroHijos) {
+						// 2 fecha nacimiento menor a 18
+						fechaNacimiento = UValidacion.ConvertDateToString(itemTmpFamilia.getDtfFecNac());
+						vEdad = UValidacion.getEdad(fechaNacimiento);
+
+						switch (itemTmpFamilia.getCtfSitFamilia()) {
+						case "01":
+							if (vEdad < 18) {
+								procesoContadorHijos++;
+								addGenericMensaje("cod 01 , Tiene hijo menor a 18 años", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+							} else if (vEdad >= 18 && UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
+								addGenericMensaje("cod 01 , Tiene hijo mayor a 18 Años y no tiene Fecha Renovacion ",
+										ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING);
+								break;
+
+							} else if (vEdad >= 18 && !UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
+								procesoContadorHijos++;
+								addGenericMensaje("cod 01 , Tiene hijo mayor a 18 Años y si tiene  tiene Fecha Renovacion ",
+										ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+
+							}
+
+						case "02":
+							if (vEdad < 28 && UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
+								procesoContadorHijos++;
+							}
+
+							break;
+						case "03":
+							if (vEdad < 28 && UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
+								procesoContadorHijos++;
+							}
+							break;
+						default:
+							break;
+						}
+						addGenericMensaje("Actualizando el Numero de Hijos al personal", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+								ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+
+						// updateProcesoNumeroHijo(cipPersona,
+						// procesoContadorHijos);
+					}
+				} else {
+					addGenericMensaje("No se encontraron datos en TMP FAMILIA asociados al Personal.",
+							ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 				}
 
 			}
@@ -130,17 +158,22 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	}
 
-	private void updateProcesoNumeroHijo(String cipPersona,
-			Integer procesoContadorHijos) {
+	private void addGenericMensaje(String Mensaje, String constanteNombreProceso, String constanteTipoMensaje) {
+		beanGm = new GenericMessage<>();
+		beanGm.setMensaje("No tiene los codigo 56 y 60 ,no tiene familiares.");
+		beanGm.setCampo(ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS);
+		beanGm.setTipoMensaje(ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+		beanGmList.add(beanGm);
+	}
+
+	private void updateProcesoNumeroHijo(String cipPersona, Integer procesoContadorHijos) {
 		// Actualizar Numero hijo de persona
 		beanPersona.setNpersonaNroHijo(procesoContadorHijos.toString());
 		beanPersona.setCpersonaNroAdm(cipPersona);
 		// ejbPersona.merge(beanPersona);
 
-		showMessage(
-				ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Numero hijos : "
-						+ procesoContadorHijos + "(" + beanPersona.toString()
-						+ ")", SEVERITY_INFO);
+		showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Numero hijos : " + procesoContadorHijos + "(" + beanPersona.toString()
+				+ ")", SEVERITY_INFO);
 	}
 
 	public List<SipreTmpFamilia> getBeanTmpFamiliaList() {
@@ -173,5 +206,21 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	public void setBeanPersona(SiprePersona beanPersona) {
 		this.beanPersona = beanPersona;
+	}
+
+	public List<GenericMessage<SiprePersona>> getBeanGmList() {
+		return beanGmList;
+	}
+
+	public void setBeanGmList(List<GenericMessage<SiprePersona>> beanGmList) {
+		this.beanGmList = beanGmList;
+	}
+
+	public GenericMessage<SiprePersona> getBeanGm() {
+		return beanGm;
+	}
+
+	public void setBeanGm(GenericMessage<SiprePersona> beanGm) {
+		this.beanGm = beanGm;
 	}
 }
