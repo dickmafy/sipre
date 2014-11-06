@@ -11,12 +11,13 @@ import java.util.Locale;
 import java.util.SimpleTimeZone;
 
 public class UValidacion {
-	private static SimpleDateFormat DATE_FORMAT = null;
+	private static SimpleDateFormat	DATE_FORMAT	= null;
 
 	public UValidacion() {
 
 	}
 
+	/* validar nulo o vacio un String */
 	public static boolean esNuloOVacio(String valor) {
 		if (valor != null && !valor.equals("")) {
 			return false;
@@ -25,7 +26,7 @@ public class UValidacion {
 		}
 
 	}
-	
+
 	public static String getMaskedDate(String mascara, Date fecha) {
 		DATE_FORMAT = new SimpleDateFormat(mascara, new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
@@ -41,15 +42,12 @@ public class UValidacion {
 		return DATE_FORMAT.format(fechaDate);
 	}
 
-	
 	public static String getFechaActual() {
 		DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 		Date fechaDate = new Date();
 		return DATE_FORMAT.format(fechaDate);
 	}
-
-
 
 	public static int diasDiferencia(Date inicio, Date fin) {
 		long segInicio = inicio.getTime();
@@ -59,8 +57,7 @@ public class UValidacion {
 		return ((int) dias);
 	}
 
-	public static int diasDiferencia(String sInicio, String sFin)
-			throws ParseException {
+	public static int diasDiferencia(String sInicio, String sFin) throws ParseException {
 		Date inicio = UValidacion.ConvertStringToDate2(sInicio);
 		Date fin = UValidacion.ConvertStringToDate2(sFin);
 
@@ -71,16 +68,13 @@ public class UValidacion {
 		return ((int) dias);
 	}
 
-	public static boolean fechaEnRango(Date fecha, Date rangoInicio,
-			Date rangoFin) {
+	public static boolean fechaEnRango(Date fecha, Date rangoInicio, Date rangoFin) {
 		if (fecha == null || rangoInicio == null || rangoFin == null) {
 			return false;
 		}
 
-		System.out.println("Chequeo Rango de Fechas -> Fecha:"
-				+ UValidacion.ConvertDateToString(fecha) + " en rango["
-				+ UValidacion.ConvertDateToString(rangoInicio) + "/"
-				+ UValidacion.ConvertDateToString(rangoFin) + "]");
+		System.out.println("Chequeo Rango de Fechas -> Fecha:" + UValidacion.ConvertDateToString(fecha) + " en rango["
+				+ UValidacion.ConvertDateToString(rangoInicio) + "/" + UValidacion.ConvertDateToString(rangoFin) + "]");
 
 		long f = fecha.getTime();
 		long ri = rangoInicio.getTime();
@@ -112,8 +106,7 @@ public class UValidacion {
 		return false;
 	}
 
-	public static boolean horaEnRango(String hora, String horaInicio,
-			String horaFin) throws ParseException {
+	public static boolean horaEnRango(String hora, String horaInicio, String horaFin) throws ParseException {
 		DATE_FORMAT = new SimpleDateFormat("H:m", new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 
@@ -128,8 +121,7 @@ public class UValidacion {
 	}
 
 	public static String getFechaYHoraActual() {
-		DATE_FORMAT = new SimpleDateFormat("H:m:s dd/MM/yyyy", new Locale(
-				"es_ES"));
+		DATE_FORMAT = new SimpleDateFormat("H:m:s dd/MM/yyyy", new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT")); // TODO: Ver
 																// despues como
 																// hacer para no
@@ -160,9 +152,7 @@ public class UValidacion {
 		// el dia de hoy sin horas ni nada.
 		GregorianCalendar ddate = new GregorianCalendar();
 		ddate.setTime(d);
-		GregorianCalendar ddateday = new GregorianCalendar(
-				ddate.get(GregorianCalendar.YEAR),
-				ddate.get(GregorianCalendar.MONTH),
+		GregorianCalendar ddateday = new GregorianCalendar(ddate.get(GregorianCalendar.YEAR), ddate.get(GregorianCalendar.MONTH),
 				ddate.get(GregorianCalendar.DAY_OF_MONTH));
 		return ddateday.getTime();
 	}
@@ -177,11 +167,9 @@ public class UValidacion {
 		return result;
 	}
 
-	
 	public static String ConvertDateToString(Date d) {
 		if (d != null) {
-			DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy",
-					new Locale("es_ES"));
+			DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", new Locale("es_ES"));
 			DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 			return DATE_FORMAT.format(d);
 		}
@@ -193,20 +181,18 @@ public class UValidacion {
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 		return DATE_FORMAT.parse(fecha);
 	}
-	
-	
+
 	public static Date ConvertStringToDate3(String fecha) {
 		Date fechaDate = new Date();
 		try {
-			DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy",
-					new Locale("es_ES"));
+			DATE_FORMAT = new SimpleDateFormat("dd/MM/yyyy", new Locale("es_ES"));
 			fechaDate = DATE_FORMAT.parse(fecha);
 		} catch (Exception e) {
 			new Exception();
 		}
 		return fechaDate;
 	}
-	
+
 	public static Date ConvertStringToDateSinHora(String fecha) {
 
 		DateFormat fechaFormato;
@@ -226,7 +212,7 @@ public class UValidacion {
 		}
 
 	}
-	
+
 	public static Date ConvertStringToDateConHora(String fecha) {
 
 		DateFormat horaFormato = new SimpleDateFormat("HH:mm:ss");
@@ -251,7 +237,6 @@ public class UValidacion {
 		}
 
 	}
-	
 
 	public static String getFecha_ddMMyyyy() {
 
@@ -260,10 +245,6 @@ public class UValidacion {
 
 		return formato.format(calendar.getTime());
 	}
-
-	
-
-	
 
 	public static Double ConcertStringToDouble(String valor) {
 
@@ -342,9 +323,7 @@ public class UValidacion {
 		String ruta = currentDirectory.getPath();
 		int indice = ruta.indexOf("bin");
 		ruta = ruta.substring(0, indice - 1);
-		ruta = ruta + obtenerSeparadorCarpetas() + "standalone"
-				+ obtenerSeparadorCarpetas() + "tmp"
-				+ obtenerSeparadorCarpetas();
+		ruta = ruta + obtenerSeparadorCarpetas() + "standalone" + obtenerSeparadorCarpetas() + "tmp" + obtenerSeparadorCarpetas();
 
 		System.out.println("Ruta temporales: " + ruta);
 
@@ -364,43 +343,54 @@ public class UValidacion {
 			return "/";
 		}
 	}
-	
-	
+
 	/**
 	 * ejemplo dd/MM/yyyy
+	 * 
 	 * @param fecha
 	 * @return
 	 */
-	  public static Integer getEdad(String fecha){
-		    Date fechaNac=null;
-		        try {
-		            /**Se puede cambiar la mascara por el formato de la fecha
-		            que se quiera recibir, por ejemplo año mes día "yyyy-MM-dd"
-		            en este caso es día mes año*/
-		            fechaNac = new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
-		        } catch (Exception ex) {
-		            System.out.println("Error:"+ex);
-		        }
-		        Calendar fechaNacimiento = Calendar.getInstance();
-		        //Se crea un objeto con la fecha actual
-		        Calendar fechaActual = Calendar.getInstance();
-		        //Se asigna la fecha recibida a la fecha de nacimiento.
-		        fechaNacimiento.setTime(fechaNac);
-		        //Se restan la fecha actual y la fecha de nacimiento
-		        int año = fechaActual.get(Calendar.YEAR)- fechaNacimiento.get(Calendar.YEAR);
-		        System.out.println("año :" + año);
-		        int mes =fechaActual.get(Calendar.MONTH)- fechaNacimiento.get(Calendar.MONTH);
-		        System.out.println("mes :" + mes);
-		        int dia = fechaActual.get(Calendar.DATE)- fechaNacimiento.get(Calendar.DATE);
-		        System.out.println("dia :" + dia);
-		        //Se ajusta el año dependiendo el mes y el día
-		        if(mes<0 || (mes==0 && dia<0)){
-		            año--;
-		        }
-		        //Regresa la edad en base a la fecha de nacimiento
-		        return año;
-		    }
-	  
-	  
+	public static Integer getEdad(String fecha) {
+		Date fechaNac = null;
+		try {
+			/**
+			 * Se puede cambiar la mascara por el formato de la fecha que se
+			 * quiera recibir, por ejemplo año mes día "yyyy-MM-dd" en este caso
+			 * es día mes año
+			 */
+			fechaNac = new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
+		} catch (Exception ex) {
+			System.out.println("Error:" + ex);
+		}
+		Calendar fechaNacimiento = Calendar.getInstance();
+		// Se crea un objeto con la fecha actual
+		Calendar fechaActual = Calendar.getInstance();
+		// Se asigna la fecha recibida a la fecha de nacimiento.
+		fechaNacimiento.setTime(fechaNac);
+		// Se restan la fecha actual y la fecha de nacimiento
+		int año = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
+		System.out.println("año :" + año);
+		int mes = fechaActual.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH);
+		System.out.println("mes :" + mes);
+		int dia = fechaActual.get(Calendar.DATE) - fechaNacimiento.get(Calendar.DATE);
+		System.out.println("dia :" + dia);
+		// Se ajusta el año dependiendo el mes y el día
+		if (mes < 0 || (mes == 0 && dia < 0)) {
+			año--;
+		}
+		// Regresa la edad en base a la fecha de nacimiento
+		return año;
+	}
+
+	public static boolean isFechaValida(String fecha) {
+		try {
+			SimpleDateFormat formatoFecha = new SimpleDateFormat("dd/MM/yyyy", Locale.getDefault());
+			formatoFecha.setLenient(false);
+			formatoFecha.parse(fecha);
+		} catch (ParseException e) {
+			return false;
+		}
+		return true;
+	}
 
 }
