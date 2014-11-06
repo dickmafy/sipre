@@ -17,6 +17,8 @@ public interface DescuentoLeyDetalleEjbRemote extends GenericDAO<SipreDescuentoL
 	List<SipreDescuentoLeyDet> findAllByIdDescuentoLey(String propiedad1);
 	
 	
+	
+	
 	 
 	
 
