@@ -165,6 +165,7 @@ public class SiprePersona implements Serializable {
     @JoinColumn(name = "CAGRUPADOR_CODIGO", referencedColumnName = "CAGRUPADOR_CODIGO")
     @ManyToOne
     private SipreAgrupador sipreAgrupador;
+    /*
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private List<SipreTmpBonificacion> sipreTmpBonificacionList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
@@ -172,7 +173,7 @@ public class SiprePersona implements Serializable {
     /*
     @OneToOne(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private SipreTmpBanco sipreTmpBanco;
-    */
+    
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private List<SipreIngresoOtro> sipreIngresoOtroList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
@@ -191,7 +192,7 @@ public class SiprePersona implements Serializable {
     private List<SiprePlanilla> siprePlanillaList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePersona")
     private List<SipreTmpEntidadCrediticia> sipreTmpEntidadCrediticiaList;
-
+*/
     public SiprePersona() {
     }
 
@@ -534,7 +535,7 @@ public class SiprePersona implements Serializable {
     public void setSipreAgrupador(SipreAgrupador sipreAgrupador) {
         this.sipreAgrupador = sipreAgrupador;
     }
-
+    /*
     public List<SipreTmpBonificacion> getSipreTmpBonificacionList() {
         return sipreTmpBonificacionList;
     }
@@ -550,7 +551,7 @@ public class SiprePersona implements Serializable {
     public void setSipreDescuentoNoprocesadoList(List<SipreDescuentoNoprocesado> sipreDescuentoNoprocesadoList) {
         this.sipreDescuentoNoprocesadoList = sipreDescuentoNoprocesadoList;
     }
-/*
+
     public SipreTmpBanco getSipreTmpBanco() {
         return sipreTmpBanco;
     }
@@ -558,7 +559,7 @@ public class SiprePersona implements Serializable {
     public void setSipreTmpBanco(SipreTmpBanco sipreTmpBanco) {
         this.sipreTmpBanco = sipreTmpBanco;
     }
-*/
+
     public List<SipreIngresoOtro> getSipreIngresoOtroList() {
         return sipreIngresoOtroList;
     }
@@ -599,6 +600,7 @@ public class SiprePersona implements Serializable {
         this.sipreTmpJudicialList = sipreTmpJudicialList;
     }
 
+
     public List<SipreTmpFamilia> getSipreTmpFamiliaList() {
         return sipreTmpFamiliaList;
     }
@@ -630,7 +632,7 @@ public class SiprePersona implements Serializable {
     public void setSipreTmpEntidadCrediticiaList(List<SipreTmpEntidadCrediticia> sipreTmpEntidadCrediticiaList) {
         this.sipreTmpEntidadCrediticiaList = sipreTmpEntidadCrediticiaList;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;

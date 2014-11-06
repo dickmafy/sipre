@@ -62,9 +62,11 @@ public class SipreTmpFamilia implements Serializable {
     @Column(name = "CPERSONA_NRO_ADM")
     private String cpersonaNroAdm;
     
+    /*
     @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM",insertable=false,updatable=false)
     @ManyToOne(optional = false)
     private SiprePersona siprePersona;
+    */
 
     public SipreTmpFamilia() {
     }
@@ -136,7 +138,7 @@ public class SipreTmpFamilia implements Serializable {
     public void setCtfDni(String ctfDni) {
         this.ctfDni = ctfDni;
     }
-
+/*
     public SiprePersona getSiprePersona() {
         return siprePersona;
     }
@@ -144,7 +146,7 @@ public class SipreTmpFamilia implements Serializable {
     public void setSiprePersona(SiprePersona siprePersona) {
         this.siprePersona = siprePersona;
     }
-
+*/
     @Override
     public int hashCode() {
         int hash = 0;
