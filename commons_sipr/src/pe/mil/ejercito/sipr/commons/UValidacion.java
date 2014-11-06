@@ -369,11 +369,11 @@ public class UValidacion {
 		fechaNacimiento.setTime(fechaNac);
 		// Se restan la fecha actual y la fecha de nacimiento
 		int año = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
-		System.out.println("año :" + año);
+		//System.out.println("año :" + año);
 		int mes = fechaActual.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH);
-		System.out.println("mes :" + mes);
+		//System.out.println("mes :" + mes);
 		int dia = fechaActual.get(Calendar.DATE) - fechaNacimiento.get(Calendar.DATE);
-		System.out.println("dia :" + dia);
+		//System.out.println("dia :" + dia);
 		// Se ajusta el año dependiendo el mes y el día
 		if (mes < 0 || (mes == 0 && dia < 0)) {
 			año--;
