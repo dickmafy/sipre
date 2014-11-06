@@ -10,12 +10,12 @@
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
-				<p:panel header="PROCESAR PLANILLA" >
+				<p:panel header="PROCESAR PLANILLA">
 					<p:panelGrid columns="3">
 						<p:outputLabel value="Numero de Hijos" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}">
+							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}" update=":frm:dt">
 						</p:commandButton>
 						<p:outputLabel value="Se proceso correctamente" />
 
@@ -34,8 +34,8 @@
 						</p:commandButton>
 						<p:outputLabel value="Se proceso correctamente" />
 					</p:panelGrid>
-					
-					<p:panelGrid columns="3" >
+
+					<p:panelGrid columns="3">
 
 
 						<p:outputLabel value="Numero de Hijos" />
@@ -61,9 +61,31 @@
 						</p:commandButton>
 						<p:outputLabel value="Se proceso correctamente" />
 					</p:panelGrid>
-					
-					
+
+
 				</p:panel>
+
+
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					value="#{procesarPlanillaMb.beanGmList}"
+					emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
+
+					<p:column headerText="Campo Proceso"
+						style="width:10%; align:center;">
+						<h:outputText value="#{item.campo}" />
+					</p:column>
+
+					<p:column headerText="Tipo Mensaje"
+						style="width:10%; align:center;">
+						<h:outputText value="#{item.tipoMensaje}" />
+					</p:column>
+
+					<p:column headerText="Mensaje" style="width:10%; align:center;">
+						<h:outputText value="#{item.mensaje}" />
+					</p:column>
+
+				</p:dataTable>
+
 
 			</div>
 		</div>
