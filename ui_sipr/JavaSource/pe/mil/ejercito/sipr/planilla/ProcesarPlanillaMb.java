@@ -22,7 +22,6 @@ import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
-import sun.net.www.content.text.plain;
 
 @ManagedBean(name = "procesarPlanillaMb")
 @ViewScoped
@@ -33,7 +32,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private List<GenericMessage<SiprePersona>>	beanGmList;
 	private GenericMessage<SiprePersona>		beanGm;
 
-	
 	private UsuarioEjbRemote					ejbUsuario;
 	private FamiliaEjbRemote					ejbTmpFamilia;
 	private PersonaEjbRemote					ejbPersona;
@@ -54,34 +52,38 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			ejbPersona = (PersonaEjbRemote) findServiceRemote(PersonaEjbRemote.class);
 
 			beanTmpFamiliaList = ejbTmpFamilia.findAll(100);
-			beanGmList = new ArrayList<>();
+			cleanBeanGmList();
 
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 
-	
-	public void procesarListaRevista(){
-		
+	private void cleanBeanGmList() {
+		beanGmList = new ArrayList<>();
+	}
+
+	public void procesarListaRevista() {
+		cleanBeanGmList();
+
 		try {
 			beanPersonaList = ejbPersona.findAllBySituacionAdministrativaDeListaRevista();
 		} catch (Exception e1) {
-			addGenericMensaje("-No se pudo obtener registros de la Tabla Personal.",
-					ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-			//return;
+			addGenericMensaje("-No se pudo obtener registros de la Tabla Personal.", ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA,
+					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+			// return;
 		}
-		
+
 		SiprePlanilla planilla = null;
 
 		for (SiprePersona itemPersona : beanPersonaList) {
 			try {
 				planilla = new SiprePlanilla();
-				
+
 				SiprePlanillaPK pkPlanilla = new SiprePlanillaPK();
-				
+
 				planilla.setId(pkPlanilla);
-				
+
 				planilla.setCplanillaCodGraPen(itemPersona.getCpersonaCodGraPen());
 				planilla.setCplanillaDni(itemPersona.getCpersonaDni());
 				planilla.setCplanillaIndActPen(null);
@@ -92,7 +94,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setCplanillaSerRecon(itemPersona.getCpersonaSerRecon());
 				planilla.setCplanillaSexo(itemPersona.getCpersonaSexo());
 				planilla.setCplanillaSexPension(itemPersona.getCpersonaSexPension());
-				
+
 				planilla.setDplanillaFecAfiAfp(itemPersona.getDpersonaFecAfiAfp());
 				planilla.setDplanillaFecFal(itemPersona.getDpersonaFecFal());
 				planilla.setDplanillaFecFinContr(itemPersona.getDpersonaFecFinContr());
@@ -100,7 +102,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setDplanillaFecNac(itemPersona.getDpersonaFecNac());
 				planilla.setDplanillaFecPromo(itemPersona.getDpersonaFecPromo());
 				planilla.setDplanillaFecRetiro(itemPersona.getDpersonaFecRetiro());
-				
+
 				planilla.setVplanillaApeNom(itemPersona.getVpersonaApeNom());
 				planilla.setVplanillaCadFunc(itemPersona.getVpersonaCadFunc());
 				planilla.setVplanillaCodEssalud(itemPersona.getVpersonaCodEssalud());
@@ -109,13 +111,13 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setVplanillaDocRecon(itemPersona.getVpersonaDocRecon());
 				planilla.setVplanillaDocRetiro(itemPersona.getVpersonaDocRetiro());
 				planilla.setVplanillaNomCausante(itemPersona.getVpersonaNomCausante());
-				
+
 				planilla.setNplanillaNroHijo(Integer.parseInt(itemPersona.getNpersonaNroHijo()));
 				planilla.setNplanillaPorPension(itemPersona.getNpersonaPorPension());
 				planilla.setNplanillaPorUnif(itemPersona.getNpersonaPorUnif());
 				planilla.setNplanillaRetAscenso(Integer.parseInt(itemPersona.getNpersonaRetAscenso()));
 				planilla.setNplanillaTieServicio(null);
-				
+
 				planilla.setSipreAgrupador(itemPersona.getSipreAgrupador());
 				planilla.setSipreArma(itemPersona.getSipreArma());
 				planilla.setSipreBanco(itemPersona.getSipreBanco());
@@ -125,23 +127,23 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setSipreEspecialidadAlterna(itemPersona.getSipreEspecialidadAlterna());
 				planilla.setSipreEstadoCivil(itemPersona.getSipreEstadoCivil());
 				planilla.setSipreGrado(itemPersona.getSipreGrado());
-				planilla.setSiprePersona(itemPersona);//PERSONA repetido?
+				planilla.setSiprePersona(itemPersona);// PERSONA repetido?
 				planilla.setSipreSituacionCausal(itemPersona.getSipreSituacionCausal());
 				planilla.setSipreUnidad(itemPersona.getSipreUnidad());
 				planilla.setSipreUsuario(getSessionUser());
-				
-				//auditoria
+
+				// auditoria
 				planilla.setCplanillaUsuMod(getSessionUser().getVusuarioNom());
 				planilla.setDplanillaFecReg(new Date());
 				planilla.setDplanillaFecMod(new Date());
 			} catch (NumberFormatException e) {
-				addGenericMensaje("Error en el formato de los numeros.",
-						ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+				addGenericMensaje("Error en el formato de los numeros.", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 			} catch (Exception e) {
 				addGenericMensaje("No se pudo asignar obtener la data del Personal " + itemPersona.getCpersonaNroAdm(),
 						ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 			}
-			
+
 			try {
 				ejbPlanilla.merge(planilla);
 			} catch (Exception e) {
@@ -149,12 +151,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 						ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 			}
 		}
-	} 
-	
+	}
+
 	public void procesarNumeroHijos() {
-		
-		addGenericMensaje("###INICIANDO.",
-				ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+		cleanBeanGmList();
+		addGenericMensaje("###INICIANDO.", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+
 		try {
 			beanPersona = new SiprePersona();
 			String numeroHijosPersona = null;
@@ -163,24 +165,22 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			String fechaNacimiento;
 			SipreTmpFamilia sipreTmpFamilia;
 			Integer procesoContadorHijos = null;
-			
-			
+
 			try {
 				beanPersonaList = ejbPersona.findAllBySituacionAdministrativaYActividad();
 			} catch (Exception e1) {
-				addGenericMensaje("-No se pudo obtener registros de la Tabla Personal.",
-						ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-				//return;
+				addGenericMensaje("-No se pudo obtener registros de la Tabla Personal.", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+				// return;
 			}
-			
 
 			for (SiprePersona itemPersona : beanPersonaList) {
-				
-				addGenericMensaje("###Persona : " + itemPersona.getCpersonaNroAdm() 
-						+ " - Persona Nombre : " + itemPersona.getVpersonaApeNom()
-						+ "- Persona Numero Hijos : " + itemPersona.getNpersonaNroHijo(),
-						ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-				
+
+				addGenericMensaje(
+						"###Persona : " + itemPersona.getCpersonaNroAdm() + " - Persona Nombre : " + itemPersona.getVpersonaApeNom()
+								+ "- Persona Numero Hijos : " + itemPersona.getNpersonaNroHijo(),
+						ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+
 				procesoContadorHijos = 0;
 				beanTmpFamiliaList = null;
 
@@ -189,7 +189,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				} catch (Exception e) {
 					addGenericMensaje("-No se pudo obtener registros de la Tabla Familia por CIP Persona.",
 							ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-					//return;
+					// return;
 				}
 
 				for (SipreTmpFamilia itemTmpFamilia : beanTmpFamiliaList) {
@@ -204,25 +204,30 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 						// 1. que tengan esos codigo son familia
 						boolean banderaNumeroHijos = false;
 						for (int i = 50; i <= 69; i++) {
-							if (i==Integer.parseInt(codigoTmpFamilia)) {
+							if (i == Integer.parseInt(codigoTmpFamilia)) {
 								banderaNumeroHijos = true;
-								addGenericMensaje("Tiene un hijo con codigo XXXXX"+i+".",
+								addGenericMensaje("Tiene un hijo con codigo XXXXX" + i + ".",
 										ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 							} else {
-								/*banderaNumeroHijos = false;
-								addGenericMensaje("No tiene los codigo 56 y 60 ,no tiene familiares.",
-										ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-										
-								//return;
-								*/
+								/*
+								 * banderaNumeroHijos = false;
+								 * addGenericMensaje(
+								 * "No tiene los codigo 56 y 60 ,no tiene familiares."
+								 * ,
+								 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS
+								 * ,
+								 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR
+								 * );
+								 * 
+								 * //return;
+								 */
 							}
 						}
-						
 
 						if (UValidacion.esNuloOVacio(itemTmpFamilia.getCtfSitFamilia())) {
 							addGenericMensaje("No se encontraron datos en TMP FAMILIA asociados al Personal.",
 									ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-							//return;
+							// return;
 						} else {
 							banderaNumeroHijos = true;
 						}
@@ -238,21 +243,24 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 								if (vEdad < 18) {
 									procesoContadorHijos++;
-									addGenericMensaje("cod 01 , Tiene hijo menor a 18 años", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+									addGenericMensaje("cod 01 , Tiene hijo menor a 18 años",
+											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 											ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
-									//No tiene fecha renovacion
+									// No tiene fecha renovacion
 								} else if (vEdad >= 18 && UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
 									addGenericMensaje("cod 01 , Tiene hijo mayor a 18 Años y no tiene Fecha Renovacion ",
-											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING);
+											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+											ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING);
 									break;
-									//Si tiene fecha renovacion
+									// Si tiene fecha renovacion
 								} else if (vEdad >= 18 && !UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
 									procesoContadorHijos++;
 									addGenericMensaje("cod 01 , Tiene hijo mayor a 18 Años y si tiene  tiene Fecha Renovacion ",
-											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+											ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 
 								}
-									break;
+								break;
 							case "2":
 								addGenericMensaje("cod 02", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
@@ -273,8 +281,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 								break;
 							}
-							addGenericMensaje("Actualizando el Numero de Hijos : #"+procesoContadorHijos+"al personal", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-									ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 
 							// updateProcesoNumeroHijo(cipPersona,
 							// procesoContadorHijos);
@@ -285,13 +291,15 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					}
 
 				}
+				addGenericMensaje("Actualizando el Numero de Hijos : #" + procesoContadorHijos + "al personal",
+						ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 			}
 		} catch (Exception e3) {
-			addGenericMensaje("####FINALIZANDO - Con Error " + e3.getMessage(),
-					ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-		}finally{
-			addGenericMensaje("####FINALIZANDO",
-					ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
+			addGenericMensaje("####FINALIZANDO - Con Error " + e3.getMessage(), ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+		} finally {
+			addGenericMensaje("####FINALIZANDO", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 		}
 
 	}
