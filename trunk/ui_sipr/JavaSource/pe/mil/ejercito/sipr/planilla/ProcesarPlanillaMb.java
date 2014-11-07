@@ -73,7 +73,10 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 			// return;
 		}
+		
+		//sipre planmia otros , filtrar a la tabla personal
 
+		//verificar si la persona esta, no se puede repetir persona de sipre_palnilla_otro a sipre_planilla
 		SiprePlanilla planilla = null;
 
 		for (SiprePersona itemPersona : beanPersonaList) {
@@ -86,9 +89,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 				planilla.setCplanillaCodGraPen(itemPersona.getCpersonaCodGraPen());
 				planilla.setCplanillaDni(itemPersona.getCpersonaDni());
-				planilla.setCplanillaIndActPen(null);
-				planilla.setCplanillaIndCalculo(null);
-				planilla.setCplanillaIndLicencia(null);
+				planilla.setCplanillaIndActPen(null); //when CSA_CODIGO 1 , es A 
+				planilla.setCplanillaIndCalculo(null); //pendeia
+				planilla.setCplanillaIndLicencia(null);//si esta
 				planilla.setCplanillaIndOnp(itemPersona.getCpersonaIndOnp());
 				planilla.setCplanillaIndQui(itemPersona.getCpersonaIndQui());
 				planilla.setCplanillaSerRecon(itemPersona.getCpersonaSerRecon());
@@ -116,7 +119,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setNplanillaPorPension(itemPersona.getNpersonaPorPension());
 				planilla.setNplanillaPorUnif(itemPersona.getNpersonaPorUnif());
 				planilla.setNplanillaRetAscenso(Integer.parseInt(itemPersona.getNpersonaRetAscenso()));
-				planilla.setNplanillaTieServicio(null);
+				planilla.setNplanillaTieServicio(null);//pendiete
 
 				planilla.setSipreAgrupador(itemPersona.getSipreAgrupador());
 				planilla.setSipreArma(itemPersona.getSipreArma());
@@ -223,7 +226,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 								 */
 							}
 						}
-
+								//estado 1
 						if (UValidacion.esNuloOVacio(itemTmpFamilia.getCtfSitFamilia())) {
 							addGenericMensaje("No se encontraron datos en TMP FAMILIA asociados al Personal.",
 									ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
@@ -236,7 +239,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 							// 2 fecha nacimiento menor a 18
 							fechaNacimiento = UValidacion.ConvertDateToString(itemTmpFamilia.getDtfFecNac());
 							vEdad = UValidacion.getEdad(fechaNacimiento);
-
+								//
 							switch (itemTmpFamilia.getCtfSitFamilia()) {
 							case "1":
 								addGenericMensaje("cod 01", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
@@ -252,7 +255,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 											ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 											ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING);
 									break;
-									// Si tiene fecha renovacion
+									// Si tiene cod renovacion si es 1 pasa
 								} else if (vEdad >= 18 && !UValidacion.esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
 									procesoContadorHijos++;
 									addGenericMensaje("cod 01 , Tiene hijo mayor a 18 Años y si tiene  tiene Fecha Renovacion ",
