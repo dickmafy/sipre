@@ -26,7 +26,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
 		Query q = em.createQuery(sb.toString());
 		//situacion administrativa
-		q.setParameter("csaCodigo", "70");
+		q.setParameter("csaCodigo", "01");
 		return q.getResultList();
 	}
 	
@@ -44,15 +44,14 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p8");
 		Query q = em.createQuery(sb.toString());
-		//situacion administrativa
+		//situacion administrativa +01
+		q.setParameter("p1", "01");
 		q.setParameter("p1", "60");
-		q.setParameter("p2", "71");
-		q.setParameter("p3", "63");
-		q.setParameter("p4", "75");
+		q.setParameter("p1", "57");
+		q.setParameter("p2", "61");
 		q.setParameter("p5", "50");
 		q.setParameter("p6", "71");
-		q.setParameter("p7", "52");
-		q.setParameter("p8", "75");
+		q.setParameter("p7", "77");
 		return q.getResultList();
 	}
 	
