@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -18,7 +19,6 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -32,149 +32,153 @@ import javax.validation.constraints.Size;
 @Table(name = "SIPRE_PLANILLA")
 @NamedQueries({ @NamedQuery(name = "SiprePlanilla.findAll", query = "SELECT s FROM SiprePlanilla s") })
 public class SiprePlanilla implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long				serialVersionUID	= 1L;
 	@EmbeddedId
-	protected SiprePlanillaPK id;
+	protected SiprePlanillaPK				id;
 	@Size(max = 8)
 	@Column(name = "CPLANILLA_DNI")
-	private String cplanillaDni;
+	private String							cplanillaDni;
 	@Column(name = "CPLANILLA_IND_QUI")
-	private Character cplanillaIndQui;
+	private String							cplanillaIndQui;
 	@Column(name = "DPLANILLA_FEC_FAL")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecFal;
+	private Date							dplanillaFecFal;
 	@Column(name = "DPLANILLA_FEC_ING")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecIng;
+	private Date							dplanillaFecIng;
 	@Size(max = 30)
 	@Column(name = "VPLANILLA_DOC_ALTA")
-	private String vplanillaDocAlta;
+	private String							vplanillaDocAlta;
 	@Size(max = 80)
 	@Column(name = "VPLANILLA_APE_NOM")
-	private String vplanillaApeNom;
+	private String							vplanillaApeNom;
 	@Column(name = "CPLANILLA_SEXO")
-	private Character cplanillaSexo;
+	private String							cplanillaSexo;
 	@Column(name = "DPLANILLA_FEC_NAC")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecNac;
+	private Date							dplanillaFecNac;
 	@Column(name = "NPLANILLA_NRO_HIJO")
-	private Integer nplanillaNroHijo;
+	private Integer							nplanillaNroHijo;
 	@Size(max = 3)
 	@Column(name = "CPLANILLA_COD_GRA_PEN")
-	private String cplanillaCodGraPen;
+	private String							cplanillaCodGraPen;
 	@Column(name = "CPLANILLA_IND_ONP")
-	private Character cplanillaIndOnp;
+	private String							cplanillaIndOnp;
 	// @Max(value=?) @Min(value=?)//if you know range of your decimal fields
 	// consider using these annotations to enforce field validation
 	@Column(name = "NPLANILLA_POR_UNIF")
-	private BigDecimal nplanillaPorUnif;
+	private BigDecimal						nplanillaPorUnif;
 	@Size(max = 20)
 	@Column(name = "VPLANILLA_CAD_FUNC")
-	private String vplanillaCadFunc;
+	private String							vplanillaCadFunc;
 	@Size(max = 18)
 	@Column(name = "VPLANILLA_COD_ESSALUD")
-	private String vplanillaCodEssalud;
+	private String							vplanillaCodEssalud;
 	@Size(max = 16)
 	@Column(name = "VPLANILLA_CUSPP")
-	private String vplanillaCuspp;
+	private String							vplanillaCuspp;
 	@Column(name = "CPLANILLA_IND_AGUIN")
-	private Character cplanillaIndAguin;
+	private String							cplanillaIndAguin;
 	@Column(name = "DPLANILLA_FEC_AFI_AFP")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecAfiAfp;
+	private Date							dplanillaFecAfiAfp;
 	@Column(name = "DPLANILLA_FEC_FIN_CONTR")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecFinContr;
+	private Date							dplanillaFecFinContr;
 	@Column(name = "DPLANILLA_FEC_PROMO")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecPromo;
+	private Date							dplanillaFecPromo;
 	@Column(name = "NPLANILLA_RET_ASCENSO")
-	private Integer nplanillaRetAscenso;
+	private Integer							nplanillaRetAscenso;
 	@Size(max = 2)
 	@Column(name = "CPLANILLA_IND_LICENCIA")
-	private String cplanillaIndLicencia;
+	private String							cplanillaIndLicencia;
 	@Column(name = "DPLANILLA_FEC_RETIRO")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecRetiro;
+	private Date							dplanillaFecRetiro;
 	@Size(max = 30)
 	@Column(name = "VPLANILLA_DOC_RETIRO")
-	private String vplanillaDocRetiro;
+	private String							vplanillaDocRetiro;
 	@Size(max = 6)
 	@Column(name = "CPLANILLA_SER_RECON")
-	private String cplanillaSerRecon;
+	private String							cplanillaSerRecon;
 	@Size(max = 30)
 	@Column(name = "VPLANILLA_DOC_RECON")
-	private String vplanillaDocRecon;
+	private String							vplanillaDocRecon;
 	@Column(name = "NPLANILLA_POR_PENSION")
-	private BigDecimal nplanillaPorPension;
+	private BigDecimal						nplanillaPorPension;
 	@Column(name = "CPLANILLA_SEX_PENSION")
-	private Character cplanillaSexPension;
+	private String							cplanillaSexPension;
 	@Size(max = 80)
 	@Column(name = "VPLANILLA_NOM_CAUSANTE")
-	private String vplanillaNomCausante;
+	private String							vplanillaNomCausante;
 	@Column(name = "CPLANILLA_IND_ACT_PEN")
-	private Character cplanillaIndActPen;
+	private String							cplanillaIndActPen;
 	@Column(name = "CPLANILLA_IND_CALCULO")
-	private Character cplanillaIndCalculo;
+	private String							cplanillaIndCalculo;
 	@Size(max = 18)
 	@Column(name = "NPLANILLA_TIE_SERVICIO")
-	private String nplanillaTieServicio;
+	private String							nplanillaTieServicio;
 	@Size(max = 9)
 	@Column(name = "CPLANILLA_USU_MOD")
-	private String cplanillaUsuMod;
+	private String							cplanillaUsuMod;
 	@Column(name = "DPLANILLA_FEC_REG")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecReg;
+	private Date							dplanillaFecReg;
 	@Column(name = "DPLANILLA_FEC_MOD")
 	@Temporal(TemporalType.TIMESTAMP)
-	private Date dplanillaFecMod;
+	private Date							dplanillaFecMod;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePlanilla")
-	private List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList;
-	@OneToOne(cascade = CascadeType.ALL, mappedBy = "siprePlanilla")
-	private SipreCalculoQuintaCategoria sipreCalculoQuintaCategoria;
+	private List<SipreCalculoDescuentoLey>	sipreCalculoDescuentoLeyList;
+
+	/*
+	 * @OneToOne(cascade = CascadeType.ALL, mappedBy = "siprePlanilla") private
+	 * SipreCalculoQuintaCategoria sipreCalculoQuintaCategoria;
+	 */
+
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePlanilla")
-	private List<SiprePlanillaDescuento> siprePlanillaDescuentoList;
+	private List<SiprePlanillaDescuento>	siprePlanillaDescuentoList;
 	@JoinColumn(name = "CUSUARIO_CODIGO", referencedColumnName = "CUSUARIO_CODIGO")
 	@ManyToOne(optional = false)
-	private SipreUsuario sipreUsuario;
+	private SipreUsuario					sipreUsuario;
 	@JoinColumn(name = "CAGRUPADOR_CODIGO", referencedColumnName = "CAGRUPADOR_CODIGO")
 	@ManyToOne
-	private SipreAgrupador sipreAgrupador;
+	private SipreAgrupador					sipreAgrupador;
 	@JoinColumn(name = "CARMA_CODIGO", referencedColumnName = "CARMA_CODIGO")
 	@ManyToOne
-	private SipreArma sipreArma;
+	private SipreArma						sipreArma;
 	@JoinColumn(name = "CBANCO_CODIGO", referencedColumnName = "CBANCO_CODIGO")
 	@ManyToOne
-	private SipreBanco sipreBanco;
+	private SipreBanco						sipreBanco;
 	@JoinColumn(name = "CCARGO_CODIGO", referencedColumnName = "CCARGO_CODIGO")
 	@ManyToOne
-	private SipreCargo sipreCargo;
+	private SipreCargo						sipreCargo;
 	@JoinColumn(name = "CCEDULA_CODIGO", referencedColumnName = "CCEDULA_CODIGO")
 	@ManyToOne
-	private SipreCedula sipreCedula;
+	private SipreCedula						sipreCedula;
 	@JoinColumn(name = "CEA_CODIGO", referencedColumnName = "CEA_CODIGO")
 	@ManyToOne
-	private SipreEspecialidadAlterna sipreEspecialidadAlterna;
+	private SipreEspecialidadAlterna		sipreEspecialidadAlterna;
 	@JoinColumn(name = "CEC_CODIGO", referencedColumnName = "CEC_CODIGO")
 	@ManyToOne(optional = false)
-	private SipreEstadoCivil sipreEstadoCivil;
+	private SipreEstadoCivil				sipreEstadoCivil;
 	@JoinColumn(name = "CGRADO_CODIGO", referencedColumnName = "CGRADO_CODIGO")
 	@ManyToOne(optional = false)
-	private SipreGrado sipreGrado;
+	private SipreGrado						sipreGrado;
 	@JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
-	private SiprePersona siprePersona;
+	private SiprePersona					siprePersona;
 	@JoinColumn(name = "CSA_CODIGO", referencedColumnName = "CSA_CODIGO")
 	@ManyToOne
-	private SipreSituacionAdm sipreSituacionAdm;
+	private SipreSituacionAdm				sipreSituacionAdm;
 	@JoinColumn(name = "CSC_CODIGO", referencedColumnName = "CSC_CODIGO")
 	@ManyToOne
-	private SipreSituacionCausal sipreSituacionCausal;
+	private SipreSituacionCausal			sipreSituacionCausal;
 	@JoinColumn(name = "CUNIDAD_CODIGO", referencedColumnName = "CUNIDAD_CODIGO")
 	@ManyToOne(optional = false)
-	private SipreUnidad sipreUnidad;
+	private SipreUnidad						sipreUnidad;
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePlanilla")
-	private List<SiprePlanillaDetalle> siprePlanillaDetalleList;
+	private List<SiprePlanillaDetalle>		siprePlanillaDetalleList;
 
 	public SiprePlanilla() {
 	}
@@ -183,10 +187,8 @@ public class SiprePlanilla implements Serializable {
 		this.id = siprePlanillaPK;
 	}
 
-	public SiprePlanilla(String cpersonaNroAdm, String cplanillaMesProceso,
-			Integer nplanillaNumProceso) {
-		this.id = new SiprePlanillaPK(cpersonaNroAdm, cplanillaMesProceso,
-				nplanillaNumProceso);
+	public SiprePlanilla(String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
+		this.id = new SiprePlanillaPK(cpersonaNroAdm, cplanillaMesProceso, nplanillaNumProceso);
 	}
 
 	public SiprePlanillaPK getId() {
@@ -205,11 +207,11 @@ public class SiprePlanilla implements Serializable {
 		this.cplanillaDni = cplanillaDni;
 	}
 
-	public Character getCplanillaIndQui() {
+	public String getCplanillaIndQui() {
 		return cplanillaIndQui;
 	}
 
-	public void setCplanillaIndQui(Character cplanillaIndQui) {
+	public void setCplanillaIndQui(String cplanillaIndQui) {
 		this.cplanillaIndQui = cplanillaIndQui;
 	}
 
@@ -245,11 +247,11 @@ public class SiprePlanilla implements Serializable {
 		this.vplanillaApeNom = vplanillaApeNom;
 	}
 
-	public Character getCplanillaSexo() {
+	public String getCplanillaSexo() {
 		return cplanillaSexo;
 	}
 
-	public void setCplanillaSexo(Character cplanillaSexo) {
+	public void setCplanillaSexo(String cplanillaSexo) {
 		this.cplanillaSexo = cplanillaSexo;
 	}
 
@@ -277,11 +279,11 @@ public class SiprePlanilla implements Serializable {
 		this.cplanillaCodGraPen = cplanillaCodGraPen;
 	}
 
-	public Character getCplanillaIndOnp() {
+	public String getCplanillaIndOnp() {
 		return cplanillaIndOnp;
 	}
 
-	public void setCplanillaIndOnp(Character cplanillaIndOnp) {
+	public void setCplanillaIndOnp(String cplanillaIndOnp) {
 		this.cplanillaIndOnp = cplanillaIndOnp;
 	}
 
@@ -317,11 +319,11 @@ public class SiprePlanilla implements Serializable {
 		this.vplanillaCuspp = vplanillaCuspp;
 	}
 
-	public Character getCplanillaIndAguin() {
+	public String getCplanillaIndAguin() {
 		return cplanillaIndAguin;
 	}
 
-	public void setCplanillaIndAguin(Character cplanillaIndAguin) {
+	public void setCplanillaIndAguin(String cplanillaIndAguin) {
 		this.cplanillaIndAguin = cplanillaIndAguin;
 	}
 
@@ -405,11 +407,11 @@ public class SiprePlanilla implements Serializable {
 		this.nplanillaPorPension = nplanillaPorPension;
 	}
 
-	public Character getCplanillaSexPension() {
+	public String getCplanillaSexPension() {
 		return cplanillaSexPension;
 	}
 
-	public void setCplanillaSexPension(Character cplanillaSexPension) {
+	public void setCplanillaSexPension(String cplanillaSexPension) {
 		this.cplanillaSexPension = cplanillaSexPension;
 	}
 
@@ -421,19 +423,19 @@ public class SiprePlanilla implements Serializable {
 		this.vplanillaNomCausante = vplanillaNomCausante;
 	}
 
-	public Character getCplanillaIndActPen() {
+	public String getCplanillaIndActPen() {
 		return cplanillaIndActPen;
 	}
 
-	public void setCplanillaIndActPen(Character cplanillaIndActPen) {
+	public void setCplanillaIndActPen(String cplanillaIndActPen) {
 		this.cplanillaIndActPen = cplanillaIndActPen;
 	}
 
-	public Character getCplanillaIndCalculo() {
+	public String getCplanillaIndCalculo() {
 		return cplanillaIndCalculo;
 	}
 
-	public void setCplanillaIndCalculo(Character cplanillaIndCalculo) {
+	public void setCplanillaIndCalculo(String cplanillaIndCalculo) {
 		this.cplanillaIndCalculo = cplanillaIndCalculo;
 	}
 
@@ -473,26 +475,24 @@ public class SiprePlanilla implements Serializable {
 		return sipreCalculoDescuentoLeyList;
 	}
 
-	public void setSipreCalculoDescuentoLeyList(
-			List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList) {
+	public void setSipreCalculoDescuentoLeyList(List<SipreCalculoDescuentoLey> sipreCalculoDescuentoLeyList) {
 		this.sipreCalculoDescuentoLeyList = sipreCalculoDescuentoLeyList;
 	}
 
-	public SipreCalculoQuintaCategoria getSipreCalculoQuintaCategoria() {
-		return sipreCalculoQuintaCategoria;
-	}
-
-	public void setSipreCalculoQuintaCategoria(
-			SipreCalculoQuintaCategoria sipreCalculoQuintaCategoria) {
-		this.sipreCalculoQuintaCategoria = sipreCalculoQuintaCategoria;
-	}
+	/*
+	 * public SipreCalculoQuintaCategoria getSipreCalculoQuintaCategoria() {
+	 * return sipreCalculoQuintaCategoria; }
+	 * 
+	 * public void setSipreCalculoQuintaCategoria(SipreCalculoQuintaCategoria
+	 * sipreCalculoQuintaCategoria) { this.sipreCalculoQuintaCategoria =
+	 * sipreCalculoQuintaCategoria; }
+	 */
 
 	public List<SiprePlanillaDescuento> getSiprePlanillaDescuentoList() {
 		return siprePlanillaDescuentoList;
 	}
 
-	public void setSiprePlanillaDescuentoList(
-			List<SiprePlanillaDescuento> siprePlanillaDescuentoList) {
+	public void setSiprePlanillaDescuentoList(List<SiprePlanillaDescuento> siprePlanillaDescuentoList) {
 		this.siprePlanillaDescuentoList = siprePlanillaDescuentoList;
 	}
 
@@ -548,8 +548,7 @@ public class SiprePlanilla implements Serializable {
 		return sipreEspecialidadAlterna;
 	}
 
-	public void setSipreEspecialidadAlterna(
-			SipreEspecialidadAlterna sipreEspecialidadAlterna) {
+	public void setSipreEspecialidadAlterna(SipreEspecialidadAlterna sipreEspecialidadAlterna) {
 		this.sipreEspecialidadAlterna = sipreEspecialidadAlterna;
 	}
 
@@ -589,8 +588,7 @@ public class SiprePlanilla implements Serializable {
 		return sipreSituacionCausal;
 	}
 
-	public void setSipreSituacionCausal(
-			SipreSituacionCausal sipreSituacionCausal) {
+	public void setSipreSituacionCausal(SipreSituacionCausal sipreSituacionCausal) {
 		this.sipreSituacionCausal = sipreSituacionCausal;
 	}
 
@@ -606,8 +604,7 @@ public class SiprePlanilla implements Serializable {
 		return siprePlanillaDetalleList;
 	}
 
-	public void setSiprePlanillaDetalleList(
-			List<SiprePlanillaDetalle> siprePlanillaDetalleList) {
+	public void setSiprePlanillaDetalleList(List<SiprePlanillaDetalle> siprePlanillaDetalleList) {
 		this.siprePlanillaDetalleList = siprePlanillaDetalleList;
 	}
 
@@ -626,8 +623,7 @@ public class SiprePlanilla implements Serializable {
 			return false;
 		}
 		SiprePlanilla other = (SiprePlanilla) object;
-		if ((this.id == null && other.id != null)
-				|| (this.id != null && !this.id.equals(other.id))) {
+		if (((this.id == null) && (other.id != null)) || ((this.id != null) && !this.id.equals(other.id))) {
 			return false;
 		}
 		return true;
@@ -635,8 +631,7 @@ public class SiprePlanilla implements Serializable {
 
 	@Override
 	public String toString() {
-		return "pe.mil.ejercito.sipr.model.SiprePlanilla[ siprePlanillaPK="
-				+ id + " ]";
+		return "pe.mil.ejercito.sipr.model.SiprePlanilla[ siprePlanillaPK=" + id + " ]";
 	}
 
 }
