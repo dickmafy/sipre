@@ -209,11 +209,11 @@ public class FamiliaMb extends MainContext implements Serializable {
 					// Row.RETURN_NULL_AND_BLANK
 					ejb.merge(bean);
 
-					showMessage("Fila " + rowCount + " leida correctamente.", SEVERITY_INFO);
+					
 
 				}// if
 			}// while
-
+			showMessage(rowCount + " filas  leida correctamente.", SEVERITY_INFO);
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
