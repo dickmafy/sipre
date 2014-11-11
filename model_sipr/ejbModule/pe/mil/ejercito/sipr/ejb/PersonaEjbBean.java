@@ -22,6 +22,8 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
+				//+ " and o.cpersonaNroAdm <='114058200'"
+				//+ " and o.cpersonaNroAdm <='134058200'");
 		Query q = em.createQuery(sb.toString());
 		// situacion administrativa
 		q.setParameter("csaCodigo", "01");
