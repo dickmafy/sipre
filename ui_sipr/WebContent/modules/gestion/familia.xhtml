@@ -39,13 +39,14 @@
 					<p:column headerText="CIP" style="width:15%; align:center;">
 						<h:outputText value="#{item.cpersonaNroAdm}" />
 					</p:column>
-<p:column headerText="Causal de Renovaciòn" style="width:15%; align:center;">
+					<p:column headerText="Causal de Renovaciòn"
+						style="width:15%; align:center;">
 						<h:outputText value="#{item.ctfCauRenovac}" />
 					</p:column>
 					<p:column headerText="Nombres" style="width:15%; align:center;">
 						<h:outputText value="#{item.vtfApeNom}" />
 					</p:column>
-					
+
 
 					<p:column headerText="Fecha Nacimiento"
 						style="width:15%; align:center;">
@@ -58,7 +59,7 @@
 
 					<p:column headerText="Sexo" style="width:15%; align:center;">
 						<h:outputText
-							value="#{item.ctfSexo eq '1'? 'Masculito':'Femenino'}" />
+							value="#{item.ctfSexo eq '1'? 'Masculino':'Femenino'}" />
 					</p:column>
 
 					<p:column headerText="Causa Renovación" rendered="false"
@@ -69,7 +70,8 @@
 
 
 					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogUpdate').show()" update=":frmUpdate"> 
+						<p:commandLink oncomplete="PF('wdialogUpdate').show()"
+							update=":frmUpdate">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{familiaMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
@@ -99,20 +101,18 @@
 				<p:inputText value="#{familiaMb.bean.cpersonaNroAdm}" />
 
 				<p:outputLabel value="Fecha Nacimiento" />
-				<p:calendar  navigator="true" pattern="dd/MM/yyyy"
-										value="#{familiaMb.bean.dtfFecNac}" 
-										showOn="button" size="10" >
-									</p:calendar>
+				<p:calendar navigator="true" pattern="dd/MM/yyyy"
+					value="#{familiaMb.bean.dtfFecNac}" showOn="button" size="10">
+				</p:calendar>
 
 				<p:outputLabel value="Fecha Renovacion" />
-				<p:calendar  navigator="true" pattern="dd/MM/yyyy"
-										value="#{familiaMb.bean.ctfFecRenovac}" 
-										showOn="button" size="10" >
-									</p:calendar>
+				<p:calendar navigator="true" pattern="dd/MM/yyyy"
+					value="#{familiaMb.bean.ctfFecRenovac}" showOn="button" size="10">
+				</p:calendar>
 
 				<p:outputLabel value="Sexo" />
 				<p:selectOneMenu value="#{familiaMb.bean.ctfSexo}">
-					<f:selectItem itemValue="1" itemLabel="Masculito" />
+					<f:selectItem itemValue="1" itemLabel="Masculino" />
 					<f:selectItem itemValue="0" itemLabel="Femenino" />
 				</p:selectOneMenu>
 

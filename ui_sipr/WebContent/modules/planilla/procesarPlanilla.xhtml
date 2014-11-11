@@ -10,83 +10,155 @@
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
-				
+
 				<p:outputLabel value="Fecha de Proceso :" />
-				<p:selectOneMenu >
+				<p:selectOneMenu>
 					<f:selectItem itemValue="1" itemLabel="Enero" />
 					<f:selectItem itemValue="0" itemLabel="Febrero" />
 				</p:selectOneMenu>
-				
+
 				<p:panel header="PROCESAR PLANILLA">
-					<p:panelGrid columns="2">
+					<p:panelGrid columns="4">
 						<p:outputLabel value="1 Numero de Hijos" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}" update=":frm:dt">
+							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}"
+							update=":frm:dt">
 						</p:commandButton>
-						
+
 
 						<p:outputLabel value="2 Lista Revista" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}" update=":frm:dt">
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
 						</p:commandButton>
 
 
-						<p:outputLabel value="Otro10" />
+						<p:outputLabel value="3 Calcular Ingresos por Persona" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}" update=":frm:dt">
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
 						</p:commandButton>
-					</p:panelGrid>
 
-					
+						<p:outputLabel value="4 Calcular Descuento de Ley" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="5 Calcular Guardias Hospitalarias" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="6 Combustible" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="7 Chofer y Mayordomo" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="8 Ex Comabiente del 41" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="8 Ex Comabiente Cenepa" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="9 Subsidio DL 1132" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="10 Bonificacion DU 040" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="11 Subsidio por invalidez o póstumo" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="12 Bonificación por Cumplir 65 años" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="13 Calcular Impuesto a la renta" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="14 Actualizar descuento" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+						<p:outputLabel value="15 Calcular Boleta" />
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							update=":frm:dt">
+						</p:commandButton>
+
+
+					</p:panelGrid>
 				</p:panel>
 
-				<!-- DATATABLE -->
-				<p:dataTable id="dt" var="item" widgetVar="wdt"
+				<!-- DATATABLE -1 - NUMERO DE HIJOS-->
+				<p:dataTable id="dt" var="item" widgetVar="wdt" 
 					value="#{procesarPlanillaMb.beanGmList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
-					paginator="true" rows="20"
-					paginatorPosition="top"
+					paginator="true" rows="20" paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					scrollable="true" scrollHeight="100%" scrollWidth="100%" scrollRows="6">
+					scrollable="true" scrollHeight="100%" scrollWidth="100%"
+					scrollRows="6">
 
-					<p:column headerText="Campo Proceso">
+					<p:column headerText="Campo Proceso" width="10">
 						<h:outputText value="#{item.campo}" />
 					</p:column>
 
-					<p:column headerText="Tipo Mensaje" >
-						<h:outputText value="#{item.tipoMensaje}" 
-						style="width:40px; background-color : #{item.tipoMensaje lt 'info' ? '#F78181' : '#81F781' }"/>
+					<p:column headerText="Tipo Mensaje" width="10">
+						<h:outputText value="#{item.tipoMensaje}"
+							style="width:40px; background-color : #{item.tipoMensaje lt 'info' ? '#F78181' : '#81F781' }" />
 					</p:column>
 
-					<p:column headerText="Mensaje" width="500">
+					<p:column headerText="Mensaje" width="500"
+						filterBy="#{item.mensaje}" filterMatchMode="contains"
+						sortBy="#{item.mensaje}">
 						<h:outputText value="#{item.mensaje}" />
-					</p:column>
-					
-					<p:column headerText="Proceso" >
-					</p:column>
-					
-					<p:column headerText="Tipo Planilla" resizable="true">
-					</p:column>
-					
-					<p:column headerText="Concepto" resizable="true">
-					</p:column>
-					
-					<p:column headerText="CIP" resizable="true">
-					</p:column>
-					
-					<p:column headerText="Grado" resizable="true">
-					</p:column>
-					
-					<p:column headerText="Especialidad" resizable="true">
-					</p:column>
-					
-					<p:column headerText="Nombres" resizable="true">
-					</p:column>
-					
-					<p:column headerText="Unidad" resizable="true">
 					</p:column>
 
 				</p:dataTable>
@@ -94,4 +166,31 @@
 			</div>
 		</div>
 	</h:form>
+
+	<!-- 
+					<p:column headerText="Proceso">
+					</p:column>
+
+					<p:column headerText="Tipo Planilla" resizable="true">
+					</p:column>
+
+					<p:column headerText="Concepto" resizable="true">
+					</p:column>
+
+					<p:column headerText="CIP" resizable="true">
+					</p:column>
+
+					<p:column headerText="Grado" resizable="true">
+					</p:column>
+
+					<p:column headerText="Especialidad" resizable="true">
+					</p:column>
+
+					<p:column headerText="Nombres" resizable="true">
+					</p:column>
+
+					<p:column headerText="Unidad" resizable="true">
+					</p:column>
+					 -->
+
 </ui:composition>
