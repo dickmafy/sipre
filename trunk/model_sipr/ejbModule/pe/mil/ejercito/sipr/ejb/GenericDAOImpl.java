@@ -12,21 +12,24 @@ import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
 public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
-	
-	
-	private Class<T> clazz;
+
+	private Class<T>	clazz;
 	@PersistenceContext(name = "model_sipre")
-	EntityManager em;
+	EntityManager		em;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public GenericDAOImpl(){
+	public GenericDAOImpl() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.clazz = (Class) genericSuperclass.getActualTypeArguments()[0];
 	}
-	
-	
+
 	@Override
 	public T findById(Long id) {
+		return em.find(clazz, id);
+	}
+
+	@Override
+	public T findById(String id) {
 		return em.find(clazz, id);
 	}
 
@@ -48,52 +51,47 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		return (List<T>) em.createQuery("from " + clazz.getName())
-				.getResultList();
+		return (List<T>) em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll(int maxRowReturn) {
-		return (List<T>) em.createQuery("from " + clazz.getName())
-				.setMaxResults(maxRowReturn).getResultList();
+		return (List<T>) em.createQuery("from " + clazz.getName()).setMaxResults(maxRowReturn).getResultList();
 	}
 
-	
 	@Override
-	public List<T> findAllSort(int maxRowReturn,String propiedad1) {
+	public List<T> findAllSort(int maxRowReturn, String propiedad1) {
 		List<T> list;
-		
-		CriteriaBuilder criteriaBuilder= em.getCriteriaBuilder();
+
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
-		
+
 		Root<T> from = query.from(clazz);
 		query.orderBy(criteriaBuilder.asc(from.get(propiedad1)));
-		
+
 		query.select(from);
-		
+
 		list = em.createQuery(query).setMaxResults(maxRowReturn).getResultList();
 		return list;
 	}
-	
 
 	@Override
-	public List<T> findAllSortDes(int maxRowReturn,String propiedad1) {
+	public List<T> findAllSortDes(int maxRowReturn, String propiedad1) {
 		List<T> list;
-		
-		CriteriaBuilder criteriaBuilder= em.getCriteriaBuilder();
+
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
-		
+
 		Root<T> from = query.from(clazz);
 		query.orderBy(criteriaBuilder.desc(from.get(propiedad1)));
-		
+
 		query.select(from);
-		
+
 		list = em.createQuery(query).setMaxResults(maxRowReturn).getResultList();
 		return list;
 	}
-	
-	
+
 	@Override
 	public long countAll() {
 		CriteriaBuilder cb = em.getCriteriaBuilder();
@@ -127,5 +125,4 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 		return em.merge(t);
 	}
 
-	
 }

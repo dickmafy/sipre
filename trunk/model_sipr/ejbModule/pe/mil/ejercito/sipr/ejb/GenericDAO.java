@@ -4,11 +4,13 @@ import java.io.Serializable;
 import java.util.List;
 
 public interface GenericDAO<T extends Serializable> {
-	 
+
 	T findById(Long id);
 
+	T findById(String id);
+
 	// List<T> findAll(Pagination paginacion);
-	
+
 	long countAll();
 
 	T persist(T bean);
@@ -24,8 +26,7 @@ public interface GenericDAO<T extends Serializable> {
 	List<T> findAll(int maxRowReturn);
 
 	List<T> findAllSort(int maxRowReturn, String propiedad1);
-	
-	List<T> findAllSortDes(int maxRowReturn, String propiedad1);
 
+	List<T> findAllSortDes(int maxRowReturn, String propiedad1);
 
 }
