@@ -8,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.text.DateFormat;
-import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.Iterator;
@@ -28,18 +26,15 @@ import org.apache.poi.ss.usermodel.DateUtil;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.apache.poi.xssf.usermodel.XSSFSheet;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.commons.Mensaje;
 import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 
@@ -47,20 +42,20 @@ import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 @ViewScoped
 public class FamiliaMb extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long		serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
-	private FamiliaEjbRemote ejb;
-	private TipoPlanillaEjbRemote ejbTipoPlanilla;
+	private UsuarioEjbRemote		ejbUsuario;
+	private FamiliaEjbRemote		ejb;
+	private TipoPlanillaEjbRemote	ejbTipoPlanilla;
 
-	private SipreTmpFamilia bean;
+	private SipreTmpFamilia			bean;
 
-	private List<SipreTmpFamilia> beanList;
+	private List<SipreTmpFamilia>	beanList;
 
-	private List<SipreTipoPlanilla> tipoPlanillaList;
+	private List<SipreTipoPlanilla>	tipoPlanillaList;
 
-	public static final String JBOSS_CATALINA = "catalina.home";
-	public static final String JBOSS_TEMP = "tmpFiles";
+	public static final String		JBOSS_CATALINA		= "catalina.home";
+	public static final String		JBOSS_TEMP			= "tmpFiles";
 
 	public FamiliaMb() {
 		super();
@@ -88,12 +83,10 @@ public class FamiliaMb extends MainContext implements Serializable {
 	public void saveBean(ActionEvent event) {
 		try {
 			// bean = ejb.persist(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
@@ -101,11 +94,9 @@ public class FamiliaMb extends MainContext implements Serializable {
 	public void updateBean(ActionEvent event) {
 		try {
 			bean = ejb.merge(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
@@ -117,16 +108,13 @@ public class FamiliaMb extends MainContext implements Serializable {
 			Workbook wb = null;
 			String fileExt = null;
 
-			if (FilenameUtils.isExtension(fileOldName, "xls")
-					|| FilenameUtils.isExtension(fileOldName, "XLS")) {
+			if (FilenameUtils.isExtension(fileOldName, "xls") || FilenameUtils.isExtension(fileOldName, "XLS")) {
 				fileExt = "xls";
 			}
-			if (FilenameUtils.isExtension(fileOldName, "xlsx")
-					|| FilenameUtils.isExtension(fileOldName, "XLSX")) {
+			if (FilenameUtils.isExtension(fileOldName, "xlsx") || FilenameUtils.isExtension(fileOldName, "XLSX")) {
 				fileExt = "xlsx";
 			}
-			if (FilenameUtils.isExtension(fileOldName, "txt")
-					|| FilenameUtils.isExtension(fileOldName, "TXT")) {
+			if (FilenameUtils.isExtension(fileOldName, "txt") || FilenameUtils.isExtension(fileOldName, "TXT")) {
 				fileExt = "txt";
 			}
 
@@ -151,8 +139,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 			showMessage("No se pudo leer el archivo.", SEVERITY_ERROR);
 			e.printStackTrace();
 		} catch (Exception e) {
-			showMessage("No se copio el contenido del Excel correctamente.",
-					SEVERITY_ERROR);
+			showMessage("No se copio el contenido del Excel correctamente.", SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 		// event.getFile().getContentType();
@@ -161,8 +148,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 		// application/vnd.openxmlformats-officedocument.spreadsheetml.sheet
 	}
 
-	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS,
-			SipreTmpFamilia bean) {
+	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpFamilia bean) {
 		try {
 
 			String valorTmpCelda = "";
@@ -183,61 +169,54 @@ public class FamiliaMb extends MainContext implements Serializable {
 				// no cuenta la cabecera
 				if (rowCount < numeroFilas2) {
 					rowCount++;
+
 					// CIF
 					cell = row.getCell(0, Row.RETURN_NULL_AND_BLANK);
 					bean.setCtfCif(getValorCeldaExcel(cell));
 
 					// CIP
 					cell = row.getCell(1, Row.RETURN_NULL_AND_BLANK);
-					/*bean.getSiprePersona().setCpersonaNroAdm(
-							getValorCeldaExcel(cell));
-							*/
 					bean.setCpersonaNroAdm(getValorCeldaExcel(cell));
 
 					// NOMBRES
 					cell = row.getCell(2, Row.RETURN_NULL_AND_BLANK);
 					bean.setVtfApeNom(getValorCeldaExcel(cell));
 
-					// SITUACION
+					// Fecha Nacimiento
 					cell = row.getCell(3, Row.RETURN_NULL_AND_BLANK);
-					// bean.setCtfSitFamilia(getValorCeldaExcel(cell));
+					bean.setDtfFecNac(UValidacion.ConvertStringToDate2(getValorCeldaExcel(cell)));
 
+					// Fecha Renovacion
 					cell = row.getCell(4, Row.RETURN_NULL_AND_BLANK);
-					bean.setDtfFecNac(UValidacion
-							.ConvertStringToDate2(getValorCeldaExcel(cell)));
+					bean.setCtfFecRenovac(UValidacion.ConvertStringToDate2(getValorCeldaExcel(cell)));
 
-					cell = row.getCell(5, Row.RETURN_NULL_AND_BLANK);
-					bean.setCtfFecRenovac(UValidacion
-							.ConvertStringToDate2(getValorCeldaExcel(cell)));
-					/*
-					 * // FECHA NACIMIENTO cell = row.getCell(4,
-					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
-					 * getValorCeldaExcel(cell); bean.setDtfFecNac(UValidacion
-					 * .getStringToDate(valorTmpCelda));
-					 * 
-					 * // RENOVACION cell = row.getCell(5,
-					 * Row.RETURN_NULL_AND_BLANK); valorTmpCelda =
-					 * getValorCeldaExcel(cell);
-					 * bean.setCtfFecRenovac(UValidacion
-					 * .getStringToDate(valorTmpCelda));
-					 */
 					// SEXO
-					cell = row.getCell(6, Row.RETURN_NULL_AND_BLANK);
+					cell = row.getCell(5, Row.RETURN_NULL_AND_BLANK);
 					bean.setCtfSexo(getValorCeldaExcel(cell));
 
-					ejb.persist(bean);
+					// CTF_CAUSAL_RENOVAC
+					cell = row.getCell(6, Row.RETURN_NULL_AND_BLANK);
+					bean.setCtfCauRenovac(getValorCeldaExcel(cell));
 
-					showMessage("Fila " + rowCount + " leida correctamente.",
-							SEVERITY_INFO);
+					// CTF_SITUACION_FAMILIA
+					cell = row.getCell(7, Row.RETURN_NULL_AND_BLANK);
+					bean.setCtfSitFamilia(getValorCeldaExcel(cell));
+
+					// CTF_DNI
+					cell = row.getCell(8, Row.RETURN_NULL_AND_BLANK);
+					bean.setCtfDni(getValorCeldaExcel(cell));
+
+					// Row.RETURN_NULL_AND_BLANK
+					ejb.merge(bean);
+
+					showMessage("Fila " + rowCount + " leida correctamente.", SEVERITY_INFO);
 
 				}// if
 			}// while
 
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
 		return bean;
 
@@ -257,8 +236,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 				}
 				break;
 			case Cell.CELL_TYPE_STRING:
-				System.out
-						.print("String : " + cell.getStringCellValue() + "\t");
+				System.out.print("String : " + cell.getStringCellValue() + "\t");
 				valorCelda = cell.getStringCellValue();
 				break;
 			}
@@ -270,8 +248,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	}
 
-	private SipreTmpFamilia readExcelNew(Workbook wb, FileInputStream fileIS,
-			SipreTmpFamilia bean) throws IOException {
+	private SipreTmpFamilia readExcelNew(Workbook wb, FileInputStream fileIS, SipreTmpFamilia bean) throws IOException {
 		// Create Workbook .xlsx 2007- 2010 files
 		// XSSFWorkbook workbook = new XSSFWorkbook(fileIS);
 		// Get first/desired sheet from the workbook
@@ -318,15 +295,12 @@ public class FamiliaMb extends MainContext implements Serializable {
 		String fileNewName = null;
 
 		try {
-			rutaGuardar = FacesContext.getCurrentInstance()
-					.getExternalContext().getRealPath("/");
+			rutaGuardar = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
 
 			fileId = new SimpleDateFormat("yyyyMMddHHmmss");
-			fileNewName = fileId.format(new Date())
-					+ fileOldName
-					// Extension
-					+ fileOldName.substring(event.getFile().getFileName()
-							.lastIndexOf('.'));
+			fileNewName = fileId.format(new Date()) + fileOldName
+			// Extension
+					+ fileOldName.substring(event.getFile().getFileName().lastIndexOf('.'));
 
 			archivo = new File(rutaGuardar + "/" + fileNewName);
 			System.out.println("path :" + rutaGuardar);
