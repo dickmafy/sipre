@@ -32,7 +32,7 @@ import org.primefaces.event.FileUploadEvent;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UValidacion;
-import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
@@ -45,7 +45,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	private static final long		serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
 	private UsuarioEjbRemote		ejbUsuario;
-	private FamiliaEjbRemote		ejb;
+	private TmpFamiliaEjbRemote		ejb;
 	private TipoPlanillaEjbRemote	ejbTipoPlanilla;
 
 	private SipreTmpFamilia			bean;
@@ -61,7 +61,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 		super();
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
-			ejb = (FamiliaEjbRemote) findServiceRemote(FamiliaEjbRemote.class);
+			ejb = (TmpFamiliaEjbRemote) findServiceRemote(TmpFamiliaEjbRemote.class);
 			ejbTipoPlanilla = (TipoPlanillaEjbRemote) findServiceRemote(TipoPlanillaEjbRemote.class);
 
 			tipoPlanillaList = ejbTipoPlanilla.findAll(100);
