@@ -1,44 +1,36 @@
 package pe.mil.ejercito.sipr.registro;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.component.log.Log;
-
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreBanco;
-import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
-import pe.mil.ejercito.sipr.model.SiprePersona;
-import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
-import pe.mil.ejercito.sipr.model.SipreUsuario;
+import pe.mil.ejercito.sipr.ejbremote.GradoEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreGrado;
 
-@ManagedBean(name = "grado")
+@ManagedBean(name = "gradoMb")
 @ViewScoped
-public class Grado extends MainContext implements Serializable {
+public class GradoMb extends MainContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private GrupoGradoEjbRemote ejb;
+	private GradoEjbRemote ejb;
 
-	private List<SipreGrupoGrado> beanList;
-	private SipreGrupoGrado bean;
-	private SipreGrupoGrado beanSelected;
+	private List<SipreGrado> beanList;
+	private SipreGrado bean;
+	private SipreGrado beanSelected;
 	
 
-	public Grado() {
+	public GradoMb() {
 		super();
 		try {
-			ejb = (GrupoGradoEjbRemote) findServiceRemote(GrupoGradoEjbRemote.class);
-			beanList = ejb.findAllSort(100, "cggCodigo");
-			bean = new SipreGrupoGrado();
-			beanSelected = new SipreGrupoGrado();
+			ejb = (GradoEjbRemote) findServiceRemote(GradoEjbRemote.class);
+			beanList = ejb.findAll();
+			bean = new SipreGrado();
+			beanSelected = new SipreGrado();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -49,8 +41,8 @@ public class Grado extends MainContext implements Serializable {
 	}
 
 	public void cleanBean() {
-		bean = new SipreGrupoGrado();
-		beanSelected = new SipreGrupoGrado();
+		bean = new SipreGrado();
+		beanSelected = new SipreGrado();
 	}
 
 	public void saveBean(ActionEvent event) {
@@ -82,27 +74,27 @@ public class Grado extends MainContext implements Serializable {
 
 	}
 
-	public List<SipreGrupoGrado> getBeanList() {
+	public List<SipreGrado> getBeanList() {
 		return beanList;
 	}
 
-	public void setBeanList(List<SipreGrupoGrado> beanList) {
+	public void setBeanList(List<SipreGrado> beanList) {
 		this.beanList = beanList;
 	}
 
-	public SipreGrupoGrado getBean() {
+	public SipreGrado getBean() {
 		return bean;
 	}
 
-	public void setBean(SipreGrupoGrado bean) {
+	public void setBean(SipreGrado bean) {
 		this.bean = bean;
 	}
 
-	public SipreGrupoGrado getBeanSelected() {
+	public SipreGrado getBeanSelected() {
 		return beanSelected;
 	}
 
-	public void setBeanSelected(SipreGrupoGrado beanSelected) {
+	public void setBeanSelected(SipreGrado beanSelected) {
 		this.beanSelected = beanSelected;
 	}
 

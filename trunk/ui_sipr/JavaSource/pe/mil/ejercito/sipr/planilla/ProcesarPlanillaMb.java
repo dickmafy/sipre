@@ -15,7 +15,7 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericMessage;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UValidacion;
-import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaOtroEjbRemote;
@@ -38,7 +38,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private GenericMessage<SiprePersona>		beanGm;
 
 	private UsuarioEjbRemote					ejbUsuario;
-	private FamiliaEjbRemote					ejbTmpFamilia;
+	private TmpFamiliaEjbRemote					ejbTmpFamilia;
 	private PersonaEjbRemote					ejbPersona;
 	private SituacionAdmEjbRemote				ejbSituacionAdm;
 	private PlanillaEjbRemote					ejbPlanilla;
@@ -56,7 +56,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		LOG.info("###ProcesarPlanillaMb");
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
-			ejbTmpFamilia = (FamiliaEjbRemote) findServiceRemote(FamiliaEjbRemote.class);
+			ejbTmpFamilia = (TmpFamiliaEjbRemote) findServiceRemote(TmpFamiliaEjbRemote.class);
 			ejbPersona = (PersonaEjbRemote) findServiceRemote(PersonaEjbRemote.class);
 			ejbSituacionAdm = (SituacionAdmEjbRemote) findServiceRemote(SituacionAdmEjbRemote.class);
 			ejbPlanilla = (PlanillaEjbRemote) findServiceRemote(PlanillaEjbRemote.class);
@@ -101,7 +101,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		int limitador = 0;
 		for (SiprePlanillaOtro itemPlanillaOtro : beanPlanillaOtroList) {
 			limitador++;
-			if(limitador==5000){break;}
+			if (limitador == 5000) {
+				break;
+			}
 			String tmpCip = "";
 			itemPersona = new SiprePersona();
 			try {
@@ -220,10 +222,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		// verificar si la persona esta, no se puede repetir persona de
 		// sipre_palnilla_otro a sipre_planilla
 		SiprePlanilla planilla = new SiprePlanilla();
-		Integer limitador=0;
+		Integer limitador = 0;
 		for (SiprePersona itemPersona : beanPersonaList) {
 			limitador++;
-			if(limitador==5000){break;}
+			if (limitador == 5000) {
+				break;
+			}
 			try {
 				planilla = new SiprePlanilla();
 
@@ -364,17 +368,22 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 				try {
 					beanTmpFamiliaList = ejbTmpFamilia.findAllByIdPersona(tmpCip);
-					if(beanTmpFamiliaList.size()==0){
+					if (beanTmpFamiliaList.size() == 0) {
 						/*
-						addGenericMensaje("No se pudo obtener registros de la Tabla Familia con el codigo CIP " + tmpCip,
-								ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-								*/
+						 * addGenericMensaje(
+						 * "No se pudo obtener registros de la Tabla Familia con el codigo CIP "
+						 * + tmpCip,
+						 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+						 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+						 */
 					}
 				} catch (Exception e) {
 					/*
-					addGenericMensaje("No se pudo obtener registros de la Tabla Familia con el codigo CIP " + tmpCip,
-							ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-							*/
+					 * addGenericMensaje(
+					 * "No se pudo obtener registros de la Tabla Familia con el codigo CIP "
+					 * + tmpCip, ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+					 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
+					 */
 
 				}
 
@@ -394,7 +403,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					}
 					// estado 1
 					if (UValidacion.esNuloOVacio(itemTmpFamilia.getCtfSitFamilia())) {
-						
+
 						addGenericMensaje("No se encontro la SituacionFamilia en Tabala TMP_FAMILIA asociados al Personal.",
 								ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
 						// return;
@@ -420,18 +429,19 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					}
 				}// FOR FAMILIA
 
-				if(beanTmpFamiliaList.size()>=1){
+				if (beanTmpFamiliaList.size() >= 1) {
 					updateProcesoNumeroHijo(itemPersona, procesoContadorHijos);
 					addGenericMensaje("___Numero de Hijos Final: " + procesoContadorHijos, ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
 				}
-				
+
 			}// FOR PERSONA
 
 		} catch (Exception e3) {
-			addGenericMensaje("####FINALIZANDO-No se encontro relacion entre TMP_FAMILIA y PERSONAL", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+			addGenericMensaje("####FINALIZANDO-No se encontro relacion entre TMP_FAMILIA y PERSONAL",
+					ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR);
-			LOG.info("####FINALIZANDO-"+e3.getMessage());
+			LOG.info("####FINALIZANDO-" + e3.getMessage());
 		} finally {
 			addGenericMensaje("####FINALIZANDO", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 					ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);

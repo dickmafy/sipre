@@ -65,6 +65,9 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/blank_page";
 			break;
 		case 30:
+			contenidoDefault = "/modules/registro/grupoGrado";
+			break;
+		case 29:
 			contenidoDefault = "/modules/registro/grado";
 			break;
 		case 31:

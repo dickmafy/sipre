@@ -17,13 +17,13 @@ import pe.mil.ejercito.sipr.model.SipreConceptoDescuento;
 @ViewScoped
 public class ConceptoDescuentoMb extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long				serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
-	private ConceptoDescuentoEjbRemote ejb;
+	private UsuarioEjbRemote				ejbUsuario;
+	private ConceptoDescuentoEjbRemote		ejb;
 
-	private List<SipreConceptoDescuento> beanList;
-	private SipreConceptoDescuento bean;
+	private List<SipreConceptoDescuento>	beanList;
+	private SipreConceptoDescuento			bean;
 
 	public ConceptoDescuentoMb() {
 		super();
@@ -47,9 +47,9 @@ public class ConceptoDescuentoMb extends MainContext implements Serializable {
 
 	public void saveBean(ActionEvent event) {
 		try {
-				bean = ejb.persist(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
+			bean = ejb.persist(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(
 					ConstantesUtil.MENSAJE_RESPUESTA_ERROR_CONCEPTO_INGRESO,
@@ -61,9 +61,9 @@ public class ConceptoDescuentoMb extends MainContext implements Serializable {
 
 	public void updateBean(ActionEvent event) {
 		try {
-				bean = ejb.merge(bean);
-				showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-						SEVERITY_INFO);
+			bean = ejb.merge(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
+					SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(
 					ConstantesUtil.MENSAJE_RESPUESTA_ERROR_CONCEPTO_INGRESO,
@@ -88,7 +88,5 @@ public class ConceptoDescuentoMb extends MainContext implements Serializable {
 	public void setBean(SipreConceptoDescuento bean) {
 		this.bean = bean;
 	}
-
-	
 
 }
