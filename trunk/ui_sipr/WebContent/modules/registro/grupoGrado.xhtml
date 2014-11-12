@@ -13,12 +13,12 @@
 					autoUpdate="true" closable="true" />
 
 				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-					value="Agregar Concepto personal" actionListener="#{gradoMb.newBean}"
+					value="Agregar Concepto personal" actionListener="#{grupoGradoMb.newBean}"
 					oncomplete="PF('wdiGrado').show()" />
 
 
 				<p:dataTable widgetVar="dt" id="dt" var="item"
-					value="#{gradoMb.beanList}" paginatorPosition="bottom"
+					value="#{grupoGradoMb.beanList}" paginatorPosition="bottom"
 					resizableColumns="true" paginator="true" rows="8"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
@@ -27,26 +27,30 @@
 					</f:facet>
 
 					<p:column headerText="Id" style="width:20%; align:center;"
-						filterBy="#{item.cgradoCodigo}" 
-						filterMatchMode="contains" sortBy="#{item.cgradoCodigo}">
-						<h:outputText value="#{item.cgradoCodigo}" />
+						filterBy="#{item.cggCodigo}" 
+						filterMatchMode="contains" sortBy="#{item.cggCodigo}">
+						<h:outputText value="#{item.cggCodigo}" />
 					</p:column>
 					<p:column headerText="Desc. Corta"
 						style="width:50%; text-align:center">
-						<h:outputText value="#{item.vgradoDscCorta}" />
+						<h:outputText value="#{item.vggDscCorta}" />
 					</p:column>
 					<p:column headerText="Desc. Larga"
 						style="width:50%; text-align:center">
-						<h:outputText value="#{item.vgradoDscLarga}" />
+						<h:outputText value="#{item.vggDscLarga}" />
 					</p:column>
-				
+					<p:column headerText="Cód. Tipo Persona"
+						filterBy="#{item.cggTipoPersona}" 
+						filterMatchMode="contains" style="width:30%; text-align:center">
+						<h:outputText value="#{item.cggTipoPersona}" />
+					</p:column>
 
 					<p:column headerText="Opciones" style="width:20%">
 
 						<p:commandLink oncomplete="PF('wduGrado').show()"
 							update=":fuGrado">
 							<f:setPropertyActionListener value="#{item}"
-								target="#{gradoMb.bean}" />
+								target="#{grupoGradoMb.bean}" />
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 
@@ -66,19 +70,20 @@
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="CIP" />
-				<p:inputText value="#{gradoMb.bean.cgradoCodigo}" />
+				<p:inputText value="#{grupoGradoMb.bean.cggCodigo}" />
 
 				<p:outputLabel value="Desc. Corta" />
-				<p:inputText value="#{gradoMb.bean.vgradoDscCorta}" />
+				<p:inputText value="#{grupoGradoMb.bean.vggDscCorta}" />
 
 				<p:outputLabel value="Desc. Larga" />
-				<p:inputTextarea value="#{gradoMb.bean.vgradoDscLarga}" cols="25"
+				<p:inputTextarea value="#{grupoGradoMb.bean.vggDscLarga}" cols="25"
 					rows="10" />
 
-				
+				<p:outputLabel value="Cod Tipo Persona" />
+				<p:inputText value="#{grupoGradoMb.bean.cggTipoPersona}" />
 
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{gradoMb.saveBean}" ajax="true"
+					actionListener="#{grupoGradoMb.saveBean}" ajax="true"
 					oncomplete="PF('wdiGrado').hide();" update=":fGrado:dt">
 				</p:commandButton>
 
@@ -95,18 +100,20 @@
 			<p:panelGrid columns="2">
 
 				<p:outputLabel value="Codigo Grado" />
-				<p:inputText value="#{gradoMb.bean.cgradoCodigo}" />
+				<p:inputText value="#{grupoGradoMb.bean.cggCodigo}" />
 
 				<p:outputLabel value="Desc. Corta" />
-				<p:inputText value="#{gradoMb.bean.vgradoDscCorta}" />
+				<p:inputText value="#{grupoGradoMb.bean.vggDscCorta}" />
 
 				<p:outputLabel value="Desc. Larga" />
-				<p:inputTextarea value="#{gradoMb.bean.vgradoDscLarga}" cols="25"
+				<p:inputTextarea value="#{grupoGradoMb.bean.vggDscLarga}" cols="25"
 					rows="10" />
 
-			
+				<p:outputLabel value="Cod Tipo Persona" />
+				<p:inputText value="#{grupoGradoMb.bean.cggTipoPersona}" />
+
 				<p:commandButton title="Guardar" value="Guardar" icon="icn_bar_save"
-					actionListener="#{gradoMb.updateBean}" ajax="true"
+					actionListener="#{grupoGradoMb.updateBean}" ajax="true"
 					oncomplete="PF('wduGrado').hide();" update=":fGrado:dt">
 				</p:commandButton>
 
@@ -131,7 +138,7 @@
 
 			<p:commandButton value="Eliminar" styleClass="boton_botonera"
 				oncomplete="PF('wddGrado').hide();" update=":fGrado:dt"
-				icon="_ui-icon-logout" actionListener="#{gradoMb.deleteBean}"
+				icon="_ui-icon-logout" actionListener="#{grupoGradoMb.deleteBean}"
 				ajax="false" />
 
 		</h:form>
