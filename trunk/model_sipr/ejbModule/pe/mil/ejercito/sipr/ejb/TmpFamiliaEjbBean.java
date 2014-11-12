@@ -7,7 +7,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-import pe.mil.ejercito.sipr.ejbremote.FamiliaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.VerificarCodigoBancoEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet;
@@ -19,8 +19,8 @@ import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
  * Session Bean implementation class beanEjbBean
  */
 @Stateless
-public class FamiliaEjbBean extends GenericDAOImpl<SipreTmpFamilia>
-		implements FamiliaEjbRemote {
+public class TmpFamiliaEjbBean extends GenericDAOImpl<SipreTmpFamilia>
+		implements TmpFamiliaEjbRemote {
 
 	@PersistenceContext(name = "model_sipre")
 	EntityManager em;

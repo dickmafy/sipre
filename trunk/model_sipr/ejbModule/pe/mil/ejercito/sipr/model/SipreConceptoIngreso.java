@@ -1,14 +1,24 @@
 /*
  * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
+ * To change this template file, choose Tools | Templates and open the template
+ * in the editor.
  */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.*;
 
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 
@@ -20,33 +30,33 @@ import javax.validation.constraints.Size;
 @Table(name = "SIPRE_CONCEPTO_INGRESO")
 @NamedQueries({ @NamedQuery(name = "SipreConceptoIngreso.findAll", query = "SELECT s FROM SipreConceptoIngreso s") })
 public class SipreConceptoIngreso implements Serializable {
-	private static final long serialVersionUID = 1L;
+	private static final long				serialVersionUID	= 1L;
 	@Id
 	@Basic(optional = false)
 	@NotNull
 	@Size(min = 1, max = 4)
 	@Column(name = "CCI_CODIGO")
-	private String cciCodigo;
+	private String							cciCodigo;
 	@Size(max = 4)
 	@Column(name = "CCI_COD_DESTINO")
-	private String cciCodDestino;
+	private String							cciCodDestino;
 	@Size(max = 80)
 	@Column(name = "VCI_DSC_LARGA")
-	private String vciDscLarga;
+	private String							vciDscLarga;
 	@Size(max = 40)
 	@Column(name = "VCI_DSC_CORTA")
-	private String vciDscCorta;
+	private String							vciDscCorta;
 	@Size(max = 6)
 	@Column(name = "CCI_COD_MEF")
-	private String cciCodMef;
+	private String							cciCodMef;
 	@ManyToMany(mappedBy = "sipreConceptoIngresoList")
-	private List<SipreConceptoDescuento> sipreConceptoDescuentoList;
+	private List<SipreConceptoDescuento>	sipreConceptoDescuentoList;
 	@JoinColumn(name = "CTP_CODIGO", referencedColumnName = "CTP_CODIGO")
 	@ManyToOne
-	private SipreTipoPlanilla sipreTipoPlanilla;
+	private SipreTipoPlanilla				sipreTipoPlanilla;
 
 	@Transient
-	private Boolean check;
+	private Boolean							check;
 
 	public SipreConceptoIngreso() {
 	}
