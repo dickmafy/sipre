@@ -12,7 +12,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 
 @Remote
-public interface FamiliaEjbRemote extends GenericDAO<SipreTmpFamilia> {
+public interface TmpFamiliaEjbRemote extends GenericDAO<SipreTmpFamilia> {
 	List<SipreTmpFamilia> findAllByIdPersona(String propiedad1);
 	
 }

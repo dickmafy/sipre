@@ -6,7 +6,7 @@ import pe.mil.ejercito.sipr.ejb.GenericDAO;
 import pe.mil.ejercito.sipr.model.SipreGrado;
 
 @Remote
-public interface GradoEjbRemote extends GenericDAO<SipreGrado> {
+public interface CostoProcesoEjbRemote extends GenericDAO<SipreGrado> {
 	
 
 	

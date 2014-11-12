@@ -110,7 +110,8 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 
 	@Override
 	public void remove(T object) {
-		em.remove(object);
+		em.remove(em.contains(object) ? object : em.merge(object));
+		//em.remove(object);
 	}
 
 	@Override
