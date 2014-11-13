@@ -9,19 +9,39 @@
 			<div id="page_flow">Gestion / Gestionar Familia</div>
 			<div id="titulo_formulario">Gestionar Familia</div>
 			<div id="contenido">
+
+
+				<!-- PROGRES -->
+				<!-- Custom CSS styles -->
+				<style type="text/css">
+.animated .ui-progressbar-value
+ {
+ background-image:
+  url("/images/bar_orange.gif"); ! important;
+}
+</style>
+
+				<p:blockUI block="frm" widgetVar="wblockui" />
+				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="3"
+					id="barraProgreso" value="#{familiaMb.contador}"
+					labelTemplate="{value}%" styleClass="animated" global="false">
+					<p:ajax event="complete" listener="#{familiaMb.onComplete}" />
+				</p:progressBar>
+				<!-- PROGRES -->
+
+
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<p:panelGrid columns="2">
 					<p:fileUpload sizeLimit="1000000" auto="true" label="Subir Excel"
 						cancelLabel="cancel" uploadLabel="update"
 						fileUploadListener="#{familiaMb.handleFileUpload}" mode="advanced"
-						allowTypes="/(\.|\/)(xlsx|xls)$/" update=":frm:dt" />
-
-					<p:commandButton title="Guardar" value="Guardar" rendered="false"
-						icon="icn_bar_save" actionListener="#{familiaMb.saveBean}"
-						ajax="true" update=":frm:dt">
-					</p:commandButton>
-
+						allowTypes="/(\.|\/)(xlsx|xls)$/"
+						update=":frm:dt :frm:barraProgreso" id="uploadFile"
+						onstart="PF('barraProgreso').start();PF('wblockui').show();"
+						oncomplete="PF('wblockui').hide();" />
 				</p:panelGrid>
+
+
 
 
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
@@ -84,6 +104,8 @@
 			</div>
 		</div>
 
+
+
 	</h:form>
 
 
@@ -127,6 +149,5 @@
 			</p:panelGrid>
 		</h:form>
 	</p:dialog>
-
 
 </ui:composition>
