@@ -22,8 +22,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
-				//+ " and o.cpersonaNroAdm <='114058200'"
-				//+ " and o.cpersonaNroAdm <='134058200'");
+		//sb.append(" and o.cpersonaNroAdm ='123652000'");
 		Query q = em.createQuery(sb.toString());
 		// situacion administrativa
 		q.setParameter("csaCodigo", "01");
@@ -55,6 +54,15 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		q.setParameter("p6", "71");
 		q.setParameter("p7", "77");
 		return q.getResultList();
+	}
+	
+	@Override
+	public Integer updatePersonaHijos(String cip,String numeroHijo) {
+		Query q = em.createQuery("UPDATE SiprePersona SET npersonaNroHijo=:numeroHijo where cpersonaNroAdm=:cip");
+		q.setParameter("cip", cip);
+		q.setParameter("numeroHijo", numeroHijo);
+		return q.executeUpdate();
+		
 	}
 
 }
