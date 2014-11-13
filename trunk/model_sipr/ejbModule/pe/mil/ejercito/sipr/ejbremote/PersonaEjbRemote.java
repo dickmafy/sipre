@@ -16,6 +16,7 @@ public interface PersonaEjbRemote extends
 	
 	List<SiprePersona> findAllBySituacionAdministrativaYActividad();
 	List<SiprePersona> findAllBySituacionAdministrativaDeListaRevista();
+	Integer updatePersonaHijos(String cip, String numeroHijo);
 
 	
 
