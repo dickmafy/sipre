@@ -32,8 +32,8 @@ import org.primefaces.event.FileUploadEvent;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UValidacion;
-import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
@@ -57,6 +57,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	public static final String		JBOSS_CATALINA		= "catalina.home";
 	public static final String		JBOSS_TEMP			= "tmpFiles";
 
+	private Integer					contador			= 1;
 	public FamiliaMb() {
 		super();
 		try {
@@ -99,6 +100,23 @@ public class FamiliaMb extends MainContext implements Serializable {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
+	}
+
+	public void onComplete() {
+		showMessage("Carga del Excel Completada.", SEVERITY_INFO);
+	}
+
+	public void cancel() {
+		contador = null;
+	}
+
+	public Integer getContador() {
+
+		return contador;
+	}
+
+	public void setContador(Integer contador) {
+		this.contador = contador;
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
@@ -150,11 +168,10 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpFamilia bean) {
 		try {
-
-			String valorTmpCelda = "";
+			contador = 0;
 			Sheet sheet = wb.getSheetAt(0);
 			Cell cell;
-			int rowCount = 0;
+			int contadorFilas = 1;
 			Iterator<Row> rowIterator = sheet.iterator();
 			Row row;
 			row = rowIterator.next();
@@ -162,13 +179,12 @@ public class FamiliaMb extends MainContext implements Serializable {
 				row = rowIterator.next();
 				CellReference ref = new CellReference(0, 0);
 				cell = row.getCell(ref.getCol());
-				int filaInicio = cell.getRowIndex() + 1;
-				int columnaInicio = cell.getColumnIndex();
-				long numeroFilas = (long) sheet.getLastRowNum();
-				long numeroFilas2 = (long) sheet.getPhysicalNumberOfRows();
+				cell.getColumnIndex();
+				sheet.getLastRowNum();
+				long contadorFilasTotal = (long) sheet.getPhysicalNumberOfRows();
 				// no cuenta la cabecera
-				if (rowCount < numeroFilas2) {
-					rowCount++;
+				if (contadorFilas < contadorFilasTotal) {
+					contadorFilas++;
 
 					// CIF
 					cell = row.getCell(0, Row.RETURN_NULL_AND_BLANK);
@@ -209,11 +225,12 @@ public class FamiliaMb extends MainContext implements Serializable {
 					// Row.RETURN_NULL_AND_BLANK
 					ejb.merge(bean);
 
-					
+					setContador(UValidacion.barraProgreso(contadorFilas, (int) contadorFilasTotal));					
 
 				}// if
+
 			}// while
-			showMessage(rowCount + " filas  leida correctamente.", SEVERITY_INFO);
+			showMessage(contadorFilas + " filas  leida correctamente.", SEVERITY_INFO);
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
@@ -221,6 +238,8 @@ public class FamiliaMb extends MainContext implements Serializable {
 		return bean;
 
 	}
+
+	
 
 	public String getValorCeldaExcel(Cell cell) {
 		String valorCelda = "";
@@ -299,7 +318,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 			fileId = new SimpleDateFormat("yyyyMMddHHmmss");
 			fileNewName = fileId.format(new Date()) + fileOldName
-			// Extension
+					// Extension
 					+ fileOldName.substring(event.getFile().getFileName().lastIndexOf('.'));
 
 			archivo = new File(rutaGuardar + "/" + fileNewName);
