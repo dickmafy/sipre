@@ -12,6 +12,7 @@ import java.util.SimpleTimeZone;
 
 public class UValidacion {
 	private static SimpleDateFormat	DATE_FORMAT	= null;
+	private static int				contador	= 1;
 
 	public UValidacion() {
 
@@ -369,11 +370,11 @@ public class UValidacion {
 		fechaNacimiento.setTime(fechaNac);
 		// Se restan la fecha actual y la fecha de nacimiento
 		int año = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
-		//System.out.println("año :" + año);
+		// System.out.println("año :" + año);
 		int mes = fechaActual.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH);
-		//System.out.println("mes :" + mes);
+		// System.out.println("mes :" + mes);
 		int dia = fechaActual.get(Calendar.DATE) - fechaNacimiento.get(Calendar.DATE);
-		//System.out.println("dia :" + dia);
+		// System.out.println("dia :" + dia);
 		// Se ajusta el año dependiendo el mes y el día
 		if (mes < 0 || (mes == 0 && dia < 0)) {
 			año--;
@@ -391,6 +392,24 @@ public class UValidacion {
 			return false;
 		}
 		return true;
+	}
+
+	public static Integer barraProgreso(int contadorActual, int contadorTotal) {
+
+		try {
+			Double valorActual = (double) contadorActual;
+			Double valorTotal = (double) contadorTotal;
+			Double porcentaje = new Double(valorActual / valorTotal);
+			contador = (int) (porcentaje * 100);
+			if (contador > 100) {
+				contador = 100;
+			}
+		} catch (Exception e) {
+			contador = 0;
+		}
+
+		return contador;
+
 	}
 
 }
