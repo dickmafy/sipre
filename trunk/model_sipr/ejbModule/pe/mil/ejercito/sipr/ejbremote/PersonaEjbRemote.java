@@ -14,8 +14,8 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 public interface PersonaEjbRemote extends
 		GenericDAO<SiprePersona> {
 	
-	List<SiprePersona> findAllBySituacionAdministrativaYActividad();
-	List<SiprePersona> findAllBySituacionAdministrativaDeListaRevista();
+	List<SiprePersona> procesarNumeroHijosList();
+	List<SiprePersona> procesarPlanillaPrincipalList();
 	Integer updatePersonaHijos(String cip, String numeroHijo);
 
 	

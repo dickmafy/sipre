@@ -18,7 +18,7 @@ public class PlanillaOtroEjbBean extends GenericDAOImpl<SiprePlanillaOtro> imple
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SiprePlanillaOtro> listBy() {
+	public List<SiprePlanillaOtro> procesarPlanillaOtrosList() {
 		StringBuilder sb = new StringBuilder();
 
 		sb.append(" SELECT B.* FROM SIPRE_PLANILLA A RIGHT JOIN SIPRE_PLANILLA_OTRO B ON A.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM"

@@ -11,6 +11,6 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaOtro;
 public interface PlanillaOtroEjbRemote extends
 		GenericDAO<SiprePlanillaOtro> {
 
-	List<SiprePlanillaOtro> listBy();
+	List<SiprePlanillaOtro> procesarPlanillaOtrosList();
 
 }
