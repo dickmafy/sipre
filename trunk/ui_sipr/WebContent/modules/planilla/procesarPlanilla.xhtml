@@ -16,11 +16,11 @@
 				oncomplete="PF('wblockui').hide();" /> -->
 				<p:blockUI block="frm:panelProcesoPlanilla" widgetVar="wblockui" />
 				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000"
-					id="barraProgreso"
-					value="#{progressBar.contador}"
-					labelTemplate="{value}%" styleClass="animated" global="false" style="width:700px">
-					<p:ajax event="complete"
-							listener="#{progressBar.onComplete()}" />
+					id="barraProgreso" value="#{progressBar.contador}"
+					labelTemplate="{value}%" styleClass="animated" global="false"
+					style="width:700px">
+					<p:ajax event="complete" listener="#{progressBar.onComplete}"
+						update=":frm:barraProgreso" />
 				</p:progressBar>
 				<!-- PROGRES FIN-->
 
@@ -43,8 +43,8 @@
 
 
 						<p:outputLabel value="2 Lista Revista" />
-						<p:commandButton  icon="_ui-icon-add"
-							styleClass="boton_botonera" value="Validar"
+						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+							value="Validar"
 							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
@@ -196,11 +196,14 @@
 						var="detalle" type="unordered" itemType="none" paginator="true"
 						rows="10" styleClass="paginated">
 						<f:facet name="header">
-				           <h:outputText value="#{constantesUtil.proceso1PlanillaNumeroHijos}"/>
-				           
-				        </f:facet>
-				        <h:outputText value="#{detalle.tipoMensaje}" style="display:inline-block" />
-						<h:outputText value="#{detalle.mensaje}" style="display:inline-block" />
+							<h:outputText
+								value="#{constantesUtil.proceso1PlanillaNumeroHijos}" />
+
+						</f:facet>
+						<h:outputText value="#{detalle.tipoMensaje}"
+							style="display:inline-block" />
+						<h:outputText value="#{detalle.mensaje}"
+							style="display:inline-block" />
 					</p:dataList>
 				</p:dialog>
 
