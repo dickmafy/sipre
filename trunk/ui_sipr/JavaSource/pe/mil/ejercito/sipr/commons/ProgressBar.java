@@ -7,7 +7,15 @@ import javax.faces.bean.ManagedBean;
 @ApplicationScoped
 public class ProgressBar {
 
+	public ProgressBar(){
+		contador = 0;
+	}
+	
 	public int	contador;
+	
+	public void onComplete() {
+		contador=0;
+	}
 
 	@SuppressWarnings("unused")
 	public Integer barraProgreso(int contadorActual, int contadorTotal) {
