@@ -18,7 +18,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
-	public List<SiprePersona> findAllBySituacionAdministrativaYActividad() {
+	public List<SiprePersona> procesarNumeroHijosList() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
@@ -30,7 +30,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 	}
 
 	@Override
-	public List<SiprePersona> findAllBySituacionAdministrativaDeListaRevista() {
+	public List<SiprePersona> procesarPlanillaPrincipalList() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:p1");
@@ -40,6 +40,8 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p5");
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p6");
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
+		//PARA PRUEBAS->
+		sb.append(" and o.cpersonaNroAdm <='123652000'");
 		Query q = em.createQuery(sb.toString());
 		// //SQL parameter in :=parametros
 		// List<String> parametros = Arrays.asList("60", "61");
