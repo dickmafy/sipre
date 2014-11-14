@@ -24,6 +24,7 @@ public class PlanillaOtroEjbBean extends GenericDAOImpl<SiprePlanillaOtro> imple
 		sb.append(" SELECT B.* FROM SIPRE_PLANILLA A RIGHT JOIN SIPRE_PLANILLA_OTRO B ON A.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM"
 				+ " inner join SIPRE_PERSONA C ON C.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM WHERE A.CPERSONA_NRO_ADM IS NULL"
 				+ " and (B.CTP_CODIGO in ('60','61')) ");
+		sb.append(" and c.dpersonaFecIngand BETWEEN '01/01/1900' AND '31/12/2014'");
 		/*
 		 * sb.append(" SELECT B.* FROM SIPRE_PLANILLA A RIGHT JOIN " +
 		 * " SIPRE_PLANILLA_OTRO B ON A.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM "
