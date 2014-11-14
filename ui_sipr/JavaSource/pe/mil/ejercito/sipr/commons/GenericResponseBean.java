@@ -2,17 +2,13 @@ package pe.mil.ejercito.sipr.commons;
 
 import java.util.List;
 
-import javax.annotation.ManagedBean;
-import javax.faces.bean.SessionScoped;
-
-
 public class GenericResponseBean<T> {
 
-	private T objeto;
-	private List<T> lista;
+	private T		objeto;
+	private List<T>	lista;
 
-	private String codigoRespuesta;
-	private String mensaje;
+	private String	codigoRespuesta;
+	private String	mensaje;
 
 	public GenericResponseBean() {
 		super();

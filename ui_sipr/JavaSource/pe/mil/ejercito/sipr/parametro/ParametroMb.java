@@ -7,8 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-
-
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
 import pe.mil.ejercito.sipr.commons.MainContext;
@@ -22,18 +20,18 @@ import pe.mil.ejercito.sipr.model.SipreParametroDetalle;
 @ViewScoped
 public class ParametroMb extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long					serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
+	private UsuarioEjbRemote					ejbUsuario;
 
-	private ParametroEjbRemote ejb;
-	private List<SipreParametro> beanList;
-	private SipreParametro bean;
+	private ParametroEjbRemote					ejb;
+	private List<SipreParametro>				beanList;
+	private SipreParametro						bean;
 
-	private ParametroDetalleEjbRemote ejbParametroDetalle;
-	private SipreParametroDetalle beanSipreParametroDetalle;
-	private List<SipreParametroDetalle> beanParametroDetalleList;
-	private GenericResponseBean<SipreParametro> sessionBean ; 
+	private ParametroDetalleEjbRemote			ejbParametroDetalle;
+	private SipreParametroDetalle				beanSipreParametroDetalle;
+	private List<SipreParametroDetalle>			beanParametroDetalleList;
+	private GenericResponseBean<SipreParametro>	sessionBean;
 
 	public ParametroMb() {
 		super();
@@ -49,17 +47,16 @@ public class ParametroMb extends MainContext implements Serializable {
 		}
 	}
 
-	 
-	public String goParametroDetalleMb(){
-		sessionBean = new  GenericResponseBean<>();
+	public String goParametroDetalleMb() {
+		sessionBean = new GenericResponseBean<>();
 		sessionBean.setObjeto(bean);
 		registrarVariable("vparametro", sessionBean);
 		return redirecciona("/modules/parametro/parametroDetalle");
 	}
-	
+
 	public void newBean(ActionEvent event) {
 		bean = new SipreParametro();
-		//bean.set
+		// bean.set
 	}
 
 	public void saveBean(ActionEvent event) {
@@ -121,11 +118,9 @@ public class ParametroMb extends MainContext implements Serializable {
 		this.beanParametroDetalleList = beanParametroDetalleList;
 	}
 
-
 	public GenericResponseBean<SipreParametro> getSessionBean() {
 		return sessionBean;
 	}
-
 
 	public void setSessionBean(GenericResponseBean<SipreParametro> sessionBean) {
 		this.sessionBean = sessionBean;
