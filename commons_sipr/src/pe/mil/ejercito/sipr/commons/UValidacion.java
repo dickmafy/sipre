@@ -356,8 +356,8 @@ public class UValidacion {
 		try {
 			/**
 			 * Se puede cambiar la mascara por el formato de la fecha que se
-			 * quiera recibir, por ejemplo año mes día "yyyy-MM-dd" en este caso
-			 * es día mes año
+			 * quiera recibir, por ejemplo aï¿½o mes dï¿½a "yyyy-MM-dd" en este caso
+			 * es dia mes ano
 			 */
 			fechaNac = new SimpleDateFormat("dd/MM/yyyy").parse(fecha);
 		} catch (Exception ex) {
@@ -369,18 +369,18 @@ public class UValidacion {
 		// Se asigna la fecha recibida a la fecha de nacimiento.
 		fechaNacimiento.setTime(fechaNac);
 		// Se restan la fecha actual y la fecha de nacimiento
-		int año = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
-		// System.out.println("año :" + año);
+		int anio = fechaActual.get(Calendar.YEAR) - fechaNacimiento.get(Calendar.YEAR);
+		// System.out.println("anio :" + anio);
 		int mes = fechaActual.get(Calendar.MONTH) - fechaNacimiento.get(Calendar.MONTH);
 		// System.out.println("mes :" + mes);
 		int dia = fechaActual.get(Calendar.DATE) - fechaNacimiento.get(Calendar.DATE);
 		// System.out.println("dia :" + dia);
-		// Se ajusta el año dependiendo el mes y el día
+		// Se ajusta el anio dependiendo el mes y el dia
 		if (mes < 0 || (mes == 0 && dia < 0)) {
-			año--;
+			anio--;
 		}
 		// Regresa la edad en base a la fecha de nacimiento
-		return año;
+		return anio;
 	}
 
 	public static boolean isFechaValida(String fecha) {
