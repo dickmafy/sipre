@@ -22,7 +22,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
-		//sb.append(" and o.cpersonaNroAdm ='123652000'");
+		// sb.append(" and o.cpersonaNroAdm ='123652000'");
 		Query q = em.createQuery(sb.toString());
 		// situacion administrativa
 		q.setParameter("csaCodigo", "01");
@@ -40,9 +40,10 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p5");
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p6");
 		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
-		//PARA PRUEBAS->
-		sb.append(" and o.cpersonaNroAdm <='123652000'");
+		// PARA PRUEBAS->
+		sb.append(" and o.dpersonaFecIng BETWEEN '01/01/1900' AND '31/12/2014'");
 		Query q = em.createQuery(sb.toString());
+		// o.cpersonaNroAdm <='123652000'
 		// //SQL parameter in :=parametros
 		// List<String> parametros = Arrays.asList("60", "61");
 		// q.setParameter("ctpCodigo", parametros);
@@ -57,14 +58,14 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		q.setParameter("p7", "77");
 		return q.getResultList();
 	}
-	
+
 	@Override
-	public Integer updatePersonaHijos(String cip,String numeroHijo) {
+	public Integer updatePersonaHijos(String cip, String numeroHijo) {
 		Query q = em.createQuery("UPDATE SiprePersona SET npersonaNroHijo=:numeroHijo where cpersonaNroAdm=:cip");
 		q.setParameter("cip", cip);
 		q.setParameter("numeroHijo", numeroHijo);
 		return q.executeUpdate();
-		
+
 	}
 
 }
