@@ -14,11 +14,13 @@
 				<!--Elemento Trigger : update=":frm:dt :frm:barraProgreso" id="uploadFile"
 				onstart="PF('barraProgreso').start();PF('wblockui').show();"
 				oncomplete="PF('wblockui').hide();" /> -->
-				<p:blockUI block="frm" widgetVar="wblockui" />
-				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="3"
+				<p:blockUI block="frm:panelProcesoPlanilla" widgetVar="wblockui" />
+				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000"
 					id="barraProgreso"
-					value="#{procesarPlanillaMb.progressBar.contador}"
-					labelTemplate="{value}%" styleClass="animated" global="false">
+					value="#{progressBar.contador}"
+					labelTemplate="{value}%" styleClass="animated" global="false" style="width:700px">
+					<p:ajax event="complete"
+							listener="#{progressBar.onComplete()}" />
 				</p:progressBar>
 				<!-- PROGRES FIN-->
 
@@ -28,7 +30,7 @@
 					<f:selectItem itemValue="012014" itemLabel="022014" />
 				</p:selectOneMenu>
 
-				<p:panel header="PROCESAR PLANILLA">
+				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
 					<p:panelGrid columns="4">
 						<p:outputLabel value="1 Numero de Hijos" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
