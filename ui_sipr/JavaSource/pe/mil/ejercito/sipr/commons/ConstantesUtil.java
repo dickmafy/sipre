@@ -10,6 +10,9 @@ public class ConstantesUtil {
 	public static final String	MENSAJE_GENERIC_TIPO_MENSAJE_ERROR			= "error";
 	public static final String	MENSAJE_GENERIC_TIPO_MENSAJE_WARNING		= "advertencia";
 
+	public static final int		GENERIC_MENSAJE_ES_DETALLE					= 1;
+	public static final int		GENERIC_MENSAJE_NO_ES_DETALLE				= 0;
+
 	public static final String	PROCESO_1_PLANILLA_NUMERO_HIJOS				= "Proceso 1 Numero Hijos";
 	public static final String	PROCESO_2_PLANILLA_LISTA_REVISTA			= "Proceso 2 Lista Revista";
 
@@ -53,6 +56,14 @@ public class ConstantesUtil {
 
 	public int getLIST_SIZE() {
 		return 15;
+	}
+
+	public String getProceso1PlanillaNumeroHijos() {
+		return PROCESO_1_PLANILLA_NUMERO_HIJOS;
+	}
+
+	public String getProceso2PlanillaListaRevista() {
+		return PROCESO_2_PLANILLA_LISTA_REVISTA;
 	}
 
 }

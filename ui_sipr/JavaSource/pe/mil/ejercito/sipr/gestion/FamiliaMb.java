@@ -103,7 +103,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	}
 
 	public void onComplete() {
-		showMessage("Carga del Excel Completada.", SEVERITY_INFO);
+		//showMessage("Carga del Excel Completada.", SEVERITY_INFO);
 	}
 
 	public void cancel() {
