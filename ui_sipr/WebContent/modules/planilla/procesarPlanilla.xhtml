@@ -10,11 +10,22 @@
 			<div id="contenido">
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<!-- PROGRES INICIO -->
+				<!--Elemento Trigger : update=":frm:dt :frm:barraProgreso" id="uploadFile"
+				onstart="PF('barraProgreso').start();PF('wblockui').show();"
+				oncomplete="PF('wblockui').hide();" /> -->
+				<p:blockUI block="frm" widgetVar="wblockui" />
+				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="3"
+					id="barraProgreso"
+					value="#{procesarPlanillaMb.progressBar.contador}"
+					labelTemplate="{value}%" styleClass="animated" global="false">
+				</p:progressBar>
+				<!-- PROGRES FIN-->
 
 				<p:outputLabel value="Fecha de Proceso :" />
 				<p:selectOneMenu>
-					<f:selectItem itemValue="1" itemLabel="Enero" />
-					<f:selectItem itemValue="0" itemLabel="Febrero" />
+					<f:selectItem itemValue="012014" itemLabel="012014" />
+					<f:selectItem itemValue="012014" itemLabel="022014" />
 				</p:selectOneMenu>
 
 				<p:panel header="PROCESAR PLANILLA">
@@ -23,23 +34,25 @@
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
 							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}"
-							update=":frm:dt">
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" id="p1">
 						</p:commandButton>
 
 
 						<p:outputLabel value="2 Lista Revista" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
+						<p:commandButton  icon="_ui-icon-add"
+							styleClass="boton_botonera" value="Validar"
 							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" id="p2">
 						</p:commandButton>
 
 
 						<p:outputLabel value="3 Calcular Ingresos por Persona" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+							value="Validar" update=":frm:dt">
 						</p:commandButton>
 
 						<p:outputLabel value="4 Calcular Descuento de Ley" />
@@ -138,7 +151,7 @@
 				</p:panel>
 
 				<!-- DATATABLE -1 - NUMERO DE HIJOS-->
-				<p:dataTable id="dt" var="item" widgetVar="wdt" 
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
 					value="#{procesarPlanillaMb.beanGmList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
 					paginator="true" rows="20" paginatorPosition="top"
@@ -146,13 +159,13 @@
 					scrollable="true" scrollHeight="100%" scrollWidth="100%"
 					scrollRows="6">
 
-					<p:column headerText="Campo Proceso" width="10">
+					<p:column headerText="Campo Proceso" width="25">
 						<h:outputText value="#{item.campo}" />
 					</p:column>
 
 					<p:column headerText="Tipo Mensaje" width="10">
 						<h:outputText value="#{item.tipoMensaje}"
-							style="width:40px; background-color : #{item.tipoMensaje lt 'info' ? '#F78181' : '#81F781' }" />
+							style="width:40px;border: 1px solid #F00; background-color : #{item.tipoMensaje lt 'info' ? '#F78181' : '#81F781' }" />
 					</p:column>
 
 					<p:column headerText="Mensaje" width="500"
@@ -161,7 +174,33 @@
 						<h:outputText value="#{item.mensaje}" />
 					</p:column>
 
+					<p:column headerText="Detalle" width="20">
+						<p:commandLink update=":frm:carDetail"
+							oncomplete="PF('carDialog').show()" title="View Detail"
+							styleClass="ui-icon ui-icon-search"
+							style="float:left;margin-right:10px">
+							<f:setPropertyActionListener value="#{item}"
+								target="#{procesarPlanillaMb.beanGm}" />
+
+						</p:commandLink>
+					</p:column>
 				</p:dataTable>
+				<!-- DIALOG- PROCESO 1 NUMERO DE HIJOS INICIO -->
+				<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
+					appendTo="@(body)" showEffect="blind" hideEffect="explode"
+					resizable="false" id="carDetail" closable="true"
+					closeOnEscape="true">
+					<p:dataList value="#{procesarPlanillaMb.beanGm.listaObjeto}"
+						var="detalle" type="unordered" itemType="none" paginator="true"
+						rows="10" styleClass="paginated">
+						<f:facet name="header">
+				           <h:outputText value="#{constantesUtil.proceso1PlanillaNumeroHijos}"/>
+				           
+				        </f:facet>
+				        <h:outputText value="#{detalle.tipoMensaje}" style="display:inline-block" />
+						<h:outputText value="#{detalle.mensaje}" style="display:inline-block" />
+					</p:dataList>
+				</p:dialog>
 
 			</div>
 		</div>

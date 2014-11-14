@@ -11,97 +11,102 @@
 			<div id="contenido">
 
 
-				<!-- PROGRES -->
-				<!-- Custom CSS styles -->
-				<style type="text/css">
-.animated .ui-progressbar-value
- {
- background-image:
-  url("/images/bar_orange.gif"); ! important;
-}
-</style>
+				<!-- PROGRES INICIO -->
+				<!--Elemento Trigger : update=":frm:dt :frm:barraProgreso" id="uploadFile"
+				onstart="PF('barraProgreso').start();PF('wblockui').show();"
+				oncomplete="PF('wblockui').hide();" /> -->
+				
+					
+					
 
-				<p:blockUI block="frm" widgetVar="wblockui" />
-				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="3"
-					id="barraProgreso" value="#{familiaMb.contador}"
-					labelTemplate="{value}%" styleClass="animated" global="false">
-					<p:ajax event="complete" listener="#{familiaMb.onComplete}" />
-				</p:progressBar>
-				<!-- PROGRES -->
-
-
-				<p:messages id="messages" autoUpdate="true" closable="true" />
-				<p:panelGrid columns="2">
-					<p:fileUpload sizeLimit="1000000" auto="true" label="Subir Excel"
-						cancelLabel="cancel" uploadLabel="update"
-						fileUploadListener="#{familiaMb.handleFileUpload}" mode="advanced"
-						allowTypes="/(\.|\/)(xlsx|xls)$/"
-						update=":frm:dt :frm:barraProgreso" id="uploadFile"
-						onstart="PF('barraProgreso').start();PF('wblockui').show();"
-						oncomplete="PF('wblockui').hide();" />
-				</p:panelGrid>
+					<p:blockUI block="frm" widgetVar="wblockui" />
+					<p:progressBar widgetVar="barraProgreso" ajax="true"
+						interval="3" id="barraProgreso" value="#{familiaMb.contador}"
+						labelTemplate="{value}%" styleClass="animated" global="false">
+						<p:ajax event="complete"
+							listener="#{familiaMb.onComplete}" />
+					</p:progressBar>
+					<!-- PROGRES FIN-->
 
 
-
-
-				<p:dataTable id="dt" var="item" widgetVar="wdt"
-					value="#{familiaMb.beanList}"
-					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
-					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
-					paginatorPosition="top"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
-
-					<p:column headerText="CIF (ID Excel)"
-						style="width:10%; align:center;">
-						<h:outputText value="#{item.ctfCif}" />
-					</p:column>
-
-					<p:column headerText="CIP" style="width:15%; align:center;">
-						<h:outputText value="#{item.cpersonaNroAdm}" />
-					</p:column>
-					<p:column headerText="Causal de Renovaciòn"
-						style="width:15%; align:center;">
-						<h:outputText value="#{item.ctfCauRenovac}" />
-					</p:column>
-					<p:column headerText="Nombres" style="width:15%; align:center;">
-						<h:outputText value="#{item.vtfApeNom}" />
-					</p:column>
-
-
-					<p:column headerText="Fecha Nacimiento"
-						style="width:15%; align:center;">
-						<h:outputText value="#{item.dtfFecNac}" />
-					</p:column>
-					<p:column headerText="Fecha Renovacion"
-						style="width:15%; align:center;">
-						<h:outputText value="#{item.ctfFecRenovac}" />
-					</p:column>
-
-					<p:column headerText="Sexo" style="width:15%; align:center;">
-						<h:outputText
-							value="#{item.ctfSexo eq '1'? 'Masculino':'Femenino'}" />
-					</p:column>
-
-					<p:column headerText="Causa Renovación" rendered="false"
-						style="width:10%; align:center;">
-						<h:outputText value="#{item.ctfCauRenovac}" />
-					</p:column>
+					<p:messages id="messages" autoUpdate="true"
+						closable="true" />
+					<p:panelGrid columns="2">
+						<p:fileUpload sizeLimit="1000000" auto="true"
+							label="Subir Excel" cancelLabel="cancel" uploadLabel="update"
+							fileUploadListener="#{familiaMb.handleFileUpload}"
+							mode="advanced" allowTypes="/(\.|\/)(xlsx|xls)$/"
+							update=":frm:dt :frm:barraProgreso" id="uploadFile"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" />
+					</p:panelGrid>
 
 
 
-					<p:column headerText="Opciones" width="10%">
-						<p:commandLink oncomplete="PF('wdialogUpdate').show()"
-							update=":frmUpdate">
-							<f:setPropertyActionListener value="#{item}"
-								target="#{familiaMb.bean}" />
-							<p:graphicImage value="/images/icons/pencil_12.png" />
-						</p:commandLink>
-					</p:column>
+
+					<p:dataTable id="dt" var="item" widgetVar="wdt"
+						value="#{familiaMb.beanList}"
+						emptyMessage="#{constantesUtil.LIST_EMPTY}"
+						resizableColumns="true" paginator="true"
+						rows="#{constantesUtil.LIST_SIZE}" paginatorPosition="top"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+						<p:column headerText="CIF (ID Excel)"
+							style="width:10%; align:center;">
+							<h:outputText value="#{item.ctfCif}" />
+						</p:column>
+
+						<p:column headerText="CIP"
+							style="width:15%; align:center;">
+							<h:outputText
+								value="#{item.cpersonaNroAdm}" />
+						</p:column>
+						<p:column headerText="Causal de Renovaciòn"
+							style="width:15%; align:center;">
+							<h:outputText value="#{item.ctfCauRenovac}" />
+						</p:column>
+						<p:column headerText="Nombres"
+							style="width:15%; align:center;">
+							<h:outputText value="#{item.vtfApeNom}" />
+						</p:column>
 
 
-				</p:dataTable>
+						<p:column headerText="Fecha Nacimiento"
+							style="width:15%; align:center;">
+							<h:outputText value="#{item.dtfFecNac}" />
+						</p:column>
+						<p:column headerText="Fecha Renovacion"
+							style="width:15%; align:center;">
+							<h:outputText value="#{item.ctfFecRenovac}" />
+						</p:column>
 
-			</div>
+						<p:column headerText="Sexo"
+							style="width:15%; align:center;">
+							<h:outputText
+								value="#{item.ctfSexo eq '1'? 'Masculino':'Femenino'}" />
+						</p:column>
+
+						<p:column headerText="Causa Renovación"
+							rendered="false" style="width:10%; align:center;">
+							<h:outputText value="#{item.ctfCauRenovac}" />
+						</p:column>
+
+
+
+						<p:column headerText="Opciones" width="10%">
+							<p:commandLink
+								oncomplete="PF('wdialogUpdate').show()" update=":frmUpdate">
+								<f:setPropertyActionListener
+									value="#{item}" target="#{familiaMb.bean}" />
+								<p:graphicImage
+									value="/images/icons/pencil_12.png" />
+							</p:commandLink>
+						</p:column>
+
+
+					</p:dataTable>
+
+</div>
 		</div>
 
 
