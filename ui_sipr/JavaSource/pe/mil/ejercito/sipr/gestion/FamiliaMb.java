@@ -14,6 +14,7 @@ import java.util.Iterator;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.event.ActionEvent;
@@ -31,6 +32,7 @@ import org.primefaces.event.FileUploadEvent;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.commons.ProgressBar;
 import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
@@ -57,7 +59,9 @@ public class FamiliaMb extends MainContext implements Serializable {
 	public static final String		JBOSS_CATALINA		= "catalina.home";
 	public static final String		JBOSS_TEMP			= "tmpFiles";
 
-	private Integer					contador			= 1;
+	@ManagedProperty("#{progressBar}")
+	private ProgressBar				progressBar;
+
 	public FamiliaMb() {
 		super();
 		try {
@@ -100,23 +104,6 @@ public class FamiliaMb extends MainContext implements Serializable {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
-	}
-
-	public void onComplete() {
-		//showMessage("Carga del Excel Completada.", SEVERITY_INFO);
-	}
-
-	public void cancel() {
-		contador = null;
-	}
-
-	public Integer getContador() {
-
-		return contador;
-	}
-
-	public void setContador(Integer contador) {
-		this.contador = contador;
 	}
 
 	public void handleFileUpload(FileUploadEvent event) {
@@ -168,7 +155,6 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpFamilia bean) {
 		try {
-			contador = 0;
 			Sheet sheet = wb.getSheetAt(0);
 			Cell cell;
 			int contadorFilas = 1;
@@ -224,9 +210,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 					// Row.RETURN_NULL_AND_BLANK
 					ejb.merge(bean);
-
-					setContador(UValidacion.barraProgreso(contadorFilas, (int) contadorFilasTotal));					
-
+					progressBar.barraProgreso(contadorFilas, (int) contadorFilasTotal);
 				}// if
 
 			}// while
@@ -238,8 +222,6 @@ public class FamiliaMb extends MainContext implements Serializable {
 		return bean;
 
 	}
-
-	
 
 	public String getValorCeldaExcel(Cell cell) {
 		String valorCelda = "";
@@ -375,6 +357,14 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	public void setTipoPlanillaList(List<SipreTipoPlanilla> tipoPlanillaList) {
 		this.tipoPlanillaList = tipoPlanillaList;
+	}
+
+	public ProgressBar getProgressBar() {
+		return progressBar;
+	}
+
+	public void setProgressBar(ProgressBar progressBar) {
+		this.progressBar = progressBar;
 	}
 
 }
