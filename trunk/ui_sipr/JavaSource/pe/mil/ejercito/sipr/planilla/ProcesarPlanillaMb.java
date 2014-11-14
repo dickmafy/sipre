@@ -218,9 +218,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				addGenericMensaje(tmpCip + " Persona de PlanillaOtros - verificando para pasar a Planilla.",
 						ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
 						ConstantesUtil.GENERIC_MENSAJE_NO_ES_DETALLE);
-				/*
-				 * if (contadorPOtroTotal == 10000) { continue; }
-				 */
 				// PLANILLA OTRO- > PLANILLA
 				ejbPlanilla.persist(planilla);
 				contadorPOtrosGuardado++;
@@ -264,9 +261,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		SiprePlanilla planilla = new SiprePlanilla();
 		for (SiprePersona itemPersona : beanPersonaList) {
 			contadorPPrincipalTotal++;
-			// progressBar.barraProgreso(contadorPPrincipalTotal,
-			// beanPersonaList.size());
-			progressBar.barraProgreso(contadorPPrincipalTotal, 1000);
+			progressBar.barraProgreso(contadorPPrincipalTotal, beanPersonaList.size());
 			tmpCip = itemPersona.getCpersonaNroAdm();
 
 			try {
