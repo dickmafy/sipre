@@ -31,7 +31,7 @@
 				</p:selectOneMenu>
 
 				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
-					<p:panelGrid columns="4">
+					<p:panelGrid columns="10">
 						<p:outputLabel value="1 Numero de Hijos" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
@@ -45,7 +45,7 @@
 						<p:outputLabel value="2 Lista Revista" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
+							actionListener="#{procesarPlanillaMb.procesarListaRevista}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
 							oncomplete="PF('wblockui').hide();" id="p2">
@@ -59,9 +59,7 @@
 
 						<p:outputLabel value="4 Calcular Descuento de Ley" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+							value="Validar" update=":frm:dt">
 						</p:commandButton>
 
 						<p:outputLabel value="5 Calcular Guardias Hospitalarias" />
@@ -152,59 +150,75 @@
 					</p:panelGrid>
 				</p:panel>
 
-				<!-- DATATABLE -1 - NUMERO DE HIJOS-->
+				<!-- DATATABLE-->
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					filteredValue="#{procesarPlanillaMb.beanGmListBusqueda}"
 					value="#{procesarPlanillaMb.beanGmList}"
-					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
-					paginator="true" rows="20" paginatorPosition="top"
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+					rows="20" paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					scrollable="true" scrollHeight="100%" scrollWidth="100%"
-					scrollRows="6">
+					>
 
-					<p:column headerText="Campo Proceso" width="25">
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Buscar en la Tabla" />
+							<h:inputText id="globalFilter" onkeyup="PF('wdt').filter()" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Campo Proceso" width="2%">
 						<h:outputText value="#{item.campo}" />
 					</p:column>
 
-					<p:column headerText="Tipo Mensaje" width="10">
+					<p:column headerText="Tipo Mensaje" width="1%">
 						<h:outputText value="#{item.tipoMensaje}"
-							style="width:40px;border: 1px solid #F00; background-color : #{item.tipoMensaje lt 'info' ? '#F78181' : '#81F781' }" />
+							style="background-color : #{item.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
+							:item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
+							: item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
 					</p:column>
 
-					<p:column headerText="Mensaje" width="500"
-						filterBy="#{item.mensaje}" filterMatchMode="contains"
-						sortBy="#{item.mensaje}">
-						<h:outputText value="#{item.mensaje}" />
+					<p:column headerText="Mensaje" width="10%"
+						filterBy="#{item.mensaje}" filterMatchMode="contains">
+						<h:outputText value="#{item.mensaje}"  />
 					</p:column>
 
-					<p:column headerText="Detalle" width="20">
-						<p:commandLink update=":frm:carDetail"
-							oncomplete="PF('carDialog').show()" title="View Detail"
+					<p:column headerText="Detalle" width="1%">
+						<p:commandLink update=":frm:carDetail" value="Detalle del Proceso" 
+							oncomplete="PF('detalleProceso').show()" title="Detalle del Proceso"
 							styleClass="ui-icon ui-icon-search"
 							style="float:left;margin-right:10px">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{procesarPlanillaMb.beanGm}" />
-
+							Detalle del Proceso
 						</p:commandLink>
 					</p:column>
 				</p:dataTable>
 				<!-- DIALOG- PROCESO 1 NUMERO DE HIJOS INICIO -->
-				<p:dialog header="Car Info" widgetVar="carDialog" modal="true"
-					appendTo="@(body)" showEffect="blind" hideEffect="explode"
-					resizable="false" id="carDetail" closable="true"
-					closeOnEscape="true">
-					<p:dataList value="#{procesarPlanillaMb.beanGm.listaObjeto}"
-						var="detalle" type="unordered" itemType="none" paginator="true"
-						rows="10" styleClass="paginated">
+				<p:dialog header="Detalle del Proceso" widgetVar="detalleProceso"
+					modal="true" appendTo="@(body)" showEffect="blind"
+					hideEffect="explode" resizable="false" id="carDetail"
+					closable="true" closeOnEscape="true">
+
+					<p:dataTable id="dtd" var="detalle" widgetVar="wdtd"
+						tableStyle="width:400px"
+						filteredValue="#{procesarPlanillaMb.beanGm.listaObjeto}"
+						value="#{procesarPlanillaMb.beanGm.listaObjeto}"
+						emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+						rows="20" paginatorPosition="top"
+						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 						<f:facet name="header">
 							<h:outputText
 								value="#{constantesUtil.proceso1PlanillaNumeroHijos}" />
-
 						</f:facet>
-						<h:outputText value="#{detalle.tipoMensaje}"
-							style="display:inline-block" />
-						<h:outputText value="#{detalle.mensaje}"
-							style="display:inline-block" />
-					</p:dataList>
+						<p:column headerText="Tipo Mensaje" width="10%">
+							<h:outputText value="#{detalle.tipoMensaje}" 	style="background-color : #{detalle.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
+							: detalle.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
+							: detalle.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
+						</p:column>
+						<p:column headerText="Campo Proceso" width="25%">
+							<h:outputText value="#{detalle.mensaje}" />
+						</p:column>
+					</p:dataTable>
 				</p:dialog>
 
 			</div>
@@ -214,27 +228,19 @@
 	<!-- 
 					<p:column headerText="Proceso">
 					</p:column>
-
 					<p:column headerText="Tipo Planilla" resizable="true">
 					</p:column>
-
 					<p:column headerText="Concepto" resizable="true">
 					</p:column>
-
 					<p:column headerText="CIP" resizable="true">
 					</p:column>
-
 					<p:column headerText="Grado" resizable="true">
 					</p:column>
-
 					<p:column headerText="Especialidad" resizable="true">
 					</p:column>
-
 					<p:column headerText="Nombres" resizable="true">
 					</p:column>
-
 					<p:column headerText="Unidad" resizable="true">
 					</p:column>
 					 -->
-
 </ui:composition>
