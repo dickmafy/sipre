@@ -71,7 +71,7 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/registro/grado";
 			break;
 		case 31:
-			contenidoDefault = "/modules/registro/reintegroPersonal_list";
+			contenidoDefault = "/modules/planilla/reintegroPersonal_list";
 			break;
 		case 32:
 			contenidoDefault = "/modules/registro/ingresoConceptoPersonal";

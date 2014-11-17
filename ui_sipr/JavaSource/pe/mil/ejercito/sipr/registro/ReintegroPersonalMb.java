@@ -12,17 +12,20 @@ import org.primefaces.component.log.Log;
 
 import com.sun.mail.util.BEncoderStream;
 
+import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.ReintegroPersonalEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreGrupoGrado;
 import pe.mil.ejercito.sipr.model.SiprePerfil;
 import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
+import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
 import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
-import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
+import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "reintegroPersonalMb")
@@ -30,82 +33,61 @@ import pe.mil.ejercito.sipr.model.SipreUsuario;
 public class ReintegroPersonalMb extends MainContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private List<SipreTmpBonificacion> beanList;
-
-	private SiprePlanilla beanPlanilla;
-	
+	private List<SiprePlanillaAdicional> beanList;
 	private SiprePlanillaAdicional beanSelected;
-	
-	private ReintegroPersonalEjbRemote ejb;
-	private SipreTmpBonificacion bean;
+	private PlanillaAdicionalEjbRemote ejb;
+	private SiprePlanillaAdicional bean;
 
 	public ReintegroPersonalMb() {
 		super();
 		try {
-			ejb = (ReintegroPersonalEjbRemote) findServiceRemote(ReintegroPersonalEjbRemote.class);
-			beanList = ejb.listReintegroPersonal(null);
+			ejb = (PlanillaAdicionalEjbRemote) findServiceRemote(PlanillaAdicionalEjbRemote.class);
+			beanList = ejb.findAll(ConstantesUtil.LISTAR_EJB_REMOTE);
+			cleanBean();
 			
-			beanPlanilla = new SiprePlanilla();
-			SiprePlanillaPK pk = new SiprePlanillaPK();
-			SiprePersona siprePersona = new SiprePersona();
-			beanPlanilla.setSiprePersona(siprePersona);
-			beanPlanilla.setId(pk);
-			
-			
-			beanSelected = new SiprePlanillaAdicional();
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
 	}
 
-	public void insertMensual(ActionEvent event) {
-			try {
-				beanPlanilla = ejb.registrar(beanPlanilla);
-				showMessage("Personal editado con exito.", SEVERITY_INFO);
-			} catch (Exception e) {
-				showMessage("Error al guardar el Personal.", SEVERITY_ERROR);
-				e.printStackTrace();
-			}
+	private void cleanBean() {
+		bean = new SiprePlanillaAdicional();
+		SiprePlanillaAdicionalPK pk = new SiprePlanillaAdicionalPK();
+		bean.setSiprePlanillaAdicionalPK(pk);
 	}
-	
-	public void updateMensual(ActionEvent event) {
-		if(null != beanPlanilla.getId().getNplanillaNumProceso()
-				&& null != beanPlanilla.getId().getCplanillaMesProceso() 
-				&& null != beanPlanilla.getId().getCpersonaNroAdm()){
-			beanPlanilla = ejb.registrar(beanPlanilla);
-			showMessage("Personal editado con exito.", SEVERITY_INFO);
-		}else{
-			showMessage("Error al editar el Personal.", SEVERITY_ERROR);
+
+	public void newBean(ActionEvent event) {
+		cleanBean();
+	}
+
+	public void saveBean(ActionEvent event) {
+		try {
+			ejb.persist(bean);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
+			beanList = ejb.findAll();
+		} catch (Exception e) {
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL, SEVERITY_ERROR);
 		}
 		
-			
-			
+	}
+	
+	public void deleteBean(ActionEvent event) {
+		try {
+			ejb.remove(beanSelected);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
+			beanList = ejb.findAll();
+		} catch (Exception e) {
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_GENERAL, SEVERITY_ERROR);
+		}
 		
 	}
 
-	
-	public void insertNuevo(ActionEvent event){
-		SiprePlanillaPK pk = new SiprePlanillaPK();
-		beanPlanilla = new SiprePlanilla();
-		beanPlanilla.setId(pk);
-		
-	}
-	
-
-	public List<SipreTmpBonificacion> getBeanList() {
+	public List<SiprePlanillaAdicional> getBeanList() {
 		return beanList;
 	}
 
-	public void setBeanList(List<SipreTmpBonificacion> beanList) {
+	public void setBeanList(List<SiprePlanillaAdicional> beanList) {
 		this.beanList = beanList;
-	}
-
-	public SiprePlanilla getBeanPlanilla() {
-		return beanPlanilla;
-	}
-
-	public void setBeanPlanilla(SiprePlanilla beanPlanilla) {
-		this.beanPlanilla = beanPlanilla;
 	}
 
 	public SiprePlanillaAdicional getBeanSelected() {
@@ -116,11 +98,13 @@ public class ReintegroPersonalMb extends MainContext implements Serializable {
 		this.beanSelected = beanSelected;
 	}
 
-	public SipreTmpBonificacion getBean() {
+	public SiprePlanillaAdicional getBean() {
 		return bean;
 	}
 
-	public void setBean(SipreTmpBonificacion bean) {
+	public void setBean(SiprePlanillaAdicional bean) {
 		this.bean = bean;
 	}
+
+
 }
