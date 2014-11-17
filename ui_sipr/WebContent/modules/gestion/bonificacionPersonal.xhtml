@@ -1,0 +1,59 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm">
+		<div id="contenido_formulario">
+
+			<div id="page_flow">Gestión de Bonificación de Personal Militar</div>
+			<div id="titulo_formulario">Gestión de Bonificación de Personal
+				Militar</div>
+			<div id="contenido">
+				<p:messages id="messages" showIcon="true" showSummary="true"
+					autoUpdate="true" closable="true" />
+
+				<div>
+
+					<p:fieldset legend="DATOS GENERALES" style="margin-bottom:20px">
+					 <h:panelGrid columns="2" style="margin-top:10px;margin-bottom:10px" cellpadding="5">
+					     <p:outputLabel for="nivel" value="Nivel Jerarquico:" />
+						<p:selectOneRadio id="nivel">
+							<f:selectItem itemLabel="Oficial" itemValue="1" />
+							<f:selectItem itemLabel="Tecnico / SS.OO" itemValue="2" />
+						</p:selectOneRadio>
+					 </h:panelGrid>
+						
+
+					</p:fieldset>
+
+					<p:fieldset legend="PERIODO DE BONIFICACIÓN" style="margin-bottom:20px">
+					 <h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+					      <p:outputLabel for="anio" value="Año :" />
+						<h:selectOneMenu id="anio" required="true" label="Año:">
+							<f:selectItem itemLabel="Select One" itemValue="-1" noSelectionOption="true" />
+
+						</h:selectOneMenu>
+						 <p:outputLabel for="mes" value="Mes :" />
+						<h:selectOneMenu id="mes" required="true" label="Mes :">
+							<f:selectItem itemLabel="Select One" itemValue="-1" noSelectionOption="true" />
+
+						</h:selectOneMenu>
+					 </h:panelGrid>
+                   </p:fieldset>
+
+					<p:fieldset legend="CARGA MASIVA" style="margin-bottom:20px">
+                       <p:fileUpload style="margin-top:20px" fileUploadListener="#" mode="advanced" dragDropSupport="false"
+           update="messages" sizeLimit="100000" fileLimit="3" allowTypes="/(\.|\/)(gif|jpe?g|png)$/" />
+ 
+
+					</p:fieldset>
+
+				</div>
+			</div>
+
+		</div>
+	</h:form>
+
+</ui:composition>
