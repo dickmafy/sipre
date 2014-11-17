@@ -1,0 +1,80 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Parametrización / Gestionar Reintegro de
+				Personal</div>
+			<div id="titulo_formulario">Gestionar Reintegro de Personal</div>
+			<div id="contenido">
+				<p:panel header="GESTIONAR REINTEGRO MENSUAL ">
+
+
+					<p:commandButton title="Nuevo" value="Nuevo" icon="icn_bar_save"
+						actionListener="#{reintegroPersonalMb.newBean}" ajax="true" />
+
+					<p:tabView id="tab" style="border:none;">
+						<!-- TAB1 -->
+						<p:tab id="tab1" title="Mensual">
+							<!-- Registro Peronal Mensual - TAB 1-->
+							<p:panel header="Registro Personal">
+								<p:panelGrid columns="2">
+									<p:outputLabel value="Numero CIP" />
+									<p:inputText
+										value="#{reintegroPersonalMb.bean.siprePlanillaAdicionalPK.cpersonaNroAdm}"></p:inputText>
+
+									<p:outputLabel value="Grado" />
+									<p:selectOneMenu id="listGrado"
+										value="#{reintegroPersonalMb.bean.cplanillaCodGraPen}"
+										style="position:relative;  top:3px; left:15px; width:300px">
+										<f:selectItem itemLabel="Coronel" itemValue="1" />
+										<f:selectItem itemLabel="Teniente" itemValue="2" />
+										<f:selectItem itemLabel="Tecnico" itemValue="3" />
+									</p:selectOneMenu>
+
+									<p:outputLabel value="Mes de Proceso" />
+									<p:calendar navigator="true" pattern="dd/MM/yyyy"
+										value="#{reintegroPersonalMb.bean.siprePlanillaAdicionalPK.cplanillaMesProceso}"
+										showOn="button" size="10">
+									</p:calendar>
+
+									<p:commandButton title="Guardar" value="Guardar"
+										icon="icn_bar_save"
+										actionListener="#{reintegroPersonalMb.saveBean}"
+										ajax="true" />
+								</p:panelGrid>
+
+								<p:dataTable id="dtmensual" var="item"
+									value="#{reintegroPersonalMb.beanList}"
+									emptyMessage="#{constante.LIST_EMPTY}" resizableColumns="true">
+
+									<p:column headerText="N*" style="width:30%; align:center;">
+										
+									</p:column>
+
+									<p:column headerText="CIP" style="width:20%; align:center;">
+										<h:outputText value="#{item.siprePlanillaAdicionalPK.cpersonaNroAdm}" />
+									</p:column>
+									
+									<p:column headerText="MES PROCESO">
+										 <h:outputText value="#{item.siprePlanillaAdicionalPK.cpaMesAdicional}"/>
+									</p:column>
+									
+									<p:column headerText="Grado">
+										 
+									</p:column>
+
+									<p:column headerText="OPCIONES" 	style="width:20%; align:center;">
+
+									</p:column>
+								</p:dataTable>
+							</p:panel>
+						</p:tab>
+					</p:tabView>
+				</p:panel>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
