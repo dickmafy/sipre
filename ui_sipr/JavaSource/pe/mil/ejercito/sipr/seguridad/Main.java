@@ -76,6 +76,9 @@ public class Main extends MainContext {
 		case 32:
 			contenidoDefault = "/modules/registro/ingresoConceptoPersonal";
 			break;
+		case 33:
+			contenidoDefault = "/modules/gestion/bonificacionPersonal";
+			break;
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
 			break;
