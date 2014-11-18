@@ -2,6 +2,7 @@ package pe.mil.ejercito.sipr.commons;
 
 import java.util.List;
 
+
 public class GenericResponseBean<T> {
 
 	private T		objeto;

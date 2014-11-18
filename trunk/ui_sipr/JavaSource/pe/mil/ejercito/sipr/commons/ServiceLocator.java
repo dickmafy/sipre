@@ -14,8 +14,7 @@ public class ServiceLocator extends Faces{
 
 	@SuppressWarnings("unchecked")
 	public ServiceLocator() {
-		jndiProperties.put(Context.URL_PKG_PREFIXES,
-				"org.jboss.ejb.client.naming");
+		jndiProperties.put(Context.URL_PKG_PREFIXES,"org.jboss.ejb.client.naming");
 	}
 
 	/**
