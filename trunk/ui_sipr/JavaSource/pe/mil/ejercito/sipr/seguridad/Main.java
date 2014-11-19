@@ -21,8 +21,7 @@ public class Main extends MainContext {
 		/* Para efectos de presentacion */
 		menuLateral = UProperties.getMessage(UParametro.PROP_CONFIGURACIONES,
 				UParametro.MNU_LTRAL_DFULT);
-		contenidoDefault = UProperties.getMessage(
-				UParametro.PROP_CONFIGURACIONES, UParametro.CTNDO_DFULT);
+		contenidoDefault = UProperties.getMessage(UParametro.PROP_CONFIGURACIONES, UParametro.CTNDO_DFULT);
 	}
 
 	/* Inicio: Para efectos de presentación, la logica se regenerará */

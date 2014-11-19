@@ -38,10 +38,14 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 		super();
 		try {
 			beanParametro= ((GenericResponseBean<SipreParametro>) getVariable("vparametro")).getObjeto();
+			
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (ParametroDetalleEjbRemote) findServiceRemote(ParametroDetalleEjbRemote.class);
 
-			beanList = ejb.findAll(100);
+			
+				beanList = ejb.findAll(100);
+			
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
