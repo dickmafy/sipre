@@ -3,6 +3,7 @@ package pe.mil.ejercito.sipr.gestion;
 import java.io.Serializable;
 
 import javax.faces.bean.ManagedBean;
+import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
@@ -12,6 +13,7 @@ import org.primefaces.model.UploadedFile;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.commons.ProgressBar;
 import pe.mil.ejercito.sipr.ejb.TmpBonificacionEjbBean;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
@@ -27,6 +29,12 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	private TmpBonificacionEjbBean ejbBonificacion;
 	private SipreTmpBonificacion bean;
 	private GenericResponseBean<SipreTmpBonificacion> sessionBean ; 
+	
+	public static final String		JBOSS_CATALINA		= "catalina.home";
+	public static final String		JBOSS_TEMP			= "tmpFiles";
+
+	@ManagedProperty("#{progressBar}")
+	private ProgressBar				progressBar;
 	
 	public BonificacionPersonalMb(){
 		super();
