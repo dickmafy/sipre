@@ -50,8 +50,9 @@ public class ParametroMb extends MainContext implements Serializable {
 	public String goParametroDetalleMb() {
 		sessionBean = new GenericResponseBean<>();
 		sessionBean.setObjeto(bean);
+		System.out.println("bean::"+bean);
 		registrarVariable("vparametro", sessionBean);
-		return redirecciona("/modules/parametro/parametroDetalle");
+		return "";
 	}
 
 	public void newBean(ActionEvent event) {
