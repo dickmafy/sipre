@@ -28,5 +28,7 @@ public interface GenericDAO<T extends Serializable> {
 	List<T> findAllSort(int maxRowReturn, String propiedad1);
 
 	List<T> findAllSortDes(int maxRowReturn, String propiedad1);
+	
+	
 
 }

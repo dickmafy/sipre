@@ -7,7 +7,6 @@ import pe.mil.ejercito.sipr.model.SipreDescuentoIngreso;
 import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 
 @Remote
-public interface DescuentoIngresoEjbRemote extends
-		GenericDAO<SipreDescuentoIngreso> {
+public interface DescuentoIngresoEjbRemote extends GenericDAO<SipreDescuentoIngreso> {
 
 }
