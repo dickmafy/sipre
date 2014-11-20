@@ -19,17 +19,27 @@ import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.ProgressBar;
 import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaOtroEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.SituacionAdmEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpBonificacionEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpGuardiaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
+import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
+import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
 import pe.mil.ejercito.sipr.model.SiprePlanillaOtro;
 import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
 import pe.mil.ejercito.sipr.model.SipreSituacionAdm;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
+import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
+import pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK;
 
 @ManagedBean(name = "procesarPlanillaMb")
 @ViewScoped
@@ -37,6 +47,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	private static final long				serialVersionUID	= 1L;
 	private static Logger					LOG					= Logger.getLogger(ProcesarPlanillaMb.class);
+	private String							mesProceso;
+	private Integer							numeroProceso;
 
 	private UsuarioEjbRemote				ejbUsuario;
 	private TmpFamiliaEjbRemote				ejbTmpFamilia;
@@ -44,6 +56,10 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private SituacionAdmEjbRemote			ejbSituacionAdm;
 	private PlanillaEjbRemote				ejbPlanilla;
 	private PlanillaOtroEjbRemote			ejbPlanillaOtro;
+	private PlanillaDetalleEjbRemote		ejbPlanillaDetalle;
+	private PlanillaAdicionalEjbRemote		ejbPlanillaAdicional;
+	private TmpBonificacionEjbRemote		ejbTmpBonificacion;
+	private TmpGuardiaEjbRemote				ejbTmpGuardia;
 
 	private List<SipreTmpFamilia>			beanTmpFamiliaList;
 	private List<SiprePersona>				beanPersonaList;
@@ -79,8 +95,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			ejbSituacionAdm = (SituacionAdmEjbRemote) findServiceRemote(SituacionAdmEjbRemote.class);
 			ejbPlanilla = (PlanillaEjbRemote) findServiceRemote(PlanillaEjbRemote.class);
 			ejbPlanillaOtro = (PlanillaOtroEjbRemote) findServiceRemote(PlanillaOtroEjbRemote.class);
+			ejbPlanillaDetalle = (PlanillaDetalleEjbRemote) findServiceRemote(PlanillaDetalleEjbRemote.class);
+			ejbPlanillaAdicional = (PlanillaAdicionalEjbRemote) findServiceRemote(PlanillaAdicionalEjbRemote.class);
+			ejbTmpGuardia = (TmpGuardiaEjbRemote) findServiceRemote(TmpGuardiaEjbRemote.class);
+			ejbTmpBonificacion = (TmpBonificacionEjbRemote) findServiceRemote(TmpBonificacionEjbRemote.class);
 
-			beanTmpFamiliaList = ejbTmpFamilia.findAll(100);
+			beanTmpFamiliaList = ejbTmpFamilia.findAll();
 			cleanBeanGmList();
 
 		} catch (Exception e) {
@@ -90,7 +110,115 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	private void cleanBeanGmList() {
 		beanGmList = new ArrayList<>();
-		// updateComponente("dt");
+
+	}
+
+	private List<SiprePlanillaDetalle> planillaAdicionalAgrupada() {
+		// agrupar de planilla adicional por CTP
+		SiprePlanillaDetalle planillaDetalle;
+		SiprePlanillaDetallePK pk;
+		List<SiprePlanillaDetalle> listPlanillaDetalle = new ArrayList<SiprePlanillaDetalle>();
+		List<Object[]> list = ejbPlanillaAdicional.findBy("12", numeroProceso, mesProceso);
+		for (Object[] item : list) {
+			planillaDetalle = new SiprePlanillaDetalle();
+			pk = new SiprePlanillaDetallePK();
+			pk.setCtpCodigo((String) item[0]);
+			pk.setCpersonaNroAdm((String) item[1]);
+			pk.setCplanillaMesProceso((String) item[2]);
+			pk.setNplanillaNumProceso((Integer) item[3]);
+			// insertar CCI_CODIGO fijo = 0080
+			pk.setCciCodigo("0080");
+			// falta la columna CPD_CON_DESTINO = Código de concepto destino
+			planillaDetalle.setSiprePlanillaDetallePK(pk);
+			planillaDetalle.setNpdMtoConcepto((BigDecimal) item[4]);
+			listPlanillaDetalle.add(planillaDetalle);
+		}
+		return listPlanillaDetalle;
+	}
+
+	public void procesarIngresoPersona() {
+		cleanBeanGmList();
+		int contadorProcesarIngresoPersona = 0;
+		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_3_INGRESO_PERSONA, SEVERITY_INFO);
+
+		try {
+			List<SiprePlanillaDetalle> listPlanillaDetalle = planillaAdicionalAgrupada();
+
+			for (SiprePlanillaDetalle item : listPlanillaDetalle) {
+				contadorProcesarIngresoPersona++;
+				progressBar.barraProgreso(contadorProcesarIngresoPersona, listPlanillaDetalle.size());
+				ejbPlanillaDetalle.persist(item);
+				addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
+						ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			}
+
+		} catch (Exception e) {
+			LOG.info("No se pudo guardar en Planilla Detalle > " + e.getMessage());
+			addGenericMensaje("No se pudo guardar en Planilla Detalle (" + e.getMessage() + ")",
+					ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+		}
+
+	}
+
+	public boolean verificarSiYaSePagoEnPlanillaAdicional() {
+
+		SiprePlanillaAdicional siprePlanillaAdicional = new SiprePlanillaAdicional();
+		SiprePlanillaAdicionalPK pk = new SiprePlanillaAdicionalPK();
+		int contador5 = 0;
+		try {
+			List<SipreTmpGuardia> list = ejbTmpGuardia.findAll();
+			SipreTmpGuardiaPK pkGuardia = new SipreTmpGuardiaPK();
+			for (SipreTmpGuardia item : list) {
+				contador5++;
+				progressBar.barraProgreso(contador5, list.size());
+				BigDecimal monto = ejbPlanillaAdicional.verificarSiYaSePago(item.getSipreTmpGuardiaPK().getCpersonaNroAdm(),
+						item.getSipreTmpGuardiaPK().getCtgMesGuardia());
+
+				if (item.getNtgMtoPagado() == monto) {
+					// ya esta al dia con el pago
+					item.setCtgIndSituacion("1");
+				} else {
+					// no se le pago.
+					item.setCtgIndSituacion("2");
+				}
+				BigDecimal suma = new BigDecimal(0);
+				suma = item.getNtgMtoGestion().subtract(item.getNtgMtoPagado());
+				item.setNtgMtoReintegro(suma);
+				ejbTmpGuardia.merge(item);
+				addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + ". El registro : " + item.toString(),
+						ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+			}
+			addGenericMensaje("Se guardaron todos los datos correctamente",
+					ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			return true;
+		} catch (Exception e) {
+
+			addGenericMensaje("No se pudo guardar en Tmp Guardia (" + e.getMessage() + ")",
+					ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			return false;
+
+		}
+
+	}
+
+	public void procesarGuardiaHospitalaria() {
+		cleanBeanGmList();
+		contadorP1NumeroHijos = 0;
+		int contadorNumeroHijosTotal = 0;
+		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, SEVERITY_INFO);
+		if (verificarSiYaSePagoEnPlanillaAdicional()) {
+			// si , indicador de tmpbonificacion se actualiza ,aceptado?
+
+		} else {
+			// no, indicador de tmpbonificacion se actualiza ,aceptado?
+		}
+
 	}
 
 	public void procesarListaRevista() {
@@ -681,6 +809,22 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	public void setBeanGmListBusqueda(List<GenericMessage<Object>> beanGmListBusqueda) {
 		this.beanGmListBusqueda = beanGmListBusqueda;
+	}
+
+	public String getMesProceso() {
+		return mesProceso;
+	}
+
+	public void setMesProceso(String mesProceso) {
+		this.mesProceso = mesProceso;
+	}
+
+	public Integer getNumeroProceso() {
+		return numeroProceso;
+	}
+
+	public void setNumeroProceso(Integer numeroProceso) {
+		this.numeroProceso = numeroProceso;
 	}
 
 }
