@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates and open the template
- * in the editor.
- */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
@@ -11,7 +6,6 @@ import java.math.BigDecimal;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
-import javax.persistence.FetchType;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
@@ -40,14 +34,11 @@ public class SipreIngresoGrado implements Serializable {
 	private Character				cigIndCalculo;
 	@Column(name = "CIG_IND_SITUACION")
 	private Character				cigIndSituacion;
-	@JoinColumn(name = "CSA_CODIGO", referencedColumnName = "CSA_CODIGO", insertable = false, updatable = false)
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
-	private SipreSituacionAdm		sipreSituacionAdm;
 	@JoinColumn(name = "CGRADO_CODIGO", referencedColumnName = "CGRADO_CODIGO", insertable = false, updatable = false)
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false)
 	private SipreGrado				sipreGrado;
 	@JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
-	@ManyToOne(optional = false, fetch = FetchType.EAGER)
+	@ManyToOne(optional = false)
 	private SipreConceptoIngreso	sipreConceptoIngreso;
 
 	public SipreIngresoGrado() {
@@ -57,8 +48,8 @@ public class SipreIngresoGrado implements Serializable {
 		this.sipreIngresoGradoPK = sipreIngresoGradoPK;
 	}
 
-	public SipreIngresoGrado(String cgradoCodigo, String cciCodigo, String csaCodigo) {
-		this.sipreIngresoGradoPK = new SipreIngresoGradoPK(cgradoCodigo, cciCodigo, csaCodigo);
+	public SipreIngresoGrado(String cgradoCodigo, String cciCodigo, String cigSituacion) {
+		this.sipreIngresoGradoPK = new SipreIngresoGradoPK(cgradoCodigo, cciCodigo, cigSituacion);
 	}
 
 	public SipreIngresoGradoPK getSipreIngresoGradoPK() {
@@ -99,14 +90,6 @@ public class SipreIngresoGrado implements Serializable {
 
 	public void setCigIndSituacion(Character cigIndSituacion) {
 		this.cigIndSituacion = cigIndSituacion;
-	}
-
-	public SipreSituacionAdm getSipreSituacionAdm() {
-		return sipreSituacionAdm;
-	}
-
-	public void setSipreSituacionAdm(SipreSituacionAdm sipreSituacionAdm) {
-		this.sipreSituacionAdm = sipreSituacionAdm;
 	}
 
 	public SipreGrado getSipreGrado() {

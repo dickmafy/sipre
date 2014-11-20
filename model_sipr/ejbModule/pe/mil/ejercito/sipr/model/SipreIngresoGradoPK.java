@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates and open the template
- * in the editor.
- */
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
@@ -10,6 +5,8 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
 
 /**
  * 
@@ -17,25 +14,29 @@ import javax.persistence.Embeddable;
  */
 @Embeddable
 public class SipreIngresoGradoPK implements Serializable {
-
-	private static final long	serialVersionUID	= 1L;
 	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 3)
 	@Column(name = "CGRADO_CODIGO")
-	private String				cgradoCodigo;
+	private String	cgradoCodigo;
 	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 4)
 	@Column(name = "CCI_CODIGO")
-	private String				cciCodigo;
+	private String	cciCodigo;
 	@Basic(optional = false)
-	@Column(name = "CSA_CODIGO")
-	private String				csaCodigo;
+	@NotNull
+	@Size(min = 1, max = 18)
+	@Column(name = "CIG_SITUACION")
+	private String	cigSituacion;
 
 	public SipreIngresoGradoPK() {
 	}
 
-	public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo, String csaCodigo) {
+	public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo, String cigSituacion) {
 		this.cgradoCodigo = cgradoCodigo;
 		this.cciCodigo = cciCodigo;
-		this.csaCodigo = csaCodigo;
+		this.cigSituacion = cigSituacion;
 	}
 
 	public String getCgradoCodigo() {
@@ -54,12 +55,12 @@ public class SipreIngresoGradoPK implements Serializable {
 		this.cciCodigo = cciCodigo;
 	}
 
-	public String getCsaCodigo() {
-		return csaCodigo;
+	public String getCigSituacion() {
+		return cigSituacion;
 	}
 
-	public void setCsaCodigo(String csaCodigo) {
-		this.csaCodigo = csaCodigo;
+	public void setCigSituacion(String cigSituacion) {
+		this.cigSituacion = cigSituacion;
 	}
 
 	@Override
@@ -67,7 +68,7 @@ public class SipreIngresoGradoPK implements Serializable {
 		int hash = 0;
 		hash += (cgradoCodigo != null ? cgradoCodigo.hashCode() : 0);
 		hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
-		hash += (csaCodigo != null ? csaCodigo.hashCode() : 0);
+		hash += (cigSituacion != null ? cigSituacion.hashCode() : 0);
 		return hash;
 	}
 
@@ -86,7 +87,8 @@ public class SipreIngresoGradoPK implements Serializable {
 		if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
 			return false;
 		}
-		if ((this.csaCodigo == null && other.csaCodigo != null) || (this.csaCodigo != null && !this.csaCodigo.equals(other.csaCodigo))) {
+		if ((this.cigSituacion == null && other.cigSituacion != null)
+				|| (this.cigSituacion != null && !this.cigSituacion.equals(other.cigSituacion))) {
 			return false;
 		}
 		return true;
@@ -94,8 +96,8 @@ public class SipreIngresoGradoPK implements Serializable {
 
 	@Override
 	public String toString() {
-		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo + ", csaCodigo="
-				+ csaCodigo + " ]";
+		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo
+				+ ", cigSituacion=" + cigSituacion + " ]";
 	}
 
 }

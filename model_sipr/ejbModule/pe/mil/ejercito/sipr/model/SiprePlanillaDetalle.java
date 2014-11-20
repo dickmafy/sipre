@@ -61,7 +61,7 @@ public class SiprePlanillaDetalle implements Serializable {
         this.siprePlanillaDetallePK = siprePlanillaDetallePK;
     }
 
-    public SiprePlanillaDetalle(String ctpCodigo, String cciCodigo, String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+    public SiprePlanillaDetalle(String ctpCodigo, String cciCodigo, String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
         this.siprePlanillaDetallePK = new SiprePlanillaDetallePK(ctpCodigo, cciCodigo, cpersonaNroAdm, cplanillaMesProceso, nplanillaNumProceso);
     }
 
@@ -142,8 +142,11 @@ public class SiprePlanillaDetalle implements Serializable {
     }
 
     @Override
-    public String toString() {
-        return "pe.mil.ejercito.sipr.model.SiprePlanillaDetalle[ siprePlanillaDetallePK=" + siprePlanillaDetallePK + " ]";
-    }
+	public String toString() {
+		return "SiprePlanillaDetalle [siprePlanillaDetallePK=" + siprePlanillaDetallePK + ", npdMtoConcepto=" + npdMtoConcepto
+				+ ", cpdConDestino=" + cpdConDestino + ", siprePlanillaAdicionalList=" + siprePlanillaAdicionalList
+				+ ", sipreTipoPlanilla=" + sipreTipoPlanilla + ", siprePlanilla=" + siprePlanilla + ", sipreConceptoIngreso="
+				+ sipreConceptoIngreso + "]";
+	}
     
 }
