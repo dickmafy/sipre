@@ -24,10 +24,18 @@
 				</p:progressBar>
 				<!-- PROGRES FIN-->
 
-				<p:outputLabel value="Fecha de Proceso :" />
-				<p:selectOneMenu>
-					<f:selectItem itemValue="012014" itemLabel="012014" />
-					<f:selectItem itemValue="012014" itemLabel="022014" />
+				<p:outputLabel value="Mes del Proceso :" />
+				<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+					<f:selectItem itemValue="201410" itemLabel="201410" />
+					<f:selectItem itemValue="201411" itemLabel="201411" />
+					<f:selectItem itemValue="201412" itemLabel="201412" />
+				</p:selectOneMenu>
+				
+				<p:outputLabel value="Numero del Proceso :" />
+				<p:selectOneMenu value="#{procesarPlanillaMb.numeroProceso}">
+					<f:selectItem itemValue="1" itemLabel="1" />
+					<f:selectItem itemValue="2" itemLabel="2" />
+					<f:selectItem itemValue="3" itemLabel="3" />
 				</p:selectOneMenu>
 
 				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
@@ -54,19 +62,29 @@
 
 						<p:outputLabel value="3 Calcular Ingresos por Persona" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar" update=":frm:dt">
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarIngresoPersona}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" id="p3">
 						</p:commandButton>
 
 						<p:outputLabel value="4 Calcular Descuento de Ley" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar" update=":frm:dt">
+							value="Validar"
+							actionListener="#{procesarPlanillaMb.procesarIngresoPersona}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" id="p4">
 						</p:commandButton>
 
 						<p:outputLabel value="5 Calcular Guardias Hospitalarias" />
 						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
 							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+							actionListener="#{procesarPlanillaMb.procesarGuardiaHospitalaria()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();" id="p5">
 						</p:commandButton>
 
 						<p:outputLabel value="6 Combustible" />
