@@ -46,12 +46,12 @@ public class SiprePlanillaAdicionalPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NPLANILLA_NUM_PROCESO")
-    private short nplanillaNumProceso;
+    private Integer nplanillaNumProceso;
 
     public SiprePlanillaAdicionalPK() {
     }
 
-    public SiprePlanillaAdicionalPK(String cpaMesAdicional, String cciCodigo, String ctpCodigo, String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+    public SiprePlanillaAdicionalPK(String cpaMesAdicional, String cciCodigo, String ctpCodigo, String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
         this.cpaMesAdicional = cpaMesAdicional;
         this.cciCodigo = cciCodigo;
         this.ctpCodigo = ctpCodigo;
@@ -100,11 +100,11 @@ public class SiprePlanillaAdicionalPK implements Serializable {
         this.cplanillaMesProceso = cplanillaMesProceso;
     }
 
-    public short getNplanillaNumProceso() {
+    public Integer getNplanillaNumProceso() {
         return nplanillaNumProceso;
     }
 
-    public void setNplanillaNumProceso(short nplanillaNumProceso) {
+    public void setNplanillaNumProceso(Integer nplanillaNumProceso) {
         this.nplanillaNumProceso = nplanillaNumProceso;
     }
 
