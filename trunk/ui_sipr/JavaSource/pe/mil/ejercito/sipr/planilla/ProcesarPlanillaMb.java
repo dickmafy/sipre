@@ -138,12 +138,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		 * 
 		 * obtener el monto que gana esa persona y guardarlo en detalle.
 		 */
-		if (moverADetalleMontoMensualDePersona()) {
-			// si
-
-		} else {
-			// no,
-		}
+		
 
 		if (verificarSiYaSePagoEnPlanillaAdicional()) {
 			// si , indicador de tmpbonificacion se actualiza ,aceptado?
@@ -164,29 +159,33 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			for (SiprePlanilla item : list) {
 
 				SipreGrado tmpGrado = ejbGrado.findById(item.getSiprePersona().getSipreGrado().getCgradoCodigo());
-				SipreConceptoIngreso tmpSipreConceptoIngreso = ejbConceptoIngreso.findById("0002");
+				SipreConceptoIngreso tmpSipreConceptoIngreso = ejbConceptoIngreso.findById("0002");//FALTA CCI
 
 				SipreIngresoGradoPK pkIngresoGrado = new SipreIngresoGradoPK();
 				pkIngresoGrado.setCciCodigo(tmpSipreConceptoIngreso.getCciCodigo());
 				pkIngresoGrado.setCgradoCodigo(tmpGrado.getCgradoCodigo());
-				pkIngresoGrado.setCigSituacion("1");
+				pkIngresoGrado.setCigSituacion("A");//valor fijo diccionario datos
 				SipreIngresoGrado tmSipreIngresoGradop = ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
+				//SipreIngresoGrado tmSipreIngresoGradop = (SipreIngresoGrado) ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
 				BigDecimal monto = tmSipreIngresoGradop.getNigMonto();
 
 				// insertar el monto en detalle
 				planillaDetalle = new SiprePlanillaDetalle();
 				pkPlanillaDetalle = new SiprePlanillaDetallePK();
-				pkPlanillaDetalle.setCtpCodigo("01");
+				pkPlanillaDetalle.setCtpCodigo(tmpSipreConceptoIngreso.getSipreTipoPlanilla().getCtpCodigo());
 				pkPlanillaDetalle.setCpersonaNroAdm(item.getSiprePersona().getCpersonaNroAdm());
 				pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
 				pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
 				// insertar CCI_CODIGO fijo = 0080?
-				pkPlanillaDetalle.setCciCodigo("0080");
+				pkPlanillaDetalle.setCciCodigo("0002");
 				planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
 				planillaDetalle.setNpdMtoConcepto(monto);
-
+				LOG.info(">>>pkPlanillaDetalle(1):" + pkPlanillaDetalle.toString());
+				LOG.info(">>>planillaDetalle(2):" + planillaDetalle.toString());
 				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+					
 					ejbPlanillaDetalle.persist(planillaDetalle);
+					
 					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
 							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
 							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
@@ -317,6 +316,23 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		int contadorProcesarIngresoPersona = 0;
 		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_3_INGRESO_PERSONA, SEVERITY_INFO);
 
+		
+		try {
+			if (moverADetalleMontoMensualDePersona()) {
+				// si
+
+			} else {
+				// no,
+			}
+		} catch (Exception e1) {
+			addGenericMensaje("No se pudo mover el monto mensual de la persona a Planilla Detalle",
+					ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+		}
+		
+		addGenericMensaje("Terminado - mover el monto mensual de la persona a Planilla Detalle ",
+				ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+				ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 		try {
 			List<SiprePlanillaDetalle> listPlanillaDetalle = planillaAdicionalAgrupada();
 
@@ -324,6 +340,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				contadorProcesarIngresoPersona++;
 				progressBar.barraProgreso(contadorProcesarIngresoPersona, listPlanillaDetalle.size());
 				// si no existe,guardar
+				LOG.info("SiprePlanillaDetalle :  " + item.toString());
 				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", item.getSiprePlanillaDetallePK())) {
 					ejbPlanillaDetalle.persist(item);
 					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
