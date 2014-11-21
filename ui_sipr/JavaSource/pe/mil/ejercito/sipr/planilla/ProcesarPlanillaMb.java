@@ -87,7 +87,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	public ProcesarPlanillaMb() {
 		super();
-		LOG.info("###ProcesarPlanillaMb");
+		LOG.info("###ProcesarPlanillaMb 307209600");
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejbTmpFamilia = (TmpFamiliaEjbRemote) findServiceRemote(TmpFamiliaEjbRemote.class);
@@ -571,7 +571,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				contadorP1NumeroHijos++;
 				progressBar.barraProgreso(contadorP1NumeroHijos, beanPersonaList.size());
 				addGenericMensaje("Persona : " + itemPersona.getCpersonaNroAdm() + " - Persona Nombre : " + itemPersona.getVpersonaApeNom()
-						+ "Numero Previo de Hijos : " + itemPersona.getNpersonaNroHijo(), ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
+						, ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 
 				procesoContadorHijos = 0;
