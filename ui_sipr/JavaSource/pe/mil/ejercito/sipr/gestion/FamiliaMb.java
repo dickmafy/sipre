@@ -154,7 +154,9 @@ public class FamiliaMb extends MainContext implements Serializable {
 	}
 
 	private SipreTmpFamilia readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpFamilia bean) {
+
 		try {
+			ejb.removeAll();
 			Sheet sheet = wb.getSheetAt(0);
 			Cell cell;
 			int contadorFilas = 1;
