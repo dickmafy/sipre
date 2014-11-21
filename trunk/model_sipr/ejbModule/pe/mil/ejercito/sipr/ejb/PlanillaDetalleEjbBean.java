@@ -12,9 +12,6 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 		implements PlanillaDetalleEjbRemote {
 
 	@PersistenceContext(name = "model_sipre")
-	EntityManager em;
+	EntityManager	em;
 
-	
-
-	
 }

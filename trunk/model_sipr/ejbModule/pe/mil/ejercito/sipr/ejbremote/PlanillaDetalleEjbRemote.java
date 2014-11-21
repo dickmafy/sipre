@@ -7,9 +7,5 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
 
 @Remote
 public interface PlanillaDetalleEjbRemote extends GenericDAO<SiprePlanillaDetalle> {
-	
 
-	
-
-	
 }
