@@ -111,7 +111,7 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@Override
 	public void remove(T object) {
 		em.remove(em.contains(object) ? object : em.merge(object));
-		//em.remove(object);
+		// em.remove(object);
 	}
 
 	@Override
@@ -124,6 +124,30 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@Override
 	public T merge(T t) {
 		return em.merge(t);
+	}
+
+	@Override
+	public boolean findPkExist(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException {
+		Class<?> cls = Class.forName("pe.mil.ejercito.sipr.model." + nombreClasePadre);
+		if (em.find(cls, clasePkHija) != null) {
+			return true;
+		}
+		return false;
+		/*
+		 * Remplazar en tu Ejb*Bean si no se tiene esos parametros. Ejemplo:
+		 * 
+		 * @Override public boolean findPk(SiprePlanillaDetallePK
+		 * siprePlanillaDetallePK) { if (em.find(SiprePlanillaDetalle.class,
+		 * siprePlanillaDetallePK) != null) { return true; } return false; }
+		 */
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public T findByPkCompuesta(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException {
+		Class<?> cls = Class.forName("pe.mil.ejercito.sipr.model." + nombreClasePadre);
+		return (T) em.find(cls, clasePkHija);
+
 	}
 
 }

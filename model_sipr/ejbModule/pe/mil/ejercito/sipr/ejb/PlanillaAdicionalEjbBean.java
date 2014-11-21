@@ -10,6 +10,7 @@ import javax.persistence.Query;
 
 import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
+import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
 
 @Stateless
 public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicional>
@@ -19,18 +20,32 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 	EntityManager	em;
 
 	@Override
-	public BigDecimal verificarSiYaSePago(String cpersonaNroAdm, String ctgMesGuardia) {
+	public BigDecimal verificarSiYaSePago(SiprePlanillaAdicionalPK pk) {
+
+		BigDecimal monto;
 
 		StringBuilder sb = new StringBuilder();
 		sb.append(" SELECT  o.npdMtoConcepto ");
 		sb.append(" FROM SiprePlanillaAdicional o ");
-		sb.append(" WHERE o.siprePlanillaAdicionalPK.cplanillaMesProceso=:ctgMesGuardia  ");
+		sb.append(" WHERE o.siprePlanillaAdicionalPK.cplanillaMesProceso=:cplanillaMesProceso  ");
+		sb.append(" and o.siprePlanillaAdicionalPK.cpaMesAdicional=:cpaMesAdicional ");
+		sb.append(" and o.siprePlanillaAdicionalPK.nplanillaNumProceso=:nplanillaNumProceso ");
+
 		sb.append(" and o.siprePlanillaAdicionalPK.cpersonaNroAdm=:cpersonaNroAdm ");
+		sb.append(" and o.siprePlanillaAdicionalPK.ctpCodigo=:ctpCodigo ");
+		sb.append(" and o.siprePlanillaAdicionalPK.cciCodigo=:cciCodigo ");
+
 		Query q = em.createQuery(sb.toString());
-		q.setParameter("cpersonaNroAdm", cpersonaNroAdm);
-		q.setParameter("ctgMesGuardia", ctgMesGuardia);
-		List list = q.getResultList();
-		BigDecimal monto = (BigDecimal) list.get(0);
+
+		q.setParameter("cplanillaMesProceso", pk.getCplanillaMesProceso());
+		q.setParameter("cpaMesAdicional", pk.getCpaMesAdicional());
+		q.setParameter("nplanillaNumProceso", pk.getNplanillaNumProceso());
+
+		q.setParameter("cpersonaNroAdm", pk.getCpersonaNroAdm());
+		q.setParameter("ctpCodigo", pk.getCtpCodigo());
+		q.setParameter("cciCodigo", pk.getCciCodigo());
+		monto = (BigDecimal) q.getSingleResult();
+
 		return monto;
 	}
 
