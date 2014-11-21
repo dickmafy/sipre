@@ -18,6 +18,9 @@ import pe.mil.ejercito.sipr.commons.GenericMessage;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.ProgressBar;
 import pe.mil.ejercito.sipr.commons.UValidacion;
+import pe.mil.ejercito.sipr.ejbremote.ConceptoIngresoEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.GradoEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.IngresoGradoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
@@ -28,6 +31,10 @@ import pe.mil.ejercito.sipr.ejbremote.TmpBonificacionEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpGuardiaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreConceptoIngreso;
+import pe.mil.ejercito.sipr.model.SipreGrado;
+import pe.mil.ejercito.sipr.model.SipreIngresoGrado;
+import pe.mil.ejercito.sipr.model.SipreIngresoGradoPK;
 import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
@@ -60,6 +67,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private PlanillaAdicionalEjbRemote		ejbPlanillaAdicional;
 	private TmpBonificacionEjbRemote		ejbTmpBonificacion;
 	private TmpGuardiaEjbRemote				ejbTmpGuardia;
+	private ConceptoIngresoEjbRemote		ejbConceptoIngreso;
+	private GradoEjbRemote					ejbGrado;
+	private IngresoGradoEjbRemote			ejbIngresoGrado;
 
 	private List<SipreTmpFamilia>			beanTmpFamiliaList;
 	private List<SiprePersona>				beanPersonaList;
@@ -100,6 +110,10 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			ejbTmpGuardia = (TmpGuardiaEjbRemote) findServiceRemote(TmpGuardiaEjbRemote.class);
 			ejbTmpBonificacion = (TmpBonificacionEjbRemote) findServiceRemote(TmpBonificacionEjbRemote.class);
 
+			ejbConceptoIngreso = (ConceptoIngresoEjbRemote) findServiceRemote(ConceptoIngresoEjbRemote.class);
+			ejbGrado = (GradoEjbRemote) findServiceRemote(GradoEjbRemote.class);
+			ejbIngresoGrado = (IngresoGradoEjbRemote) findServiceRemote(IngresoGradoEjbRemote.class);
+
 			beanTmpFamiliaList = ejbTmpFamilia.findAll();
 			cleanBeanGmList();
 
@@ -110,6 +124,168 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	private void cleanBeanGmList() {
 		beanGmList = new ArrayList<>();
+
+	}
+
+	public void procesarGuardiaHospitalaria() {
+		cleanBeanGmList();
+		contadorP1NumeroHijos = 0;
+		int contadorNumeroHijosTotal = 0;
+		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, SEVERITY_INFO);
+
+		/*
+		 * TALBA INGRESO_GRADO GRADO y CONCEPTO INGRESO
+		 * 
+		 * obtener el monto que gana esa persona y guardarlo en detalle.
+		 */
+		if (moverADetalleMontoMensualDePersona()) {
+			// si
+
+		} else {
+			// no,
+		}
+
+		if (verificarSiYaSePagoEnPlanillaAdicional()) {
+			// si , indicador de tmpbonificacion se actualiza ,aceptado?
+
+		} else {
+			// no, indicador de tmpbonificacion se actualiza ,aceptado?
+		}
+
+	}
+
+	private boolean moverADetalleMontoMensualDePersona() {
+		boolean banderaProcesoGuardia = false;
+
+		try {
+			List<SiprePlanilla> list = ejbPlanilla.findAll();
+			SiprePlanillaDetalle planillaDetalle;
+			SiprePlanillaDetallePK pkPlanillaDetalle;
+			for (SiprePlanilla item : list) {
+
+				SipreGrado tmpGrado = ejbGrado.findById(item.getSiprePersona().getSipreGrado().getCgradoCodigo());
+				SipreConceptoIngreso tmpSipreConceptoIngreso = ejbConceptoIngreso.findById("0002");
+
+				SipreIngresoGradoPK pkIngresoGrado = new SipreIngresoGradoPK();
+				pkIngresoGrado.setCciCodigo(tmpSipreConceptoIngreso.getCciCodigo());
+				pkIngresoGrado.setCgradoCodigo(tmpGrado.getCgradoCodigo());
+				pkIngresoGrado.setCigSituacion("1");
+				SipreIngresoGrado tmSipreIngresoGradop = ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
+				BigDecimal monto = tmSipreIngresoGradop.getNigMonto();
+
+				// insertar el monto en detalle
+				planillaDetalle = new SiprePlanillaDetalle();
+				pkPlanillaDetalle = new SiprePlanillaDetallePK();
+				pkPlanillaDetalle.setCtpCodigo("01");
+				pkPlanillaDetalle.setCpersonaNroAdm(item.getSiprePersona().getCpersonaNroAdm());
+				pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+				pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+				// insertar CCI_CODIGO fijo = 0080?
+				pkPlanillaDetalle.setCciCodigo("0080");
+				planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+				planillaDetalle.setNpdMtoConcepto(monto);
+
+				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+					ejbPlanillaDetalle.persist(planillaDetalle);
+					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
+							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				} else {
+					addGenericMensaje("Ya existe el registro : " + item.toString(),
+							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				}
+
+			}
+			banderaProcesoGuardia = true;
+		} catch (Exception e) {
+			banderaProcesoGuardia = false;
+		}
+
+		return banderaProcesoGuardia;
+	}
+
+	public boolean verificarSiYaSePagoEnPlanillaAdicional() {
+
+		SiprePlanillaAdicional siprePlanillaAdicional = new SiprePlanillaAdicional();
+		boolean banderaProcesoGuardia = false;
+		int contador5 = 0;
+		try {
+			List<SipreTmpGuardia> list = ejbTmpGuardia.findAll();
+			SipreTmpGuardiaPK pkGuardia = new SipreTmpGuardiaPK();
+
+			if (list.size() == 0) {
+				addGenericMensaje("No hay registros de la TmbGuardia ",
+						ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			} else {
+				banderaProcesoGuardia = true;
+			}
+
+			if (banderaProcesoGuardia) {
+
+				for (SipreTmpGuardia item : list) {
+					contador5++;
+					progressBar.barraProgreso(contador5, list.size());
+
+					SiprePlanillaAdicionalPK pk = new SiprePlanillaAdicionalPK();
+					pk.setCplanillaMesProceso(mesProceso);
+					pk.setCpaMesAdicional(item.getSipreTmpGuardiaPK().getCtgMesGuardia());
+					pk.setNplanillaNumProceso(numeroProceso);
+
+					pk.setCpersonaNroAdm(item.getSipreTmpGuardiaPK().getCpersonaNroAdm());
+					pk.setCtpCodigo("62");
+					pk.setCciCodigo(item.getSipreTmpGuardiaPK().getCciCodigo());
+
+					BigDecimal monto = null;
+					try {
+						monto = ejbPlanillaAdicional.verificarSiYaSePago(pk);
+						if (null == monto) {
+							addGenericMensaje("Monto no se pudo comparar con Planilla Adicional.         Detalle : " + pk.toString(),
+									ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+									ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							continue;
+						}
+					} catch (Exception e) {
+						addGenericMensaje("Monto no se pudo comparar con Planilla Adicional.         Detalle : " + pk.toString(),
+								ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+								ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						continue;
+
+					}
+
+					if (item.getNtgMtoPagado() == monto) {
+						// ya esta al dia con el pago
+						item.setCtgIndSituacion("1");
+					} else {
+						// no se le pago.
+						item.setCtgIndSituacion("2");
+					}
+					BigDecimal suma = new BigDecimal(0);
+					suma = item.getNtgMtoGestion().subtract(item.getNtgMtoPagado());
+
+					item.setNtgMtoReintegro(suma);
+					ejbTmpGuardia.merge(item);
+					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + ". El registro : " + item.toString(),
+							ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+				}
+
+				addGenericMensaje("Se guardaron todos los datos correctamente",
+						ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				banderaProcesoGuardia = true;
+			}
+		} catch (Exception e) {
+
+			addGenericMensaje("No se pudo guardar en Tmp Guardia (" + e.getMessage() + ")",
+					ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			banderaProcesoGuardia = false;
+
+		}
+		return banderaProcesoGuardia;
 
 	}
 
@@ -147,10 +323,18 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			for (SiprePlanillaDetalle item : listPlanillaDetalle) {
 				contadorProcesarIngresoPersona++;
 				progressBar.barraProgreso(contadorProcesarIngresoPersona, listPlanillaDetalle.size());
-				ejbPlanillaDetalle.persist(item);
-				addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
-						ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
-						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				// si no existe,guardar
+				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", item.getSiprePlanillaDetallePK())) {
+					ejbPlanillaDetalle.persist(item);
+					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
+							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				} else {
+					addGenericMensaje("Ya existe el registro : " + item.toString(),
+							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				}
+
 			}
 
 		} catch (Exception e) {
@@ -158,65 +342,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			addGenericMensaje("No se pudo guardar en Planilla Detalle (" + e.getMessage() + ")",
 					ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
 					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-		}
-
-	}
-
-	public boolean verificarSiYaSePagoEnPlanillaAdicional() {
-
-		SiprePlanillaAdicional siprePlanillaAdicional = new SiprePlanillaAdicional();
-		SiprePlanillaAdicionalPK pk = new SiprePlanillaAdicionalPK();
-		int contador5 = 0;
-		try {
-			List<SipreTmpGuardia> list = ejbTmpGuardia.findAll();
-			SipreTmpGuardiaPK pkGuardia = new SipreTmpGuardiaPK();
-			for (SipreTmpGuardia item : list) {
-				contador5++;
-				progressBar.barraProgreso(contador5, list.size());
-				BigDecimal monto = ejbPlanillaAdicional.verificarSiYaSePago(item.getSipreTmpGuardiaPK().getCpersonaNroAdm(),
-						item.getSipreTmpGuardiaPK().getCtgMesGuardia());
-
-				if (item.getNtgMtoPagado() == monto) {
-					// ya esta al dia con el pago
-					item.setCtgIndSituacion("1");
-				} else {
-					// no se le pago.
-					item.setCtgIndSituacion("2");
-				}
-				BigDecimal suma = new BigDecimal(0);
-				suma = item.getNtgMtoGestion().subtract(item.getNtgMtoPagado());
-				item.setNtgMtoReintegro(suma);
-				ejbTmpGuardia.merge(item);
-				addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + ". El registro : " + item.toString(),
-						ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
-						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-
-			}
-			addGenericMensaje("Se guardaron todos los datos correctamente",
-					ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
-					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-			return true;
-		} catch (Exception e) {
-
-			addGenericMensaje("No se pudo guardar en Tmp Guardia (" + e.getMessage() + ")",
-					ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
-					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-			return false;
-
-		}
-
-	}
-
-	public void procesarGuardiaHospitalaria() {
-		cleanBeanGmList();
-		contadorP1NumeroHijos = 0;
-		int contadorNumeroHijosTotal = 0;
-		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_5_GUARDIA_HOSPITALARIA, SEVERITY_INFO);
-		if (verificarSiYaSePagoEnPlanillaAdicional()) {
-			// si , indicador de tmpbonificacion se actualiza ,aceptado?
-
-		} else {
-			// no, indicador de tmpbonificacion se actualiza ,aceptado?
 		}
 
 	}
@@ -417,8 +542,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 				SiprePlanillaPK pkPlanilla = new SiprePlanillaPK();
 				pkPlanilla.setCpersonaNroAdm(itemPersona.getCpersonaNroAdm());
-				pkPlanilla.setCplanillaMesProceso("012014");
-				pkPlanilla.setNplanillaNumProceso(1);
+				pkPlanilla.setCplanillaMesProceso(mesProceso);
+				pkPlanilla.setNplanillaNumProceso(numeroProceso);
 				planilla.setId(pkPlanilla);
 
 				planilla.setCplanillaCodGraPen(itemPersona.getCpersonaCodGraPen());
@@ -473,10 +598,10 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				// OTROS LLENADOS
 				planilla.setCplanillaIndAguin("1");
 				planilla.setCplanillaSexPension("1");
-				planilla.setDplanillaFecAfiAfp(new Date());
-				planilla.setDplanillaFecFal(new Date());
-				planilla.setDplanillaFecFinContr(new Date());
-				planilla.setDplanillaFecRetiro(new Date());
+				// planilla.setDplanillaFecAfiAfp(new Date());
+				// planilla.setDplanillaFecFal(new Date());
+				// planilla.setDplanillaFecFinContr(new Date());
+				// planilla.setDplanillaFecRetiro(new Date());
 
 				BigDecimal bPlanillaPorPension = new BigDecimal(1);
 				planilla.setNplanillaPorPension(bPlanillaPorPension);
@@ -694,49 +819,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 		ejbPersona.updatePersonaHijos(tmpCip, procesoContadorHijos.toString());
 
-	}
-
-	public void guardaHospitalaria() {
-		/*
-		 * switch (itemTmpFamilia.getCtfSitFamilia()) { case "1":
-		 * addGenericMensaje("cod 01",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO); if (vEdad < 18) {
-		 * procesoContadorHijos++;
-		 * addGenericMensaje("cod 01 , Tiene hijo menor a 18 años",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO); // No tiene fecha
-		 * renovacion } else if (vEdad >= 18 &&
-		 * UValidacion.esNuloOVacio(itemTmpFamilia
-		 * .getCtfFecRenovac().toString())) { addGenericMensaje(
-		 * "cod 01 , Tiene hijo mayor a 18 Años y no tiene Fecha Renovacion ",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING); break; // Si
-		 * tiene cod renovacion si es 1 pasa } else if (vEdad >= 18 &&
-		 * !UValidacion
-		 * .esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
-		 * procesoContadorHijos++; addGenericMensaje(
-		 * "cod 01 , Tiene hijo mayor a 18 Años y si tiene  tiene Fecha Renovacion "
-		 * , ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO);
-		 * 
-		 * } break; case "2": addGenericMensaje("cod 02",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO); if (vEdad < 28 &&
-		 * UValidacion
-		 * .esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
-		 * procesoContadorHijos++; }
-		 * 
-		 * break; case "3": addGenericMensaje("cod 03",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO); if (vEdad < 28 &&
-		 * UValidacion
-		 * .esNuloOVacio(itemTmpFamilia.getCtfFecRenovac().toString())) {
-		 * procesoContadorHijos++; } break; default:
-		 * addGenericMensaje("Ningun Codigo- DEFAULT",
-		 * ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
-		 * ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO); break; }
-		 */
 	}
 
 	public List<SipreTmpFamilia> getBeanTmpFamiliaList() {
