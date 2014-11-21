@@ -146,8 +146,7 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@Override
 	public T findByPkCompuesta(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException {
 		Class<?> cls = Class.forName("pe.mil.ejercito.sipr.model." + nombreClasePadre);
-		return (T) em.find(cls, clasePkHija);
-
+		return  (T) em.find(cls, clasePkHija);
 	}
 
 }
