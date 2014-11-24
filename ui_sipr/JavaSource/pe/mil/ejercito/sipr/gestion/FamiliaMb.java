@@ -53,6 +53,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 	private SipreTmpFamilia			bean;
 
 	private List<SipreTmpFamilia>	beanList;
+	private List<SipreTmpFamilia>	beanListBusqueda;
 
 	private List<SipreTipoPlanilla>	tipoPlanillaList;
 
@@ -239,11 +240,12 @@ public class FamiliaMb extends MainContext implements Serializable {
 				}
 				break;
 			case Cell.CELL_TYPE_STRING:
-				System.out.print("String : " + cell.getStringCellValue() + "\t");
+				// System.out.print("String : " + cell.getStringCellValue() +
+				// "\t");
 				valorCelda = cell.getStringCellValue();
 				break;
 			}
-			System.out.println("");
+			// System.out.println("");
 		} catch (Exception e) {
 			System.out.println(e.getMessage());
 		}
@@ -269,14 +271,14 @@ public class FamiliaMb extends MainContext implements Serializable {
 				// Check the cell type and format accordingly
 				switch (cell.getCellType()) {
 				case Cell.CELL_TYPE_NUMERIC:
-					System.out.print(cell.getNumericCellValue() + "\t");
+					// System.out.print(cell.getNumericCellValue() + "\t");
 					break;
 				case Cell.CELL_TYPE_STRING:
-					System.out.print(cell.getStringCellValue() + "\t");
+					// System.out.print(cell.getStringCellValue() + "\t");
 					break;
 				}
 			}
-			System.out.println("");
+			// System.out.println("");
 		}
 		return bean;
 
@@ -306,7 +308,7 @@ public class FamiliaMb extends MainContext implements Serializable {
 					+ fileOldName.substring(event.getFile().getFileName().lastIndexOf('.'));
 
 			archivo = new File(rutaGuardar + "/" + fileNewName);
-			System.out.println("path :" + rutaGuardar);
+			// System.out.println("path :" + rutaGuardar);
 			InputStream is = event.getFile().getInputstream();
 			OutputStream out = new FileOutputStream(archivo);
 			byte buf[] = new byte[1024];
@@ -367,6 +369,14 @@ public class FamiliaMb extends MainContext implements Serializable {
 
 	public void setProgressBar(ProgressBar progressBar) {
 		this.progressBar = progressBar;
+	}
+
+	public List<SipreTmpFamilia> getBeanListBusqueda() {
+		return beanListBusqueda;
+	}
+
+	public void setBeanListBusqueda(List<SipreTmpFamilia> beanListBusqueda) {
+		this.beanListBusqueda = beanListBusqueda;
 	}
 
 }
