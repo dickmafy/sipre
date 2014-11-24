@@ -20,15 +20,17 @@ public class PlanillaOtroEjbBean extends GenericDAOImpl<SiprePlanillaOtro> imple
 	@Override
 	public List<SiprePlanillaOtro> procesarPlanillaOtrosList() {
 		StringBuilder sb = new StringBuilder();
-
+		// NATIVE QUERY (planilla-no otro(planilla x otro)otro-no planillax)
 		sb.append(" SELECT B.* FROM SIPRE_PLANILLA A RIGHT JOIN SIPRE_PLANILLA_OTRO B ON A.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM"
 				+ " inner join SIPRE_PERSONA C ON C.CPERSONA_NRO_ADM = B.CPERSONA_NRO_ADM WHERE A.CPERSONA_NRO_ADM IS NULL"
 				+ " and (B.CTP_CODIGO in ('60','61')) ");
-		sb.append(" and c.dpersonaFecIng BETWEEN '01/01/1900' AND '31/12/2014'");
+		sb.append(" and C.DPERSONA_FEC_ING BETWEEN '01/01/14' AND '31/12/14'");
+
 		Query q = em.createNativeQuery(sb.toString(), SiprePlanillaOtro.class);
-		// SQL parameter ?
-		// query.setParameter(1, "Bob");
-		// query.setParameter(2, "Smith");
+		/*
+		 * SQL parameter , usar : where id=? query.setParameter(1, "Bob");
+		 * query.setParameter(2, "Smith");
+		 */
 		List<SiprePlanillaOtro> result = q.getResultList();
 		return result;
 	}

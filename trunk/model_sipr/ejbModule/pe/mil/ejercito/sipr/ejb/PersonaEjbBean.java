@@ -50,10 +50,10 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 
 		// situacion administrativa +01
 		q.setParameter("p1", "01");
-		q.setParameter("p2", "60");
-		q.setParameter("p3", "57");
-		q.setParameter("p4", "61");
 		q.setParameter("p5", "50");
+		q.setParameter("p3", "57");
+		q.setParameter("p2", "60");
+		q.setParameter("p4", "61");
 		q.setParameter("p6", "71");
 		q.setParameter("p7", "77");
 		return q.getResultList();

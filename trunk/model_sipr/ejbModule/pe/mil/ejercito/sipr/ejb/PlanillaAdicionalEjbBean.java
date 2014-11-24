@@ -44,6 +44,7 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 		q.setParameter("cpersonaNroAdm", pk.getCpersonaNroAdm());
 		q.setParameter("ctpCodigo", pk.getCtpCodigo());
 		q.setParameter("cciCodigo", pk.getCciCodigo());
+		// validar nullpoint
 		monto = (BigDecimal) q.getSingleResult();
 
 		return monto;
