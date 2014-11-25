@@ -158,13 +158,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			SiprePlanillaDetalle planillaDetalle;
 			SiprePlanillaDetallePK pkPlanillaDetalle;
 			for (SiprePlanilla item : list) {
-				
-				if(item.getSiprePersona().getCpersonaNroAdm().equals("318700400")){
-					//'318700400','307209600','331730700','330043900','618440500','614744100'
+
+				if (item.getSiprePersona().getCpersonaNroAdm().equals("318700400")) {
+					// '318700400','307209600','331730700','330043900','618440500','614744100'
 					int monitor;
-					monitor=0;
+					monitor = 0;
 				}
-				
 
 				SipreGrado tmpGrado = ejbGrado.findById(item.getSiprePersona().getSipreGrado().getCgradoCodigo());
 				SipreConceptoIngreso tmpSipreConceptoIngreso = ejbConceptoIngreso.findById("0002");// FALTA
@@ -173,8 +172,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				SipreIngresoGradoPK pkIngresoGrado = new SipreIngresoGradoPK();
 				pkIngresoGrado.setCciCodigo(tmpSipreConceptoIngreso.getCciCodigo());
 				pkIngresoGrado.setCgradoCodigo(tmpGrado.getCgradoCodigo());
-				//pkIngresoGrado.setCigSituacion("A");// valor fijo diccionario
-													// datos
+				// pkIngresoGrado.setCigSituacion("A");// valor fijo diccionario
+				// datos
 				SipreIngresoGrado tmSipreIngresoGradop;
 				try {
 					tmSipreIngresoGradop = ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
@@ -555,6 +554,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	}
 
+	@SuppressWarnings("unused")
 	private void procesarPlanillaPrincipal() {
 		int contadorPPrincipalTotal = 0;
 		int contadorPPrincipalGuardado = 0;
@@ -629,6 +629,10 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				planilla.setSipreCedula(itemPersona.getSipreCedula());
 				planilla.setSipreEspecialidadAlterna(itemPersona.getSipreEspecialidadAlterna());
 				planilla.setSipreEstadoCivil(itemPersona.getSipreEstadoCivil());
+				if ("100183300".equals(tmpCip) || "618440500".equals(tmpCip)) {
+					int monitor;
+					monitor = 1;
+				}
 				planilla.setSipreGrado(itemPersona.getSipreGrado());
 
 				planilla.setSipreSituacionCausal(itemPersona.getSipreSituacionCausal());
@@ -671,12 +675,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 				// PERSONA- > PLANILLA
 				if (ejbPlanilla.siPersonaExisteEnPlanillaPrincipal(tmpCip) == 0) {
-					// LOG.info(tmpCip +
-					// " Persona - No existe se procede a guardar.(" +
-					// contadorPPrincipalTotal + ")");
 					ejbPlanilla.persist(planilla);
-					// LOG.info("contadorPlanillaPrincipal GUARDO:" +
-					// contadorPPrincipalGuardado);
 					contadorPPrincipalGuardado++;
 					addGenericMensaje(tmpCip + " Persona - Guardada en Planilla.", ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA,
 							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_HIJO);
@@ -688,7 +687,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				}
 
 			} catch (Exception e) {
-				// LOG.error(e.getMessage());
+				LOG.error(planilla.toString() + " - " + e.getMessage());
 				addGenericMensaje(tmpCip + " Personal No se pudo grabar el personal. (" + e.getMessage() + ")",
 						ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA,
 						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
@@ -733,6 +732,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			tmpCip = null;
 
 			try {
+				ejbPersona.removePersonaHijosAZero();
 				beanPersonaList = ejbPersona.procesarNumeroHijosList();
 			} catch (Exception e1) {
 				addGenericMensaje("No se pudo obtener registros de la Tabla Personal.", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
