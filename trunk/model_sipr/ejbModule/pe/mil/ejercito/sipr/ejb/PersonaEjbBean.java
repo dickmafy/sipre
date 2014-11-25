@@ -68,4 +68,13 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 
 	}
 
+	@Override
+	public Boolean removePersonaHijosAZero() {
+		Query q = em.createQuery("UPDATE SiprePersona o SET o.npersonaNroHijo=0 where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
+		q.setParameter("csaCodigo", "01");
+		q.executeUpdate();
+		return true;
+
+	}
+
 }
