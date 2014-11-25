@@ -149,6 +149,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	}
 
+	@SuppressWarnings("unused")
 	private boolean moverADetalleMontoMensualDePersona() {
 		boolean bandera3Ingreso = false;
 
@@ -157,6 +158,13 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			SiprePlanillaDetalle planillaDetalle;
 			SiprePlanillaDetallePK pkPlanillaDetalle;
 			for (SiprePlanilla item : list) {
+				
+				if(item.getSiprePersona().getCpersonaNroAdm().equals("318700400")){
+					//'318700400','307209600','331730700','330043900','618440500','614744100'
+					int monitor;
+					monitor=0;
+				}
+				
 
 				SipreGrado tmpGrado = ejbGrado.findById(item.getSiprePersona().getSipreGrado().getCgradoCodigo());
 				SipreConceptoIngreso tmpSipreConceptoIngreso = ejbConceptoIngreso.findById("0002");// FALTA
@@ -165,9 +173,15 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				SipreIngresoGradoPK pkIngresoGrado = new SipreIngresoGradoPK();
 				pkIngresoGrado.setCciCodigo(tmpSipreConceptoIngreso.getCciCodigo());
 				pkIngresoGrado.setCgradoCodigo(tmpGrado.getCgradoCodigo());
-				pkIngresoGrado.setCigSituacion("A");// valor fijo diccionario
+				//pkIngresoGrado.setCigSituacion("A");// valor fijo diccionario
 													// datos
-				SipreIngresoGrado tmSipreIngresoGradop = ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
+				SipreIngresoGrado tmSipreIngresoGradop;
+				try {
+					tmSipreIngresoGradop = ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado", pkIngresoGrado);
+				} catch (Exception e) {
+					e.printStackTrace();
+					continue;
+				}
 				// SipreIngresoGrado tmSipreIngresoGradop = (SipreIngresoGrado)
 				// ejbIngresoGrado.findByPkCompuesta("SipreIngresoGrado",
 				// pkIngresoGrado);
@@ -188,17 +202,22 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				// pkPlanillaDetalle.toString());
 				// LOG.info(">>>planillaDetalle(2):" +
 				// planillaDetalle.toString());
-				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+				try {
+					if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
 
-					ejbPlanillaDetalle.persist(planillaDetalle);
+						ejbPlanillaDetalle.persist(planillaDetalle);
 
-					addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
-							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
-							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-				} else {
-					addGenericMensaje("Ya existe el registro : " + item.toString(),
-							ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
-							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						addGenericMensaje(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA + " Datos Guardados : " + item.toString(),
+								ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
+								ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					} else {
+						addGenericMensaje("Ya existe el registro : " + item.toString(),
+								ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+								ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					}
+				} catch (Exception e) {
+					LOG.info(e.getMessage());
+					continue;
 				}
 
 			}
@@ -731,15 +750,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				procesoContadorHijos = 0;
 				beanTmpFamiliaList = null;
 				tmpCip = itemPersona.getCpersonaNroAdm();
-
-				if (tmpCip == "100107800") {
-
-					// comntaro;
-					@SuppressWarnings("unused")
-					int a;
-					a = 1;
-
-				}
 
 				try {
 					beanTmpFamiliaList = ejbTmpFamilia.findAllByIdPersona(tmpCip);
