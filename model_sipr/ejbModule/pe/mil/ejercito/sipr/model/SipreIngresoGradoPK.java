@@ -5,8 +5,6 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
-import javax.validation.constraints.NotNull;
-import javax.validation.constraints.Size;
 
 /**
  * 
@@ -15,18 +13,16 @@ import javax.validation.constraints.Size;
 @Embeddable
 public class SipreIngresoGradoPK implements Serializable {
 	@Basic(optional = false)
-	@NotNull
 	@Column(name = "CGRADO_CODIGO")
 	private String	cgradoCodigo;
 	@Basic(optional = false)
-	@NotNull
 	@Column(name = "CCI_CODIGO")
 	private String	cciCodigo;
-	
+
 	public SipreIngresoGradoPK() {
 	}
 
-	public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo, String cigSituacion) {
+	public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo) {
 		this.cgradoCodigo = cgradoCodigo;
 		this.cciCodigo = cciCodigo;
 	}
@@ -46,8 +42,6 @@ public class SipreIngresoGradoPK implements Serializable {
 	public void setCciCodigo(String cciCodigo) {
 		this.cciCodigo = cciCodigo;
 	}
-
-	
 
 	@Override
 	public int hashCode() {
@@ -72,13 +66,12 @@ public class SipreIngresoGradoPK implements Serializable {
 		if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
 			return false;
 		}
-		
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo +"]";
+		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo + " ]";
 	}
 
 }

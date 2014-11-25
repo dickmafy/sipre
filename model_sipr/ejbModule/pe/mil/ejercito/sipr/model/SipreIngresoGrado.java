@@ -3,6 +3,7 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 
+import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -29,11 +30,12 @@ public class SipreIngresoGrado implements Serializable {
 	@Column(name = "NIG_MONTO")
 	private BigDecimal				nigMonto;
 	@Column(name = "CIG_IND_INGRESO")
-	private String				cigIndIngreso;
+	private String					cigIndIngreso;
 	@Column(name = "CIG_IND_CALCULO")
-	private String				cigIndCalculo;
+	private String					cigIndCalculo;
+	@Basic(optional = false)
 	@Column(name = "CIG_IND_SITUACION")
-	private String				cigIndSituacion;
+	private String					cigIndSituacion;
 	@JoinColumn(name = "CGRADO_CODIGO", referencedColumnName = "CGRADO_CODIGO", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private SipreGrado				sipreGrado;
@@ -48,8 +50,13 @@ public class SipreIngresoGrado implements Serializable {
 		this.sipreIngresoGradoPK = sipreIngresoGradoPK;
 	}
 
-	public SipreIngresoGrado(String cgradoCodigo, String cciCodigo, String cigSituacion) {
-		this.sipreIngresoGradoPK = new SipreIngresoGradoPK(cgradoCodigo, cciCodigo, cigSituacion);
+	public SipreIngresoGrado(SipreIngresoGradoPK sipreIngresoGradoPK, String cigIndSituacion) {
+		this.sipreIngresoGradoPK = sipreIngresoGradoPK;
+		this.cigIndSituacion = cigIndSituacion;
+	}
+
+	public SipreIngresoGrado(String cgradoCodigo, String cciCodigo) {
+		this.sipreIngresoGradoPK = new SipreIngresoGradoPK(cgradoCodigo, cciCodigo);
 	}
 
 	public SipreIngresoGradoPK getSipreIngresoGradoPK() {
