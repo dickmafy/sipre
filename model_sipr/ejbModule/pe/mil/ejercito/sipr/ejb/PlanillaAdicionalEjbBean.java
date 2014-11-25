@@ -1,6 +1,7 @@
 package pe.mil.ejercito.sipr.ejb;
 
 import java.math.BigDecimal;
+import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -8,9 +9,18 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
+
+
+
+
+
+import org.hibernate.validator.internal.util.CollectionHelper;
+
+import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
+
 
 @Stateless
 public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicional>
@@ -44,9 +54,19 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 		q.setParameter("cpersonaNroAdm", pk.getCpersonaNroAdm());
 		q.setParameter("ctpCodigo", pk.getCtpCodigo());
 		q.setParameter("cciCodigo", pk.getCciCodigo());
-		// validar nullpoint
-		monto = (BigDecimal) q.getSingleResult();
+		try {
+			
+			// validar nullpoint
+			if(null!=q.getResultList() || q.getResultList().size()>0){
+				monto = (BigDecimal)q.getResultList().get(0);	
+			}else{
+				monto = new BigDecimal(-1);
+			}
 
+			return monto;
+		} catch (Exception e) {
+			monto = new BigDecimal(-1);
+		}
 		return monto;
 	}
 
