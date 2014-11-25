@@ -29,11 +29,11 @@ public class SipreIngresoGrado implements Serializable {
 	@Column(name = "NIG_MONTO")
 	private BigDecimal				nigMonto;
 	@Column(name = "CIG_IND_INGRESO")
-	private Character				cigIndIngreso;
+	private String				cigIndIngreso;
 	@Column(name = "CIG_IND_CALCULO")
-	private Character				cigIndCalculo;
+	private String				cigIndCalculo;
 	@Column(name = "CIG_IND_SITUACION")
-	private Character				cigIndSituacion;
+	private String				cigIndSituacion;
 	@JoinColumn(name = "CGRADO_CODIGO", referencedColumnName = "CGRADO_CODIGO", insertable = false, updatable = false)
 	@ManyToOne(optional = false)
 	private SipreGrado				sipreGrado;
@@ -68,27 +68,27 @@ public class SipreIngresoGrado implements Serializable {
 		this.nigMonto = nigMonto;
 	}
 
-	public Character getCigIndIngreso() {
+	public String getCigIndIngreso() {
 		return cigIndIngreso;
 	}
 
-	public void setCigIndIngreso(Character cigIndIngreso) {
+	public void setCigIndIngreso(String cigIndIngreso) {
 		this.cigIndIngreso = cigIndIngreso;
 	}
 
-	public Character getCigIndCalculo() {
+	public String getCigIndCalculo() {
 		return cigIndCalculo;
 	}
 
-	public void setCigIndCalculo(Character cigIndCalculo) {
+	public void setCigIndCalculo(String cigIndCalculo) {
 		this.cigIndCalculo = cigIndCalculo;
 	}
 
-	public Character getCigIndSituacion() {
+	public String getCigIndSituacion() {
 		return cigIndSituacion;
 	}
 
-	public void setCigIndSituacion(Character cigIndSituacion) {
+	public void setCigIndSituacion(String cigIndSituacion) {
 		this.cigIndSituacion = cigIndSituacion;
 	}
 

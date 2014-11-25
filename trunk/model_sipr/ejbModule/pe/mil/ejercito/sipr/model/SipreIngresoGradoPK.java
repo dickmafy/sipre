@@ -16,27 +16,19 @@ import javax.validation.constraints.Size;
 public class SipreIngresoGradoPK implements Serializable {
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 3)
 	@Column(name = "CGRADO_CODIGO")
 	private String	cgradoCodigo;
 	@Basic(optional = false)
 	@NotNull
-	@Size(min = 1, max = 4)
 	@Column(name = "CCI_CODIGO")
 	private String	cciCodigo;
-	@Basic(optional = false)
-	@NotNull
-	@Size(min = 1, max = 18)
-	@Column(name = "CIG_SITUACION")
-	private String	cigSituacion;
-
+	
 	public SipreIngresoGradoPK() {
 	}
 
 	public SipreIngresoGradoPK(String cgradoCodigo, String cciCodigo, String cigSituacion) {
 		this.cgradoCodigo = cgradoCodigo;
 		this.cciCodigo = cciCodigo;
-		this.cigSituacion = cigSituacion;
 	}
 
 	public String getCgradoCodigo() {
@@ -55,20 +47,13 @@ public class SipreIngresoGradoPK implements Serializable {
 		this.cciCodigo = cciCodigo;
 	}
 
-	public String getCigSituacion() {
-		return cigSituacion;
-	}
-
-	public void setCigSituacion(String cigSituacion) {
-		this.cigSituacion = cigSituacion;
-	}
+	
 
 	@Override
 	public int hashCode() {
 		int hash = 0;
 		hash += (cgradoCodigo != null ? cgradoCodigo.hashCode() : 0);
 		hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
-		hash += (cigSituacion != null ? cigSituacion.hashCode() : 0);
 		return hash;
 	}
 
@@ -87,17 +72,13 @@ public class SipreIngresoGradoPK implements Serializable {
 		if ((this.cciCodigo == null && other.cciCodigo != null) || (this.cciCodigo != null && !this.cciCodigo.equals(other.cciCodigo))) {
 			return false;
 		}
-		if ((this.cigSituacion == null && other.cigSituacion != null)
-				|| (this.cigSituacion != null && !this.cigSituacion.equals(other.cigSituacion))) {
-			return false;
-		}
+		
 		return true;
 	}
 
 	@Override
 	public String toString() {
-		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo
-				+ ", cigSituacion=" + cigSituacion + " ]";
+		return "pe.mil.ejercito.sipr.model.SipreIngresoGradoPK[ cgradoCodigo=" + cgradoCodigo + ", cciCodigo=" + cciCodigo +"]";
 	}
 
 }
