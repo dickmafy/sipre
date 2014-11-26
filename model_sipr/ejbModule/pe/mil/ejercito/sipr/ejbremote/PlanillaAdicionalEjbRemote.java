@@ -12,8 +12,8 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
 @Remote
 public interface PlanillaAdicionalEjbRemote extends GenericDAO<SiprePlanillaAdicional> {
 
-	List<Object[]> findBy(String ctpCodigo, Integer nplanillaNumProceso, String cplanillaMesProceso);
-
 	BigDecimal verificarSiYaSePago(SiprePlanillaAdicionalPK pk);
+
+	List<Object[]> findBy(Integer nplanillaNumProceso, String cplanillaMesProceso);
 
 }
