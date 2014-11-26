@@ -1,7 +1,6 @@
 package pe.mil.ejercito.sipr.ejb;
 
 import java.math.BigDecimal;
-import java.util.Collection;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -9,18 +8,9 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
-
-
-
-
-
-import org.hibernate.validator.internal.util.CollectionHelper;
-
-import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicional;
 import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
-
 
 @Stateless
 public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicional>
@@ -55,11 +45,11 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 		q.setParameter("ctpCodigo", pk.getCtpCodigo());
 		q.setParameter("cciCodigo", pk.getCciCodigo());
 		try {
-			
+
 			// validar nullpoint
-			if(null!=q.getResultList() || q.getResultList().size()>0){
-				monto = (BigDecimal)q.getResultList().get(0);	
-			}else{
+			if (null != q.getResultList() || q.getResultList().size() > 0) {
+				monto = (BigDecimal) q.getResultList().get(0);
+			} else {
 				monto = new BigDecimal(-1);
 			}
 
@@ -72,7 +62,7 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> findBy(String ctpCodigo, Integer nplanillaNumProceso, String cplanillaMesProceso) {
+	public List<Object[]> findBy(Integer nplanillaNumProceso, String cplanillaMesProceso) {
 		List<Object[]> list;
 		StringBuilder sb = new StringBuilder();
 		sb.append(" SELECT o.siprePlanillaAdicionalPK.ctpCodigo ");
@@ -84,6 +74,7 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 
 		sb.append(" WHERE  o.siprePlanillaAdicionalPK.nplanillaNumProceso=:nplanillaNumProceso  ");
 		sb.append(" and  o.siprePlanillaAdicionalPK.cplanillaMesProceso=:cplanillaMesProceso  ");
+		sb.append(" and  o.siprePlanillaAdicionalPK.ctpCodigo=:ctpCodigo ");
 
 		sb.append(" GROUP BY o.siprePlanillaAdicionalPK.ctpCodigo ");
 		sb.append(" ,o.siprePlanillaAdicionalPK.cpersonaNroAdm ");
@@ -94,6 +85,7 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 		// q.setParameter("ctpCodigo", ctpCodigo); /
 		q.setParameter("nplanillaNumProceso", nplanillaNumProceso);
 		q.setParameter("cplanillaMesProceso", cplanillaMesProceso);
+		q.setParameter("ctpCodigo", "01");
 		list = q.getResultList();
 		return list;
 	}
