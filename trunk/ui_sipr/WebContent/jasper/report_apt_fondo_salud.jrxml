@@ -1,0 +1,109 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_apt_fondo_salud" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="4b35455e-b13d-4932-a102-52439afc9cd0">
+	<property name="ireport.zoom" value="1.5"/>
+	<property name="ireport.x" value="226"/>
+	<property name="ireport.y" value="45"/>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="99" splitType="Stretch">
+			<image>
+				<reportElement x="0" y="0" width="186" height="78" uuid="2a604139-517b-4a8b-a055-ace97820bf7f"/>
+			</image>
+			<staticText>
+				<reportElement x="227" y="20" width="190" height="20" uuid="a85c0b3d-5403-47a1-b00d-3d0b2045d7f3"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[OBLIGACIONES DEL EMPLEADOR  -]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="283" y="40" width="220" height="20" uuid="72a78b89-b1ce-405a-b507-8117ada1292b"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[APORTES A LOS FONDOS DE SALUD]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageHeader>
+		<band height="3" splitType="Stretch"/>
+	</pageHeader>
+	<columnHeader>
+		<band height="25" splitType="Stretch">
+			<rectangle>
+				<reportElement x="36" y="0" width="150" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="7a25212e-2c30-4703-b04f-688a4f3dceda"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="186" y="0" width="150" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="e5565474-52fd-4477-ab39-9fada1487d27"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="336" y="0" width="150" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="8adab498-17bd-43c0-801a-d541b8858c8c"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="36" y="0" width="150" height="25" uuid="ec49fde2-dc68-41ac-aba3-8668085bd2d4"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[PERSONAL MILITAR]]></text>
+			</staticText>
+		</band>
+	</columnHeader>
+	<detail>
+		<band height="20" splitType="Stretch">
+			<line>
+				<reportElement x="186" y="0" width="1" height="20" forecolor="#666600" uuid="4080b38b-8efb-4db3-be3c-c028de7cacfa"/>
+			</line>
+			<line>
+				<reportElement x="36" y="0" width="1" height="20" forecolor="#666600" uuid="8eb9c542-c406-4e91-879e-8b6285f87df7"/>
+			</line>
+			<line>
+				<reportElement x="336" y="0" width="1" height="20" forecolor="#666600" uuid="793b28f0-7a9e-408d-846e-d9404dc7ddd9"/>
+			</line>
+			<line>
+				<reportElement x="486" y="0" width="1" height="20" forecolor="#666600" uuid="b8918500-bc31-4550-b61b-e4f4c913260f"/>
+			</line>
+		</band>
+	</detail>
+	<columnFooter>
+		<band splitType="Stretch"/>
+	</columnFooter>
+	<pageFooter>
+		<band height="20" splitType="Stretch">
+			<textField isStretchWithOverflow="true" pattern="EEEEE dd MMMMM yyyy" isBlankWhenNull="true">
+				<reportElement x="11" y="0" width="175" height="20" uuid="12ae094f-d3e0-4805-86a0-594d16ba7cec"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[new java.util.Date()]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="450" y="0" width="105" height="20" uuid="09c7e40b-507f-4a78-a1e8-c941601f3a4f"/>
+				<textFieldExpression><![CDATA["Página "+$V{PAGE_NUMBER}+" de"]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="503" y="0" width="39" height="20" uuid="7e9edb39-6dd7-460a-b0ce-30ab64e6e890"/>
+				<textFieldExpression><![CDATA[" " + $V{PAGE_NUMBER}]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+	<summary>
+		<band height="42" splitType="Stretch">
+			<rectangle>
+				<reportElement x="36" y="0" width="150" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="3ba4f654-7b54-4fba-8d6f-75f47b8d0af2"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="186" y="0" width="150" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="7ef7a783-126f-453f-86ae-448e5f75f6a1"/>
+			</rectangle>
+			<rectangle>
+				<reportElement x="337" y="0" width="149" height="25" forecolor="#666600" backcolor="#CCCCCC" uuid="42540bd3-f365-48e1-85d2-8f79539b5c9e"/>
+			</rectangle>
+			<staticText>
+				<reportElement x="36" y="0" width="150" height="25" uuid="39b644c7-5789-4037-9f62-ac0bdbf1e9d5"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle">
+					<font isBold="true"/>
+				</textElement>
+				<text><![CDATA[ TOTAL DPTO]]></text>
+			</staticText>
+		</band>
+	</summary>
+</jasperReport>
