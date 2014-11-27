@@ -1,0 +1,15 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frm_opciones">
+		<p:menu style="width:100%" id="mnuReporte">
+			<p:submenu label="REPORTES">
+				<p:menuitem value="Aportes Fondos de Salud" icon="ui-icon-person"
+					async="true" actionListener="#{mainMb.redireccionaContent(82)}"
+					ajax="true" update=":pnlContenido" />
+				
+			</p:submenu>
+		</p:menu>
+	</h:form>
+</ui:composition>
