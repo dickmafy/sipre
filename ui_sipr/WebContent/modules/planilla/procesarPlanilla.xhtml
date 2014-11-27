@@ -12,9 +12,8 @@
 
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<!-- PROGRES INICIO -->
-				<!--Elemento Trigger : update=":frm:dt :frm:barraProgreso" id="uploadFile"
-				onstart="PF('barraProgreso').start();PF('wblockui').show();"
-				oncomplete="PF('wblockui').hide();" /> -->
+				<!-- Si se print infinitos post, revisar los ajax true y en java updateComponente("dt"); 
+				-->
 				<p:blockUI block="frm:panelProcesoPlanilla" widgetVar="wblockui" />
 				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000"
 					id="barraProgreso" value="#{progressBar.contador}"
@@ -42,9 +41,10 @@
 
 				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
 					<p:panelGrid columns="10">
+
 						<p:outputLabel value="1 Numero de Hijos" />
 						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
-							value="Procesar"
+							value="Procesar" ajax="true"
 							disabled="#{!procesarPlanillaMb.habilitarProceso[1]}"
 							actionListener="#{procesarPlanillaMb.p1NumeroHijos()}"
 							update=":frm:dt :frm:barraProgreso"
@@ -56,7 +56,7 @@
 
 						<p:outputLabel value="2 Lista Revista" />
 						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
-							value="Procesar"
+							value="Procesar" ajax="true"
 							disabled="#{!procesarPlanillaMb.habilitarProceso[2]}"
 							actionListener="#{procesarPlanillaMb.p2ListaRevista()}"
 							update=":frm:dt :frm:barraProgreso"

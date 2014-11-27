@@ -1,0 +1,22 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Judicial</div>
+			<div id="titulo_formulario">Judicial</div>
+			<div id="contenido">
+				<p:panel header="Judicial ">
+
+
+					<p:commandButton title="Nuevo" value="Nuevo" icon="icn_bar_save"
+						actionListener="#{reintegroPersonalMb.newBean}" ajax="true" />
+
+
+				</p:panel>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

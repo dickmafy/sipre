@@ -128,7 +128,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 			beanTmpFamiliaList = ejbTmpFamilia.findAll();
 			cleanBeanGmList();
-			iniciarEstadoBotones();
+			//iniciarEstadoBotones();
 			habilitarTodo();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -153,7 +153,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 
 	private void cleanBeanGmList() {
 		beanGmList = new ArrayList<>();
-		//updateComponente("dt");
+		updateComponente("dt");
 	}
 
 	public void p4DescuentoLey() {
@@ -217,7 +217,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		addGenericMensaje(cTotal + " / " + list.size() + "  Registros Procesados.",
 				ConstantesUtil.PROCESO_4_CALC_DESC_LEY, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
 				ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-		habilitarProceso[5] = false;
+		
 	}
 
 	private void limpiarP4ProcesodelMes() {
@@ -492,7 +492,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					ConstantesUtil.PROCESO_3_INGRESO_PERSONA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
 					ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 		}
-		habilitarProceso[4] = false;
+		
 	}
 
 	@SuppressWarnings("unused")
@@ -861,7 +861,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			}
 		}
 
-		habilitarProceso[3] = false;
+		
 		addGenericMensaje("Planilla Principal : Se registraron " + contadorPPrincipalGuardado + "  de  " + contadorPPrincipalTotal,
 				ConstantesUtil.PROCESO_2_PLANILLA_LISTA_REVISTA, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO,
 				ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
@@ -893,7 +893,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		int contadorNumeroHijosTotal = 0;
 		addGenericMensaje("###INICIANDO - Proceso Numero de Hijos", ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-
+		
 		try {
 			beanPersona = new SiprePersona();
 			Integer vEdad;
@@ -984,7 +984,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				}// FOR PERSONA
 			}
 
-			habilitarProceso[2] = false;
+			
 		} catch (Exception e3) {
 			addGenericMensaje("####FINALIZANDO con Error - " + tmpCip + " -No se encontro relacion entre TMP_FAMILIA y PERSONAL",
 					ConstantesUtil.PROCESO_1_PLANILLA_NUMERO_HIJOS, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
