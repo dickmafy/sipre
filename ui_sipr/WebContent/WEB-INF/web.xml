@@ -21,6 +21,8 @@
     <servlet-name>Faces Servlet</servlet-name>
     <url-pattern>/faces/*</url-pattern>
   </servlet-mapping>
+  
+
   <filter>
     <filter-name>AuthFilter</filter-name>
     <filter-class>pe.mil.ejercito.sipr.filter.AuthenticationFilter</filter-class>
