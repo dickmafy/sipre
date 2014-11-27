@@ -51,6 +51,10 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/seguridad";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 11:
+			menuLateral = "/modules/menu/reporte";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		}
 		return "";
 	}
@@ -124,6 +128,10 @@ public class Main extends MainContext {
 			break;
 		case 81:
 			contenidoDefault = "/modules/parametro/parametroDetalle";
+			break;
+	    //reportes
+		case 82:
+			contenidoDefault = "/modules/reporte/rpt_aprt_fondo_salud";
 			break;
 
 		}
