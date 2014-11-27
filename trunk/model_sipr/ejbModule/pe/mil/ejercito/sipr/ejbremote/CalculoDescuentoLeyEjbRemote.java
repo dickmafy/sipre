@@ -7,9 +7,7 @@ import pe.mil.ejercito.sipr.model.SipreCalculoDescuentoLey;
 
 @Remote
 public interface CalculoDescuentoLeyEjbRemote extends GenericDAO<SipreCalculoDescuentoLey> {
-	
 
-	
+	void removeDelMes(String cplanillaMesProceso, Integer nplanillaNumProceso);
 
-	
 }

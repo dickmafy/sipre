@@ -9,6 +9,7 @@
 			<div id="titulo_formulario">PROCESAR PLANILLA</div>
 			<div id="contenido">
 
+
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 				<!-- PROGRES INICIO -->
 				<!--Elemento Trigger : update=":frm:dt :frm:barraProgreso" id="uploadFile"
@@ -21,6 +22,8 @@
 					style="width:700px">
 					<p:ajax event="complete" listener="#{progressBar.onComplete}"
 						update=":frm:barraProgreso" />
+
+
 				</p:progressBar>
 				<!-- PROGRES FIN-->
 
@@ -29,7 +32,7 @@
 					<f:selectItem itemValue="201411" itemLabel="201411" />
 					<f:selectItem itemValue="201412" itemLabel="201412" />
 				</p:selectOneMenu>
-				
+
 				<p:outputLabel value="Numero del Proceso :" />
 				<p:selectOneMenu value="#{procesarPlanillaMb.numeroProceso}">
 					<f:selectItem itemValue="1" itemLabel="1" />
@@ -40,131 +43,193 @@
 				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
 					<p:panelGrid columns="10">
 						<p:outputLabel value="1 Numero de Hijos" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarNumeroHijos()}"
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[1]}"
+							actionListener="#{procesarPlanillaMb.p1NumeroHijos()}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
-							oncomplete="PF('wblockui').hide();" id="p1">
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p1">
 						</p:commandButton>
 
 
 						<p:outputLabel value="2 Lista Revista" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista}"
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[2]}"
+							actionListener="#{procesarPlanillaMb.p2ListaRevista()}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
-							oncomplete="PF('wblockui').hide();" id="p2">
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p2">
 						</p:commandButton>
 
 
 						<p:outputLabel value="3 Calcular Ingresos por Persona" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarIngresoPersona}"
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[3]}"
+							actionListener="#{procesarPlanillaMb.p3IngresoPersona()}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
-							oncomplete="PF('wblockui').hide();" id="p3">
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p3">
 						</p:commandButton>
 
 						<p:outputLabel value="4 Calcular Descuento de Ley" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar">
-							
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[4]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p4">
 						</p:commandButton>
 
+
 						<p:outputLabel value="5 Calcular Guardias Hospitalarias" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar" id="p5"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[5]}"
 							actionListener="#{procesarPlanillaMb.procesarGuardiaHospitalaria()}"
 							update=":frm:dt :frm:barraProgreso"
 							onstart="PF('barraProgreso').start();PF('wblockui').show();"
-							oncomplete="PF('wblockui').hide();" id="p5">
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();">
 						</p:commandButton>
 
+
 						<p:outputLabel value="6 Combustible" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[6]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p6">
 						</p:commandButton>
 
 						<p:outputLabel value="7 Chofer y Mayordomo" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[7]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p7">
 						</p:commandButton>
 
 						<p:outputLabel value="8 Ex Comabiente del 41" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[8]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p8">
 						</p:commandButton>
 
 						<p:outputLabel value="9 Ex Comabiente Cenepa" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[9]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p9">
 						</p:commandButton>
 
 						<p:outputLabel value="10 Subsidio DL 1132" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[10]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p10">
 						</p:commandButton>
 
 						<p:outputLabel value="11 Bonificacion DL 1132" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[11]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p11">
 						</p:commandButton>
-						
+
 						<p:outputLabel value="12 Bonificacion DU 040" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[12]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p12">
 						</p:commandButton>
 
 						<p:outputLabel value="13 Subsidio por invalidez o póstumo" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[13]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p13">
 						</p:commandButton>
 
 						<p:outputLabel value="14 Bonificación por Cumplir 65 años" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[14]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p14">
 						</p:commandButton>
 
 						<p:outputLabel value="15 Calcular Impuesto a la renta" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[15]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p15">
 						</p:commandButton>
 
 						<p:outputLabel value="16 Actualizar Descuento" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[16]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p16">
 						</p:commandButton>
 
 						<p:outputLabel value="17 Calcular Boleta" />
-						<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
-							value="Validar"
-							actionListener="#{procesarPlanillaMb.procesarListaRevista()}"
-							update=":frm:dt">
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar"
+							disabled="#{!procesarPlanillaMb.habilitarProceso[17]}"
+							actionListener="#{procesarPlanillaMb.p4DescuentoLey()}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p17">
 						</p:commandButton>
 
 
@@ -177,8 +242,7 @@
 					value="#{procesarPlanillaMb.beanGmList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
 					rows="20" paginatorPosition="top"
-					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} "
-					>
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
 					<f:facet name="header">
 						<p:outputPanel>
@@ -200,13 +264,13 @@
 
 					<p:column headerText="Mensaje" width="10%"
 						filterBy="#{item.mensaje}" filterMatchMode="contains">
-						<h:outputText value="#{item.mensaje}"  />
+						<h:outputText value="#{item.mensaje}" />
 					</p:column>
 
 					<p:column headerText="Detalle" width="1%">
-						<p:commandLink update=":frm:carDetail" value="Detalle del Proceso" 
-							oncomplete="PF('detalleProceso').show()" title="Detalle del Proceso"
-							styleClass="ui-icon ui-icon-search"
+						<p:commandLink update=":frm:carDetail" value="Detalle del Proceso"
+							oncomplete="PF('detalleProceso').show()"
+							title="Detalle del Proceso" styleClass="ui-icon ui-icon-search"
 							style="float:left;margin-right:10px">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{procesarPlanillaMb.beanGm}" />
@@ -232,7 +296,8 @@
 								value="#{constantesUtil.proceso1PlanillaNumeroHijos}" />
 						</f:facet>
 						<p:column headerText="Tipo Mensaje" width="10%">
-							<h:outputText value="#{detalle.tipoMensaje}" 	style="background-color : #{detalle.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
+							<h:outputText value="#{detalle.tipoMensaje}"
+								style="background-color : #{detalle.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
 							: detalle.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
 							: detalle.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
 						</p:column>
