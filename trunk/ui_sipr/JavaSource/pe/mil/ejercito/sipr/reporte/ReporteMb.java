@@ -14,7 +14,7 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletResponse;
-
+/*
 import org.primefaces.model.StreamedContent;
 
 import net.sf.jasperreports.engine.JRException;
@@ -86,7 +86,7 @@ public class ReporteMb extends MainContext implements Serializable {
 
 	    public JasperPrint imprimir(StreamedContent file) {
 	        JasperPrint print = null;
-	        /*try {
+	        try {
 	            List<Expediente> lstExpedientes = ejbExpediente.listarExpedientes(expdnt.getCdgExp(), expdnt.getTpExp(), expdnt.getCondjrdcExp(),
 	                    expdnt.getNomdistExp(), expdnt.getEstdprdoExp(), expdnt.getNtrlzExp(),expdnt.getTramoExp(), Estado.TPO_BSQD_RPT);
 
@@ -108,7 +108,7 @@ public class ReporteMb extends MainContext implements Serializable {
 
 	        } catch (Exception e) {
 	            e.printStackTrace();
-	        }*/
+	        }
 
 	        return print;
 	    }
@@ -143,3 +143,4 @@ public class ReporteMb extends MainContext implements Serializable {
 	
 	
 }
+*/

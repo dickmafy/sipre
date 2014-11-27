@@ -105,6 +105,12 @@ public class Main extends MainContext {
 		case 60:
 			contenidoDefault = "/modules/planilla/procesarPlanilla";
 			break;
+		case 61:
+			contenidoDefault = "/modules/planilla/crediticia";
+			break;
+		case 62:
+			contenidoDefault = "/modules/planilla/judicial";
+			break;
 		// PLANILLA
 		case 70:
 			contenidoDefault = "/modules/ingresoDescuento/conceptoDescuentoLey";
