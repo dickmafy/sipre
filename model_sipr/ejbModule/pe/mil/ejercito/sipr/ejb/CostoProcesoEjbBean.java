@@ -4,17 +4,15 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import pe.mil.ejercito.sipr.ejbremote.CalculoDescuentoLeyEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreCalculoDescuentoLey;
+import pe.mil.ejercito.sipr.ejbremote.CostoProcesoEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreCostoProceso;
 
 @Stateless
 public class CostoProcesoEjbBean extends
-		GenericDAOImpl<SipreCalculoDescuentoLey> implements
-		CalculoDescuentoLeyEjbRemote {
+		GenericDAOImpl<SipreCostoProceso> implements
+		CostoProcesoEjbRemote {
 
 	@PersistenceContext(name = "model_sipre")
 	EntityManager	em;
-	
 
-	
 }

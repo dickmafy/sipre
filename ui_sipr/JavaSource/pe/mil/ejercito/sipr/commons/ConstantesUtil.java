@@ -16,7 +16,7 @@ public class ConstantesUtil {
 	public static final String	PROCESO_1_PLANILLA_NUMERO_HIJOS				= "Proceso 1 Numero Hijos";
 	public static final String	PROCESO_2_PLANILLA_LISTA_REVISTA			= "Proceso 2 Lista Revista";
 	public static final String	PROCESO_3_INGRESO_PERSONA			= "Proceso 3 Ingreso Por Persona";
-	public static final String	PROCESO_4_PLANILLA_LISTA_REVISTA			= "Proceso 4 Calcular Descuento de Ley";
+	public static final String	PROCESO_4_CALC_DESC_LEY			= "Proceso 4 Calcular Descuento de Ley";
 	public static final String	PROCESO_5_GUARDIA_HOSPITALARIA			= "Proceso 5 Guardias Hospitalarias";
 
 	// Estados Tablas
