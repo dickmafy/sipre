@@ -1,0 +1,31 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:form id="frm">
+   <div id="contenido_formulario">
+		<div id="page_flow">Reporte / Reporte </div>
+		<div id="titulo_formulario">Aportes a los Fondo de Salud</div>
+		<div id="contenido">
+		    <p:messages id="messages" autoUpdate="true" closable="true" />
+			   
+			    <h:panelGrid columns="5" cellpadding="5">
+			    <p:outputLabel for="txtInicio" value="Fecha inicio :" />
+                <p:calendar id="txtInicio" value="#{reporteMb.fechaInicio}" locale="es" navigator="true" pattern="dd/mm/yyyy" />
+ 
+                <p:outputLabel for="txtFin" value="Fecha fin :" />
+                <p:calendar id="txtFin" value="#{reporteMb.fechaFin}" locale="es" navigator="true" pattern="dd/mm/yyyy" />
+ 
+                 <p:commandButton icon="ui-icon-arrowthickstop-1-s" 
+                                         value="Generar" styleClass="boton_botonera"
+                                         action="#{reporteMb.generarRpt}" 
+                                         ajax="false" >
+                <p:fileDownload value="#{reporteMb.file}"  contentDisposition="inline" />  
+                </p:commandButton> 
+			    </h:panelGrid>
+		</div>
+   </div>
+</h:form>
+</ui:composition>
