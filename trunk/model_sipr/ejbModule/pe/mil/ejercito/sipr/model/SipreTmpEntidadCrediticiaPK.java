@@ -36,12 +36,12 @@ public class SipreTmpEntidadCrediticiaPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "CTEC_TIPO_MOVIM")
-    private Character ctecTipoMovim;
+    private String ctecTipoMovim;
 
     public SipreTmpEntidadCrediticiaPK() {
     }
 
-    public SipreTmpEntidadCrediticiaPK(String cpersonaNroAdm, String cecCodigo, String ctecMesProceso, Character ctecTipoMovim) {
+    public SipreTmpEntidadCrediticiaPK(String cpersonaNroAdm, String cecCodigo, String ctecMesProceso, String ctecTipoMovim) {
         this.cpersonaNroAdm = cpersonaNroAdm;
         this.cecCodigo = cecCodigo;
         this.ctecMesProceso = ctecMesProceso;
@@ -72,11 +72,11 @@ public class SipreTmpEntidadCrediticiaPK implements Serializable {
         this.ctecMesProceso = ctecMesProceso;
     }
 
-    public Character getCtecTipoMovim() {
+    public String getCtecTipoMovim() {
         return ctecTipoMovim;
     }
 
-    public void setCtecTipoMovim(Character ctecTipoMovim) {
+    public void setCtecTipoMovim(String ctecTipoMovim) {
         this.ctecTipoMovim = ctecTipoMovim;
     }
 

@@ -33,7 +33,7 @@ public class SipreTmpEntidadCrediticia implements Serializable {
     @Column(name = "NTEC_MONTO")
     private BigDecimal ntecMonto;
     @Column(name = "NTEC_NRO_CUOTA")
-    private Short ntecNroCuota;
+    private Integer ntecNroCuota;
     @Size(max = 10)
     @Column(name = "CTEC_NRO_CHEQUE")
     private String ctecNroCheque;
@@ -53,7 +53,7 @@ public class SipreTmpEntidadCrediticia implements Serializable {
         this.sipreTmpEntidadCrediticiaPK = sipreTmpEntidadCrediticiaPK;
     }
 
-    public SipreTmpEntidadCrediticia(String cpersonaNroAdm, String cecCodigo, String ctecMesProceso, Character ctecTipoMovim) {
+    public SipreTmpEntidadCrediticia(String cpersonaNroAdm, String cecCodigo, String ctecMesProceso, String ctecTipoMovim) {
         this.sipreTmpEntidadCrediticiaPK = new SipreTmpEntidadCrediticiaPK(cpersonaNroAdm, cecCodigo, ctecMesProceso, ctecTipoMovim);
     }
 
@@ -73,11 +73,11 @@ public class SipreTmpEntidadCrediticia implements Serializable {
         this.ntecMonto = ntecMonto;
     }
 
-    public Short getNtecNroCuota() {
+    public Integer getNtecNroCuota() {
         return ntecNroCuota;
     }
 
-    public void setNtecNroCuota(Short ntecNroCuota) {
+    public void setNtecNroCuota(Integer ntecNroCuota) {
         this.ntecNroCuota = ntecNroCuota;
     }
 
