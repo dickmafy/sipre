@@ -55,6 +55,10 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/reporte";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 12:
+			menuLateral = "/modules/menu/controlCalidad";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		}
 		return "";
 	}
@@ -81,6 +85,9 @@ public class Main extends MainContext {
 			break;
 		case 33:
 			contenidoDefault = "/modules/gestion/bonificacionPersonal";
+			break;
+		case 34:
+			contenidoDefault = "/modules/gestion/judicialCrediticia";
 			break;
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
@@ -139,6 +146,11 @@ public class Main extends MainContext {
 		case 82:
 			contenidoDefault = "/modules/reporte/rpt_aprt_fondo_salud";
 			break;
+		//CALIDAD DE INFORMACION
+		case 83:
+			contenidoDefault = "/modules/controlCalidad/verificarInformacion";
+			break;
+		
 
 		}
 		return "";

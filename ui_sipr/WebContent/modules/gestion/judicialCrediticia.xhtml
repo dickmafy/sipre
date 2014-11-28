@@ -1,0 +1,56 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+<style>
+    .ui-datepicker-calendar {
+        display: none;
+        }
+ </style>
+	<h:form id="frm">
+		<div id="contenido_formulario">
+
+			<div id="page_flow">Gestión / Proceso Judical y Crediticio</div>
+			<div id="titulo_formulario">Proceso Judical y Crediticio</div>
+			<div id="contenido">
+				<p:messages id="messages" showIcon="true" showSummary="true"
+					autoUpdate="true" closable="true" />
+
+				<div>
+
+					<p:fieldset  style="margin-bottom:20px">
+					    <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
+						   <p:outputLabel value="Tipo de archivo:" />
+						   <p:selectOneRadio id="tipo" value="#{judicialCrediticiaMb.tipoArchivo}" valueChangeListener="#{judicialCrediticiaMb.seteandoTipo}">
+							<f:selectItem itemLabel="Judiciales" itemValue="1" />
+							<f:selectItem itemLabel="Entidades Crediticias" itemValue="2" />
+							
+						</p:selectOneRadio>
+						</h:panelGrid>
+						<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
+							<p:outputLabel for="anio" value="Año / Mes :" />
+							 <p:calendar id="anio" value="#{judicialCrediticiaMb.anioMes}" locale="es" navigator="true" pattern="mm/yyyy" styleClass="" />
+							 
+						</h:panelGrid>
+						<p:panelGrid columns="1">
+							<p:fileUpload sizeLimit="100000000" auto="true" label="Subir Archivo "
+								cancelLabel="cancel" uploadLabel="update" fileLimit="1"
+								fileUploadListener="#{judicialCrediticiaMb.handleFileUpload}" dragDropSupport="false"
+								mode="advanced" allowTypes="/(\.|\/)(dbf|DBF)$/" id="uploadFile">
+								
+								 <f:attribute name="typeFile" value="#{judicialCrediticiaMb.tipoArchivo}" />
+								</p:fileUpload>
+						</p:panelGrid>
+
+					</p:fieldset>
+
+
+
+				</div>
+			</div>
+
+		</div>
+	</h:form>
+
+</ui:composition>

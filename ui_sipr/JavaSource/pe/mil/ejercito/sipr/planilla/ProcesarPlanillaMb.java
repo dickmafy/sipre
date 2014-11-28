@@ -180,12 +180,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					List<SipreConceptoDescuentoLey> listCDL = ejbConceptoDescuentoLey.findAll();
 					for (SipreConceptoDescuentoLey itemConceptoDL : listCDL) {
 						try {
-							if ((itemConceptoDL
-									.getSipreConceptoDescuentoLeyPK()
-									.getCdlCodigo()
-									.equals(itemDLP.getSipreDescuentoLeyPersonaPK().getCdlCodigo())
-							&& (itemConceptoDL.getSipreConceptoDescuentoLeyPK().getCdldCodigo()
-									.equals(itemDLP.getSipreDescuentoLeyPersonaPK().getCdldCodigo())))) {
+							if ((itemConceptoDL.getSipreConceptoDescuentoLeyPK().getCdlCodigo().equals(itemDLP.getSipreDescuentoLeyPersonaPK().getCdlCodigo())
+							&& (itemConceptoDL.getSipreConceptoDescuentoLeyPK().getCdldCodigo().equals(itemDLP.getSipreDescuentoLeyPersonaPK().getCdldCodigo())))) {
 
 								codigoConceptoDescuento = itemConceptoDL.getSipreConceptoDescuentoLeyPK().getCcdCodigo();
 
