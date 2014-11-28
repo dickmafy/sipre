@@ -27,8 +27,7 @@ import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "planillaMb")
 @ViewScoped
-public class PlanillaMb extends MainContext implements
-		Serializable {
+public class PlanillaMb extends MainContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	@SuppressWarnings("unused")
