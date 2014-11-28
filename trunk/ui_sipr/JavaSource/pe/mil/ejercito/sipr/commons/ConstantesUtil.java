@@ -52,6 +52,9 @@ public class ConstantesUtil {
 	public static final String	MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY		= MENSAJE_RESPUESTA_ERROR_GENERAL
 																					+ " No se puede repetir el Codigo del Descuento Ley.";
 
+	public static final String	RUTA_FILE_SYSTEM			= "system_file/";
+	public static final int	TIPO_FILE_ENTIDAD			= 2;
+	public static final int	TIPO_FILE_JUDICIAL			= 1;
 	// Listas
 	public String getLIST_EMPTY() {
 		return "No se encontraron resultados.";
