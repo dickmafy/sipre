@@ -59,6 +59,14 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/controlCalidad";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 13:
+			menuLateral = "/modules/menu/boleta";
+			contenidoDefault = "/modules/blank_page";
+			break;
+		case 14:
+			menuLateral = "/modules/menu/importacion";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		}
 		return "";
 	}
@@ -83,12 +91,8 @@ public class Main extends MainContext {
 		case 32:
 			contenidoDefault = "/modules/registro/ingresoConceptoPersonal";
 			break;
-		case 33:
-			contenidoDefault = "/modules/gestion/bonificacionPersonal";
-			break;
-		case 34:
-			contenidoDefault = "/modules/gestion/judicialCrediticia";
-			break;
+		
+		
 		case 40:
 			contenidoDefault = "/modules/seguridad/gestionar_usuario/usuario";
 			break;
@@ -151,7 +155,18 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/controlCalidad/verificarInformacion";
 			break;
 		
-
+		case 84:
+			contenidoDefault = "/modules/controlCalidad/verificarInformacion";
+			break;
+		case 33:
+			contenidoDefault = "/modules/importacion/bonificacionPersonal";
+			break;
+		case 34:
+			contenidoDefault = "/modules/importacion/judicialCrediticia";
+			break;
+		case 85:
+			contenidoDefault = "/modules/boleta/generarBoleta";
+			break;
 		}
 		return "";
 	}
