@@ -1,0 +1,21 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frm_opciones">
+		<p:menu style="width:100%" id="mnuParametrizacion">
+			<p:submenu label="Importación">
+				
+			    <p:menuitem value="Gestionar Bonificación de Personal Militar"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(33)}" ajax="false"
+					update=":pnlContenido" />
+					
+				<p:menuitem value="Proceso Judical y Crediticio"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(34)}" ajax="false"
+					update=":pnlContenido" />
+			</p:submenu>
+		</p:menu>
+	</h:form>
+</ui:composition>

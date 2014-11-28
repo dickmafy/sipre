@@ -1,0 +1,38 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+<h:form id="frm">
+   <div id="contenido_formulario">
+		<div id="page_flow">Boleta / Genrar Boleta </div>
+		<div id="titulo_formulario">Generar Boleta</div>
+		<div id="contenido">
+		    <p:messages id="messages" autoUpdate="true" closable="true" />
+			   
+			    <h:panelGrid columns="5" cellpadding="5">
+			    <p:outputLabel for="txtInicio" value="Fecha proceso :" />
+                <p:calendar id="txtInicio" value="#{boletaMb.fechaProceso}" locale="es" navigator="true" pattern="dd/mm/yyyy" />
+ 
+                
+                 <p:commandButton icon="ui-icon-arrowthickstop-1-s" 
+                                         value="Generar" styleClass="boton_botonera"
+                                         update="dlgviewpdf"
+                                         action="#{boletaMb.generarRpt}" oncomplete="PF('wvviewpdf').show()" >
+              <!--  <p:fileDownload value="#{boletaMb.file}"  contentDisposition="inline" />  -->  
+                </p:commandButton> 
+			    </h:panelGrid>
+	</div>
+   </div>
+   <div>
+   <p:dialog widgetVar="wvviewpdf"  header="Boleta generada" 
+                  id="dlgviewpdf" showEffect="clip" hideEffect="slide"  >
+
+            <p:media value="../reporte_file/#{boletaMb.nameBoleta}" width="500px" height="500px" > </p:media>  
+
+        </p:dialog>
+   </div>
+   
+</h:form>
+</ui:composition>
