@@ -48,7 +48,6 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
 import pe.mil.ejercito.sipr.model.SiprePlanillaOtro;
 import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
-import pe.mil.ejercito.sipr.model.SipreSituacionAdm;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK;
@@ -433,7 +432,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			pk.setNplanillaNumProceso((Integer) item[3]);
 			// insertar CCI_CODIGO fijo = 0080
 			pk.setCciCodigo("0080");
-			// falta la columna CPD_CON_DESTINO = Código de concepto destino
+			// falta la columna CPD_CON_DESTINO = Cï¿½digo de concepto destino
 			planillaDetalle.setSiprePlanillaDetallePK(pk);
 			planillaDetalle.setNpdMtoConcepto((BigDecimal) item[4]);
 			planillaDetalle.setCpdConDestino("0080");
@@ -878,7 +877,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	 * @return CSA_TIPO_PERSONA
 	 */
 	private String obtenerSituacionAdm(String csaCodigo) {
-		return ((SipreSituacionAdm) ejbSituacionAdm.findById(csaCodigo)).getCsaTipoPersona();
+		return ejbSituacionAdm.findById(csaCodigo).getCsaTipoPersona();
 
 	}
 
@@ -1012,7 +1011,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			beanGm.setTipoMensaje(constanteTipoMensaje);
 			beanGmList.add(beanGm);
 		}
-
 	}
 
 	@SuppressWarnings("unused")
