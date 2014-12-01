@@ -786,11 +786,11 @@ table#tblFrmInfrm tr td {
 div#titulo_formulario {
 	width: 100%;
 	border-bottom: solid 3px #D2D2D2;
-	height: 34px;
+	height: 30px;
 	vertical-align: bottom;
 	color: #4f4f4f;
 	font-size: 25px;
-	padding: 0px 0px 4px 0px;
+	padding: 0px 0px 0px 0px;
 }
 
 div#contenido {
@@ -852,7 +852,7 @@ table.separador tr td {
 	background: #4169E1 !important
 }
 
-.titulo_fieldset{
+.titulo_fieldset {
 	position: relative;
 	top: 4px;
 	left: 10px;
@@ -860,19 +860,49 @@ table.separador tr td {
 	color: #332F2E;
 }
 
-.contenido_fieldset{
+.contenido_fieldset {
 	position: relative;
-	top:8px;
+	top: 8px;
 	left: 20px;
 }
 
-.boton_botonera{
+.boton_botonera {
 	position: relative;
 	margin-top: 10px;
 }
 
-.boton_botonera .ui-button-text{
+.boton_botonera .ui-button-text {
 	font-size: 12px !important;
 	text-transform: uppercase;
 }
 
+.ui-widget-header {
+	color: #FFF;
+	font-weight: normal;
+	text-shadow: none;
+	border: none;
+}
+
+.ui-panel {
+	padding: 0px;
+}
+
+table.tbl_contenido, table.tbl_contenido tr, table.tbl_contenido tr td{
+	border: 0px;
+	padding: 0px;
+	margin: 0px;
+}
+
+table.tbl_contenido{
+	border: solid 1px #CCC;
+	border-radius:3px;
+	background-color: #F5F5F5;
+}
+
+table.tbl_contenido tr td{
+	padding: 2px;
+	text-align: center;
+	width: 150px;
+	height: 28px;
+	vertical-align: middle;
+}
