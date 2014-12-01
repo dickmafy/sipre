@@ -93,7 +93,7 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	public String generarRpt() throws FileNotFoundException {
-		JasperPrint   print = null;
+		String   print = null;
 
         try {
             print = imprimir(file);
@@ -123,8 +123,8 @@ private static final long serialVersionUID = 1L;
         return "";
     }
 
-    public JasperPrint   imprimir(StreamedContent file) {
-    	JasperPrint    print = null;
+    public String   imprimir(StreamedContent file) {
+    	String    print = null;
         try{
         	System.out.println("persona cod:"+nroAdm);
         	System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
@@ -143,12 +143,10 @@ private static final long serialVersionUID = 1L;
              parametro.put("SUB_RPT_PERCIBO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_INGRESO));
              
               try{
-            	  JasperReport   jasperReport = JasperCompileManager.compileReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA_JXML));//REPORT_BOLETA_JXML
-            	 print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
-            	//print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
-            	 //print=JasperFillManager.fillReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta, parametro,  ConexionORCL.getConexion());
-            	 //print=JasperFillManager.fillReportToFile(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta, parametro, ConexionORCL.getConexion());
-            	 JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
+            	//  JasperReport   jasperReport = JasperCompileManager.compileReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA_JXML));//REPORT_BOLETA_JXML
+            	// print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
+            	print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
+            	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
              }catch(JRException ex){
             	ex.printStackTrace(); 
              }finally{
