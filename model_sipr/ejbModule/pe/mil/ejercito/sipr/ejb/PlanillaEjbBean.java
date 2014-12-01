@@ -1,5 +1,7 @@
 package pe.mil.ejercito.sipr.ejb;
 
+import java.util.List;
+
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +23,21 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 		q.setParameter("cip", cip);
 		Long count = (Long)q.getSingleResult();
 		return count;
+		
+	}
+
+
+	@Override
+	public List<SiprePlanilla> getListPlanillaByNroAdm() {
+		try{
+			Query q=em.createQuery("Select p from SiprePlanilla p where 1=1 order by p.vplanillaApeNom ");
+			
+			return q.getResultList();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 		
 	}
 
