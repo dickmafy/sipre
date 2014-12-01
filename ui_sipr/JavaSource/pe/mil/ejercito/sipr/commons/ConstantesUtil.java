@@ -67,21 +67,18 @@ public class ConstantesUtil {
 	public static final String	MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY		= MENSAJE_RESPUESTA_ERROR_GENERAL
 																					+ " No se puede repetir el Codigo del Descuento Ley.";
 
-	public static final String	RUTA_FILE_SYSTEM							= "system_file/";
-	public static final int		TIPO_FILE_ENTIDAD							= 2;
-	public static final int		TIPO_FILE_JUDICIAL							= 1;
 
-	public static final String	LOGO										= "images\\logo_ejercito.png";
-	public static final String	IMAGES										= "images";
-	public static final String	REPORT_BOLETA								= "jasper\\report_boleta.jasper";
-	public static final String	RUTA_REPORT_FILE							= "reporte_file\\";
+	
+	public static final int	TIPO_FILE_ENTIDAD			= 2;
+	public static final int	TIPO_FILE_JUDICIAL			= 1;
+	
 
-	public static String getRutaFiles(FacesContext facesContext, String carpeta) {
-		ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-		String realPath = servletContext.getRealPath("/") + carpeta;
-		System.out.println("Ruta logo y/o jasper: " + realPath);
-		return realPath;
-	}
+	 public static String getRutaFiles(FacesContext facesContext, String carpeta) {
+	        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+	        String realPath = servletContext.getRealPath("/") + carpeta;
+	        System.out.println("Ruta logo y/o jasper: " + realPath);
+	        return realPath;
+	    }
 
 	// Listas
 	public String getLIST_EMPTY() {

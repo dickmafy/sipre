@@ -7,26 +7,41 @@ import java.io.FileNotFoundException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
+import javax.faces.model.SelectItem;
 import javax.servlet.http.HttpServletResponse;
 
 import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperCompileManager;
+import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.JasperReport;
+import net.sf.jasperreports.engine.design.JasperDesign;
 import net.sf.jasperreports.engine.export.JRPdfExporter;
 import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
 
-import org.primefaces.context.RequestContext;
 import org.primefaces.model.StreamedContent;
 
+import pe.mil.ejercito.sipr.commons.ConexionORCL;
+import pe.mil.ejercito.sipr.commons.ConfiguracionDefault;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
+import pe.mil.ejercito.sipr.commons.UDate;
+import pe.mil.ejercito.sipr.ejbremote.BoletaCabeceraEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.BoletaDetalleEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
+import pe.mil.ejercito.sipr.model.SiprePlanilla;
 
 
 
@@ -40,40 +55,61 @@ private static final long serialVersionUID = 1L;
 	private Date fechaProceso;
 	private StreamedContent file;
 	private String nameBoleta;
+	private PlanillaEjbRemote ejbPlanilla;
+	
+	private String nroAdm;
+	private List<SelectItem> lstNames;
+	private boolean seEnvia;//true 
 	
 	public BoletaMb(){
-		setNameBoleta(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConstantesUtil.RUTA_REPORT_FILE)+"boleta.pdf");
+		try{
+			setNameBoleta(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"boleta.pdf");
+			setSeEnvia(true);
+			ejbPlanilla = (PlanillaEjbRemote) findServiceRemote(PlanillaEjbRemote.class);
+				
+			 if (!ConexionORCL.isInstance()) {
+	                new ConexionORCL().setValores(ConfiguracionDefault.IP, ConfiguracionDefault.INSTANCIA, ConfiguracionDefault.PUERTO, ConfiguracionDefault.USUARIO, ConfiguracionDefault.PASSWORD);
+	           }
+			
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		
+	}
+	
+	@PostConstruct
+	public void loadPersonal(){
+		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm();
+		lstNames=new ArrayList<SelectItem>();
+		if(lstPlanilla!=null & !lstPlanilla.isEmpty()){
+			for(SiprePlanilla pl:lstPlanilla){
+				SelectItem si=new SelectItem();
+				si.setLabel(pl.getVplanillaApeNom());
+				si.setValue(pl.getId().getCpersonaNroAdm());
+				lstNames.add(si);
+			}
+		}
+		
 	}
 	
 	public String generarRpt() throws FileNotFoundException {
-        JasperPrint print = null;
+		JasperPrint   print = null;
 
         try {
             print = imprimir(file);
 
             if (print != null) {
-                FacesContext f = FacesContext.getCurrentInstance();
-                HttpServletResponse rp = (HttpServletResponse) f.getExternalContext().getResponse();
-
-                rp.setContentType("application/pdf");
-                rp.setHeader("Content-disposition", "Attachment;filename=" + "Boleta2");
-                OutputStream os = rp.getOutputStream();
+                 try {
+                	System.out.println("name::>"+nameBoleta);
+                	System.out.println("PRINT::>"+print);
                 
-                
-              /*  JRPdfExporter expPdf = new JRPdfExporter();
-               
-                expPdf.setParameter(JRPdfExporterParameter.JASPER_PRINT, print);
-                expPdf.setParameter(JRPdfExporterParameter.OUTPUT_STREAM, os);
-                //expPdf.exportReport();
-
-                try {
-                    expPdf.exportReport();
-                   
-                } catch (JRException e) {
+                	//JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
+                	//JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta );
+                	//expPdf.exportReport();
+                } catch (Exception e) {
                     e.printStackTrace();
-                }*/
-                os.close();
-                f.responseComplete();
+                }
+              
             }
 
         } catch (Exception e) {
@@ -82,38 +118,52 @@ private static final long serialVersionUID = 1L;
 
         
         
-        //setNameBoleta(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConstantesUtil.RUTA_REPORT_FILE)+"boleta.pdf");
-        setNameBoleta("boleta.pdf");
+         setNameBoleta("boleta.pdf");
         
         return "";
     }
 
-    public JasperPrint imprimir(StreamedContent file) {
-        JasperPrint print = null;
-        //JasperPrint print = new JasperPrint();
-    /*    try {
-           // List<Expediente> lstExpedientes = ejbExpediente.listarExpedientes(expdnt.getCdgExp(), expdnt.getTpExp(), expdnt.getCondjrdcExp(),
-           //         expdnt.getNomdistExp(), expdnt.getEstdprdoExp(), expdnt.getNtrlzExp(),expdnt.getTramoExp(), Estado.TPO_BSQD_RPT);
-
-          //  if (lstExpedientes != null && !lstExpedientes.isEmpty()) {
-               // ExpedienteDataSource lstExpDS = new ExpedienteDataSource(lstExpedientes);
-                String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConstantesUtil.REPORT_BOLETA);
-
-                Map parametro = new HashMap();
-                parametro.put("LOGO_EJERCITO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConstantesUtil.LOGO));
-              
-                File fp = new File(path);
-                InputStream reportSt = new BufferedInputStream(new FileInputStream(fp));
-               // print = JasperFillManager.fillReport(reportSt, parametro, lstExpDS);
-                //print=JasperFillManager.fillReport(reportSt, parametro);
-               JasperFillManager.fillReportToFile(path, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConstantesUtil.RUTA_REPORT_FILE)+"/Boleta2.pdf", parametro);
-          //  }
-
-
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }*/
+    public JasperPrint   imprimir(StreamedContent file) {
+    	JasperPrint    print = null;
+        try{
+        	System.out.println("persona cod:"+nroAdm);
+        	System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
+        	System.out.println("se envia:"+seEnvia);
+        	
+        	 String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA);
+        	 nameBoleta="boleta"+"_"+nroAdm+".pdf";
+        	 if (ConexionORCL.conectar()) {
+        		 System.out.println("CONECTOOO!!"+ConexionORCL.conectar());
+             Map<String,Object> parametro = new HashMap<String, Object>();
+             parametro.put("LOGO_EJERCITO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.LOGO));
+             parametro.put("ANO_MES_PROCESO",UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
+           
+             parametro.put("NRO_ADM", nroAdm);
+             parametro.put("SUB_RPT_DESCUENTO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_DESCUENTO));
+             parametro.put("SUB_RPT_PERCIBO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_INGRESO));
+             
+              try{
+            	  JasperReport   jasperReport = JasperCompileManager.compileReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA_JXML));//REPORT_BOLETA_JXML
+            	 print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
+            	//print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
+            	 //print=JasperFillManager.fillReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta, parametro,  ConexionORCL.getConexion());
+            	 //print=JasperFillManager.fillReportToFile(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta, parametro, ConexionORCL.getConexion());
+            	 JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
+             }catch(JRException ex){
+            	ex.printStackTrace(); 
+             }finally{
+             	ConexionORCL.cerrarConexion();
+     		}
+             
+         }
+        	 
+       }catch(SQLException ex){
+        	ex.printStackTrace();
+        
+        }catch(Exception e){
+        	e.printStackTrace();
+        }
+       
 
         return print;
     }
@@ -140,6 +190,30 @@ private static final long serialVersionUID = 1L;
 
 	public void setNameBoleta(String nameBoleta) {
 		this.nameBoleta = nameBoleta;
+	}
+
+	public String getNroAdm() {
+		return nroAdm;
+	}
+
+	public void setNroAdm(String nroAdm) {
+		this.nroAdm = nroAdm;
+	}
+
+	public List<SelectItem> getLstNames() {
+		return lstNames;
+	}
+
+	public void setLstNames(List<SelectItem> lstNames) {
+		this.lstNames = lstNames;
+	}
+
+	public boolean isSeEnvia() {
+		return seEnvia;
+	}
+
+	public void setSeEnvia(boolean seEnvia) {
+		this.seEnvia = seEnvia;
 	}
     
     
