@@ -5,8 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form id="frm">
 		<div id="contenido_formulario">
-			<div id="page_flow">Planilla / PROCESAR PLANILLA</div>
-			<div id="titulo_formulario">PROCESAR PLANILLA</div>
+			<div id="page_flow">Control de Calidad / Importar Información </div>
+			<div id="titulo_formulario">Importar Información</div>
 			<div id="contenido">
 
 
@@ -39,10 +39,10 @@
 					<f:selectItem itemValue="3" itemLabel="3" />
 				</p:selectOneMenu>
 
-				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
+				<p:panel header="Importar Información" id="panelProcesoPlanilla">
 					<p:panelGrid columns="10">
 
-						<p:outputLabel value="1 Numero de Hijos" />
+						<p:outputLabel value="Migrar Información" />
 						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
 							value="Procesar" ajax="true"
 							actionListener="#{importarInformacion.moverCopereATmpPersonal}"
