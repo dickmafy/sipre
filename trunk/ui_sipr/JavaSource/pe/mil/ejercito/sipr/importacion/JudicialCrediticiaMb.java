@@ -23,7 +23,9 @@ import javax.faces.context.FacesContext;
 
 
 
+
 import org.primefaces.event.FileUploadEvent;
+
 
 
 
@@ -33,6 +35,7 @@ import org.primefaces.event.FileUploadEvent;
 import com.linuxense.javadbf.DBFField;
 import com.linuxense.javadbf.DBFReader;
 
+import pe.mil.ejercito.sipr.commons.ConfiguracionDefault;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.TmpEntidadCrediticiaEjbRemote;
@@ -65,7 +68,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable{
 		super();
 		try{
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
-			 ejbJudicial = (TmpJudicialEjbRemote) findServiceRemote(TmpJudicialEjbRemote.class);
+			ejbJudicial = (TmpJudicialEjbRemote) findServiceRemote(TmpJudicialEjbRemote.class);
 			ejbEntidad = (TmpEntidadCrediticiaEjbRemote) findServiceRemote(TmpEntidadCrediticiaEjbRemote.class);
 			
 		}catch(Exception e){
@@ -161,7 +164,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable{
 			fileId = new SimpleDateFormat("yyyyMMddHHmmss");
 			fileNewName = fileId.format(new Date()) + fileOldName + fileOldName.substring(event.getFile().getFileName().lastIndexOf('.'));
 
-			archivo = new File(rutaGuardar + "/" +ConstantesUtil.RUTA_FILE_SYSTEM+ fileNewName);
+			archivo = new File(rutaGuardar + "/" +ConfiguracionDefault.RUTA_FILE_SYSTEM+ fileNewName);
 			System.out.println("path :" + rutaGuardar);
 			InputStream is = event.getFile().getInputstream();
 			OutputStream out = new FileOutputStream(archivo);
