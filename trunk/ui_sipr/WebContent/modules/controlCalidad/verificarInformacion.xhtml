@@ -45,25 +45,25 @@
 					filteredValue="#{verificarInformacion.beanGmListBusqueda}"
 					value="#{verificarInformacion.beanTmpPersonaList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
-					rows="20" paginatorPosition="top"
+					rows="20" paginatorPosition="top" rowIndexVar="rowIndex"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-					<p:column headerText="N*">
-
+					<p:column headerText="N*" width="5%">
+						<h:outputText value="#{rowIndex+1}" />
 					</p:column>
 
 					<p:column headerText="CIP">
 						<h:outputText value="#{item.cpersonaNroAdm}" />
 					</p:column>
 
-					<p:column headerText="Grado">
+					<p:column headerText="Grado" width="5%">
 						<h:outputText value="#{item.ctpCodGrado}" />
 					</p:column>
 					<p:column headerText="Esp">
 						<h:outputText value="#{item.ctpCodEspAlt}" />
 
 					</p:column>
-					<p:column headerText="Nombre">
+					<p:column headerText="Nombre" width="30%">
 						<h:outputText value="#{item.vtpApeNom}" />
 					</p:column>
 					<p:column headerText="Situación">
