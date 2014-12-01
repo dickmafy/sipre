@@ -4,11 +4,8 @@ import java.io.Serializable;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
-import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
-
-
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
@@ -22,30 +19,28 @@ import pe.mil.ejercito.sipr.model.SipreParametroDetalle;
 @ViewScoped
 public class ParametroDetalleMb extends MainContext implements Serializable {
 
-	private static final long serialVersionUID = 1L;
+	private static final long					serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote ejbUsuario;
-	
-	private ParametroDetalleEjbRemote ejb;
-	private SipreParametroDetalle bean;
-	private List<SipreParametroDetalle> beanList;
-	
-	private SipreParametro beanParametro;
-	private GenericResponseBean<SipreParametro> sessionBean ; 
-	
+	private UsuarioEjbRemote					ejbUsuario;
+
+	private ParametroDetalleEjbRemote			ejb;
+	private SipreParametroDetalle				bean;
+	private List<SipreParametroDetalle>			beanList;
+
+	private SipreParametro						beanParametro;
+	private GenericResponseBean<SipreParametro>	sessionBean;
+
 	@SuppressWarnings("unchecked")
 	public ParametroDetalleMb() {
 		super();
 		try {
-			beanParametro= ((GenericResponseBean<SipreParametro>) getVariable("vparametro")).getObjeto();
-			
+			beanParametro = ((GenericResponseBean<SipreParametro>) getVariable("vparametro")).getObjeto();
+
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (ParametroDetalleEjbRemote) findServiceRemote(ParametroDetalleEjbRemote.class);
 
-			
-				beanList = ejb.findAll(100);
-			
-			
+			beanList = ejb.findAll(100);
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -53,17 +48,15 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 
 	public void newBean(ActionEvent event) {
 		bean = new SipreParametroDetalle();
-		
+
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
 			bean = ejb.persist(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
@@ -71,12 +64,10 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 	public void updateBean(ActionEvent event) {
 		try {
 			bean = ejb.merge(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 
 		} catch (Exception e) {
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
-					SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO, SEVERITY_ERROR);
 		}
 		beanList = ejb.findAll(100);
 	}
@@ -104,8 +95,5 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 	public void setBeanParametro(SipreParametro beanParametro) {
 		this.beanParametro = beanParametro;
 	}
-
-	
-	
 
 }

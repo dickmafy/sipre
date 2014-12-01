@@ -43,7 +43,7 @@
 							<p:graphicImage value="/images/icons/pencil_12.png" />
 						</p:commandLink>
 						<p:spacer width="10" />
-						<p:commandLink oncomplete="PF('wdd').show()"
+						<p:commandLink oncomplete="PF('wdd').show()"  rendered="false" 
 							update=":frmDelete">
 							<f:setPropertyActionListener value="#{item}"
 								target="#{descuentoLeyMb.bean}" />
