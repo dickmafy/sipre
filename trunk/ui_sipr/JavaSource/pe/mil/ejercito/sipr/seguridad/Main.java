@@ -24,7 +24,7 @@ public class Main extends MainContext {
 		contenidoDefault = UProperties.getMessage(UParametro.PROP_CONFIGURACIONES, UParametro.CTNDO_DFULT);
 	}
 
-	/* Inicio: Para efectos de presentación, la logica se regenerará */
+	/* Inicio: Para efectos de presentaciï¿½n, la logica se regenerarï¿½ */
 	public String redireccionaMnu(Long id) {
 		switch (id.intValue()) {
 		case 0:
@@ -156,7 +156,7 @@ public class Main extends MainContext {
 			break;
 		
 		case 84:
-			contenidoDefault = "/modules/controlCalidad/verificarInformacion";
+			contenidoDefault = "/modules/controlCalidad/importarInformacion";
 			break;
 		case 33:
 			contenidoDefault = "/modules/importacion/bonificacionPersonal";
@@ -171,7 +171,7 @@ public class Main extends MainContext {
 		return "";
 	}
 
-	/* Fin: Para efectos de presentación, la logica se regenerará */
+	/* Fin: Para efectos de presentaciï¿½n, la logica se regenerarï¿½ */
 
 	public String getMenuLateral() {
 		return menuLateral;

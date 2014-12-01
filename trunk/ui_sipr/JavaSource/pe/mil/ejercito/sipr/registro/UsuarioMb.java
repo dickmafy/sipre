@@ -1,23 +1,14 @@
 package pe.mil.ejercito.sipr.registro;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.Date;
 import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-import org.primefaces.component.log.Log;
-
-import pe.mil.ejercito.sipr.commons.Faces;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.dto.UsuarioDto;
-import pe.mil.ejercito.sipr.ejbremote.GrupoGradoEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.ReintegroPersonalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.model.SiprePerfil;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 @ManagedBean(name = "usuarioMb")
@@ -70,7 +61,7 @@ public class UsuarioMb extends MainContext implements Serializable {
 			showMessage("Se elminio con exito.", SEVERITY_INFO);
 		} catch (Exception e) {
 			e.printStackTrace();
-			showMessage("Ocurrió un problema al intentar eliminar el perfil", SEVERITY_ERROR);
+			showMessage("Ocurriï¿½ un problema al intentar eliminar el perfil", SEVERITY_ERROR);
 
 		}
 		
