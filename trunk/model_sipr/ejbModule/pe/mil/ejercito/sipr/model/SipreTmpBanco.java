@@ -15,7 +15,6 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -36,10 +35,11 @@ public class SipreTmpBanco implements Serializable {
 	@Column(name = "CPERSONA_NRO_ADM")
 	private String				cpersonaNroAdm;
 
+	/*
 	@JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
 	@OneToOne(optional = false)
 	private SiprePersona		siprePersona;
-
+	*/
 	@JoinColumn(name = "CBANCO_CODIGO", referencedColumnName = "CBANCO_CODIGO")
 	@ManyToOne
 	private SipreBanco			sipreBanco;
@@ -59,14 +59,15 @@ public class SipreTmpBanco implements Serializable {
 		this.cpersonaNroAdm = cpersonaNroAdm;
 	}
 
-	public SiprePersona getSiprePersona() {
-		return siprePersona;
-	}
+	/*
+		public SiprePersona getSiprePersona() {
+			return siprePersona;
+		}
 
-	public void setSiprePersona(SiprePersona siprePersona) {
-		this.siprePersona = siprePersona;
-	}
-
+		public void setSiprePersona(SiprePersona siprePersona) {
+			this.siprePersona = siprePersona;
+		}
+	*/
 	public SipreBanco getSipreBanco() {
 		return sipreBanco;
 	}

@@ -8,11 +8,6 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.TipoPlanillaEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.VerificarCodigoBancoEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet;
-import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
-import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 
 /**
@@ -25,6 +20,7 @@ public class TmpFamiliaEjbBean extends GenericDAOImpl<SipreTmpFamilia>
 	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 	
+	@Override
 	@SuppressWarnings("unchecked")
 	public List<SipreTmpFamilia> findAllByIdPersona(String propiedad1) {
 		List<SipreTmpFamilia> list;
