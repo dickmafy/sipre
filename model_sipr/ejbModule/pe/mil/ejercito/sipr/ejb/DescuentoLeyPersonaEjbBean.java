@@ -14,7 +14,7 @@ import pe.mil.ejercito.sipr.model.SipreDescuentoLeyPersona;
 public class DescuentoLeyPersonaEjbBean extends GenericDAOImpl<SipreDescuentoLeyPersona>
 		implements DescuentoLeyPersonaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	@Override

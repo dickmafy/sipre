@@ -12,7 +12,7 @@ public class DiferenciaEjbBean extends
 		GenericDAOImpl<SipreDiferencia> implements
 		DiferenciaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

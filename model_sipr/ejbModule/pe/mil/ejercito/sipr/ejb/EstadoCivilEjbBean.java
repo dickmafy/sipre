@@ -11,7 +11,7 @@ public class EstadoCivilEjbBean extends
 		GenericDAOImpl<SipreEstadoCivil> implements
 		EstadoCivilEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 	
 

@@ -14,7 +14,7 @@ import pe.mil.ejercito.sipr.model.SipreAuditoria;
 @Stateless
 public class AuditoriaEjbBean implements AuditoriaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	@SuppressWarnings("unchecked")

@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -25,79 +26,79 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "SIPRE_TMP_BANCO")
-@NamedQueries({
-    @NamedQuery(name = "SipreTmpBanco.findAll", query = "SELECT s FROM SipreTmpBanco s")})
+@NamedQueries({ @NamedQuery(name = "SipreTmpBanco.findAll", query = "SELECT s FROM SipreTmpBanco s") })
 public class SipreTmpBanco implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @Id
-    @Basic(optional = false)
-    @NotNull
-    @Size(min = 1, max = 9)
-    @Column(name = "CPERSONA_NRO_ADM")
-    private String cpersonaNroAdm;
-    /*
-    @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
-    @OneToOne(optional = false)
-    private SiprePersona siprePersona;
-    */
-    @JoinColumn(name = "CBANCO_CODIGO", referencedColumnName = "CBANCO_CODIGO")
-    @ManyToOne
-    private SipreBanco sipreBanco;
+	private static final long	serialVersionUID	= 1L;
+	@Id
+	@Basic(optional = false)
+	@NotNull
+	@Size(min = 1, max = 9)
+	@Column(name = "CPERSONA_NRO_ADM")
+	private String				cpersonaNroAdm;
 
-    public SipreTmpBanco() {
-    }
+	@JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
+	@OneToOne(optional = false)
+	private SiprePersona		siprePersona;
 
-    public SipreTmpBanco(String cpersonaNroAdm) {
-        this.cpersonaNroAdm = cpersonaNroAdm;
-    }
+	@JoinColumn(name = "CBANCO_CODIGO", referencedColumnName = "CBANCO_CODIGO")
+	@ManyToOne
+	private SipreBanco			sipreBanco;
 
-    public String getCpersonaNroAdm() {
-        return cpersonaNroAdm;
-    }
+	public SipreTmpBanco() {
+	}
 
-    public void setCpersonaNroAdm(String cpersonaNroAdm) {
-        this.cpersonaNroAdm = cpersonaNroAdm;
-    }
-/*
-    public SiprePersona getSiprePersona() {
-        return siprePersona;
-    }
+	public SipreTmpBanco(String cpersonaNroAdm) {
+		this.cpersonaNroAdm = cpersonaNroAdm;
+	}
 
-    public void setSiprePersona(SiprePersona siprePersona) {
-        this.siprePersona = siprePersona;
-    }
-*/
-    public SipreBanco getSipreBanco() {
-        return sipreBanco;
-    }
+	public String getCpersonaNroAdm() {
+		return cpersonaNroAdm;
+	}
 
-    public void setSipreBanco(SipreBanco sipreBanco) {
-        this.sipreBanco = sipreBanco;
-    }
+	public void setCpersonaNroAdm(String cpersonaNroAdm) {
+		this.cpersonaNroAdm = cpersonaNroAdm;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
-        return hash;
-    }
+	public SiprePersona getSiprePersona() {
+		return siprePersona;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof SipreTmpBanco)) {
-            return false;
-        }
-        SipreTmpBanco other = (SipreTmpBanco) object;
-        if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null) || (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
-            return false;
-        }
-        return true;
-    }
+	public void setSiprePersona(SiprePersona siprePersona) {
+		this.siprePersona = siprePersona;
+	}
 
-    @Override
-    public String toString() {
-        return "pe.mil.ejercito.sipr.model.SipreTmpBanco[ cpersonaNroAdm=" + cpersonaNroAdm + " ]";
-    }
-    
+	public SipreBanco getSipreBanco() {
+		return sipreBanco;
+	}
+
+	public void setSipreBanco(SipreBanco sipreBanco) {
+		this.sipreBanco = sipreBanco;
+	}
+
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+		// TODO: Warning - this method won't work in the case the id fields are not set
+		if (!(object instanceof SipreTmpBanco)) {
+			return false;
+		}
+		SipreTmpBanco other = (SipreTmpBanco) object;
+		if ((this.cpersonaNroAdm == null && other.cpersonaNroAdm != null)
+				|| (this.cpersonaNroAdm != null && !this.cpersonaNroAdm.equals(other.cpersonaNroAdm))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "pe.mil.ejercito.sipr.model.SipreTmpBanco[ cpersonaNroAdm=" + cpersonaNroAdm + " ]";
+	}
+
 }

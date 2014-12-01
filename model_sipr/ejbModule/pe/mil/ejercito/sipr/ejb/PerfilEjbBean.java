@@ -14,7 +14,7 @@ import pe.mil.ejercito.sipr.model.SiprePerfil;
 @Stateless
 public class PerfilEjbBean implements PerfilEjbRemote{
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 	
 	@SuppressWarnings("unchecked")

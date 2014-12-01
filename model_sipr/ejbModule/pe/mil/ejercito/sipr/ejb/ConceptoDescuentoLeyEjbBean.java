@@ -11,7 +11,7 @@ public class ConceptoDescuentoLeyEjbBean extends
 		GenericDAOImpl<SipreConceptoDescuentoLey> implements
 		ConceptoDescuentoLeyEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 }

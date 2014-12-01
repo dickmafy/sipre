@@ -12,7 +12,7 @@ public class CalculoQuintaCategoriaEjbBean extends
 		GenericDAOImpl<SipreCalculoQuintaCategoria> implements
 		CalculoQuintaCategoriaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 	
 

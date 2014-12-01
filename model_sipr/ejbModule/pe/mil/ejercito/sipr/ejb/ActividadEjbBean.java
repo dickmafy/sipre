@@ -12,7 +12,7 @@ public class ActividadEjbBean extends
 		GenericDAOImpl<SipreActividad> implements
 		ActividadEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 	
 }

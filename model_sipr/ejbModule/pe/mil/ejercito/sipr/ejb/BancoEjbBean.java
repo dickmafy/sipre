@@ -16,7 +16,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 public class BancoEjbBean extends GenericDAOImpl<SipreBanco>
 		implements BancoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

@@ -20,7 +20,7 @@ public class IngresoConceptoPersonalEjbBean extends
 
 	
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	/**

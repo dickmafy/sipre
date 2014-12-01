@@ -14,7 +14,7 @@ import pe.mil.ejercito.sipr.model.SipreConceptoIngreso;
 public class ConceptoIngresoEjbBean extends GenericDAOImpl<SipreConceptoIngreso>
 		implements ConceptoIngresoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 }

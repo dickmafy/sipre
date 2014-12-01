@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreNucleo;
 public class NucleoEjbBean extends GenericDAOImpl<SipreNucleo>
 		implements NucleoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

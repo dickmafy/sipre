@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreIngresoGradoPK;
 @Stateless
 public class IngresoGradoEjbBean extends GenericDAOImpl<SipreIngresoGrado> implements IngresoGradoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 }

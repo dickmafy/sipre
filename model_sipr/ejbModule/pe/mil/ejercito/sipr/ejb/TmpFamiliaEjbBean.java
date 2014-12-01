@@ -22,7 +22,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 public class TmpFamiliaEjbBean extends GenericDAOImpl<SipreTmpFamilia>
 		implements TmpFamiliaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 	
 	@SuppressWarnings("unchecked")

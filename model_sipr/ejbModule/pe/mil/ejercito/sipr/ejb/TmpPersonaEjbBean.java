@@ -4,12 +4,12 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
-import pe.mil.ejercito.sipr.ejbremote.SituacionCausalEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreSituacionCausal;
+import pe.mil.ejercito.sipr.ejbremote.TmpPersonaEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreTmpPersona;
+
 
 @Stateless
-public class SituacionCausalEjbBean extends GenericDAOImpl<SipreSituacionCausal>
-		implements SituacionCausalEjbRemote {
+public class TmpPersonaEjbBean extends GenericDAOImpl<SipreTmpPersona> implements TmpPersonaEjbRemote {
 
 	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
@@ -17,4 +17,5 @@ public class SituacionCausalEjbBean extends GenericDAOImpl<SipreSituacionCausal>
 	
 
 	
+
 }

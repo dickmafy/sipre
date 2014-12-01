@@ -13,7 +13,7 @@ public class CalculoDescuentoLeyEjbBean extends
 		GenericDAOImpl<SipreCalculoDescuentoLey> implements
 		CalculoDescuentoLeyEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	@Override

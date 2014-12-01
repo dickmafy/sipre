@@ -16,7 +16,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 public class TipoPlanillaEjbBean extends GenericDAOImpl<SipreTipoPlanilla>
 		implements TipoPlanillaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

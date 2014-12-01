@@ -12,6 +12,6 @@ public class DescuentoIngresoEjbBean extends
 		GenericDAOImpl<SipreDescuentoIngreso> implements
 		DescuentoIngresoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 }

@@ -12,7 +12,7 @@ public class DescuentoNoprocesadoEjbBean extends
 		GenericDAOImpl<SipreDescuentoNoprocesado> implements
 		DescuentoNoprocesadoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 	
 

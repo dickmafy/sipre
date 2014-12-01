@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SiprePlanilla;
 @Stateless
 public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements PlanillaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

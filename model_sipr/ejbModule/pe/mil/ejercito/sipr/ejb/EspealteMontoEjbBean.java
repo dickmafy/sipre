@@ -12,7 +12,7 @@ public class EspealteMontoEjbBean extends
 		GenericDAOImpl<SipreEspealteMonto> implements
 		EspealteMontoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

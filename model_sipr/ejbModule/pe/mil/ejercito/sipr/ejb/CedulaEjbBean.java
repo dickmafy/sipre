@@ -12,7 +12,7 @@ public class CedulaEjbBean extends
 		GenericDAOImpl<SipreCedula> implements
 		CedulaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

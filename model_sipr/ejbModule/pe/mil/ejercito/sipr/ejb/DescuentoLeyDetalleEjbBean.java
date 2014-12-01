@@ -21,7 +21,7 @@ public class DescuentoLeyDetalleEjbBean extends
 		GenericDAOImpl<SipreDescuentoLeyDet> implements
 		DescuentoLeyDetalleEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	@SuppressWarnings("unchecked")

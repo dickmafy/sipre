@@ -12,6 +12,6 @@ public class EntidadCrediticiaEjbBean extends
 		GenericDAOImpl<SipreEntidadCrediticia> implements
 		EntidadCrediticiaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 }

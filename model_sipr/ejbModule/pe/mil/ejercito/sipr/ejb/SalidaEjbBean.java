@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreSalida;
 public class SalidaEjbBean extends GenericDAOImpl<SipreSalida>
 		implements SalidaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

@@ -16,7 +16,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 public class VerificarCodigoBancoEjbBean extends GenericDAOImpl<SipreTmpBanco>
 		implements VerificarCodigoBancoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	@SuppressWarnings("unchecked")
