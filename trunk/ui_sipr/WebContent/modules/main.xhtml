@@ -26,42 +26,46 @@
 							style="width: 50%; min-width: 640px; vertical-align: bottom; text-align: center;">
 							<h:form id="frm_menu">
 								<p:menubar id="mnuPersonal" styleClass="mnuPersonal">
-									<p:menuitem value="MI CUENTA"
-										actionListener="#{mainMb.redireccionaMnu(0)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:menuitem value="PARAMETRIZACIÓN"
-										actionListener="#{mainMb.redireccionaMnu(1)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:menuitem value="GESTION"
-										actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									<p:menuitem value="PLANILLA"
-										actionListener="#{mainMb.redireccionaMnu(3)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									
-									<p:menuitem value="INGRESO Y DESCUENTO"
-										actionListener="#{mainMb.redireccionaMnu(4)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-										
-									<p:menuitem value="SEGURIDAD"
-										actionListener="#{mainMb.redireccionaMnu(10)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									
-									 <p:menuitem value="CONTROL DE CALIDAD"
-										actionListener="#{mainMb.redireccionaMnu(12)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-									
-									<p:menuitem value="IMPORTACION"
-										actionListener="#{mainMb.redireccionaMnu(14)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-										
-							       <p:menuitem value="REPORTES"
-										actionListener="#{mainMb.redireccionaMnu(11)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
-								
-								   <p:menuitem value="BOLETA"
-										actionListener="#{mainMb.redireccionaMnu(13)}" ajax="true"
-										async="true" update=":frm_opciones, :pnlContenido" />
+									<p:submenu label="ACCIONES" icon="ui-icon-gear">
+										<p:menuitem value="Mi cuenta" icon="ui-icon-person"
+											actionListener="#{mainMb.redireccionaMnu(0)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:submenu label="Seguridad" icon="ui-icon-locked">
+											<p:menuitem value="Seguridad" icon="ui-icon-unlocked"
+												actionListener="#{mainMb.redireccionaMnu(10)}" ajax="true"
+												async="true" update=":frm_opciones, :pnlContenido" />
+										</p:submenu>
+									</p:submenu>
+									<p:submenu label="PLANILLA" icon="ui-icon-calendar">
+										<p:menuitem value="Gestionar planilla" icon="ui-icon-note"
+											actionListener="#{mainMb.redireccionaMnu(3)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:menuitem value="Ingreso y descuento" icon="ui-icon-tag"
+											actionListener="#{mainMb.redireccionaMnu(4)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:menuitem value="Boleta" icon="ui-icon-clipboard"
+											actionListener="#{mainMb.redireccionaMnu(13)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:menuitem value="Reportes" icon="ui-icon-document"
+											actionListener="#{mainMb.redireccionaMnu(11)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+									</p:submenu>
+									<p:submenu label="MANTENIMIENTO" icon="ui-icon-wrench">
+										<p:menuitem value="Parametrización" icon="ui-icon-arrow-4-diag"
+											actionListener="#{mainMb.redireccionaMnu(1)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:menuitem value="Gestión" icon="ui-icon-calendar"
+											actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+									</p:submenu>
+									<p:submenu label="CALIDAD" icon="ui-icon-circle-check">
+										<p:menuitem value="Control de calidad" icon="ui-icon-check"
+											actionListener="#{mainMb.redireccionaMnu(12)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+										<p:menuitem value="Importación" icon="ui-icon-arrowthickstop-1-s"
+											actionListener="#{mainMb.redireccionaMnu(14)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+									</p:submenu>
 								</p:menubar>
 							</h:form>
 						</td>
