@@ -17,9 +17,22 @@ public class ConstantesUtil {
 
 	public static final String	PROCESO_1_PLANILLA_NUMERO_HIJOS				= "Proceso 1 Numero Hijos";
 	public static final String	PROCESO_2_PLANILLA_LISTA_REVISTA			= "Proceso 2 Lista Revista";
-	public static final String	PROCESO_3_INGRESO_PERSONA			= "Proceso 3 Ingreso Por Persona";
-	public static final String	PROCESO_4_CALC_DESC_LEY			= "Proceso 4 Calcular Descuento de Ley";
-	public static final String	PROCESO_5_GUARDIA_HOSPITALARIA			= "Proceso 5 Guardias Hospitalarias";
+	public static final String	PROCESO_3_INGRESO_PERSONA					= "Proceso 3 Ingreso Por Persona";
+	public static final String	PROCESO_4_CALC_DESC_LEY						= "Proceso 4 Calcular Descuento de Ley";
+	public static final String	PROCESO_5_GUARDIA_HOSPITALARIA				= "Proceso 5 Guardias Hospitalarias";
+
+	public static final String	PROCESO_6									= "Proceso 6 Combustible";
+	public static final String	PROCESO_7									= "Proceso 7 Chofer y Mayordomo";
+	public static final String	PROCESO_8									= "Proceso 8 Ex Comabiente del 41";
+	public static final String	PROCESO_9									= "Proceso 9 Ex Comabiente Cenepa";
+	public static final String	PROCESO_10									= "Proceso 10 Subsidio DL 1132";
+	public static final String	PROCESO_11									= "Proceso 11 Bonificacion DL 1132";
+	public static final String	PROCESO_12									= "Proceso 12 Bonificacion DU 040";
+	public static final String	PROCESO_13									= "Proceso 13 Subsidio por invalidez o póstumo";
+	public static final String	PROCESO_14									= "Proceso 14 Bonificación por Cumplir 65 años";
+	public static final String	PROCESO_15									= "Proceso 15 Calcular Impuesto a la renta";
+	public static final String	PROCESO_16									= "Proceso 16 Actualizar Descuento";
+	public static final String	PROCESO_17									= "Proceso 17 Calcular Boleta";
 
 	// Estados Tablas
 	public static final String	TABLA_ESTADO_ACTIVO							= "A";
@@ -30,7 +43,7 @@ public class ConstantesUtil {
 
 	// Mensajes Constantes
 	public static final String	MENSAJE_RESPUESTA_ERROR_GENERAL				= "No se pudo completar la operacion.";
-	public static final String	MENSAJE_RESPUESTA_CORRECTA					= "La operaci�n se realiz� correctamente.";
+	public static final String	MENSAJE_RESPUESTA_CORRECTA					= "La operación se realizo correctamente.";
 	public static final String	MENSAJE_FECHA_FORMATO_MAL					= "La fecha encontrada tiene un formato incorrecto.";
 
 	public static final String	MENSAJE_EXCEL_ERROR							= "No se leyeron correctamente los datos del excel.";
@@ -54,23 +67,22 @@ public class ConstantesUtil {
 	public static final String	MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY		= MENSAJE_RESPUESTA_ERROR_GENERAL
 																					+ " No se puede repetir el Codigo del Descuento Ley.";
 
-	public static final String	RUTA_FILE_SYSTEM			= "system_file/";
-	public static final int	TIPO_FILE_ENTIDAD			= 2;
-	public static final int	TIPO_FILE_JUDICIAL			= 1;
-	
-	public static final String  LOGO = "images\\logo_ejercito.png";
-    public static final String  IMAGES = "images";
-    public static final String REPORT_BOLETA = "jasper\\report_boleta.jasper";
-    public static final String RUTA_REPORT_FILE = "reporte_file\\";
-   
-    
-    public static String getRutaFiles(FacesContext facesContext, String carpeta) {
-        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-        String realPath = servletContext.getRealPath("/") + carpeta;
-        System.out.println("Ruta logo y/o jasper: " + realPath);
-        return realPath;
-    }
-    
+	public static final String	RUTA_FILE_SYSTEM							= "system_file/";
+	public static final int		TIPO_FILE_ENTIDAD							= 2;
+	public static final int		TIPO_FILE_JUDICIAL							= 1;
+
+	public static final String	LOGO										= "images\\logo_ejercito.png";
+	public static final String	IMAGES										= "images";
+	public static final String	REPORT_BOLETA								= "jasper\\report_boleta.jasper";
+	public static final String	RUTA_REPORT_FILE							= "reporte_file\\";
+
+	public static String getRutaFiles(FacesContext facesContext, String carpeta) {
+		ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+		String realPath = servletContext.getRealPath("/") + carpeta;
+		System.out.println("Ruta logo y/o jasper: " + realPath);
+		return realPath;
+	}
+
 	// Listas
 	public String getLIST_EMPTY() {
 		return "No se encontraron resultados.";
