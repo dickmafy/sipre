@@ -39,7 +39,7 @@ public class IngresoConceptoPersonalMb extends MainContext implements
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
 			ejb = (IngresoConceptoPersonalEjbRemote) findServiceRemote(IngresoConceptoPersonalEjbRemote.class);
 			ejbConceptoIngreso = (ConceptoIngresoEjbRemote) findServiceRemote(ConceptoIngresoEjbRemote.class);
-			beanList = ejb.findAll(100);
+			//beanList = ejb.findAll(100);
 			beanConceptoList = ejbConceptoIngreso.findAll(100);
 		} catch (Exception e) {
 			e.printStackTrace();

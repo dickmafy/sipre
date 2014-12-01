@@ -10,8 +10,9 @@ import javax.faces.event.ActionEvent;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.BancoEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpBancoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.VerificarCodigoBancoEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreBanco;
 import pe.mil.ejercito.sipr.model.SiprePersona;
 import pe.mil.ejercito.sipr.model.SipreTmpBanco;
@@ -20,25 +21,31 @@ import pe.mil.ejercito.sipr.model.SipreTmpBanco;
 @ViewScoped
 public class VerificarCodigoBanco extends MainContext implements Serializable {
 
-	private static final long				serialVersionUID	= 1L;
+	private static final long	serialVersionUID	= 1L;
 	@SuppressWarnings("unused")
-	private UsuarioEjbRemote				ejbUsuario;
-	private VerificarCodigoBancoEjbRemote	ejb;
-	private BancoEjbRemote					ejbBanco;
+	private UsuarioEjbRemote	ejbUsuario;
+	private TmpBancoEjbRemote	ejb;
+	private BancoEjbRemote		ejbBanco;
+	private PersonaEjbRemote	ejbPersona;
 
-	private List<SipreTmpBanco>				beanList;
-	private List<SipreBanco>				bancoList;
-	private SipreTmpBanco					bean;
+	private List<SipreTmpBanco>	beanList;
+	private List<SipreBanco>	beanBancoList;
+	private List<SiprePersona>	beanPersonaList;
+
+	private SipreTmpBanco		bean;
 
 	public VerificarCodigoBanco() {
 		super();
 		try {
 			ejbUsuario = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
-			ejb = (VerificarCodigoBancoEjbRemote) findServiceRemote(VerificarCodigoBancoEjbRemote.class);
+			ejb = (TmpBancoEjbRemote) findServiceRemote(TmpBancoEjbRemote.class);
+			ejbPersona = (PersonaEjbRemote) findServiceRemote(PersonaEjbRemote.class);
 			ejbBanco = (BancoEjbRemote) findServiceRemote(BancoEjbRemote.class);
 
-			beanList = ejb.findAll(100);
-			bancoList = ejbBanco.findAll();
+			beanPersonaList = ejbPersona.findAll();
+			beanBancoList = ejbBanco.findAll();
+
+			beanList = ejb.findAll();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -46,16 +53,16 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 
 	public void newBean(ActionEvent event) {
 		bean = new SipreTmpBanco();
-		SiprePersona persona = new SiprePersona();
 		SipreBanco banco = new SipreBanco();
-		// bean.setSiprePersona(persona);
 		bean.setSipreBanco(banco);
+		
+
 	}
 
 	public void saveBean(ActionEvent event) {
 		try {
 			bean = ejb.persist(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_ERROR);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA, SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO, SEVERITY_ERROR);
 		}
@@ -73,12 +80,44 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 		beanList = ejb.findAll(100);
 	}
 
+	public UsuarioEjbRemote getEjbUsuario() {
+		return ejbUsuario;
+	}
+
+	public void setEjbUsuario(UsuarioEjbRemote ejbUsuario) {
+		this.ejbUsuario = ejbUsuario;
+	}
+
+	public TmpBancoEjbRemote getEjb() {
+		return ejb;
+	}
+
+	public void setEjb(TmpBancoEjbRemote ejb) {
+		this.ejb = ejb;
+	}
+
+	public PersonaEjbRemote getEjbPersona() {
+		return ejbPersona;
+	}
+
+	public void setEjbPersona(PersonaEjbRemote ejbPersona) {
+		this.ejbPersona = ejbPersona;
+	}
+
 	public List<SipreTmpBanco> getBeanList() {
 		return beanList;
 	}
 
 	public void setBeanList(List<SipreTmpBanco> beanList) {
 		this.beanList = beanList;
+	}
+
+	public List<SiprePersona> getBeanPerosnaList() {
+		return beanPersonaList;
+	}
+
+	public void setBeanPerosnaList(List<SiprePersona> beanPerosnaList) {
+		this.beanPersonaList = beanPerosnaList;
 	}
 
 	public SipreTmpBanco getBean() {
@@ -89,6 +128,14 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 		this.bean = bean;
 	}
 
+	public List<SiprePersona> getBeanPersonaList() {
+		return beanPersonaList;
+	}
+
+	public void setBeanPersonaList(List<SiprePersona> beanPersonaList) {
+		this.beanPersonaList = beanPersonaList;
+	}
+
 	public BancoEjbRemote getEjbBanco() {
 		return ejbBanco;
 	}
@@ -97,12 +144,12 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 		this.ejbBanco = ejbBanco;
 	}
 
-	public List<SipreBanco> getBancoList() {
-		return bancoList;
+	public List<SipreBanco> getBeanBancoList() {
+		return beanBancoList;
 	}
 
-	public void setBancoList(List<SipreBanco> bancoList) {
-		this.bancoList = bancoList;
+	public void setBeanBancoList(List<SipreBanco> beanBancoList) {
+		this.beanBancoList = beanBancoList;
 	}
 
 }
