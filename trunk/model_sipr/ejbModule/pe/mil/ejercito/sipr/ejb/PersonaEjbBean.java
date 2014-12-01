@@ -13,7 +13,7 @@ import pe.mil.ejercito.sipr.model.SiprePersona;
 @Stateless
 public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements PersonaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	@SuppressWarnings({ "unchecked", "unused" })

@@ -1,8 +1,6 @@
 package pe.mil.ejercito.sipr.ejb;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.ArrayBlockingQueue;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -20,8 +18,8 @@ import pe.mil.ejercito.sipr.model.SipreUsuario;
 @Stateless
 public class UsuarioEjbBean implements UsuarioEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
-	EntityManager em;
+	@PersistenceContext(unitName = "model_sipre")
+	EntityManager	em;
 
 	/**
 	 * Default constructor.
@@ -51,7 +49,7 @@ public class UsuarioEjbBean implements UsuarioEjbRemote {
 	public List<SipreUsuario> listUsuario(SipreUsuario usuario) {
 		List<SipreUsuario> list = null;
 		try {
-			list = (List<SipreUsuario>) em.createNamedQuery(
+			list = em.createNamedQuery(
 					"SipreUsuario.findAll").getResultList();
 		} catch (Exception e) {
 			e.printStackTrace();

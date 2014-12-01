@@ -12,7 +12,7 @@ public class ArmaEjbBean extends
 		GenericDAOImpl<SipreArma> implements
 		ArmaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

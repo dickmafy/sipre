@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreIngresoOtro;
 public class IngresoOtroEjbBean extends GenericDAOImpl<SipreIngresoOtro>
 		implements IngresoOtroEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

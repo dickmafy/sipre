@@ -12,7 +12,7 @@ public class BoletaDetalleEjbBean extends
 		GenericDAOImpl<SipreBoletaDetalle> implements
 		BoletaDetalleEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

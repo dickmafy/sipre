@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
 public class TmpBonificacionEjbBean extends GenericDAOImpl<SipreTmpBonificacion>
 		implements TmpBonificacionEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

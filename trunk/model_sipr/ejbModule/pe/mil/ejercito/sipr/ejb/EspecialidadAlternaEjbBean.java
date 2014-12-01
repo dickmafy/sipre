@@ -11,7 +11,7 @@ public class EspecialidadAlternaEjbBean extends
 		GenericDAOImpl<SipreEspecialidadAlterna> implements
 		EspecialidadAlternaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;	
 
 	

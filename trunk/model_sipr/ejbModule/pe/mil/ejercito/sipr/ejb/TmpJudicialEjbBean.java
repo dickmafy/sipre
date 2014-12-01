@@ -9,7 +9,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpJudicial;
 
 public class TmpJudicialEjbBean extends GenericDAOImpl<SipreTmpJudicial>implements TmpJudicialEjbRemote {
 
-@PersistenceContext(name = "model_sipre")
+@PersistenceContext(unitName = "model_sipre")
 EntityManager em;
 
 }

@@ -13,7 +13,7 @@ import pe.mil.ejercito.sipr.model.SipreSituacionAdm;
 @Stateless
 public class SituacionAdmEjbBean extends GenericDAOImpl<SipreSituacionAdm> implements SituacionAdmEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 }

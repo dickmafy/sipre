@@ -12,7 +12,7 @@ public class CargoEjbBean extends
 		GenericDAOImpl<SipreCargo> implements
 		CargoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 }

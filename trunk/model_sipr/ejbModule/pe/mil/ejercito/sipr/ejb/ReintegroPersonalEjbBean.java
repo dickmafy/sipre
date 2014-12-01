@@ -24,7 +24,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
 @Stateless
 public class ReintegroPersonalEjbBean implements ReintegroPersonalEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	public ReintegroPersonalEjbBean() {

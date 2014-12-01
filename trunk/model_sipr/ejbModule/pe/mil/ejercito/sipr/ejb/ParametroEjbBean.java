@@ -14,7 +14,7 @@ public class ParametroEjbBean extends
 		GenericDAOImpl<SipreParametro> implements
 		ParametroEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 }

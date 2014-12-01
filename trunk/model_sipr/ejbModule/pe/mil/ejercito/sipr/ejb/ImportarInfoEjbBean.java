@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreImportarInfo;
 public class ImportarInfoEjbBean extends GenericDAOImpl<SipreImportarInfo>
 		implements ImportarInfoEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

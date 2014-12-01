@@ -12,7 +12,7 @@ public class AgrupadorEjbBean extends
 		GenericDAOImpl<SipreAgrupador> implements
 		AgrupadorEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 }

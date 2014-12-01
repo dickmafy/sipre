@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreSituacionCedula;
 public class SituacionCedulaEjbBean extends GenericDAOImpl<SipreSituacionCedula>
 		implements SituacionCedulaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

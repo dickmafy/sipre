@@ -16,7 +16,7 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaAdicionalPK;
 public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicional>
 		implements PlanillaAdicionalEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	@Override

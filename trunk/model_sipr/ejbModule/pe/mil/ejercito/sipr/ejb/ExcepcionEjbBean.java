@@ -12,7 +12,7 @@ public class ExcepcionEjbBean extends
 		GenericDAOImpl<SipreExcepcion> implements
 		ExcepcionEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;	
 
 	

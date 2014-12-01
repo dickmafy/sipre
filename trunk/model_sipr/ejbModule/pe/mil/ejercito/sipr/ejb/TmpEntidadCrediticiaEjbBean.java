@@ -10,7 +10,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticia;
 
 public class TmpEntidadCrediticiaEjbBean extends GenericDAOImpl<SipreTmpEntidadCrediticia>implements TmpEntidadCrediticiaEjbRemote {
 
-@PersistenceContext(name = "model_sipre")
+@PersistenceContext(unitName = "model_sipre")
 EntityManager em;
 
 }

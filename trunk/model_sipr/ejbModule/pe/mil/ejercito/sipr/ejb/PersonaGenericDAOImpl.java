@@ -11,14 +11,14 @@ import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
+public class PersonaGenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 
-	private Class<T>	clazz;
-	@PersistenceContext(unitName = "model_sipre")
+	private final Class<T>	clazz;
+	@PersistenceContext(unitName = "model_personal")
 	EntityManager		em;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
-	public GenericDAOImpl() {
+	public PersonaGenericDAOImpl() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.clazz = (Class) genericSuperclass.getActualTypeArguments()[0];
 	}
@@ -51,13 +51,13 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		return (List<T>) em.createQuery("from " + clazz.getName()).getResultList();
+		return em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll(int maxRowReturn) {
-		return (List<T>) em.createQuery("from " + clazz.getName()).setMaxResults(maxRowReturn).getResultList();
+		return em.createQuery("from " + clazz.getName()).setMaxResults(maxRowReturn).getResultList();
 	}
 
 	@Override

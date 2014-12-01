@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
 public class TmpGuardiaEjbBean extends GenericDAOImpl<SipreTmpGuardia>
 		implements TmpGuardiaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	

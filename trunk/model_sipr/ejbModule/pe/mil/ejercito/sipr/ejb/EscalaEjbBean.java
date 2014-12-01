@@ -12,7 +12,7 @@ public class EscalaEjbBean extends
 		GenericDAOImpl<SipreEscala> implements
 		EscalaEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
 	

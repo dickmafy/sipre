@@ -11,7 +11,7 @@ import pe.mil.ejercito.sipr.model.SipreUnidad;
 public class UnidadEjbBean extends GenericDAOImpl<SipreUnidad>
 		implements UnidadEjbRemote {
 
-	@PersistenceContext(name = "model_sipre")
+	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
 
 	
