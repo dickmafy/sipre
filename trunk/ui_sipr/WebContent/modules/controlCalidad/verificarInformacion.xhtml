@@ -33,36 +33,41 @@
 								icon="icn_bar_save" ajax="true" />
 
 							<p:commandButton title="Guardar" value="Guardar"
-								icon="icn_bar_save" ajax="true" />
+								icon="icn_bar_save" ajax="true"
+								actionListener="#{verificarInformacion.moverTmpPersonaAPlanilla}" />
 
 						</h:panelGrid>
 					</h:panelGrid>
 
 				</fieldset>
 
-				<p:dataTable id="dtmensual" var="item" value="" emptyMessage=""
-					resizableColumns="true">
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					filteredValue="#{verificarInformacion.beanGmListBusqueda}"
+					value="#{verificarInformacion.beanTmpPersonaList}"
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+					rows="20" paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
 					<p:column headerText="N*">
-						<h:outputText value="1" />
+
 					</p:column>
 
 					<p:column headerText="CIP">
-						<h:outputText value="1234567895" />
+						<h:outputText value="#{item.cpersonaNroAdm}" />
 					</p:column>
 
 					<p:column headerText="Grado">
-						<h:outputText value="Grado" />
+						<h:outputText value="#{item.ctpCodGrado}" />
 					</p:column>
 					<p:column headerText="Esp">
-						<h:outputText value="Espe" />
+						<h:outputText value="#{item.ctpCodEspAlt}" />
 
 					</p:column>
 					<p:column headerText="Nombre">
-						<h:outputText value="Juan Arias" />
+						<h:outputText value="#{item.vtpApeNom}" />
 					</p:column>
 					<p:column headerText="Situación">
-						<h:outputText value="Situación" />
+						<h:outputText value="#{item.ctpCodSitAdm}" />
 					</p:column>
 					<p:column headerText="Estado">
 						<p:selectBooleanCheckbox value="true" />
@@ -75,56 +80,58 @@
 
 				</p:dataTable>
 
-             </div>
+			</div>
 		</div>
-			<div >
-				<p:dialog widgetVar="wrevisar" style="width:500px;"
-					header="Validación actual y anterior" id="dlgrevisar" showEffect="clip" hideEffect="slide">
-					
-					<h:panelGrid columns="1" style="margin-top:10px;margin-bottom:10px"
+		<div>
+			<p:dialog widgetVar="wrevisar" style="width:500px;"
+				header="Validación actual y anterior" id="dlgrevisar"
+				showEffect="clip" hideEffect="slide">
+
+				<h:panelGrid columns="1" style="margin-top:10px;margin-bottom:10px"
+					cellpadding="8">
+					<p:dataTable id="dtDetalle" var="item" value="" emptyMessage=""
+						resizableColumns="true" style="width:80%">
+
+						<p:column headerText="Datos" style="width:5%">
+							<h:outputText value="Mes Actual" />
+
+						</p:column>
+
+						<p:column headerText="CIP" style="width:5%">
+							<h:outputText value="1234567895" />
+						</p:column>
+
+
+						<p:column headerText="Nombre" style="width:15%">
+							<h:outputText value="Juan Arias" />
+						</p:column>
+						<p:column headerText="Grado" style="width:10%">
+							<h:outputText value="Grado" />
+						</p:column>
+
+
+						<p:column headerText="Estado" style="width:10%">
+							<p:selectBooleanCheckbox value="true" />
+						</p:column>
+
+					</p:dataTable>
+					<h:panelGrid columns="2" style="margin-top:10px;margin-bottom:10px"
 						cellpadding="8">
-						<p:dataTable id="dt" var="item" value="" emptyMessage=""
-							resizableColumns="true" style="width:80%">
-
-							<p:column headerText="Datos" style="width:5%">
-								<h:outputText value="Mes Actual" />
-
-							</p:column>
-
-							<p:column headerText="CIP" style="width:5%">
-								<h:outputText value="1234567895" />
-							</p:column>
-
-
-							<p:column headerText="Nombre" style="width:15%">
-								<h:outputText value="Juan Arias" />
-							</p:column>
-							<p:column headerText="Grado" style="width:10%">
-								<h:outputText value="Grado" />
-							</p:column>
-
-
-							<p:column headerText="Estado" style="width:10%">
-								<p:selectBooleanCheckbox value="true" />
-							</p:column>
-
-						</p:dataTable>
-						<h:panelGrid columns="2" style="margin-top:10px;margin-bottom:10px" cellpadding="8">
 
 
 
-							<p:commandButton title="Guardar" value="Guardar"
-								icon="icn_bar_save" ajax="true" />
+						<p:commandButton title="Guardar" value="Guardar"
+							icon="icn_bar_save" ajax="true" />
 
-							<p:commandButton title="Cancelar" value="Cancelar"
-								icon="icn_bar_save" ajax="true" />
-
-						</h:panelGrid>
+						<p:commandButton title="Cancelar" value="Cancelar"
+							icon="icn_bar_save" ajax="true" />
 
 					</h:panelGrid>
-				</p:dialog>
-		   </div>
-	
+
+				</h:panelGrid>
+			</p:dialog>
+		</div>
+
 	</h:form>
 
 </ui:composition>
