@@ -10,11 +10,222 @@
 			<div id="contenido">
 				<p:panel header="Judicial ">
 
+					<h:form>
 
-					<p:commandButton title="Nuevo" value="Nuevo" icon="icn_bar_save"
-						actionListener="#{reintegroPersonalMb.newBean}" ajax="true" />
+						<p:panel header="GENERAL">
+							<p:panelGrid columns="6">
+								<p:outputLabel value="RESOLUCION" />
+								<p:inputText value="131032" />
+
+								<p:inputText value="327456" />
+
+								<p:inputText value="01" />
+
+								<p:outputLabel value="FERNANDES POMAHUACRE KELLY GRACIELA" />
+
+								<p:outputLabel value="AÑO MP" />
+								<p:inputText value="2013" />
+
+								<p:outputLabel value="NUMERO MP" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="FECHA EXPEDIENTE" />
+
+								<p:inputText value="2013" />
+
+								<p:outputLabel value="N RESOLUCION" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="N EXPEDIENTE" />
+								<p:inputText value="" />
+							</p:panelGrid>
+						</p:panel>
+
+						<p:spacer height="20"></p:spacer>
+
+						<p:panel header="DATOS DE LA RESOLUCIÓN">
+							<p:panelGrid columns="6">
+
+								<p:outputLabel value="FECHA OFICIO" />
+								<p:inputText value="4" />
+
+								<p:outputLabel value="NRO OFICIO" />
+								<p:inputText value="001" />
+
+								<p:outputLabel value="FECHA RESOL" />
+								<p:inputText value="01" />
+
+								<p:outputLabel value="NOMBRE JUEZ" />
+								<p:inputText value="000001" />
+
+								<p:outputLabel value="SECRETARIO" />
+								<p:inputText value="01" />
 
 
+								<p:outputLabel value="TIPO JUZGADO" />
+								<p:inputText value="11/11/11" />
+
+
+								<p:outputLabel value="JUZGADO" />
+								<p:inputText value=" - " />
+
+
+							</p:panelGrid>
+						</p:panel>
+
+
+
+						<p:panel header="DATOS DEL DESCUENTO">
+							<p:panelGrid columns="6">
+
+								<p:outputLabel value="DESCUENTO" />
+								<p:inputText value=" 1 " />
+
+								<p:outputLabel value="FECHA" />
+								<p:inputText value=" 31-10-2013 " />
+
+
+								<p:outputLabel value="TIPO DE IMPORTE" />
+								<p:inputText rows="2" cols="2" value=" - " />
+
+
+								<p:outputLabel value="OBSERVACION" />
+								<p:inputText value=" - " />
+
+
+
+							</p:panelGrid>
+						</p:panel>
+
+
+
+						<p:panel header="PORCENTAJE">
+							<p:panelGrid columns="6">
+								<p:outputLabel value="REM GRAT BONI" />
+								<p:inputText value="01" />
+
+								<p:outputLabel value="ESCOLARIDAD" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="COMBUSTIBLE" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="CHOFER " />
+								<p:inputText value="" />
+
+								<p:outputLabel value="BONOS" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="IMP CENEPA" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="COMISION DE PAZ" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="MOVILIDAD Y REFRI" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="DOCENCIA" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="RACIONAMIENTO" />
+								<p:inputText value="" />
+								<p:outputLabel value="MAYORDOMO" />
+								<p:inputText value="" />
+								<p:outputLabel value="VRAE" />
+								<p:inputText value="" />
+								<p:outputLabel value="ZONA DE EMERGENCIA" />
+								<p:inputText value="" />
+								<p:outputLabel value="INDEMNIZACION" />
+								<p:inputText value="" />
+								<p:outputLabel value="VACACIONES" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="AETA" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="IMP BON EXTRA" />
+								<p:inputText value="" />
+								<p:outputLabel value="IMP GUARDIAS H." />
+								<p:inputText value="" />
+
+
+
+							</p:panelGrid>
+						</p:panel>
+
+						<p:panel header="IMPORTE FIJO">
+							<p:panelGrid columns="6">
+
+								<p:outputLabel value="Gratificacion" />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Escolaridad" />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Combustible" />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Importe maximo" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="Importe Cuota" />
+								<p:inputText value="" />
+
+								<p:outputLabel value="Numero Cuota" />
+								<p:inputText value="" />
+
+
+							</p:panelGrid>
+						</p:panel>
+
+						<p:panel header="DEPOSITO JUDICIAL">
+							<p:panelGrid columns="6">
+
+								<p:outputLabel value="Deposito?" />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="A favor de " />
+								<p:inputText value=" - " />
+
+
+								<p:outputLabel value="Devolucion?" />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+
+
+								<p:outputLabel value="Al titular ? " />
+								<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+									<f:selectItem itemValue="si" itemLabel="si" />
+									<f:selectItem itemValue="no" itemLabel="no" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Persona Afectada" />
+								<p:inputText value=" - " />
+
+
+							</p:panelGrid>
+						</p:panel>
+
+						<p:spacer height="20"></p:spacer>
+						<p:commandButton value="Guardar"></p:commandButton>
+						<p:commandButton value="Limpiar"></p:commandButton>
+					</h:form>
 				</p:panel>
 			</div>
 		</div>

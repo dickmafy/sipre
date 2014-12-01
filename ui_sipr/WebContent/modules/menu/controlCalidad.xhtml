@@ -5,14 +5,16 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuReporte">
 			<p:submenu label="CONTROL DE CALIDAD">
-			  <p:menuitem value="Verificar Información a Procesar" icon="ui-icon-person"
-					async="true" actionListener="#{mainMb.redireccionaContent(83)}"
-					ajax="true" update=":pnlContenido" />
-				<p:menuitem value="Importar " icon="ui-icon-person"
-					async="true" actionListener="#{mainMb.redireccionaContent(83)}"
-					ajax="true" update=":pnlContenido" />
-				
-				
+				<p:menuitem value="Verificar Información a Procesar (COPERE)"
+					icon="ui-icon-person" async="true"
+					actionListener="#{mainMb.redireccionaContent(83)}" ajax="true"
+					update=":pnlContenido" />
+				<p:menuitem value="Importar Informacion (COPERE)"
+					icon="ui-icon-person" async="true"
+					actionListener="#{mainMb.redireccionaContent(84)}" ajax="true"
+					update=":pnlContenido" />
+
+
 			</p:submenu>
 		</p:menu>
 	</h:form>

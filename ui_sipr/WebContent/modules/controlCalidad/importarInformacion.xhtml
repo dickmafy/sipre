@@ -1,0 +1,94 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+	<h:form id="frm">
+		<div id="contenido_formulario">
+			<div id="page_flow">Planilla / PROCESAR PLANILLA</div>
+			<div id="titulo_formulario">PROCESAR PLANILLA</div>
+			<div id="contenido">
+
+
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+				<!-- PROGRES INICIO -->
+				<!-- Si se print infinitos post, revisar los ajax true y en java updateComponente("dt"); 
+				-->
+				<p:blockUI block="frm:panelProcesoPlanilla" widgetVar="wblockui" />
+				<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000"
+					id="barraProgreso" value="#{progressBar.contador}"
+					labelTemplate="{value}%" styleClass="animated" global="false"
+					style="width:700px">
+					<p:ajax event="complete" listener="#{progressBar.onComplete}"
+						update=":frm:barraProgreso" />
+
+
+				</p:progressBar>
+				<!-- PROGRES FIN-->
+
+				<p:outputLabel value="Mes del Proceso :" />
+				<p:selectOneMenu value="#{importarInformacion.mesProceso}">
+					<f:selectItem itemValue="201411" itemLabel="201411" />
+					<f:selectItem itemValue="201412" itemLabel="201412" />
+				</p:selectOneMenu>
+
+				<p:outputLabel value="Numero del Proceso :" />
+				<p:selectOneMenu value="#{importarInformacion.numeroProceso}">
+					<f:selectItem itemValue="1" itemLabel="1" />
+					<f:selectItem itemValue="2" itemLabel="2" />
+					<f:selectItem itemValue="3" itemLabel="3" />
+				</p:selectOneMenu>
+
+				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
+					<p:panelGrid columns="10">
+
+						<p:outputLabel value="1 Numero de Hijos" />
+						<p:commandButton icon="ui-icon-play" styleClass="boton_botonera"
+							value="Procesar" ajax="true"
+							actionListener="#{importarInformacion.moverCopereATmpPersonal}"
+							update=":frm:dt :frm:barraProgreso"
+							onstart="PF('barraProgreso').start();PF('wblockui').show();"
+							oncomplete="PF('wblockui').hide();PF('wdt').clearFilters();"
+							id="p1">
+						</p:commandButton>
+					</p:panelGrid>
+				</p:panel>
+
+
+
+				<!-- DATATABLE-->
+				<p:dataTable id="dt" var="item" widgetVar="wdt"
+					filteredValue="#{importarInformacion.beanGmListBusqueda}"
+					value="#{importarInformacion.beanGmList}"
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+					rows="20" paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<f:facet name="header">
+						<p:outputPanel>
+							<h:outputText value="Buscar en la Tabla" />
+							<h:inputText id="globalFilter" onkeyup="PF('wdt').filter()" />
+						</p:outputPanel>
+					</f:facet>
+
+					<p:column headerText="Campo Proceso" width="2%">
+						<h:outputText value="#{item.campo}" />
+					</p:column>
+
+					<p:column headerText="Tipo Mensaje" width="1%">
+						<h:outputText value="#{item.tipoMensaje}"
+							style="background-color : #{item.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
+							:item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
+							: item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
+					</p:column>
+
+					<p:column headerText="Mensaje" width="10%"
+						filterBy="#{item.mensaje}" filterMatchMode="contains">
+						<h:outputText value="#{item.mensaje}" />
+					</p:column>
+					
+				</p:dataTable>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
