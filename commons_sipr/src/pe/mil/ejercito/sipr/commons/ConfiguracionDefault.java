@@ -32,11 +32,14 @@ public class ConfiguracionDefault implements Serializable {
 	public static final String TRANSPORT;
 	public static final String EMAIL_CONNECT;
 	public static final String EMAIL_PASSWORD;
-	public static final String URL_CONFIRMACION;
-	public static final int PORT_CONFIRMACION;
-	public static final String  CHARSET;
-			public static final String 		CONTENT_TYPE;
-					public static final String 		VARIABLE_CONFIRMACION;
+	public static final String TO_EMAIL;
+
+	public static final String CHARSET;
+	public static final String CONTENT_TYPE;
+	public static final String VARIABLE_CONFIRMACION;
+
+	public static final String TITULO_MENSAJE ;
+	public static final String CUERPO_MENSAJE;
 
 	static {
 
@@ -47,8 +50,8 @@ public class ConfiguracionDefault implements Serializable {
 		REPORT_INGRESO = "jasper\\report_percibo.jasper";
 		REPORT_DESCUENTO = "jasper\\report_descuento.jasper";
 		RUTA_REPORT_FILE = "reporte_file\\";
-		
-		REPORT_BOLETA_JXML= "jasper\\report_boleta.jrxml";
+
+		REPORT_BOLETA_JXML = "jasper\\report_boleta.jrxml";
 
 		IP = "localhost";
 		INSTANCIA = "xe";
@@ -56,23 +59,25 @@ public class ConfiguracionDefault implements Serializable {
 		PASSWORD = "SIPRE";
 		PUERTO = "1521";
 
-		HOST = "11.160.121.76";
+		HOST = "mail.cs4-engineering.com";
 		STARTTLS_ENABLE = "false";
-		PORT = "25";
-		USER = "sistemasgart@osinerg.gob.pe";
-		USER_ADMIN = "sistemasgart@osinerg.gob.pe";
+		PORT = "26";
+		USER = "no-reply@cs4-engineering.com";
+		USER_ADMIN = "no-reply@cs4-engineering.com";
 		AUTH = "true";
-		INTERNET_ADDRESS = "sistemasgart@osinerg.gob.pe";
-		BCC = "sistemasgart@osinerg.gob.pe";
+		INTERNET_ADDRESS = "no-reply@cs4-engineering.com";
+		BCC = "no-reply@cs4-engineering.com";
 		TRANSPORT = "smtp";
-		EMAIL_CONNECT = "sistemasgart@osinerg.gob.pe";
-		EMAIL_PASSWORD = "sistgart2012";
-		URL_CONFIRMACION = "192.168.101.27";
-		PORT_CONFIRMACION = 23302;
-		CHARSET="utf-8";
-		CONTENT_TYPE="html";
-		VARIABLE_CONFIRMACION="key";
+		EMAIL_CONNECT = "no-reply@cs4-engineering.com";
+		EMAIL_PASSWORD = "cs4@2014";
+		CHARSET = "utf-8";
+		CONTENT_TYPE = "html";
+		VARIABLE_CONFIRMACION = "key";
+		TO_EMAIL="hm.ericson@gmail.com";
 		
+		TITULO_MENSAJE = "EJERCITO DEL PERÚ – Boleta generada";
+        CUERPO_MENSAJE="Sr. (Sra.) (Srta.): : <br /><br/>"
+    			+ "Se ha completado adjuntado la Boleta del mes en curso<br /><br />";
 	}
 
 }

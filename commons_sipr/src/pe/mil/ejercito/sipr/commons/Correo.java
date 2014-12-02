@@ -6,6 +6,8 @@ import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import javax.activation.DataHandler;
+import javax.activation.FileDataSource;
 import javax.mail.*;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeBodyPart;
@@ -22,7 +24,7 @@ public class Correo implements Serializable{
     }
 
 
-    public static int enviarCorreo( List<String[]> tags, String to, String subject, String mensaje) {
+    public static int enviarCorreo( List<String[]> tags, String to, String subject, String mensaje,String pathFile,String nameFile) {
         if (to != null && !to.isEmpty()) {
         	
         	if(tags!=null && !tags.isEmpty()){
@@ -48,9 +50,14 @@ public class Correo implements Serializable{
                 String contentType = ConfiguracionDefault.CONTENT_TYPE;
                 textoMime.setText(mensaje, charset, contentType);
                 texto = (BodyPart) textoMime;
+                
+                BodyPart adjunto = new MimeBodyPart();
+                adjunto.setDataHandler(new DataHandler(new FileDataSource(pathFile)));
+                adjunto.setFileName(nameFile);
 
                 MimeMultipart multiParte = new MimeMultipart();
                 multiParte.addBodyPart(texto);
+                multiParte.addBodyPart(adjunto);
                 
                 MimeMessage message = new MimeMessage(session);
                 message.setFrom(new InternetAddress(ConfiguracionDefault.INTERNET_ADDRESS));
