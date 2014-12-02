@@ -36,6 +36,7 @@ import org.primefaces.model.StreamedContent;
 import pe.mil.ejercito.sipr.commons.ConexionORCL;
 import pe.mil.ejercito.sipr.commons.ConfiguracionDefault;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
+import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UDate;
 import pe.mil.ejercito.sipr.ejbremote.BoletaCabeceraEjbRemote;
@@ -147,7 +148,10 @@ private static final long serialVersionUID = 1L;
             	// print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
             	print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
             	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-             }catch(JRException ex){
+                String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
+                ArrayList<String[]> lista = new ArrayList<>();
+                Correo.enviarCorreo( lista,ConfiguracionDefault.TO_EMAIL , ConfiguracionDefault.TITULO_MENSAJE, cuerpoMensaje, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"boleta.pdf","boleta.pdf");
+              }catch(JRException ex){
             	ex.printStackTrace(); 
              }finally{
              	ConexionORCL.cerrarConexion();
