@@ -123,11 +123,7 @@ public class UValidacion {
 
 	public static String getFechaYHoraActual() {
 		DATE_FORMAT = new SimpleDateFormat("H:m:s dd/MM/yyyy", new Locale("es_ES"));
-		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT")); // TODO: Ver
-																// despues como
-																// hacer para no
-																// hardcodear
-																// esto
+		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 		Date fecha = new Date();
 		return DATE_FORMAT.format(fecha);
 	}
