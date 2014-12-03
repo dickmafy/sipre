@@ -31,8 +31,10 @@ import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaOtroEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.SituacionAdmEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpBonificacionEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpEntidadCrediticiaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpFamiliaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpGuardiaEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpJudicialEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreCalculoDescuentoLey;
 import pe.mil.ejercito.sipr.model.SipreCalculoDescuentoLeyPK;
@@ -48,9 +50,12 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
 import pe.mil.ejercito.sipr.model.SiprePlanillaOtro;
 import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
+import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
+import pe.mil.ejercito.sipr.model.SipreTmpEntidadCrediticia;
 import pe.mil.ejercito.sipr.model.SipreTmpFamilia;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK;
+import pe.mil.ejercito.sipr.model.SipreTmpJudicial;
 
 @ManagedBean(name = "procesarPlanillaMb")
 @ViewScoped
@@ -70,14 +75,18 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private PlanillaOtroEjbRemote			ejbPlanillaOtro;
 	private PlanillaDetalleEjbRemote		ejbPlanillaDetalle;
 	private PlanillaAdicionalEjbRemote		ejbPlanillaAdicional;
-	private TmpBonificacionEjbRemote		ejbTmpBonificacion;
-	private TmpGuardiaEjbRemote				ejbTmpGuardia;
+
 	private ConceptoIngresoEjbRemote		ejbConceptoIngreso;
 	private GradoEjbRemote					ejbGrado;
 	private IngresoGradoEjbRemote			ejbIngresoGrado;
 	private ConceptoDescuentoLeyEjbRemote	ejbConceptoDescuentoLey;
 	private DescuentoLeyPersonaEjbRemote	ejbDescuentoLeyPersona;
 	private CalculoDescuentoLeyEjbRemote	ejbCalculoDescuentoLey;
+
+	private TmpBonificacionEjbRemote		ejbTmpBonificacion;
+	private TmpGuardiaEjbRemote				ejbTmpGuardia;
+	private TmpEntidadCrediticiaEjbRemote	ejbTmpCrediticia;
+	private TmpJudicialEjbRemote			ejbTmpJudicial;
 
 	private List<SipreTmpFamilia>			beanTmpFamiliaList;
 	private List<SiprePersona>				beanPersonaList;
@@ -87,6 +96,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	private SiprePersona					beanPersona;
 	private String							tmpCip;
 	private Integer							contadorP1;
+	private int								cTotal;
+	private int								cExito;
 
 	@ManagedProperty("#{progressBar}")
 	private ProgressBar						progressBar;
@@ -125,6 +136,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			ejbCalculoDescuentoLey = (CalculoDescuentoLeyEjbRemote) findServiceRemote(CalculoDescuentoLeyEjbRemote.class);
 			ejbConceptoDescuentoLey = (ConceptoDescuentoLeyEjbRemote) findServiceRemote(ConceptoDescuentoLeyEjbRemote.class);
 
+			ejbTmpCrediticia = (TmpEntidadCrediticiaEjbRemote) findServiceRemote(TmpEntidadCrediticiaEjbRemote.class);
+			ejbTmpJudicial = (TmpJudicialEjbRemote) findServiceRemote(TmpJudicialEjbRemote.class);
+
 			beanTmpFamiliaList = ejbTmpFamilia.findAll();
 			cleanBeanGmList();
 			//iniciarEstadoBotones();
@@ -142,6 +156,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	}
 
 	private void iniciarEstadoBotones() {
+
 		habilitarProceso = new Boolean[18];
 		for (int i = 1; i < habilitarProceso.length; i++) {
 			habilitarProceso[i] = false;
@@ -165,6 +180,101 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		cleanBeanGmList();
 		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_16, ConstantesUtil.PROCESO_16,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+		//CONFIGURACION
+		cleanBeanGmList();
+		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_12, ConstantesUtil.PROCESO_12,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+		boolean esAdmin = false;
+		boolean esDocente = false;
+		boolean montoFijo = false;
+		String tmpCip = "";
+		cTotal = 0;
+		cExito = 0;
+		BigDecimal montoFijoSoles;
+		SiprePlanillaDetalle planillaDetalle;
+		SiprePlanillaDetallePK pkPlanillaDetalle;
+		List<SiprePlanilla> list = ejbPlanilla.findAll();
+
+		List<SipreTmpEntidadCrediticia> listTmpCrediticia = ejbTmpCrediticia.findAll();
+		List<SipreTmpJudicial> listTmpJudicial = ejbTmpJudicial.findAll();
+
+		cTotal++;
+		for (SipreTmpJudicial itemJudicial : listTmpJudicial) {
+			//CONFIGURACION
+
+			progressBar.barraProgreso(cTotal, listTmpJudicial.size() + listTmpCrediticia.size());
+			//tmpCip = itemPlanilla.getSiprePersona().getCpersonaNroAdm();
+
+			try {
+				planillaDetalle = new SiprePlanillaDetalle();
+				pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+				// PK DETALLE
+				pkPlanillaDetalle.setCtpCodigo("01");
+				pkPlanillaDetalle.setCpersonaNroAdm(itemJudicial.getSiprePersona().getCpersonaNroAdm());
+				pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+				pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+				pkPlanillaDetalle.setCciCodigo("0080");
+
+				// DETALLE
+				planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+				planillaDetalle.setCpdConDestino("0080");
+				planillaDetalle.setNpdMtoConcepto(itemJudicial.getNtjMonto());
+
+				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+					ejbPlanillaDetalle.persist(planillaDetalle);
+					cExito++;
+				} else {
+					addGenericMensaje("Ya existe el registro repetido en Planilla Detalle : " + pkPlanillaDetalle.toString(),
+							ConstantesUtil.PROCESO_16,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				}
+			} catch (Exception e) {
+				addGenericMensaje(
+"Error al registrar el registro TEMPORAL Judicial en Planilla Detalle  " + "(" + e.getMessage() + ")",
+						ConstantesUtil.PROCESO_16, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				continue;
+			}
+
+		}//judicial
+
+		for (SipreTmpEntidadCrediticia itemCrediticia : listTmpCrediticia) {
+			progressBar.barraProgreso(cTotal, listTmpJudicial.size() + listTmpCrediticia.size());
+			try {
+				planillaDetalle = new SiprePlanillaDetalle();
+				pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+				// PK DETALLE
+				pkPlanillaDetalle.setCtpCodigo("01");
+				pkPlanillaDetalle.setCpersonaNroAdm(itemCrediticia.getSiprePersona().getCpersonaNroAdm());
+				pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+				pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+				pkPlanillaDetalle.setCciCodigo("0080");
+
+				// DETALLE
+				planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+				planillaDetalle.setCpdConDestino("0080");
+				planillaDetalle.setNpdMtoConcepto(itemCrediticia.getNtecMonto());
+
+				if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+					ejbPlanillaDetalle.persist(planillaDetalle);
+					cExito++;
+				} else {
+					addGenericMensaje("Ya existe el registro en Planilla Detalle : " + pkPlanillaDetalle.toString(),
+							ConstantesUtil.PROCESO_16,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				}
+			} catch (Exception e) {
+				addGenericMensaje(
+						"Error al registrar el registro TEMPORAL de Entidad Crediticia en Planilla Detalle  " + "(" + e.getMessage() + ")",
+						ConstantesUtil.PROCESO_16, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				continue;
+			}
+
+		}//crediticia
 	}
 
 	public void p15() {
@@ -186,15 +296,177 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	}
 
 	public void p12() {
+		//CONFIGURACION
 		cleanBeanGmList();
 		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_12, ConstantesUtil.PROCESO_12,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+		boolean esAdmin = false;
+		boolean esDocente = false;
+		boolean montoFijo = false;
+		String tmpCip = "";
+		cTotal = 0;
+		cExito = 0;
+		BigDecimal montoFijoSoles;
+		SiprePlanillaDetalle planillaDetalle;
+		SiprePlanillaDetallePK pkPlanillaDetalle;
+		List<SiprePlanilla> list = ejbPlanilla.findAll();
+
+		for (SiprePlanilla itemPlanilla : list) {
+			//CONFIGURACION
+			cTotal++;
+			progressBar.barraProgreso(cTotal, list.size());
+			tmpCip = itemPlanilla.getSiprePersona().getCpersonaNroAdm();
+
+			if ("01".equals(itemPlanilla.getSiprePersona().getSipreSituacionAdm().getCsaCodigo())) {
+				LOG.info("GRADOS ENCONTRADOS > " + itemPlanilla.getSiprePersona().getSipreGrado().getCgradoCodigo());
+				int gradoNumero = Integer.valueOf(itemPlanilla.getSiprePersona().getSipreGrado().getCgradoCodigo());
+
+				if (gradoNumero >= 600 && gradoNumero <= 631 && gradoNumero >= 700 && gradoNumero <= 731) {
+					addGenericMensaje("Comprobando Administrativos.. ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					esAdmin = true;
+
+				}
+				if (gradoNumero >= 664 && gradoNumero <= 696 && gradoNumero >= 764 && gradoNumero <= 796 && gradoNumero >= 805
+						&& gradoNumero <= 829 && gradoNumero <= 885) {
+					addGenericMensaje("Comprobando Docentes.. ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					esDocente = true;
+
+				}
+
+				if (gradoNumero >= 821 && gradoNumero <= 829) {
+					/*addGenericMensaje("Insertando en Planilla Detalle un monto fijo de 200 soles... ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);*/
+					montoFijo = true;
+					montoFijoSoles = new BigDecimal(200);
+
+				} else {
+					/*addGenericMensaje("Insertando en Planilla Detalle un monto fijo de 200 soles... ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);*/
+					montoFijoSoles = new BigDecimal(400);
+
+				}
+
+				if (esDocente || esAdmin) {
+					try {
+						planillaDetalle = new SiprePlanillaDetalle();
+						pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+						// PK DETALLE
+						pkPlanillaDetalle.setCtpCodigo("01");
+						pkPlanillaDetalle.setCpersonaNroAdm(itemPlanilla.getSiprePersona().getCpersonaNroAdm());
+						pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+						pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+						//QUE CONCEPTO VA ? = 'REMUNERACION POR RACIONAMIENTO DS 040 2003'
+						pkPlanillaDetalle.setCciCodigo("0080");
+
+						// DETALLE
+						planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+						planillaDetalle.setCpdConDestino("0080");
+						planillaDetalle.setNpdMtoConcepto(montoFijoSoles);
+
+						if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+							ejbPlanillaDetalle.persist(planillaDetalle);
+							cExito++;
+						} else {
+							addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+									ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						}
+					} catch (Exception e) {
+						addGenericMensaje("Error al registrar a la persona  " + tmpCip + " en Planila Detalle (" + e.getMessage() + ")",
+								ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+								ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						continue;
+					}
+				}
+
+			}
+
+		}//FOR PLANILLA
+
+		addGenericMensaje("Resultado : Insertado " + cExito + " / " + cTotal + " registros en Sipre Planilla Detalle .",
+				ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+		addGenericMensaje("#Finalizado " + ConstantesUtil.PROCESO_12, ConstantesUtil.PROCESO_12,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
 	}
 
 	public void p11() {
+		//CONFIGURACION
 		cleanBeanGmList();
 		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_11, ConstantesUtil.PROCESO_11,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+		boolean esAdmin = false;
+		boolean esDocente = false;
+		boolean montoFijo = false;
+		String tmpCip = "";
+		cTotal = 0;
+		cExito = 0;
+		BigDecimal montoFijoSoles;
+		SiprePlanillaDetalle planillaDetalle;
+		SiprePlanillaDetallePK pkPlanillaDetalle;
+		List<SiprePlanilla> list = ejbPlanilla.findAll();
+		List<SipreTmpBonificacion> listTmpBonificacion = ejbTmpBonificacion.findAll();
+
+		for (SiprePlanilla itemPlanilla : list) {
+			//CONFIGURACION
+			cTotal++;
+			progressBar.barraProgreso(cTotal, list.size());
+			tmpCip = itemPlanilla.getSiprePersona().getCpersonaNroAdm();
+			for (SipreTmpBonificacion itemTmpBonificacion : listTmpBonificacion) {
+				if ("01".equals(itemPlanilla.getSiprePersona().getSipreSituacionAdm().getCsaCodigo())) {
+
+					//SI la Persona en Bonificacion existe = en Planilla, COMPARAR Planilla Adicional
+					if (itemTmpBonificacion.getSiprePersona().getCpersonaNroAdm()
+							.equals(itemPlanilla.getSiprePersona().getCpersonaNroAdm())) {
+						addGenericMensaje(tmpCip + "Se comparara en Planilla Adicional ", ConstantesUtil.PROCESO_11,
+								ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						//TODO COMPARAR CON PLANILLA ADICIONAL
+
+					} else {
+						//SE INSERTARA EN SIPRE PLANILLA DETALLE
+						addGenericMensaje(tmpCip + "Insertando en Sipre Planilla Detalle ", ConstantesUtil.PROCESO_11,
+								ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+						try {
+							planillaDetalle = new SiprePlanillaDetalle();
+							pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+							// PK DETALLE
+							pkPlanillaDetalle.setCtpCodigo("01");
+							pkPlanillaDetalle.setCpersonaNroAdm(itemPlanilla.getSiprePersona().getCpersonaNroAdm());
+							pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+							pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+							//QUE CONCEPTO VA ? = 'REMUNERACION POR RACIONAMIENTO DS 040 2003'
+							pkPlanillaDetalle.setCciCodigo("0080");
+
+							// DETALLE
+							planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+							planillaDetalle.setCpdConDestino("0080");
+							planillaDetalle.setNpdMtoConcepto(new BigDecimal(99));
+							if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+								ejbPlanillaDetalle.persist(planillaDetalle);
+								cExito++;
+							} else {
+								addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							}
+						} catch (Exception e) {
+							addGenericMensaje(
+									"Error al registrar a la persona  " + tmpCip + " en Planila Detalle (" + e.getMessage() + ")",
+									ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+									ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							continue;
+						}
+
+					}
+				}
+			}//bonificacion
+		}//planilla
+
 	}
 
 	public void p10() {
@@ -960,7 +1232,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			tmpCip = null;
 
 			try {
-				beanPersonaList = ejbPersona.procesarNumeroHijosList();
+				beanPersonaList = ejbPersona.getPersonasEnActividad();
 				estadoP1 = true;
 			} catch (Exception e1) {
 
