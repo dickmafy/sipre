@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -110,18 +111,18 @@ public class SipreTmpPlanillaDescuentoPK implements Serializable {
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) npdCodSec;
+        hash += npdCodSec;
         hash += (ctpCodigo != null ? ctpCodigo.hashCode() : 0);
         hash += (cecCodigo != null ? cecCodigo.hashCode() : 0);
         hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
         hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
-        hash += (int) nplanillaNumProceso;
+        hash += nplanillaNumProceso;
         return hash;
     }
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
+        
         if (!(object instanceof SipreTmpPlanillaDescuentoPK)) {
             return false;
         }
