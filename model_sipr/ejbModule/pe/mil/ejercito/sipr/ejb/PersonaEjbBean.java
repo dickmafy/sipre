@@ -18,7 +18,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 
 	@SuppressWarnings({ "unchecked", "unused" })
 	@Override
-	public List<SiprePersona> procesarNumeroHijosList() {
+	public List<SiprePersona> getPersonasEnActividad() {
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");

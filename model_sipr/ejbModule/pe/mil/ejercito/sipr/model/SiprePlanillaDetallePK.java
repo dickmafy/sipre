@@ -103,13 +103,13 @@ public class SiprePlanillaDetallePK implements Serializable {
 		hash += (cciCodigo != null ? cciCodigo.hashCode() : 0);
 		hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
 		hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
-		hash += (int) nplanillaNumProceso;
+		hash += nplanillaNumProceso;
 		return hash;
 	}
 
 	@Override
 	public boolean equals(Object object) {
-		// TODO: Warning - this method won't work in the case the id fields are
+
 		// not set
 		if (!(object instanceof SiprePlanillaDetallePK)) {
 			return false;
