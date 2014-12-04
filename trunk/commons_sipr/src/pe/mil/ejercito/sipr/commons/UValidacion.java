@@ -1,6 +1,7 @@
 package pe.mil.ejercito.sipr.commons;
 
 import java.io.File;
+import java.math.BigDecimal;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -406,6 +407,43 @@ public class UValidacion {
 
 		return contador;
 
+	}
+
+	public String multiplicar(String valor1, String valor2) {
+		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
+		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
+		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
+		deci2 = deci2.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal resultado = deci1.multiply(deci2);
+		resultado = resultado.setScale(2, BigDecimal.ROUND_HALF_UP);
+		return resultado + "";
+	}
+
+	public String sumar(String valor1, String valor2) {
+		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
+		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
+		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
+		deci2 = deci2.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal resultado = deci1.add(deci2);
+
+		return resultado.toString();
+	}
+
+	public String restar(String valor1, String valor2) {
+		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
+		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
+		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
+		deci2 = deci2.setScale(2, BigDecimal.ROUND_HALF_UP);
+		BigDecimal resultado = deci1.subtract(deci2);
+
+		return resultado.toString();
+	}
+
+	public String dividir(String valor1, String valor2) {
+		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
+		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
+		BigDecimal resultado = deci1.divide(deci2, 2, BigDecimal.ROUND_HALF_UP);
+		return resultado + "";
 	}
 
 }
