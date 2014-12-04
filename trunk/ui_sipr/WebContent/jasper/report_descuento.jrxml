@@ -21,12 +21,13 @@ BD.NBD_MONTO,
 BD.NBD_NUM_CUO_PAGADA,
 BD.NBD_NUM_CUO_TOTAL,
 BD.NBD_SEC,
-BD.VBD_DSC_ING_DESC
+BD.VBD_DSC_ING_DESC,
+BD.CBD_COD_MEF
 FROM SIPRE_BOLETA_DETALLE BD
 WHERE BD.CBD_TIP_CONCPTO='D'
 AND BD.CBC_MES_PROCESO=$P{ANO_MES_PROCESO}
 AND BD.CBC_NRO_ADM=$P{NRO_ADM}
-ORDER BY BD.NBD_SEC]]>
+ORDER BY BD.CBD_IND_SUBTITULO,BD.NBD_SEC]]>
 	</queryString>
 	<field name="CBC_MES_PROCESO" class="java.lang.String"/>
 	<field name="CBC_NRO_ADM" class="java.lang.String"/>
@@ -40,13 +41,27 @@ ORDER BY BD.NBD_SEC]]>
 	<field name="NBD_NUM_CUO_TOTAL" class="java.math.BigDecimal"/>
 	<field name="NBD_SEC" class="java.math.BigDecimal"/>
 	<field name="VBD_DSC_ING_DESC" class="java.lang.String"/>
+	<field name="CBD_COD_MEF" class="java.lang.String"/>
 	<variable name="TOTAL_MONTO" class="java.lang.Double" calculation="Sum">
 		<variableExpression><![CDATA[$F{NBD_MONTO}]]></variableExpression>
 	</variable>
-	<group name="SECUENCIA">
-		<groupExpression><![CDATA[$F{NBD_SEC}]]></groupExpression>
+	<group name="SUBTITULO">
+		<groupExpression><![CDATA[$F{CBD_IND_SUBTITULO}]]></groupExpression>
 		<groupHeader>
-			<band height="5"/>
+			<band height="17">
+				<textField isBlankWhenNull="true">
+					<reportElement x="1" y="0" width="271" height="15" uuid="e8a569ba-6731-48ad-8fc0-79c6d9e705ae"/>
+					<textElement textAlignment="Center" verticalAlignment="Middle">
+						<font fontName="Arial" size="9" isBold="true"/>
+					</textElement>
+					<textFieldExpression><![CDATA[($F{CBD_IND_SUBTITULO}=="3"?"APORTACIONES DE LEY / IMPUESTO":
+                                      ($F{CBD_IND_SUBTITULO}=="1"?"MANDATO JUDICIAL":
+                                               ($F{CBD_IND_SUBTITULO}=="2"?"FACULTATIVO":"SIN GRUPO")
+                                       )
+)
+]]></textFieldExpression>
+				</textField>
+			</band>
 		</groupHeader>
 		<groupFooter>
 			<band/>
@@ -123,6 +138,11 @@ ORDER BY BD.NBD_SEC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$F{NBD_MONTO}]]></textFieldExpression>
 			</textField>
+			<textField isBlankWhenNull="true">
+				<reportElement x="1" y="0" width="36" height="20" uuid="13609cf2-7d98-43e3-b4d1-5815f4c3dfe2"/>
+				<textElement textAlignment="Center" verticalAlignment="Middle"/>
+				<textFieldExpression><![CDATA[$F{CBD_COD_MEF}]]></textFieldExpression>
+			</textField>
 		</band>
 	</detail>
 	<columnFooter>
@@ -154,6 +174,9 @@ ORDER BY BD.NBD_SEC]]>
 				</textElement>
 				<textFieldExpression><![CDATA[$V{TOTAL_MONTO}]]></textFieldExpression>
 			</textField>
+			<line>
+				<reportElement x="195" y="3" width="73" height="1" uuid="44bcce94-d0c0-4776-a47a-9548218c3faf"/>
+			</line>
 		</band>
 	</summary>
 </jasperReport>

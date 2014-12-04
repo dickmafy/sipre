@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_boleta" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="86247a0b-c41c-42b9-9a94-20887e598908">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="254"/>
+	<property name="ireport.y" value="0"/>
 	<parameter name="LOGO_EJERCITO" class="java.lang.String"/>
 	<parameter name="ANO_MES_PROCESO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -11,10 +11,11 @@
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["D:\\Denisse\\Fuentes\\Ejercito\\Noviembre\\14112014\\ui_sipr\\WebContent\\jasper\\"]]></defaultValueExpression>
+		<defaultValueExpression><![CDATA["E:\\Fuentes\\Denisse\\ejercito\\27112014\\ui_sipr\\WebContent\\jasper\\"]]></defaultValueExpression>
 	</parameter>
 	<parameter name="SUB_RPT_DESCUENTO" class="java.lang.String"/>
 	<parameter name="SUB_RPT_PERCIBO" class="java.lang.String"/>
+	<parameter name="SUB_RPT_APORTE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT CB.CBC_NRO_ADM,
 CB.CBC_MES_PROCESO,
@@ -62,6 +63,9 @@ AND CBC_NRO_ADM =$P{NRO_ADM}]]>
 	</background>
 	<title>
 		<band height="197" splitType="Stretch">
+			<rectangle>
+				<reportElement x="0" y="91" width="555" height="106" forecolor="#666600" uuid="badb4c29-7899-42ca-9a8d-bcc75a385902"/>
+			</rectangle>
 			<image>
 				<reportElement x="138" y="22" width="50" height="50" uuid="1d57bc60-c03b-434e-9e19-cb97d9055cd5"/>
 				<imageExpression><![CDATA[$P{LOGO_EJERCITO}]]></imageExpression>
@@ -79,7 +83,7 @@ AND CBC_NRO_ADM =$P{NRO_ADM}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[BOLETA DE PAGO]]></text>
+				<text><![CDATA[BOLETA DE PAGO I]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="407" y="0" width="74" height="15" uuid="7658e59d-7824-4d52-adbd-b3302b0ed97e"/>
@@ -118,9 +122,6 @@ AND CBC_NRO_ADM =$P{NRO_ADM}]]>
 				<textElement verticalAlignment="Middle"/>
 				<text><![CDATA[(D.S. Nº009-2011-TR)]]></text>
 			</staticText>
-			<rectangle>
-				<reportElement x="0" y="91" width="555" height="106" forecolor="#666600" uuid="badb4c29-7899-42ca-9a8d-bcc75a385902"/>
-			</rectangle>
 			<staticText>
 				<reportElement x="7" y="96" width="93" height="15" uuid="0d127d4c-53fe-4742-8b0a-2dbd6a6bc678"/>
 				<textElement textAlignment="Left" verticalAlignment="Middle">
@@ -344,7 +345,7 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"report_percibo.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUB_RPT_PERCIBO}]]></subreportExpression>
 			</subreport>
 			<rectangle>
 				<reportElement stretchType="RelativeToTallestObject" x="280" y="0" width="275" height="100" forecolor="#666600" uuid="ee733dd7-b46e-4397-b39d-d1b8456f4f29"/>
@@ -358,7 +359,7 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
 				</subreportParameter>
 				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUBREPORT_DIR}+"report_descuento.jasper"]]></subreportExpression>
+				<subreportExpression><![CDATA[$P{SUB_RPT_DESCUENTO}]]></subreportExpression>
 			</subreport>
 		</band>
 	</columnHeader>
@@ -372,113 +373,19 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 		<band splitType="Stretch"/>
 	</pageFooter>
 	<summary>
-		<band height="156" splitType="Stretch">
+		<band height="134" splitType="Stretch">
 			<rectangle>
 				<reportElement x="0" y="3" width="555" height="18" forecolor="#666600" uuid="9eb47968-fd40-4316-ba4d-9687813af7e6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement x="0" y="50" width="555" height="97" forecolor="#666600" uuid="aa8667bd-b2d9-4021-a8cd-dae87f183592"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="27" width="555" height="100" forecolor="#666600" uuid="aa8667bd-b2d9-4021-a8cd-dae87f183592"/>
 			</rectangle>
-			<staticText>
-				<reportElement mode="Opaque" x="0" y="30" width="555" height="20" backcolor="#E6E6E6" uuid="5cf94a19-8c9d-4c5c-bb7b-d1cfd2f7288f"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="12" isBold="true"/>
-				</textElement>
-				<text><![CDATA[APORTES DEL EMPLEADOR]]></text>
-			</staticText>
 			<staticText>
 				<reportElement x="6" y="3" width="150" height="18" uuid="80e1a89b-c16d-4476-883b-0f175aec8578"/>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="7" isBold="true"/>
 				</textElement>
 				<text><![CDATA[(3)=(1)-(2) TOTAL NETO A PAGAR]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="12" y="56" width="36" height="15" uuid="a729eb54-4cd2-460b-8d02-f0d55578ad44"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[MEF]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="58" y="56" width="27" height="15" uuid="ae9f0872-803c-4d39-b6c1-ed2504500bb8"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[EP]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="99" y="56" width="121" height="15" uuid="3e5b3f40-6426-4097-86eb-6e26e3e818d4"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[CONCEPTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="220" y="56" width="61" height="15" uuid="6ea23153-a467-4a35-bc6f-8126159041f1"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="true"/>
-				</textElement>
-				<text><![CDATA[MONTO]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="92" y="82" width="135" height="15" uuid="e18e1f1b-621d-4e52-8d84-8d094536dcf4"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[CAJA PEN MIL POLICIAL 6%]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="52" y="82" width="40" height="15" uuid="883ddc2f-d81d-4922-9b89-345b48230113"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[8089]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="227" y="82" width="50" height="15" uuid="160995f5-32c7-450e-bc14-7e296522a211"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[145,48]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="92" y="97" width="135" height="15" uuid="9044d1c6-2ca8-4ba8-b295-6e1a93b887a5"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[FOSPEME]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="52" y="97" width="40" height="15" uuid="1362d951-8a5f-40f2-8364-f573f35a986e"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[8089]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="227" y="97" width="50" height="15" uuid="b3447b15-a2c8-422a-959a-a13e932b9fc9"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[145,48]]></text>
-			</staticText>
-			<staticText>
-				<reportElement x="51" y="119" width="148" height="15" uuid="ac74998c-1b0a-4bfc-8c28-3f4d65ab2ef3"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7" isBold="true" isItalic="false" isUnderline="false"/>
-				</textElement>
-				<text><![CDATA[TOTAL APORTES EMPLEADOR]]></text>
-			</staticText>
-			<line>
-				<reportElement x="213" y="120" width="100" height="1" uuid="dced8db6-6c1f-48e6-a57c-fc0ae3458cb6"/>
-			</line>
-			<staticText>
-				<reportElement x="227" y="121" width="50" height="15" uuid="189b4a0a-c8ee-4c19-b451-53506e42163a"/>
-				<textElement textAlignment="Center" verticalAlignment="Middle">
-					<font fontName="Arial" size="7"/>
-				</textElement>
-				<text><![CDATA[230.96]]></text>
 			</staticText>
 			<textField pattern="#,##0.00" isBlankWhenNull="true">
 				<reportElement x="503" y="3" width="52" height="15" uuid="e3ec3528-5fa5-4ef4-83a9-9d044fdba8a7"/>
@@ -487,6 +394,17 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression><![CDATA["S/." + $V{NETO}]]></textFieldExpression>
 			</textField>
+			<subreport>
+				<reportElement x="1" y="27" width="554" height="100" uuid="073ee59c-2c09-4b0f-b6a2-a63d4fb99251"/>
+				<subreportParameter name="ANO_MES_PROCESO">
+					<subreportParameterExpression><![CDATA[$F{CBC_MES_PROCESO}]]></subreportParameterExpression>
+				</subreportParameter>
+				<subreportParameter name="NRO_ADM">
+					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
+				</subreportParameter>
+				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
+				<subreportExpression><![CDATA[$P{SUB_RPT_APORTE}]]></subreportExpression>
+			</subreport>
 		</band>
 	</summary>
 </jasperReport>
