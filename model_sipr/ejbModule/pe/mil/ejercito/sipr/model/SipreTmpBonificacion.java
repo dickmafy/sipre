@@ -7,6 +7,7 @@ package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
@@ -36,7 +37,7 @@ public class SipreTmpBonificacion implements Serializable {
     @Column(name = "VTB_APE_NOM")
     private String vtbApeNom;
     @Column(name = "CTB_IND_SITUACION")
-    private Character ctbIndSituacion;
+	private String						ctbIndSituacion;
     @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private SiprePersona siprePersona;
@@ -79,11 +80,11 @@ public class SipreTmpBonificacion implements Serializable {
         this.vtbApeNom = vtbApeNom;
     }
 
-    public Character getCtbIndSituacion() {
+	public String getCtbIndSituacion() {
         return ctbIndSituacion;
     }
 
-    public void setCtbIndSituacion(Character ctbIndSituacion) {
+	public void setCtbIndSituacion(String ctbIndSituacion) {
         this.ctbIndSituacion = ctbIndSituacion;
     }
 
