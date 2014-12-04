@@ -227,12 +227,11 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					cExito++;
 				} else {
 					addGenericMensaje("Ya existe el registro repetido en Planilla Detalle : " + pkPlanillaDetalle.toString(),
-							ConstantesUtil.PROCESO_16,
-							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							ConstantesUtil.PROCESO_16, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 				}
 			} catch (Exception e) {
-				addGenericMensaje(
-"Error al registrar el registro TEMPORAL Judicial en Planilla Detalle  " + "(" + e.getMessage() + ")",
+				addGenericMensaje("Error al registrar el registro TEMPORAL Judicial en Planilla Detalle  " + "(" + e.getMessage() + ")",
 						ConstantesUtil.PROCESO_16, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
 						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 				continue;
@@ -263,8 +262,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					cExito++;
 				} else {
 					addGenericMensaje("Ya existe el registro en Planilla Detalle : " + pkPlanillaDetalle.toString(),
-							ConstantesUtil.PROCESO_16,
-							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							ConstantesUtil.PROCESO_16, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 				}
 			} catch (Exception e) {
 				addGenericMensaje(
@@ -281,6 +280,37 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		cleanBeanGmList();
 		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_15, ConstantesUtil.PROCESO_15,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+		
+		//No incremento sueldo
+		BigDecimal meses = new BigDecimal(12);
+		BigDecimal per = new BigDecimal(0.15);
+		BigDecimal vecesUIT = new BigDecimal(7);
+		BigDecimal sueldo = new BigDecimal(3000);
+		BigDecimal UIT = new BigDecimal(2000);
+		BigDecimal UITPor7 = UIT.multiply(vecesUIT);
+		BigDecimal montoFinal = new BigDecimal(0);
+		montoFinal = calculoNoIncrementoSueldo(meses, per, sueldo, UITPor7);
+		
+		addGenericMensaje("Finalizado el  " + ConstantesUtil.PROCESO_15, ConstantesUtil.PROCESO_15,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+
+	}
+
+	private BigDecimal calculoNoIncrementoSueldo(BigDecimal meses, BigDecimal per, BigDecimal sueldo, BigDecimal UITPor7) {
+		BigDecimal montoFinal = new BigDecimal(0);
+		//Ganancia al Año
+		montoFinal = sueldo.multiply(meses);
+		
+		//restas las 7 UIT
+		montoFinal = montoFinal.subtract(UITPor7);
+		
+		//obtener el 15 porciento
+		montoFinal = montoFinal.multiply(per);
+		
+		//div entre los meses
+		montoFinal = montoFinal.divide(meses);
+
+		return montoFinal;
 	}
 
 	public void p14() {
@@ -308,6 +338,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		cExito = 0;
 		BigDecimal montoFijoSoles;
 		SiprePlanillaDetalle planillaDetalle;
+		;
 		SiprePlanillaDetallePK pkPlanillaDetalle;
 		List<SiprePlanilla> list = ejbPlanilla.findAll();
 
@@ -316,9 +347,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			cTotal++;
 			progressBar.barraProgreso(cTotal, list.size());
 			tmpCip = itemPlanilla.getSiprePersona().getCpersonaNroAdm();
+			if ("618853200".equals(tmpCip)) {
+				LOG.info("tmp " + tmpCip);
+			}
 
 			if ("01".equals(itemPlanilla.getSiprePersona().getSipreSituacionAdm().getCsaCodigo())) {
-				LOG.info("GRADOS ENCONTRADOS > " + itemPlanilla.getSiprePersona().getSipreGrado().getCgradoCodigo());
+
 				int gradoNumero = Integer.valueOf(itemPlanilla.getSiprePersona().getSipreGrado().getCgradoCodigo());
 
 				if (gradoNumero >= 600 && gradoNumero <= 631 && gradoNumero >= 700 && gradoNumero <= 731) {
@@ -327,8 +361,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 					esAdmin = true;
 
 				}
-				if (gradoNumero >= 664 && gradoNumero <= 696 && gradoNumero >= 764 && gradoNumero <= 796 && gradoNumero >= 805
-						&& gradoNumero <= 829 && gradoNumero <= 885) {
+				if ((gradoNumero >= 664 && gradoNumero <= 696) || (gradoNumero >= 764 && gradoNumero <= 796)
+						|| (gradoNumero >= 805 && gradoNumero <= 829) || (gradoNumero == 885)) {
 					addGenericMensaje("Comprobando Docentes.. ", ConstantesUtil.PROCESO_12,
 							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 					esDocente = true;
@@ -419,18 +453,14 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 			for (SipreTmpBonificacion itemTmpBonificacion : listTmpBonificacion) {
 				if ("01".equals(itemPlanilla.getSiprePersona().getSipreSituacionAdm().getCsaCodigo())) {
 
-					//SI la Persona en Bonificacion existe = en Planilla, COMPARAR Planilla Adicional
+					/*
 					if (itemTmpBonificacion.getSiprePersona().getCpersonaNroAdm()
 							.equals(itemPlanilla.getSiprePersona().getCpersonaNroAdm())) {
-						addGenericMensaje(tmpCip + "Se comparara en Planilla Adicional ", ConstantesUtil.PROCESO_11,
-								ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-						//TODO COMPARAR CON PLANILLA ADICIONAL
+						*/
+					if ("1".equals(itemTmpBonificacion.getCtbIndSituacion())) {
 
-					} else {
+						//y si son ind_situcaicon de bonificacion 1 , son del mes
 						//SE INSERTARA EN SIPRE PLANILLA DETALLE
-						addGenericMensaje(tmpCip + "Insertando en Sipre Planilla Detalle ", ConstantesUtil.PROCESO_11,
-								ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
-
 						try {
 							planillaDetalle = new SiprePlanillaDetalle();
 							pkPlanillaDetalle = new SiprePlanillaDetallePK();
@@ -461,6 +491,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 									ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 							continue;
 						}
+
+					} else if ("2".equals(itemTmpBonificacion.getCtbIndSituacion())) {
+						cExito++;
+
+						//y si son ind_situcaicon de bonificacion 2 , son reigntegro
+						//TODO COMPARAR CON PLANILLA ADICIONAL
 
 					}
 				}
