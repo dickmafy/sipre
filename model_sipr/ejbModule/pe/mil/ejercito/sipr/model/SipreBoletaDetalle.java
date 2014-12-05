@@ -53,6 +53,10 @@ public class SipreBoletaDetalle implements Serializable {
         @JoinColumn(name = "CBC_NRO_ADM", referencedColumnName = "CBC_NRO_ADM", insertable = false, updatable = false)})
     @ManyToOne(optional = false)
     private SipreBoletaCabecera sipreBoletaCabecera;
+    
+    @Size(max = 6)
+    @Column(name = "CBD_COD_MEF")
+    private String cbdCodMef;
 
     public SipreBoletaDetalle() {
     }
@@ -136,8 +140,18 @@ public class SipreBoletaDetalle implements Serializable {
     public void setSipreBoletaCabecera(SipreBoletaCabecera sipreBoletaCabecera) {
         this.sipreBoletaCabecera = sipreBoletaCabecera;
     }
+    
+    
 
-    @Override
+    public String getCbdCodMef() {
+		return cbdCodMef;
+	}
+
+	public void setCbdCodMef(String cbdCodMef) {
+		this.cbdCodMef = cbdCodMef;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (sipreBoletaDetallePK != null ? sipreBoletaDetallePK.hashCode() : 0);
