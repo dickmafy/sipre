@@ -72,6 +72,17 @@ public class ConstantesUtil {
 	public static final int	TIPO_FILE_ENTIDAD			= 2;
 	public static final int	TIPO_FILE_JUDICIAL			= 1;
 	
+	
+	public static final int	EXCEL_ROW_INICIO_DTLL			= 4;
+	
+	public static final int	EXCEL_COLUMN_ANIO_MES			= 1;
+    public static final int	EXCEL_COLUMN_CIP			= 2;
+	public static final int	EXCEL_COLUMN_NOMBRES		= 3;
+	public static final int	EXCEL_COLUMN_CONCEPTO		= 4;
+	public static final int	EXCEL_COLUMN_MONTO			= 5;
+	public static final int	EXCEL_COLUMN_SITUACION		= 6;
+	public static final int	EXCEL_COLUMN_MES_REINTEGRO	= 7;
+	public static final int	EXCEL_COLUMN_DEDUCCION		= 8;
 
 	 public static String getRutaFiles(FacesContext facesContext, String carpeta) {
 	        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();

@@ -82,13 +82,9 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable{
 	
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
-			//bean=new SipreTmpBonificacion();
-			//String fileOldName = event.getFile().getFileName();
-			 foo = (Integer) event.getComponent().getAttributes().get("typeFile");
-			//File file = transferFile(event);
+			foo = (Integer) event.getComponent().getAttributes().get("typeFile");
 			transferFile(event);
-			//FileInputStream fileIS = new FileInputStream(file);
-			InputStream is = event.getFile().getInputstream();
+		    InputStream is = event.getFile().getInputstream();
 			readDbf(is,tipoArchivo!=null?Integer.parseInt(tipoArchivo):null);
 
 		} catch (FileNotFoundException e) {
@@ -131,7 +127,6 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable{
 					}
         			
         			if(numbColumn==numberOfFields){
-        				System.out.println("setea valores a new");
         				numbColumn=0;
         				ent.setSipreTmpEntidadCrediticiaPK(pk);
         				ejbEntidad.persist(ent);
@@ -152,7 +147,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable{
 	
 	private File transferFile(FileUploadEvent event) {
 		String fileOldName = event.getFile().getFileName();
-		// UploadedFile filePF = event.getFile();
+		
 		File archivo = null;
 		String rutaGuardar = null;
 		SimpleDateFormat fileId = null;

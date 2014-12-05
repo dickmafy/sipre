@@ -8,9 +8,12 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.Iterator;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
@@ -27,6 +30,7 @@ import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
 import org.apache.poi.xssf.usermodel.XSSFWorkbook;
+import org.codehaus.groovy.reflection.stdclasses.BigDecimalCachedClass;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.UploadedFile;
 
@@ -38,6 +42,7 @@ import pe.mil.ejercito.sipr.commons.UValidacion;
 import pe.mil.ejercito.sipr.ejb.TmpBonificacionEjbBean;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
+import pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK;
 
 
 
@@ -70,28 +75,19 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	
 	
 	
-	public String goBonificacionPersonalMb(){
-		sessionBean = new  GenericResponseBean<>();
-		sessionBean.setObjeto(bean);
-		registrarVariable("vbonificacion", sessionBean);
-		return redirecciona("/modules/parametro/parametroDetalle");
-	}
+
 	
 	public void newBean(ActionEvent event) {
 		bean = new SipreTmpBonificacion();
-		//bean.set
-	}
-	
-	public void uploadFile(FileUploadEvent event){
-		UploadedFile file= event.getFile();
 		
 	}
+	
+	
 
 	public void saveBean(ActionEvent event) {
 		try {
 			bean = ejbBonificacion.persist(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,SEVERITY_INFO);
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
 					SEVERITY_ERROR);
@@ -102,8 +98,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	public void updateBean(ActionEvent event) {
 		try {
 			bean = ejbBonificacion.merge(bean);
-			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,
-					SEVERITY_INFO);
+			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_CORRECTA,SEVERITY_INFO);
 
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_VERIFICAR_BANCO,
@@ -115,7 +110,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	
 	public void handleFileUpload(FileUploadEvent event) {
 		try {
-			bean=new SipreTmpBonificacion();
+		List<SipreTmpBonificacion> lstbean=new ArrayList<>();
 			String fileOldName = event.getFile().getFileName();
 			Workbook wb = null;
 			String fileExt = null;
@@ -134,13 +129,11 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 			fileIS = new FileInputStream(file);
 
 			if (("xlsx").equals(fileExt)) {
-				// Nuevo - Excel 2010
 				wb = new XSSFWorkbook(fileIS);
-				bean = readExcelNew(wb, fileIS, bean);
+			    lstbean = readExcelNew(wb, fileIS, bean);
 			} else {
-				// Antiguo - Excel 90
 				wb = new HSSFWorkbook(fileIS);
-				bean = readExcelOld(wb, fileIS, bean);
+				lstbean = readExcelOld(wb, fileIS, bean);
 			}
 
 		} catch (FileNotFoundException e) {
@@ -195,7 +188,90 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 		
 	}
 	
-	private SipreTmpBonificacion readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpBonificacion bean) {
+	
+	
+	private List<SipreTmpBonificacion> readOldExcel(Workbook wb, FileInputStream fileIS) throws Exception{
+		List<SipreTmpBonificacion> lstResult=new ArrayList<>();
+		Sheet sheet = wb.getSheetAt(0);
+		/*int fila=ConstantesUtil.EXCEL_ROW_ANIO;
+		StringBuilder aniomes=new StringBuilder();
+		while(fila<(ConstantesUtil.EXCEL_ROW_MES+1)){
+			fila++;
+			Row row=sheet.getRow(fila);
+			Cell cell= row.getCell(ConstantesUtil.EXCEL_COLUMN_ANIO);
+			if(Cell.CELL_TYPE_BLANK == cell.getCellType()){
+				try{
+					int value= Integer.parseInt(cell.toString()) ;
+					aniomes.append(value);
+				}catch(NumberFormatException n){
+					throw new Exception("Error de formato, para el año y/o mes solo se aceptan valores numéricos");
+				}
+				
+			}else{
+				throw new Exception("Error de formato, el año y/o mes no pueden ser valores vacios");
+			}
+			
+		}**/
+		
+		int totalRow=sheet.getPhysicalNumberOfRows();
+		for(int i=ConstantesUtil.EXCEL_ROW_INICIO_DTLL ;i<totalRow;i++){
+			Row row=sheet.getRow(i);
+			Cell cellAnioMes= row.getCell(ConstantesUtil.EXCEL_COLUMN_ANIO_MES);
+			Cell cellCip= row.getCell(ConstantesUtil.EXCEL_COLUMN_CIP);
+			Cell cellAplld= row.getCell(ConstantesUtil.EXCEL_COLUMN_NOMBRES);
+			Cell cellCncpto= row.getCell(ConstantesUtil.EXCEL_COLUMN_CONCEPTO);
+			Cell cellMonto= row.getCell(ConstantesUtil.EXCEL_COLUMN_MONTO);
+			Cell cellSituacion= row.getCell(ConstantesUtil.EXCEL_COLUMN_SITUACION);
+			Cell cellMesReintegro= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO);
+			Cell cellDeduccion= row.getCell(ConstantesUtil.EXCEL_COLUMN_DEDUCCION);
+			
+			SipreTmpBonificacion bean=new SipreTmpBonificacion();
+			SipreTmpBonificacionPK pk=new SipreTmpBonificacionPK();
+			pk.setCtbMesBonificacion(getValueCell(cellAnioMes,ConstantesUtil.EXCEL_COLUMN_ANIO_MES));
+			pk.setCpersonaNroAdm(getValueCell(cellCip,ConstantesUtil.EXCEL_COLUMN_CIP));
+			pk.setCciCodigo(getValueCell(cellCncpto,ConstantesUtil.EXCEL_COLUMN_CONCEPTO));
+			bean.setSipreTmpBonificacionPK(pk);
+			bean.setVtbApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES));
+			bean.setNtbMonto(Double.parseDouble(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO)));
+			bean.setCtbIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION));
+			
+			
+		}
+		
+		
+		
+		return lstResult;
+	}
+	
+	private String getValueCell(Cell cell,Integer nro) throws NumberFormatException, Exception{
+		if(Cell.CELL_TYPE_BLANK == cell.getCellType()){
+			switch (nro){
+			case ConstantesUtil.EXCEL_COLUMN_ANIO_MES : ;
+			case ConstantesUtil.EXCEL_COLUMN_SITUACION : ;
+			case ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO :{
+				Integer value=Integer.parseInt(cell.toString());
+				return value.toString();
+				
+			}
+			case ConstantesUtil.EXCEL_COLUMN_MONTO : ;
+	     	case ConstantesUtil.EXCEL_COLUMN_DEDUCCION :{
+				Double value=Double.parseDouble(cell.toString());
+				return value.toString();
+			 } 
+	     	default :{
+	     		return cell.toString();
+	     	}
+			}
+			
+			
+			
+		}else {
+			throw new Exception("Los valores de las celdas no deben estar vacias");
+		}
+		
+	}	
+	
+	private List<SipreTmpBonificacion> readExcelOld(Workbook wb, FileInputStream fileIS, SipreTmpBonificacion bean) {
 		try {
 			Sheet sheet = wb.getSheetAt(0);
 			Cell cell;
@@ -252,7 +328,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 
 					// Row.RETURN_NULL_AND_BLANK
 					ejbBonificacion.merge(bean);
-					progressBar.barraProgreso(contadorFilas, (int) contadorFilasTotal);
+					//progressBar.barraProgreso(contadorFilas, (int) contadorFilasTotal);
 				}// if
 
 			}// while
@@ -261,7 +337,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 		} catch (Exception e) {
 			showMessage(ConstantesUtil.MENSAJE_RESPUESTA_ERROR_FAMILIA, SEVERITY_ERROR);
 		}
-		return bean;
+		return new ArrayList<>();
 
 	}
 
@@ -291,7 +367,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 
 	}
 
-	private SipreTmpBonificacion readExcelNew(Workbook wb, FileInputStream fileIS, SipreTmpBonificacion bean) throws IOException {
+	private List<SipreTmpBonificacion> readExcelNew(Workbook wb, FileInputStream fileIS, SipreTmpBonificacion bean) throws IOException {
 		
 		Sheet sheet = wb.getSheetAt(0);
 	
@@ -315,7 +391,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 			}
 			System.out.println("");
 		}
-		return bean;
+		return new ArrayList<>();
 
 	}
 

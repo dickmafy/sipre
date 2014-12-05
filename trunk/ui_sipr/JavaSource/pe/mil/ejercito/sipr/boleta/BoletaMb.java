@@ -1,11 +1,8 @@
 package pe.mil.ejercito.sipr.boleta;
 
-import java.io.BufferedInputStream;
-import java.io.File;
-import java.io.FileInputStream;
+
 import java.io.FileNotFoundException;
-import java.io.InputStream;
-import java.io.OutputStream;
+
 import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -19,17 +16,13 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
-import javax.servlet.http.HttpServletResponse;
+
 
 import net.sf.jasperreports.engine.JRException;
-import net.sf.jasperreports.engine.JasperCompileManager;
+
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
-import net.sf.jasperreports.engine.JasperPrint;
-import net.sf.jasperreports.engine.JasperReport;
-import net.sf.jasperreports.engine.design.JasperDesign;
-import net.sf.jasperreports.engine.export.JRPdfExporter;
-import net.sf.jasperreports.engine.export.JRPdfExporterParameter;
+
 
 import org.primefaces.model.StreamedContent;
 
@@ -39,8 +32,7 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UDate;
-import pe.mil.ejercito.sipr.ejbremote.BoletaCabeceraEjbRemote;
-import pe.mil.ejercito.sipr.ejbremote.BoletaDetalleEjbRemote;
+
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 
@@ -142,15 +134,19 @@ private static final long serialVersionUID = 1L;
              parametro.put("NRO_ADM", nroAdm);
              parametro.put("SUB_RPT_DESCUENTO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_DESCUENTO));
              parametro.put("SUB_RPT_PERCIBO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_INGRESO));
+             parametro.put("SUB_RPT_APORTE", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_APORTE));
              
               try{
             	//  JasperReport   jasperReport = JasperCompileManager.compileReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA_JXML));//REPORT_BOLETA_JXML
             	// print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
             	print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
             	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-                String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
-                ArrayList<String[]> lista = new ArrayList<>();
-                Correo.enviarCorreo( lista,ConfiguracionDefault.TO_EMAIL , ConfiguracionDefault.TITULO_MENSAJE, cuerpoMensaje, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"boleta.pdf","boleta.pdf");
+               if(seEnvia){
+            	   String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
+                   ArrayList<String[]> lista = new ArrayList<>();
+                   Correo.enviarCorreo( lista,ConfiguracionDefault.TO_EMAIL , ConfiguracionDefault.TITULO_MENSAJE, cuerpoMensaje, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta,nameBoleta); 
+               }
+            	
               }catch(JRException ex){
             	ex.printStackTrace(); 
              }finally{
