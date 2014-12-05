@@ -8,6 +8,7 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -27,126 +28,142 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "SIPRE_PLANILLA_DETALLE")
-@NamedQueries({
-    @NamedQuery(name = "SiprePlanillaDetalle.findAll", query = "SELECT s FROM SiprePlanillaDetalle s")})
+@NamedQueries({ @NamedQuery(name = "SiprePlanillaDetalle.findAll", query = "SELECT s FROM SiprePlanillaDetalle s") })
 public class SiprePlanillaDetalle implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected SiprePlanillaDetallePK siprePlanillaDetallePK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "NPD_MTO_CONCEPTO")
-    private BigDecimal npdMtoConcepto;
-    @Size(max = 4)
-    @Column(name = "CPD_CON_DESTINO")
-    private String cpdConDestino;
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePlanillaDetalle")
-    private List<SiprePlanillaAdicional> siprePlanillaAdicionalList;
-    @JoinColumn(name = "CTP_CODIGO", referencedColumnName = "CTP_CODIGO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private SipreTipoPlanilla sipreTipoPlanilla;
-    @JoinColumns({
-        @JoinColumn(name = "CPLANILLA_MES_PROCESO", referencedColumnName = "CPLANILLA_MES_PROCESO", insertable = false, updatable = false),
-        @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false),
-        @JoinColumn(name = "NPLANILLA_NUM_PROCESO", referencedColumnName = "NPLANILLA_NUM_PROCESO", insertable = false, updatable = false)})
-    @ManyToOne(optional = false)
-    private SiprePlanilla siprePlanilla;
-    @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private SipreConceptoIngreso sipreConceptoIngreso;
+	private static final long				serialVersionUID	= 1L;
+	@EmbeddedId
+	protected SiprePlanillaDetallePK		siprePlanillaDetallePK;
 
-    public SiprePlanillaDetalle() {
-    }
+	@Column(name = "IND_PROCESO")
+	private String							indProceso;
 
-    public SiprePlanillaDetalle(SiprePlanillaDetallePK siprePlanillaDetallePK) {
-        this.siprePlanillaDetallePK = siprePlanillaDetallePK;
-    }
+	@Column(name = "NPD_MTO_CONCEPTO")
+	private BigDecimal						npdMtoConcepto;
+	@Size(max = 4)
+	@Column(name = "CPD_CON_DESTINO")
+	private String							cpdConDestino;
+	@OneToMany(cascade = CascadeType.ALL, mappedBy = "siprePlanillaDetalle")
+	private List<SiprePlanillaAdicional>	siprePlanillaAdicionalList;
+	@JoinColumn(name = "CTP_CODIGO", referencedColumnName = "CTP_CODIGO", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private SipreTipoPlanilla				sipreTipoPlanilla;
+	@JoinColumns({
+			@JoinColumn(name = "CPLANILLA_MES_PROCESO", referencedColumnName = "CPLANILLA_MES_PROCESO", insertable = false,
+					updatable = false),
+			@JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false),
+			@JoinColumn(name = "NPLANILLA_NUM_PROCESO", referencedColumnName = "NPLANILLA_NUM_PROCESO", insertable = false,
+					updatable = false) })
+	@ManyToOne(optional = false)
+	private SiprePlanilla					siprePlanilla;
+	@JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private SipreConceptoIngreso			sipreConceptoIngreso;
 
-    public SiprePlanillaDetalle(String ctpCodigo, String cciCodigo, String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
-        this.siprePlanillaDetallePK = new SiprePlanillaDetallePK(ctpCodigo, cciCodigo, cpersonaNroAdm, cplanillaMesProceso, nplanillaNumProceso);
-    }
+	public SiprePlanillaDetalle() {
+	}
 
-    public SiprePlanillaDetallePK getSiprePlanillaDetallePK() {
-        return siprePlanillaDetallePK;
-    }
+	public SiprePlanillaDetalle(SiprePlanillaDetallePK siprePlanillaDetallePK) {
+		this.siprePlanillaDetallePK = siprePlanillaDetallePK;
+	}
 
-    public void setSiprePlanillaDetallePK(SiprePlanillaDetallePK siprePlanillaDetallePK) {
-        this.siprePlanillaDetallePK = siprePlanillaDetallePK;
-    }
+	public SiprePlanillaDetalle(String ctpCodigo, String cciCodigo, String cpersonaNroAdm, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
+		this.siprePlanillaDetallePK = new SiprePlanillaDetallePK(ctpCodigo, cciCodigo, cpersonaNroAdm, cplanillaMesProceso,
+				nplanillaNumProceso);
+	}
 
-    public BigDecimal getNpdMtoConcepto() {
-        return npdMtoConcepto;
-    }
+	public SiprePlanillaDetallePK getSiprePlanillaDetallePK() {
+		return siprePlanillaDetallePK;
+	}
 
-    public void setNpdMtoConcepto(BigDecimal npdMtoConcepto) {
-        this.npdMtoConcepto = npdMtoConcepto;
-    }
+	public void setSiprePlanillaDetallePK(SiprePlanillaDetallePK siprePlanillaDetallePK) {
+		this.siprePlanillaDetallePK = siprePlanillaDetallePK;
+	}
 
-    public String getCpdConDestino() {
-        return cpdConDestino;
-    }
+	public BigDecimal getNpdMtoConcepto() {
+		return npdMtoConcepto;
+	}
 
-    public void setCpdConDestino(String cpdConDestino) {
-        this.cpdConDestino = cpdConDestino;
-    }
+	public void setNpdMtoConcepto(BigDecimal npdMtoConcepto) {
+		this.npdMtoConcepto = npdMtoConcepto;
+	}
 
-    public List<SiprePlanillaAdicional> getSiprePlanillaAdicionalList() {
-        return siprePlanillaAdicionalList;
-    }
+	public String getCpdConDestino() {
+		return cpdConDestino;
+	}
 
-    public void setSiprePlanillaAdicionalList(List<SiprePlanillaAdicional> siprePlanillaAdicionalList) {
-        this.siprePlanillaAdicionalList = siprePlanillaAdicionalList;
-    }
+	public void setCpdConDestino(String cpdConDestino) {
+		this.cpdConDestino = cpdConDestino;
+	}
 
-    public SipreTipoPlanilla getSipreTipoPlanilla() {
-        return sipreTipoPlanilla;
-    }
+	public List<SiprePlanillaAdicional> getSiprePlanillaAdicionalList() {
+		return siprePlanillaAdicionalList;
+	}
 
-    public void setSipreTipoPlanilla(SipreTipoPlanilla sipreTipoPlanilla) {
-        this.sipreTipoPlanilla = sipreTipoPlanilla;
-    }
+	public void setSiprePlanillaAdicionalList(List<SiprePlanillaAdicional> siprePlanillaAdicionalList) {
+		this.siprePlanillaAdicionalList = siprePlanillaAdicionalList;
+	}
 
-    public SiprePlanilla getSiprePlanilla() {
-        return siprePlanilla;
-    }
+	public SipreTipoPlanilla getSipreTipoPlanilla() {
+		return sipreTipoPlanilla;
+	}
 
-    public void setSiprePlanilla(SiprePlanilla siprePlanilla) {
-        this.siprePlanilla = siprePlanilla;
-    }
+	public void setSipreTipoPlanilla(SipreTipoPlanilla sipreTipoPlanilla) {
+		this.sipreTipoPlanilla = sipreTipoPlanilla;
+	}
 
-    public SipreConceptoIngreso getSipreConceptoIngreso() {
-        return sipreConceptoIngreso;
-    }
+	public SiprePlanilla getSiprePlanilla() {
+		return siprePlanilla;
+	}
 
-    public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
-        this.sipreConceptoIngreso = sipreConceptoIngreso;
-    }
+	public void setSiprePlanilla(SiprePlanilla siprePlanilla) {
+		this.siprePlanilla = siprePlanilla;
+	}
 
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (siprePlanillaDetallePK != null ? siprePlanillaDetallePK.hashCode() : 0);
-        return hash;
-    }
+	public SipreConceptoIngreso getSipreConceptoIngreso() {
+		return sipreConceptoIngreso;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        
-        if (!(object instanceof SiprePlanillaDetalle)) {
-            return false;
-        }
-        SiprePlanillaDetalle other = (SiprePlanillaDetalle) object;
-        if ((this.siprePlanillaDetallePK == null && other.siprePlanillaDetallePK != null) || (this.siprePlanillaDetallePK != null && !this.siprePlanillaDetallePK.equals(other.siprePlanillaDetallePK))) {
-            return false;
-        }
-        return true;
-    }
+	public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
+		this.sipreConceptoIngreso = sipreConceptoIngreso;
+	}
 
-    @Override
+	@Override
+	public int hashCode() {
+		int hash = 0;
+		hash += (siprePlanillaDetallePK != null ? siprePlanillaDetallePK.hashCode() : 0);
+		return hash;
+	}
+
+	@Override
+	public boolean equals(Object object) {
+
+		if (!(object instanceof SiprePlanillaDetalle)) {
+			return false;
+		}
+		SiprePlanillaDetalle other = (SiprePlanillaDetalle) object;
+		if ((this.siprePlanillaDetallePK == null && other.siprePlanillaDetallePK != null)
+				|| (this.siprePlanillaDetallePK != null && !this.siprePlanillaDetallePK.equals(other.siprePlanillaDetallePK))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
 	public String toString() {
 		return "SiprePlanillaDetalle [siprePlanillaDetallePK=" + siprePlanillaDetallePK + ", npdMtoConcepto=" + npdMtoConcepto
 				+ ", cpdConDestino=" + cpdConDestino + ", siprePlanillaAdicionalList=" + siprePlanillaAdicionalList
 				+ ", sipreTipoPlanilla=" + sipreTipoPlanilla + ", siprePlanilla=" + siprePlanilla + ", sipreConceptoIngreso="
 				+ sipreConceptoIngreso + "]";
 	}
-    
+
+	public String getIndProceso() {
+		return indProceso;
+	}
+
+	public void setIndProceso(String indProceso) {
+		this.indProceso = indProceso;
+	}
+
+
 }
