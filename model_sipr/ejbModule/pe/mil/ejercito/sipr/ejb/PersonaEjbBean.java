@@ -24,7 +24,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:csaCodigo");
 		// sb.append(" and o.cpersonaNroAdm ='123652000'");
 		Query q = em.createQuery(sb.toString());
-		// situacion administrativa
+		// situacion administrativa 
 		q.setParameter("csaCodigo", "01");
 		return q.getResultList();
 	}
@@ -35,27 +35,26 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		StringBuilder sb = new StringBuilder();
 		sb.append("SELECT o FROM SiprePersona o ");
 		sb.append(" where o.sipreSituacionAdm.csaCodigo=:p1");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p2");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p3");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p4");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p5");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p6");
-		//sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
-		
-		
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p2");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p3");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p4");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p5");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p6");
+		sb.append(" or o.sipreSituacionAdm.csaCodigo=:p7");
 		
 		// PARA PRUEBAS->
-		sb.append(" and o.sipreSituacionCausal.cscCodigo!='02'");
+		//sb.append(" and o.sipreSituacionCausal.cscCodigo not in('02')");
 		sb.append(" and o.cpersonaNroAdm in ('618853200','618722600','621731100','623293000','623088100') ");
-		//sb.append(" and o.dpersonaFecIng BETWEEN '01/01/1973' AND '31/12/1982'");
+		sb.append(" and o.dpersonaFecIng BETWEEN '01/01/1973' AND '31/12/1982'");
+		sb.append(" and o.dpersonaFecIng BETWEEN '01/01/2000' AND '31/12/2014'");
 		Query q = em.createQuery(sb.toString());
 		q.setParameter("p1", "01");
-		/*q.setParameter("p5", "50");
+		q.setParameter("p5", "50");
 		q.setParameter("p3", "57");
 		q.setParameter("p2", "60");
 		q.setParameter("p4", "61");
 		q.setParameter("p6", "71");
-		q.setParameter("p7", "77");*/
+		q.setParameter("p7", "77");
 		return q.getResultList();
 	}
 

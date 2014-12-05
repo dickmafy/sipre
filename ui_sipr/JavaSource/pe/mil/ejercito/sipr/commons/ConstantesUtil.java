@@ -15,24 +15,50 @@ public class ConstantesUtil {
 	public static final int		GENERIC_MENSAJE_DT_HIJO						= 1;
 	public static final int		GENERIC_MENSAJE_DT_PADRE					= 0;
 
-	public static final String	PROCESO_1_PLANILLA_NUMERO_HIJOS				= "Proceso 1 Numero Hijos";
-	public static final String	PROCESO_2_PLANILLA_LISTA_REVISTA			= "Proceso 2 Lista Revista";
-	public static final String	PROCESO_3_INGRESO_PERSONA					= "Proceso 3 Ingreso Por Persona";
-	public static final String	PROCESO_4_CALC_DESC_LEY						= "Proceso 4 Calcular Descuento de Ley";
-	public static final String	PROCESO_5_GUARDIA_HOSPITALARIA				= "Proceso 5 Guardias Hospitalarias";
+	//PLANILLA - PLANILLA DETALLE
+	public static final String	PROCESAR_PLANILLA_CODIGO_PLANILLA_PRINCIPAL_01	= "01";
+	public static final String	PROCESAR_PLANILLA_CODIGO_PRINCIPAL_CCI_0080		= "0080";
+	public static final String	PROCESAR_PLANILLA_CODIGO_ESTADO_ACTIVIDAD	= "01";
 
+	//Procesar Planilla - > codigos
+	public static final String	PROCESAR_PLANILLA_CODIGO_1					= "01";
+	public static final String	PROCESAR_PLANILLA_CODIGO_2					= "02";
+	public static final String	PROCESAR_PLANILLA_CODIGO_3					= "03";
+	public static final String	PROCESAR_PLANILLA_CODIGO_4					= "04";
+	public static final String	PROCESAR_PLANILLA_CODIGO_11					= "11";
+	public static final String	PROCESAR_PLANILLA_CODIGO_12					= "12";
+	public static final String	PROCESAR_PLANILLA_CODIGO_15					= "15";
+	public static final String	PROCESAR_PLANILLA_CODIGO_16					= "16";
+	public static final String	PROCESAR_PLANILLA_CODIGO_17					= "17";
+
+	public static final String	PROCESAR_PLANILLA_CODIGO_5					= "05";
+	public static final String	PROCESAR_PLANILLA_CODIGO_6					= "06";
+	public static final String	PROCESAR_PLANILLA_CODIGO_7					= "07";
+	public static final String	PROCESAR_PLANILLA_CODIGO_8					= "08";
+	public static final String	PROCESAR_PLANILLA_CODIGO_9					= "09";
+	public static final String	PROCESAR_PLANILLA_CODIGO_10					= "10";
+	public static final String	PROCESAR_PLANILLA_CODIGO_13					= "13";
+	public static final String	PROCESAR_PLANILLA_CODIGO_14					= "14";
+
+	//TEXTO
+	public static final String	PROCESO_1									= "Proceso 1 Numero Hijos";
+	public static final String	PROCESO_2									= "Proceso 2 Lista Revista";
+	public static final String	PROCESO_3									= "Proceso 3 Ingreso Por Persona";
+	public static final String	PROCESO_4									= "Proceso 4 Calcular Descuento de Ley";
+	public static final String	PROCESO_11									= "Proceso 11 Bonificacion DL 1132";
+	public static final String	PROCESO_12									= "Proceso 12 Bonificacion DU 040";
+	public static final String	PROCESO_15									= "Proceso 15 Calcular Impuesto a la renta";
+	public static final String	PROCESO_16									= "Proceso 16 Actualizar Descuento";
+	public static final String	PROCESO_17									= "Proceso 17 Calcular Boleta";
+
+	public static final String	PROCESO_5									= "Proceso 5 Guardias Hospitalarias";
 	public static final String	PROCESO_6									= "Proceso 6 Combustible";
 	public static final String	PROCESO_7									= "Proceso 7 Chofer y Mayordomo";
 	public static final String	PROCESO_8									= "Proceso 8 Ex Comabiente del 41";
 	public static final String	PROCESO_9									= "Proceso 9 Ex Comabiente Cenepa";
 	public static final String	PROCESO_10									= "Proceso 10 Subsidio DL 1132";
-	public static final String	PROCESO_11									= "Proceso 11 Bonificacion DL 1132";
-	public static final String	PROCESO_12									= "Proceso 12 Bonificacion DU 040";
 	public static final String	PROCESO_13									= "Proceso 13 Subsidio por invalidez o póstumo";
 	public static final String	PROCESO_14									= "Proceso 14 Bonificación por Cumplir 65 años";
-	public static final String	PROCESO_15									= "Proceso 15 Calcular Impuesto a la renta";
-	public static final String	PROCESO_16									= "Proceso 16 Actualizar Descuento";
-	public static final String	PROCESO_17									= "Proceso 17 Calcular Boleta";
 
 	// Estados Tablas
 	public static final String	TABLA_ESTADO_ACTIVO							= "A";
@@ -67,29 +93,26 @@ public class ConstantesUtil {
 	public static final String	MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY		= MENSAJE_RESPUESTA_ERROR_GENERAL
 																					+ " No se puede repetir el Codigo del Descuento Ley.";
 
+	public static final int		TIPO_FILE_ENTIDAD							= 2;
+	public static final int		TIPO_FILE_JUDICIAL							= 1;
 
-	
-	public static final int	TIPO_FILE_ENTIDAD			= 2;
-	public static final int	TIPO_FILE_JUDICIAL			= 1;
-	
-	
-	public static final int	EXCEL_ROW_INICIO_DTLL			= 4;
-	
-	public static final int	EXCEL_COLUMN_ANIO_MES			= 1;
-    public static final int	EXCEL_COLUMN_CIP			= 2;
-	public static final int	EXCEL_COLUMN_NOMBRES		= 3;
-	public static final int	EXCEL_COLUMN_CONCEPTO		= 4;
-	public static final int	EXCEL_COLUMN_MONTO			= 5;
-	public static final int	EXCEL_COLUMN_SITUACION		= 6;
-	public static final int	EXCEL_COLUMN_MES_REINTEGRO	= 7;
-	public static final int	EXCEL_COLUMN_DEDUCCION		= 8;
+	public static final int		EXCEL_ROW_INICIO_DTLL						= 4;
 
-	 public static String getRutaFiles(FacesContext facesContext, String carpeta) {
-	        ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
-	        String realPath = servletContext.getRealPath("/") + carpeta;
-	        System.out.println("Ruta logo y/o jasper: " + realPath);
-	        return realPath;
-	    }
+	public static final int		EXCEL_COLUMN_ANIO_MES						= 1;
+	public static final int		EXCEL_COLUMN_CIP							= 2;
+	public static final int		EXCEL_COLUMN_NOMBRES						= 3;
+	public static final int		EXCEL_COLUMN_CONCEPTO						= 4;
+	public static final int		EXCEL_COLUMN_MONTO							= 5;
+	public static final int		EXCEL_COLUMN_SITUACION						= 6;
+	public static final int		EXCEL_COLUMN_MES_REINTEGRO					= 7;
+	public static final int		EXCEL_COLUMN_DEDUCCION						= 8;
+
+	public static String getRutaFiles(FacesContext facesContext, String carpeta) {
+		ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
+		String realPath = servletContext.getRealPath("/") + carpeta;
+		System.out.println("Ruta logo y/o jasper: " + realPath);
+		return realPath;
+	}
 
 	// Listas
 	public String getLIST_EMPTY() {
@@ -101,11 +124,11 @@ public class ConstantesUtil {
 	}
 
 	public String getProceso1PlanillaNumeroHijos() {
-		return PROCESO_1_PLANILLA_NUMERO_HIJOS;
+		return PROCESO_1;
 	}
 
 	public String getProceso2PlanillaListaRevista() {
-		return PROCESO_2_PLANILLA_LISTA_REVISTA;
+		return PROCESO_2;
 	}
 
 	public String getMensajeGenericTipoMensajeInfo() {

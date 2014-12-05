@@ -371,13 +371,12 @@
 						<h:outputText value="#{item.campo}" />
 					</p:column>
 
-					<p:column headerText="Tipo Mensaje" width="1%">
+					<p:column headerText="Tipo Mensaje" width="1%" filterBy="#{item.tipoMensaje}" filterMatchMode="contains">
 						<h:outputText value="#{item.tipoMensaje}"
 							style="background-color : #{item.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
 							:item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
 							: item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
 					</p:column>
-
 					<p:column headerText="Mensaje" width="10%"
 						filterBy="#{item.mensaje}" filterMatchMode="contains">
 						<h:outputText value="#{item.mensaje}" />
