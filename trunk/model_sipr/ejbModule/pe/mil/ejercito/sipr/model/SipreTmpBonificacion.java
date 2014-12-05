@@ -32,18 +32,30 @@ public class SipreTmpBonificacion implements Serializable {
     protected SipreTmpBonificacionPK sipreTmpBonificacionPK;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "NTB_MONTO")
-    private BigDecimal ntbMonto;
+    private Double ntbMonto;
     @Size(max = 80)
     @Column(name = "VTB_APE_NOM")
     private String vtbApeNom;
     @Column(name = "CTB_IND_SITUACION")
-	private String						ctbIndSituacion;
+
+    private String ctbIndSituacion;
+
     @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private SiprePersona siprePersona;
     @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private SipreConceptoIngreso sipreConceptoIngreso;
+    
+   
+    
+    @Size(min = 1, max = 6)
+    @Column(name = "MES_PROCESO")
+    private String mesProceso;
+    
+    @Size(min = 1, max = 6)
+    @Column(name = "MES_REINTEGRO")
+    private String mesReintegro;
 
     public SipreTmpBonificacion() {
     }
@@ -64,11 +76,11 @@ public class SipreTmpBonificacion implements Serializable {
         this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
     }
 
-    public BigDecimal getNtbMonto() {
+    public Double getNtbMonto() {
         return ntbMonto;
     }
 
-    public void setNtbMonto(BigDecimal ntbMonto) {
+    public void setNtbMonto(Double ntbMonto) {
         this.ntbMonto = ntbMonto;
     }
 
@@ -80,11 +92,15 @@ public class SipreTmpBonificacion implements Serializable {
         this.vtbApeNom = vtbApeNom;
     }
 
-	public String getCtbIndSituacion() {
+
+    public String getCtbIndSituacion() {
+
         return ctbIndSituacion;
     }
 
-	public void setCtbIndSituacion(String ctbIndSituacion) {
+
+    public void setCtbIndSituacion(String ctbIndSituacion) {
+
         this.ctbIndSituacion = ctbIndSituacion;
     }
 
@@ -103,8 +119,26 @@ public class SipreTmpBonificacion implements Serializable {
     public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
         this.sipreConceptoIngreso = sipreConceptoIngreso;
     }
+    
+    
 
-    @Override
+    public String getMesProceso() {
+		return mesProceso;
+	}
+
+	public void setMesProceso(String mesProceso) {
+		this.mesProceso = mesProceso;
+	}
+
+	public String getMesReintegro() {
+		return mesReintegro;
+	}
+
+	public void setMesReintegro(String mesReintegro) {
+		this.mesReintegro = mesReintegro;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (sipreTmpBonificacionPK != null ? sipreTmpBonificacionPK.hashCode() : 0);

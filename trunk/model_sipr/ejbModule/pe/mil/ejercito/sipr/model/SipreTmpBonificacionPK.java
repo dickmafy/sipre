@@ -31,7 +31,7 @@ public class SipreTmpBonificacionPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 6)
-    @Column(name = "CTB_MES_BONIFICACION")
+    @Column(name = "CTB_MES_BONIFICACION", insertable = false, updatable = false)
     private String ctbMesBonificacion;
 
     public SipreTmpBonificacionPK() {
