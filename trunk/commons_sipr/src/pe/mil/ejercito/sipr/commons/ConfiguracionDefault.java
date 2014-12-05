@@ -18,6 +18,7 @@ public class ConfiguracionDefault implements Serializable {
 	public static final String REPORT_BOLETA_JXML;
 	public static final String REPORT_INGRESO;
 	public static final String REPORT_DESCUENTO;
+	public static final String REPORT_APORTE;
 	public static final String RUTA_REPORT_FILE;
 
 	// VARIABLES CORREO
@@ -49,6 +50,7 @@ public class ConfiguracionDefault implements Serializable {
 		REPORT_BOLETA = "jasper\\report_boleta.jasper";
 		REPORT_INGRESO = "jasper\\report_percibo.jasper";
 		REPORT_DESCUENTO = "jasper\\report_descuento.jasper";
+		REPORT_APORTE= "jasper\\report_aporte.jasper";
 		RUTA_REPORT_FILE = "reporte_file\\";
 
 		REPORT_BOLETA_JXML = "jasper\\report_boleta.jrxml";
@@ -73,7 +75,7 @@ public class ConfiguracionDefault implements Serializable {
 		CHARSET = "utf-8";
 		CONTENT_TYPE = "html";
 		VARIABLE_CONFIRMACION = "key";
-		TO_EMAIL="hm.ericson@gmail.com";
+		TO_EMAIL="dts1409@gmail.com";
 		
 		TITULO_MENSAJE = "EJERCITO DEL PERÚ – Boleta generada";
         CUERPO_MENSAJE="Sr. (Sra.) (Srta.): : <br /><br/>"
