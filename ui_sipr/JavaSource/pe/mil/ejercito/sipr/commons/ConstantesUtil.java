@@ -96,7 +96,7 @@ public class ConstantesUtil {
 	public static final int		TIPO_FILE_ENTIDAD							= 2;
 	public static final int		TIPO_FILE_JUDICIAL							= 1;
 
-	public static final int		EXCEL_ROW_INICIO_DTLL						= 4;
+	public static final int		EXCEL_ROW_INICIO_DTLL						= 2;
 
 	public static final int		EXCEL_COLUMN_ANIO_MES						= 1;
 	public static final int		EXCEL_COLUMN_CIP							= 2;
@@ -104,8 +104,34 @@ public class ConstantesUtil {
 	public static final int		EXCEL_COLUMN_CONCEPTO						= 4;
 	public static final int		EXCEL_COLUMN_MONTO							= 5;
 	public static final int		EXCEL_COLUMN_SITUACION						= 6;
-	public static final int		EXCEL_COLUMN_MES_REINTEGRO					= 7;
-	public static final int		EXCEL_COLUMN_DEDUCCION						= 8;
+	public static final int		EXCEL_COLUMN_MES_BONIF					    = 7;
+	public static final int		EXCEL_COLUMN_MES_REINTEGRO					= 8;
+	public static final int		EXCEL_COLUMN_DEDUCCION						= 9;
+	
+	public static final String		EXCEL_NAME_ANIO_MES						= "B";
+	public static final String		EXCEL_NAME_CIP							= "C";
+	public static final String		EXCEL_NAME_NOMBRES						= "D";
+	public static final String		EXCEL_NAME_CONCEPTO						= "E";
+	public static final String		EXCEL_NAME_MONTO						= "F";
+	public static final String		EXCEL_NAME_SITUACION					= "G";
+	public static final String		EXCEL_NAME_MES_BONIF					= "H";
+	public static final String		EXCEL_NAME_MES_REINTEGRO				= "I";
+	public static final String		EXCEL_NAME_DEDUCCION					= "J";
+	
+	public static final int		EXCEL_COLUMN_DESCUENTO						= 6;
+	public static final int		EXCEL_COLUMN_PAGAR					        = 7;
+	public static final int		EXCEL_COLUMN_MES_GUARDIA				    = 8;
+	public static final int		EXCEL_COLUMN_MES_REINTEGRO_GUARDIA			= 9;
+	public static final int		EXCEL_COLUMN_SITUACION_GUARDIA						= 10;
+
+	
+	public static final String		EXCEL_NAME_DESCUENTO					= "G";
+	public static final String		EXCEL_NAME_PAGAR					= "H";
+	public static final String		EXCEL_NAME_MES_GUARDIA				= "I";
+	public static final String		EXCEL_NAME_MES_REINTEGRO_GUARDIA					= "J";
+	public static final String		EXCEL_NAME_SITUACION_GUARDIA					= "K";
+	
+	
 
 	public static String getRutaFiles(FacesContext facesContext, String carpeta) {
 		ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();
