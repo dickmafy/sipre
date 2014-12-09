@@ -2,15 +2,21 @@ package pe.mil.ejercito.sipr.planilla;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
+import java.sql.SQLIntegrityConstraintViolationException;
+
 import java.math.RoundingMode;
+
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
+import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 
@@ -691,7 +697,12 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		sipreCalculoDescuentoLey.setNcdlMtoAplicable(new BigDecimal(99));
 		sipreCalculoDescuentoLey.setNcdlMtoEmpleado(itemConceptoDL.getNcdlPorEmpleado());
 		sipreCalculoDescuentoLey.setNcdlMtoEmpleador(itemConceptoDL.getNcdlPorEmpleador());
-		ejbCalculoDescuentoLey.persist(sipreCalculoDescuentoLey);
+		try {
+			ejbCalculoDescuentoLey.persist(sipreCalculoDescuentoLey);
+		} catch (EJBTransactionRolledbackException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	public void procesarGuardiaHospitalaria() {

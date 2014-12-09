@@ -168,7 +168,7 @@ public class Main extends MainContext {
 		case 34:
 			contenidoDefault = "/modules/importacion/judicialCrediticia";
 			break;
-		case 35:
+		case 36:
 			contenidoDefault = "/modules/importacion/guardia";
 			break;
 		case 85:
