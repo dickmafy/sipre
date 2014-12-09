@@ -45,6 +45,7 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 		q.setParameter("nplanillaNumProceso", nplanillaNumProceso);
 		q.setParameter("cplanillaMesProceso", cplanillaMesProceso);
 		q.setParameter("ctpCodigo", "01");
+		q.getResultList();
 		BigDecimal resultado = (BigDecimal) q.getSingleResult();
 		return resultado;
 	}

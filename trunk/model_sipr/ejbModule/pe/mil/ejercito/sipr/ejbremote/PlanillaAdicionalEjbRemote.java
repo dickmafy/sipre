@@ -14,6 +14,6 @@ public interface PlanillaAdicionalEjbRemote extends GenericDAO<SiprePlanillaAdic
 
 	BigDecimal verificarSiYaSePago(SiprePlanillaAdicionalPK pk);
 
-	List<Object[]> findBy(Integer nplanillaNumProceso, String cplanillaMesProceso);
+	List<Object[]> findMontoBy(Integer nplanillaNumProceso, String cplanillaMesProceso);
 
 }
