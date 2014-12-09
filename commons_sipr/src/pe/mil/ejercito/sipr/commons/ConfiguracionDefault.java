@@ -45,9 +45,10 @@ public class ConfiguracionDefault implements Serializable {
 	static {
 
 		RUTA_FILE_SYSTEM = "system_file/";
-		LOGO = "images\\logo_ejercito.png";
+		LOGO = "images\\logo_ejercito.jpg";
 		IMAGES = "images";
 		REPORT_BOLETA = "jasper\\report_boleta.jasper";
+		
 		REPORT_INGRESO = "jasper\\report_percibo.jasper";
 		REPORT_DESCUENTO = "jasper\\report_descuento.jasper";
 		REPORT_APORTE= "jasper\\report_aporte.jasper";
