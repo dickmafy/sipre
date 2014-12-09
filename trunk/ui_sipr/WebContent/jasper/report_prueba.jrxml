@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_boleta" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="86247a0b-c41c-42b9-9a94-20887e598908">
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_prueba" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="86247a0b-c41c-42b9-9a94-20887e598908">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="200"/>
+	<property name="ireport.y" value="44"/>
 	<parameter name="LOGO_EJERCITO" class="java.lang.String"/>
 	<parameter name="ANO_MES_PROCESO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -10,12 +10,6 @@
 	<parameter name="NRO_ADM" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
 	</parameter>
-	<parameter name="SUBREPORT_DIR" class="java.lang.String" isForPrompting="false">
-		<defaultValueExpression><![CDATA["E:\\Fuentes\\Denisse\\ejercito\\27112014\\ui_sipr\\WebContent\\jasper\\"]]></defaultValueExpression>
-	</parameter>
-	<parameter name="SUB_RPT_DESCUENTO" class="java.lang.String"/>
-	<parameter name="SUB_RPT_PERCIBO" class="java.lang.String"/>
-	<parameter name="SUB_RPT_APORTE" class="java.lang.String"/>
 	<queryString>
 		<![CDATA[SELECT CB.CBC_NRO_ADM,
 CB.CBC_MES_PROCESO,
@@ -332,36 +326,7 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 		<band height="2" splitType="Stretch"/>
 	</pageHeader>
 	<columnHeader>
-		<band height="101" splitType="Stretch">
-			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="0" width="275" height="100" forecolor="#666600" uuid="eec8b819-0eeb-41df-a592-cccd73f8ce46"/>
-			</rectangle>
-			<subreport>
-				<reportElement x="1" y="1" width="274" height="100" uuid="624552ff-81ee-4b10-8437-58bbac425989"/>
-				<subreportParameter name="ANO_MES_PROCESO">
-					<subreportParameterExpression><![CDATA[$F{CBC_MES_PROCESO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NRO_ADM">
-					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUB_RPT_PERCIBO}]]></subreportExpression>
-			</subreport>
-			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" x="280" y="0" width="275" height="100" forecolor="#666600" uuid="ee733dd7-b46e-4397-b39d-d1b8456f4f29"/>
-			</rectangle>
-			<subreport>
-				<reportElement x="281" y="1" width="274" height="100" uuid="3d4b8c88-1d5c-439b-9d32-abad555cfab4"/>
-				<subreportParameter name="ANO_MES_PROCESO">
-					<subreportParameterExpression><![CDATA[$F{CBC_MES_PROCESO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NRO_ADM">
-					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUB_RPT_DESCUENTO}]]></subreportExpression>
-			</subreport>
-		</band>
+		<band height="8" splitType="Stretch"/>
 	</columnHeader>
 	<detail>
 		<band splitType="Stretch"/>
@@ -378,7 +343,7 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 				<reportElement x="0" y="3" width="555" height="18" forecolor="#666600" uuid="9eb47968-fd40-4316-ba4d-9687813af7e6"/>
 			</rectangle>
 			<rectangle>
-				<reportElement stretchType="RelativeToTallestObject" x="0" y="27" width="555" height="100" isRemoveLineWhenBlank="true" forecolor="#666600" uuid="aa8667bd-b2d9-4021-a8cd-dae87f183592"/>
+				<reportElement stretchType="RelativeToTallestObject" x="0" y="27" width="555" height="100" forecolor="#666600" uuid="aa8667bd-b2d9-4021-a8cd-dae87f183592"/>
 			</rectangle>
 			<staticText>
 				<reportElement x="6" y="3" width="150" height="18" uuid="80e1a89b-c16d-4476-883b-0f175aec8578"/>
@@ -394,17 +359,6 @@ $F{MES}=="12"?"DICIEMBRE":"DESCONOCIDO":""]]></textFieldExpression>
 				</textElement>
 				<textFieldExpression><![CDATA["S/." + $V{NETO}]]></textFieldExpression>
 			</textField>
-			<subreport>
-				<reportElement x="1" y="27" width="554" height="100" uuid="073ee59c-2c09-4b0f-b6a2-a63d4fb99251"/>
-				<subreportParameter name="ANO_MES_PROCESO">
-					<subreportParameterExpression><![CDATA[$F{CBC_MES_PROCESO}]]></subreportParameterExpression>
-				</subreportParameter>
-				<subreportParameter name="NRO_ADM">
-					<subreportParameterExpression><![CDATA[$F{CBC_NRO_ADM}]]></subreportParameterExpression>
-				</subreportParameter>
-				<connectionExpression><![CDATA[$P{REPORT_CONNECTION}]]></connectionExpression>
-				<subreportExpression><![CDATA[$P{SUB_RPT_APORTE}]]></subreportExpression>
-			</subreport>
 		</band>
 	</summary>
 </jasperReport>

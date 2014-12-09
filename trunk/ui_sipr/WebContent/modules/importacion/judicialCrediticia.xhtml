@@ -3,15 +3,11 @@
 	xmlns:ui="http://java.sun.com/jsf/facelets"
 	xmlns:p="http://primefaces.org/ui"
 	xmlns:f="http://java.sun.com/jsf/core">
-<style>
-    .ui-datepicker-calendar {
-        display: none;
-        }
- </style>
+
 	<h:form id="frm">
 		<div id="contenido_formulario">
 
-			<div id="page_flow">Gestión / Proceso Judical y Crediticio</div>
+			<div id="page_flow">Calidad /Importación / Proceso Judical y Crediticio</div>
 			<div id="titulo_formulario">Proceso Judical y Crediticio</div>
 			<div id="contenido">
 				<p:messages id="messages" showIcon="true" showSummary="true"
@@ -23,15 +19,23 @@
 					    <h:panelGrid columns="3" style="margin-bottom:10px" cellpadding="5">
 						   <p:outputLabel value="Tipo de archivo:" />
 						   <p:selectOneRadio id="tipo" value="#{judicialCrediticiaMb.tipoArchivo}" valueChangeListener="#{judicialCrediticiaMb.seteandoTipo}">
+							<p:ajax listener="#{judicialCrediticiaMb.changeValueRadio}" />
 							<f:selectItem itemLabel="Judiciales" itemValue="1" />
 							<f:selectItem itemLabel="Entidades Crediticias" itemValue="2" />
 							
 						</p:selectOneRadio>
 						</h:panelGrid>
 						<h:panelGrid columns="4" style="margin-bottom:10px" cellpadding="5">
-							<p:outputLabel for="anio" value="Año / Mes :" />
-							 <p:calendar id="anio" value="#{judicialCrediticiaMb.anioMes}" locale="es" navigator="true" pattern="mm/yyyy" styleClass="" />
-							 
+							<p:outputLabel for="cmbanio" value="Año proceso:" />
+						<p:selectOneMenu effect="drop" id="cmbanio" value="#{judicialCrediticiaMb.anio}" label="Año:" >
+							<p:ajax listener="#{judicialCrediticiaMb.changeValue}" />
+							<f:selectItems value="#{judicialCrediticiaMb.lstAnios}" />  
+                        </p:selectOneMenu>
+						<p:outputLabel for="cmbmes" value="Mes proceso :" />
+						<p:selectOneMenu effect="drop" id="cmbmes" value="#{judicialCrediticiaMb.mes}"  label="Mes :" >
+							<p:ajax listener="#{judicialCrediticiaMb.changeValue}" />
+							<f:selectItems value="#{judicialCrediticiaMb.lstMeses}" />  
+                        </p:selectOneMenu>	 
 						</h:panelGrid>
 						<p:panelGrid columns="1">
 							<p:fileUpload sizeLimit="100000000" auto="true" label="Subir Archivo "
@@ -40,6 +44,8 @@
 								mode="advanced" allowTypes="/(\.|\/)(dbf|DBF)$/" id="uploadFile">
 								
 								 <f:attribute name="typeFile" value="#{judicialCrediticiaMb.tipoArchivo}" />
+								 <f:attribute name="year" value="#{judicialCrediticiaMb.anio}" />
+						         <f:attribute name="month" value="#{judicialCrediticiaMb.mes}" />
 								</p:fileUpload>
 						</p:panelGrid>
 

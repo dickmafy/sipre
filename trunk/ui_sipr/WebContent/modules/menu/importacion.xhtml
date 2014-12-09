@@ -6,15 +6,20 @@
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="Importación">
 				
-			    <p:menuitem value="Gestionar Bonificación de Personal Militar"
+			    <p:menuitem value="Gestión Bonificación"
 					icon="ui-icon-key" async="true"
 					actionListener="#{mainMb.redireccionaContent(33)}" ajax="false"
 					update=":pnlContenido" />
 					
-				<p:menuitem value="Proceso Judical y Crediticio"
+				<p:menuitem value="Gestión Judical y Crediticio"
 					icon="ui-icon-key" async="true"
 					actionListener="#{mainMb.redireccionaContent(34)}" ajax="false"
 					update=":pnlContenido" />
+					
+				<p:menuitem value="Gestión Guardia"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(36)}" ajax="false"
+					update=":pnlContenido" />	
 			</p:submenu>
 		</p:menu>
 	</h:form>
