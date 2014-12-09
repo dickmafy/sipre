@@ -41,15 +41,15 @@ public class ConstantesUtil {
 	public static final String	PROCESAR_PLANILLA_CODIGO_14					= "14";
 
 	//TEXTO
-	public static final String	PROCESO_1									= "Proceso 1 Numero Hijos";
-	public static final String	PROCESO_2									= "Proceso 2 Lista Revista";
-	public static final String	PROCESO_3									= "Proceso 3 Ingreso Por Persona";
-	public static final String	PROCESO_4									= "Proceso 4 Calcular Descuento de Ley";
-	public static final String	PROCESO_11									= "Proceso 11 Bonificacion DL 1132";
-	public static final String	PROCESO_12									= "Proceso 12 Bonificacion DU 040";
-	public static final String	PROCESO_15									= "Proceso 15 Calcular Impuesto a la renta";
-	public static final String	PROCESO_16									= "Proceso 16 Actualizar Descuento";
-	public static final String	PROCESO_17									= "Proceso 17 Calcular Boleta";
+	public static final String	PROCESO_1										= "*Proceso 1 Numero Hijos";
+	public static final String	PROCESO_2										= "*Proceso 2 Lista Revista";
+	public static final String	PROCESO_3										= "*Proceso 3 Ingreso Por Persona";
+	public static final String	PROCESO_4										= "*Proceso 4 Calcular Descuento de Ley";
+	public static final String	PROCESO_11										= "*Proceso 11 Bonificacion DL 1132";
+	public static final String	PROCESO_12										= "*Proceso 12 Bonificacion DU 040";
+	public static final String	PROCESO_15										= "*Proceso 15 Calcular Impuesto a la renta";
+	public static final String	PROCESO_16										= "*Proceso 16 Actualizar Descuento";
+	public static final String	PROCESO_17										= "*Proceso 17 Calcular Boleta";
 
 	public static final String	PROCESO_5									= "Proceso 5 Guardias Hospitalarias";
 	public static final String	PROCESO_6									= "Proceso 6 Combustible";
@@ -199,4 +199,78 @@ public class ConstantesUtil {
 		return MENSAJE_RESPUESTA_ERROR_DESCUENTO_LEY;
 	}
 
+	public String getProceso1() {
+		return PROCESO_1;
+	}
+
+	public String getProceso2() {
+		return PROCESO_2;
+	}
+
+	public String getProceso3() {
+		return PROCESO_3;
+	}
+
+	public String getProceso4() {
+		return PROCESO_4;
+	}
+
+	public String getProceso11() {
+		return PROCESO_11;
+	}
+
+	public String getProceso12() {
+		return PROCESO_12;
+	}
+
+	public String getProceso15() {
+		return PROCESO_15;
+	}
+
+	public String getProceso16() {
+		return PROCESO_16;
+	}
+
+	public String getProceso17() {
+		return PROCESO_17;
+	}
+
+	public String getProceso5() {
+		return PROCESO_5;
+	}
+
+	public String getProceso6() {
+		return PROCESO_6;
+	}
+
+	public String getProceso7() {
+		return PROCESO_7;
+	}
+
+	public String getProceso8() {
+		return PROCESO_8;
+	}
+
+	public String getProceso9() {
+		return PROCESO_9;
+	}
+
+	public String getProceso10() {
+		return PROCESO_10;
+	}
+
+	public String getProceso13() {
+		return PROCESO_13;
+	}
+
+	public String getProceso14() {
+		return PROCESO_14;
+	}
+	
+	
+	
+
+
 }
+
+
