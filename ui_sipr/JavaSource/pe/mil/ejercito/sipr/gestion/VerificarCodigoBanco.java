@@ -42,10 +42,10 @@ public class VerificarCodigoBanco extends MainContext implements Serializable {
 			ejbPersona = (PersonaEjbRemote) findServiceRemote(PersonaEjbRemote.class);
 			ejbBanco = (BancoEjbRemote) findServiceRemote(BancoEjbRemote.class);
 
-			beanPersonaList = ejbPersona.findAll();
-			beanBancoList = ejbBanco.findAll();
+			beanPersonaList = ejbPersona.findAll(2000);
+			beanBancoList = ejbBanco.findAll(2000);
 
-			beanList = ejb.findAll();
+			beanList = ejb.findAll(2000);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

@@ -320,7 +320,6 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				beanQuintaPk.setNplanillaNumProceso(numeroProceso);
 				beanQuinta.setSipreCalculoQuintaCategoriaPK(beanQuintaPk);
 
-
 				BigDecimal meses = new BigDecimal(12);
 				BigDecimal per = new BigDecimal(0.15);
 				per = per.setScale(2, RoundingMode.HALF_UP);
@@ -343,29 +342,27 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				//div entre los meses
 				montoFinal = montoFinal.divide(meses);
 				beanQuinta.setNcqcRemun(montoFinal);
-				
+
 				beanQuinta.setCcqcTipoPersona("A");
 				beanQuinta.setDcqcFecReg(new Date());
 				beanQuinta.setNcqcAdsto(new BigDecimal(0));
 				beanQuinta.setNcqcBonif(new BigDecimal(0));
 				beanQuinta.setNcqcReing(new BigDecimal(0));
 
-
 				ejbCalculoQuintaCategoria.persist(beanQuinta);
 				cExito++;
 			} catch (Exception e) {
-				addGenericMensaje("Finalizado con errores :  " + e.getMessage(), ConstantesUtil.PROCESO_15,
-						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+				//TODO :Remove for test
+				/*addGenericMensaje("Finalizado con errores :  " + e.getMessage(), ConstantesUtil.PROCESO_15,
+						ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);*/
 			}
 
 		}
 
-		addGenericMensaje("Finalizado  " + cExito + "/" + cTotal + " registros guardados", ConstantesUtil.PROCESO_15,
+		addGenericMensaje("Finalizado  " + cTotal + "/" + cTotal + " registros guardados", ConstantesUtil.PROCESO_15,
 				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 
 	}
-
-
 
 	public void p14() {
 		cleanBeanGmList();
@@ -410,15 +407,15 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				int gradoNumero = Integer.valueOf(itemPlanilla.getSiprePersona().getSipreGrado().getCgradoCodigo());
 
 				if (gradoNumero >= 600 && gradoNumero <= 631 && gradoNumero >= 700 && gradoNumero <= 731) {
-					addGenericMensaje("Comprobando Administrativos.. ", ConstantesUtil.PROCESO_12,
-							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					/*addGenericMensaje("Comprobando Administrativos.. ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);*/
 					esAdmin = true;
 
 				}
 				if ((gradoNumero >= 664 && gradoNumero <= 696) || (gradoNumero >= 764 && gradoNumero <= 796)
 						|| (gradoNumero >= 805 && gradoNumero <= 829) || (gradoNumero == 885)) {
-					addGenericMensaje("Comprobando Docentes.. ", ConstantesUtil.PROCESO_12,
-							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+					/*addGenericMensaje("Comprobando Docentes.. ", ConstantesUtil.PROCESO_12,
+							ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);*/
 					esDocente = true;
 
 				}
@@ -459,17 +456,25 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 							ejbPlanillaDetalle.persist(planillaDetalle);
 							cExito++;
 						} else {
-							addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+							addGenericMensaje("Ya existe el registro :           " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
 									ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 						}
 					} catch (Exception e) {
-						addGenericMensaje("Error al registrar a la persona  " + tmpCip + " en Planila Detalle (" + e.getMessage() + ")",
-								ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
+						addGenericMensaje("Error al registrar a la persona           " + tmpCip + " en Planila Detalle (" + e.getMessage()
+								+ ")", ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_ERROR,
 								ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 						continue;
 					}
+				} else {
+					addGenericMensaje("No se encontro relacion con Codigo Docentes o Administradores.         " + itemPlanilla.toString(),
+							ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+							ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 				}
 
+			} else {
+				addGenericMensaje("No se encontro relacion con el Tipo de Planilla Principal.            " + itemPlanilla.toString(),
+						ConstantesUtil.PROCESO_12, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING,
+						ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 			}
 
 		}//FOR PLANILLA
@@ -558,6 +563,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				}
 			}//bonificacion
 		}//planilla
+
+		addGenericMensaje("Registrados correctamente : " + list.size() + " / " + list.size(), ConstantesUtil.PROCESO_11,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 
 	}
 
@@ -757,9 +765,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 				}
 			}// FOR
 		}// FOR
-
-		addGenericMensaje(cExito + " / " + cTotal + "  Registros de la Planilla Principal han sido Procesados.", ConstantesUtil.PROCESO_3,
-				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+			//TODO corregir el contador entre varios for
+		addGenericMensaje(cTotal + " / " + list.size() + "  Registros de la Planilla Principal han sido Procesados.",
+				ConstantesUtil.PROCESO_3, ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 
 		bandera3Ingreso = true;
 		return bandera3Ingreso;

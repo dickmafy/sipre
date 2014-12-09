@@ -41,6 +41,7 @@ public class VerificarInformacion extends MainContext implements Serializable {
 	private String							tmpCipPersonalPlanillas;
 
 	private Integer							contadorP1;
+	private String							grado;
 
 	@ManagedProperty("#{progressBar}")
 	private ProgressBar						progressBar;
@@ -62,7 +63,7 @@ public class VerificarInformacion extends MainContext implements Serializable {
 		try {
 			ejbTmpPersona = (TmpPersonaEjbRemote) findServiceRemote(TmpPersonaEjbRemote.class);
 			ejbPersonalPlanillas = (PersonalPlanillasEjbRemote) findServiceRemote(PersonalPlanillasEjbRemote.class);
-			beanTmpPersonaList = ejbTmpPersona.findAll();
+			grado = "01";
 			cleanBeanGmList();
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -74,9 +75,20 @@ public class VerificarInformacion extends MainContext implements Serializable {
 		updateComponente("dt");
 	}
 
+	public void listarTmpPersona() {
+		try {
+			beanTmpPersonaList = ejbTmpPersona.findByGrado(grado);
+			showMessage("Se obtuvo la data correctamente....", SEVERITY_INFO);
+		} catch (Exception e) {
+			showMessage("No se pudo obtener la data correctamente....", SEVERITY_ERROR);
+		}
+
+	}
+
 	public void moverTmpPersonaAPlanilla() {
 		showMessage("Migrando datos de TmpPersona a Planilla Persona...", SEVERITY_INFO);
 	}
+
 	public void moverCopereATmpPersonal() {
 
 		showMessage("Migrando datos de COPERE a Planilla...", SEVERITY_INFO);
@@ -220,8 +232,6 @@ public class VerificarInformacion extends MainContext implements Serializable {
 		this.ejbPersonalPlanillas = ejbPersonalPlanillas;
 	}
 
-
-
 	public List<PersonalPlanillas> getBeanPersonalPlanillasList() {
 		return beanPersonalPlanillasList;
 	}
@@ -334,5 +344,12 @@ public class VerificarInformacion extends MainContext implements Serializable {
 		this.beanTmpPersonaList = beanTmpPersonaList;
 	}
 
+	public String getGrado() {
+		return grado;
+	}
+
+	public void setGrado(String grado) {
+		this.grado = grado;
+	}
 
 }

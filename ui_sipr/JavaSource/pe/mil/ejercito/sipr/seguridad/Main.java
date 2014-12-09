@@ -103,6 +103,10 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/seguridad/auditoria/auditoria";
 			break;
 		// GESTION
+		case 35:
+			contenidoDefault = "/modules/gestion/verificarEntidadesCrediticias";
+			break;
+
 		case 50:
 			contenidoDefault = "/modules/gestion/verificarCodigoBanco";
 			break;
