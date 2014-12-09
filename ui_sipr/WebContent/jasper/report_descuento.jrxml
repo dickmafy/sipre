@@ -58,8 +58,7 @@ ORDER BY BD.CBD_IND_SUBTITULO,BD.NBD_SEC]]>
                                       ($F{CBD_IND_SUBTITULO}=="1"?"MANDATO JUDICIAL":
                                                ($F{CBD_IND_SUBTITULO}=="2"?"FACULTATIVO":"SIN GRUPO")
                                        )
-)
-]]></textFieldExpression>
+)]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>

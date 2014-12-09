@@ -6,12 +6,17 @@
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="Boleta">
 				
-			    <p:menuitem value="Generar Boleta"
+			  
+					
+				 <p:menuitem value="Procesar Boleta"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(86)}" ajax="false"
+					update=":pnlContenido" />
+					
+					  <p:menuitem value="Generar Boleta"
 					icon="ui-icon-key" async="true"
 					actionListener="#{mainMb.redireccionaContent(85)}" ajax="false"
 					update=":pnlContenido" />
-					
-				
 			</p:submenu>
 		</p:menu>
 	</h:form>
