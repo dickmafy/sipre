@@ -49,7 +49,7 @@ public class SipreCalculoQuintaCategoria implements Serializable {
 	@Column(name = "NCQC_IMP_RENTA")
 	private BigDecimal						ncqcImpRenta;
 	@Column(name = "CCQC_TIPO_PERSONA")
-	private Character						ccqcTipoPersona;
+	private String							ccqcTipoPersona;
 	@Size(max = 9)
 	@Column(name = "CQC_USU_MOD")
 	private String							cqcUsuMod;
@@ -76,7 +76,7 @@ public class SipreCalculoQuintaCategoria implements Serializable {
 		this.sipreCalculoQuintaCategoriaPK = sipreCalculoQuintaCategoriaPK;
 	}
 
-	public SipreCalculoQuintaCategoria(String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+	public SipreCalculoQuintaCategoria(String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
 		this.sipreCalculoQuintaCategoriaPK = new SipreCalculoQuintaCategoriaPK(cpersonaNroAdm, cplanillaMesProceso, nplanillaNumProceso);
 	}
 
@@ -136,11 +136,11 @@ public class SipreCalculoQuintaCategoria implements Serializable {
 		this.ncqcImpRenta = ncqcImpRenta;
 	}
 
-	public Character getCcqcTipoPersona() {
+	public String getCcqcTipoPersona() {
 		return ccqcTipoPersona;
 	}
 
-	public void setCcqcTipoPersona(Character ccqcTipoPersona) {
+	public void setCcqcTipoPersona(String ccqcTipoPersona) {
 		this.ccqcTipoPersona = ccqcTipoPersona;
 	}
 

@@ -7,8 +7,10 @@ import pe.mil.ejercito.sipr.model.SipreCalculoQuintaCategoria;
 
 @Remote
 public interface CalculoQuintaCategoriaEjbRemote extends GenericDAO<SipreCalculoQuintaCategoria> {
+
 	
 
+	void removeDelMes(String cplanillaMesProceso, Integer nplanillaNumProceso);
 	
 
 	

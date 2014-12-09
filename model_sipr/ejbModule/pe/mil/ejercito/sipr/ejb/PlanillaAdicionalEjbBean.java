@@ -62,7 +62,7 @@ public class PlanillaAdicionalEjbBean extends GenericDAOImpl<SiprePlanillaAdicio
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<Object[]> findBy(Integer nplanillaNumProceso, String cplanillaMesProceso) {
+	public List<Object[]> findMontoBy(Integer nplanillaNumProceso, String cplanillaMesProceso) {
 		List<Object[]> list;
 		StringBuilder sb = new StringBuilder();
 		sb.append(" SELECT o.siprePlanillaAdicionalPK.ctpCodigo ");

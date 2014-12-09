@@ -6,7 +6,6 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
-import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -24,105 +23,99 @@ import javax.validation.constraints.Size;
  */
 @Entity
 @Table(name = "SIPRE_TMP_BONIFICACION")
-@NamedQueries({
-    @NamedQuery(name = "SipreTmpBonificacion.findAll", query = "SELECT s FROM SipreTmpBonificacion s")})
+@NamedQueries({ @NamedQuery(name = "SipreTmpBonificacion.findAll", query = "SELECT s FROM SipreTmpBonificacion s") })
 public class SipreTmpBonificacion implements Serializable {
-    private static final long serialVersionUID = 1L;
-    @EmbeddedId
-    protected SipreTmpBonificacionPK sipreTmpBonificacionPK;
-    // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
-    @Column(name = "NTB_MONTO")
-    private Double ntbMonto;
-    @Size(max = 80)
-    @Column(name = "VTB_APE_NOM")
-    private String vtbApeNom;
-    @Column(name = "CTB_IND_SITUACION")
+	private static final long			serialVersionUID	= 1L;
+	@EmbeddedId
+	protected SipreTmpBonificacionPK	sipreTmpBonificacionPK;
+	// @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
+	@Column(name = "NTB_MONTO")
+	private Double						ntbMonto;
+	@Size(max = 80)
+	@Column(name = "VTB_APE_NOM")
+	private String						vtbApeNom;
+	@Column(name = "CTB_IND_SITUACION")
+	private String						ctpCodigo;
+	@Column(name = "CTP_CODIGO")
+	private String						ctbIndSituacion;
 
-    private String ctbIndSituacion;
+	@JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private SiprePersona				siprePersona;
+	@JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
+	@ManyToOne(optional = false)
+	private SipreConceptoIngreso		sipreConceptoIngreso;
 
-    @JoinColumn(name = "CPERSONA_NRO_ADM", referencedColumnName = "CPERSONA_NRO_ADM", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private SiprePersona siprePersona;
-    @JoinColumn(name = "CCI_CODIGO", referencedColumnName = "CCI_CODIGO", insertable = false, updatable = false)
-    @ManyToOne(optional = false)
-    private SipreConceptoIngreso sipreConceptoIngreso;
-    
-   
-    
-    @Size(min = 1, max = 6)
-    @Column(name = "MES_PROCESO")
-    private String mesProceso;
-    
-    @Size(min = 1, max = 6)
-    @Column(name = "MES_REINTEGRO")
-    private String mesReintegro;
+	@Size(min = 1, max = 6)
+	@Column(name = "MES_PROCESO")
+	private String						mesProceso;
 
-    public SipreTmpBonificacion() {
-    }
+	@Size(min = 1, max = 6)
+	@Column(name = "MES_REINTEGRO")
+	private String						mesReintegro;
 
-    public SipreTmpBonificacion(SipreTmpBonificacionPK sipreTmpBonificacionPK) {
-        this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
-    }
+	public SipreTmpBonificacion() {
+	}
 
-    public SipreTmpBonificacion(String cpersonaNroAdm, String cciCodigo, String ctbMesBonificacion) {
-        this.sipreTmpBonificacionPK = new SipreTmpBonificacionPK(cpersonaNroAdm, cciCodigo, ctbMesBonificacion);
-    }
+	public SipreTmpBonificacion(SipreTmpBonificacionPK sipreTmpBonificacionPK) {
+		this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
+	}
 
-    public SipreTmpBonificacionPK getSipreTmpBonificacionPK() {
-        return sipreTmpBonificacionPK;
-    }
+	public SipreTmpBonificacion(String cpersonaNroAdm, String cciCodigo, String ctbMesBonificacion) {
+		this.sipreTmpBonificacionPK = new SipreTmpBonificacionPK(cpersonaNroAdm, cciCodigo, ctbMesBonificacion);
+	}
 
-    public void setSipreTmpBonificacionPK(SipreTmpBonificacionPK sipreTmpBonificacionPK) {
-        this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
-    }
+	public SipreTmpBonificacionPK getSipreTmpBonificacionPK() {
+		return sipreTmpBonificacionPK;
+	}
 
-    public Double getNtbMonto() {
-        return ntbMonto;
-    }
+	public void setSipreTmpBonificacionPK(SipreTmpBonificacionPK sipreTmpBonificacionPK) {
+		this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
+	}
 
-    public void setNtbMonto(Double ntbMonto) {
-        this.ntbMonto = ntbMonto;
-    }
+	public Double getNtbMonto() {
+		return ntbMonto;
+	}
 
-    public String getVtbApeNom() {
-        return vtbApeNom;
-    }
+	public void setNtbMonto(Double ntbMonto) {
+		this.ntbMonto = ntbMonto;
+	}
 
-    public void setVtbApeNom(String vtbApeNom) {
-        this.vtbApeNom = vtbApeNom;
-    }
+	public String getVtbApeNom() {
+		return vtbApeNom;
+	}
 
+	public void setVtbApeNom(String vtbApeNom) {
+		this.vtbApeNom = vtbApeNom;
+	}
 
-    public String getCtbIndSituacion() {
+	public String getCtbIndSituacion() {
 
-        return ctbIndSituacion;
-    }
+		return ctbIndSituacion;
+	}
 
+	public void setCtbIndSituacion(String ctbIndSituacion) {
 
-    public void setCtbIndSituacion(String ctbIndSituacion) {
+		this.ctbIndSituacion = ctbIndSituacion;
+	}
 
-        this.ctbIndSituacion = ctbIndSituacion;
-    }
+	public SiprePersona getSiprePersona() {
+		return siprePersona;
+	}
 
-    public SiprePersona getSiprePersona() {
-        return siprePersona;
-    }
+	public void setSiprePersona(SiprePersona siprePersona) {
+		this.siprePersona = siprePersona;
+	}
 
-    public void setSiprePersona(SiprePersona siprePersona) {
-        this.siprePersona = siprePersona;
-    }
+	public SipreConceptoIngreso getSipreConceptoIngreso() {
+		return sipreConceptoIngreso;
+	}
 
-    public SipreConceptoIngreso getSipreConceptoIngreso() {
-        return sipreConceptoIngreso;
-    }
+	public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
+		this.sipreConceptoIngreso = sipreConceptoIngreso;
+	}
 
-    public void setSipreConceptoIngreso(SipreConceptoIngreso sipreConceptoIngreso) {
-        this.sipreConceptoIngreso = sipreConceptoIngreso;
-    }
-    
-    
-
-    public String getMesProceso() {
+	public String getMesProceso() {
 		return mesProceso;
 	}
 
@@ -139,28 +132,37 @@ public class SipreTmpBonificacion implements Serializable {
 	}
 
 	@Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (sipreTmpBonificacionPK != null ? sipreTmpBonificacionPK.hashCode() : 0);
-        return hash;
-    }
+	public int hashCode() {
+		int hash = 0;
+		hash += (sipreTmpBonificacionPK != null ? sipreTmpBonificacionPK.hashCode() : 0);
+		return hash;
+	}
 
-    @Override
-    public boolean equals(Object object) {
-        
-        if (!(object instanceof SipreTmpBonificacion)) {
-            return false;
-        }
-        SipreTmpBonificacion other = (SipreTmpBonificacion) object;
-        if ((this.sipreTmpBonificacionPK == null && other.sipreTmpBonificacionPK != null) || (this.sipreTmpBonificacionPK != null && !this.sipreTmpBonificacionPK.equals(other.sipreTmpBonificacionPK))) {
-            return false;
-        }
-        return true;
-    }
+	@Override
+	public boolean equals(Object object) {
 
-    @Override
-    public String toString() {
-        return "pe.mil.ejercito.sipr.model.SipreTmpBonificacion[ sipreTmpBonificacionPK=" + sipreTmpBonificacionPK + " ]";
-    }
-    
+		if (!(object instanceof SipreTmpBonificacion)) {
+			return false;
+		}
+		SipreTmpBonificacion other = (SipreTmpBonificacion) object;
+		if ((this.sipreTmpBonificacionPK == null && other.sipreTmpBonificacionPK != null)
+				|| (this.sipreTmpBonificacionPK != null && !this.sipreTmpBonificacionPK.equals(other.sipreTmpBonificacionPK))) {
+			return false;
+		}
+		return true;
+	}
+
+	@Override
+	public String toString() {
+		return "pe.mil.ejercito.sipr.model.SipreTmpBonificacion[ sipreTmpBonificacionPK=" + sipreTmpBonificacionPK + " ]";
+	}
+
+	public String getCtpCodigo() {
+		return ctpCodigo;
+	}
+
+	public void setCtpCodigo(String ctpCodigo) {
+		this.ctpCodigo = ctpCodigo;
+	}
+
 }

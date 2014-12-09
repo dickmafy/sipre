@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -31,12 +32,12 @@ public class SipreCalculoQuintaCategoriaPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NPLANILLA_NUM_PROCESO")
-    private short nplanillaNumProceso;
+	private Integer	nplanillaNumProceso;
 
     public SipreCalculoQuintaCategoriaPK() {
     }
 
-    public SipreCalculoQuintaCategoriaPK(String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+	public SipreCalculoQuintaCategoriaPK(String cpersonaNroAdm, String cplanillaMesProceso, Integer nplanillaNumProceso) {
         this.cpersonaNroAdm = cpersonaNroAdm;
         this.cplanillaMesProceso = cplanillaMesProceso;
         this.nplanillaNumProceso = nplanillaNumProceso;
@@ -58,11 +59,11 @@ public class SipreCalculoQuintaCategoriaPK implements Serializable {
         this.cplanillaMesProceso = cplanillaMesProceso;
     }
 
-    public short getNplanillaNumProceso() {
+	public Integer getNplanillaNumProceso() {
         return nplanillaNumProceso;
     }
 
-    public void setNplanillaNumProceso(short nplanillaNumProceso) {
+	public void setNplanillaNumProceso(Integer nplanillaNumProceso) {
         this.nplanillaNumProceso = nplanillaNumProceso;
     }
 
@@ -71,7 +72,7 @@ public class SipreCalculoQuintaCategoriaPK implements Serializable {
         int hash = 0;
         hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
         hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
-        hash += (int) nplanillaNumProceso;
+        hash += nplanillaNumProceso;
         return hash;
     }
 
