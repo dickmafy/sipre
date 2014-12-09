@@ -51,7 +51,7 @@ public class UValidacion {
 		return DATE_FORMAT.format(fechaDate);
 	}
 
-	public static int diasDiferencia(Date inicio, Date fin) {
+	public static int getDiasDiferencia(Date inicio, Date fin) {
 		long segInicio = inicio.getTime();
 		long segFin = fin.getTime();
 		long diferencia = segFin - segInicio;
@@ -59,7 +59,7 @@ public class UValidacion {
 		return ((int) dias);
 	}
 
-	public static int diasDiferencia(String sInicio, String sFin) throws ParseException {
+	public static int getDiasDiferencia(String sInicio, String sFin) throws ParseException {
 		Date inicio = UValidacion.ConvertStringToDate2(sInicio);
 		Date fin = UValidacion.ConvertStringToDate2(sFin);
 
@@ -123,7 +123,7 @@ public class UValidacion {
 	}
 
 	public static String getFechaYHoraActual() {
-		DATE_FORMAT = new SimpleDateFormat("H:m:s dd/MM/yyyy", new Locale("es_ES"));
+		DATE_FORMAT = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss", new Locale("es_ES"));
 		DATE_FORMAT.setTimeZone(new SimpleTimeZone(-5, "GMT"));
 		Date fecha = new Date();
 		return DATE_FORMAT.format(fecha);
@@ -143,10 +143,8 @@ public class UValidacion {
 		return new Date(cal.getTimeInMillis());
 	}
 
-	public static Date getToday(Date d) // Devuelve la fecha pasada por
-										// parametros pero sin horas ni minutos
-										// (fecha en hora cero)
-	{
+	// Devuelve la fecha pasada por 	// parametros pero sin horas ni minutos 	// (fecha en hora cero)
+	public static Date getToday(Date d) {
 		// el dia de hoy sin horas ni nada.
 		GregorianCalendar ddate = new GregorianCalendar();
 		ddate.setTime(d);
@@ -283,7 +281,7 @@ public class UValidacion {
 
 	}
 
-	public static int diferenciasDeFechas(Date fechaInicial, Date fechaFinal) {
+	public static int getDiasDiferenciaEntreFechas(Date fechaInicial, Date fechaFinal) {
 		DateFormat df = DateFormat.getDateInstance(DateFormat.MEDIUM);
 		String fechaInicioString = df.format(fechaInicial);
 		try {
@@ -409,7 +407,7 @@ public class UValidacion {
 
 	}
 
-	public String multiplicar(String valor1, String valor2) {
+	public static String multiplicar(String valor1, String valor2) {
 		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
 		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
 		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -419,7 +417,7 @@ public class UValidacion {
 		return resultado + "";
 	}
 
-	public String sumar(String valor1, String valor2) {
+	public static String sumar(String valor1, String valor2) {
 		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
 		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
 		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -429,7 +427,7 @@ public class UValidacion {
 		return resultado.toString();
 	}
 
-	public String restar(String valor1, String valor2) {
+	public static String restar(String valor1, String valor2) {
 		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
 		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
 		deci1 = deci1.setScale(2, BigDecimal.ROUND_HALF_UP);
@@ -439,11 +437,48 @@ public class UValidacion {
 		return resultado.toString();
 	}
 
-	public String dividir(String valor1, String valor2) {
+	public static String dividir(String valor1, String valor2) {
 		BigDecimal deci1 = new BigDecimal(Double.parseDouble(valor1));
 		BigDecimal deci2 = new BigDecimal(Double.parseDouble(valor2));
 		BigDecimal resultado = deci1.divide(deci2, 2, BigDecimal.ROUND_HALF_UP);
 		return resultado + "";
+	}
+
+	public static String getSMHDEntreFechasString(String vinicio, String vfinal) {
+		Date dinicio = null, dfinal = null;
+		long milis1, milis2, diff;
+		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
+		try {
+			// PARSEO STRING A DATE
+			dinicio = sdf.parse(vinicio);
+			dfinal = sdf.parse(vfinal);
+		} catch (ParseException e) {
+			System.out.println("Se ha producido un error en el parseo");
+		}
+		//INSTANCIA DEL CALENDARIO GREGORIANO
+		Calendar cinicio = Calendar.getInstance();
+		Calendar cfinal = Calendar.getInstance();
+		//ESTABLECEMOS LA FECHA DEL CALENDARIO CON EL DATE GENERADO ANTERIORMENTE
+		cinicio.setTime(dinicio);
+		cfinal.setTime(dfinal);
+		milis1 = cinicio.getTimeInMillis();
+		milis2 = cfinal.getTimeInMillis();
+		diff = milis2 - milis1;
+		// calcular la diferencia en segundos
+		long diffSegundos = Math.abs(diff / 1000);
+		// calcular la diferencia en minutos
+		long diffMinutos = Math.abs(diff / (60 * 1000));
+		long restominutos = diffMinutos % 60;
+		// calcular la diferencia en horas
+		long diffHoras = (diff / (60 * 60 * 1000));
+		// calcular la diferencia en dias
+		long diffdias = Math.abs(diff / (24 * 60 * 60 * 1000));
+		//System.out.println("En segundos: " + diffSegundos + " segundos.");
+		//System.out.println("En minutos: " + diffMinutos + " minutos.");
+		//System.out.println("En horas: " + diffHoras + " horas.");
+		//System.out.println("En dias: " + diffdias + " dias.");
+		String devolver = String.valueOf(diffHoras + "H " + restominutos + "m " + diffSegundos + "s ");
+		return devolver;
 	}
 
 }
