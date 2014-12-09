@@ -22,7 +22,7 @@ public class ProgressBar {
 
 	public void onComplete() {
 		contador = 0;
-		tiempoTotal = UValidacion.getSMHDEntreFechasString(fechaInicioText, UValidacion.getFechaYHoraActual());
+		//tiempoTotal = UValidacion.getSMHDEntreFechasString(fechaInicioText, UValidacion.getFechaYHoraActual());
 	}
 
 	public Integer barraProgreso(int contadorActual, int contadorTotal) {
