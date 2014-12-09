@@ -1,0 +1,78 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm">
+		<div id="contenido_formulario">
+			<div id="page_flow">Gestion / Verificar Entidades Crediticias</div>
+			<div id="titulo_formulario">Verificar Entidades Crediticias</div>
+			<div id="contenido">
+
+				<p:messages id="messages" autoUpdate="true" closable="true" />
+
+				<p:commandButton icon="_ui-icon-add" styleClass="boton_botonera"
+					value="Listar">
+				</p:commandButton>
+
+				<h:panelGrid columns="2" style="margin-top:10px;margin-bottom:10px"
+					cellpadding="5">
+					<p:outputLabel for="nivel" value="Tipos de Concepto Hospitalario:" />
+					<p:selectOneRadio id="nivel">
+						<f:selectItem itemLabel="Entidades Crediticias" itemValue="1" />
+						<f:selectItem itemLabel="Asignacion Judicial" itemValue="2" />
+					</p:selectOneRadio>
+				</h:panelGrid>
+
+				<p:commandButton icon="_ui-icon-print" styleClass="boton_botonera"
+					value="Imprimir">
+				</p:commandButton>
+
+
+				<p:dataTable id="dt" var="item2" widgetVar="wdt"
+					
+					emptyMessage="#{constantesUtil.LIST_EMPTY}" resizableColumns="true"
+					paginator="true" rows="#{constantesUtil.LIST_SIZE}"
+					paginatorPosition="top"
+					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+					<p:column headerText="Mes Proceso" style="width:20%; align:center;">
+						<h:outputText value="#{item2.cciCodigo}">
+						</h:outputText>
+					</p:column>
+
+					<p:column headerText="Tipo Planilla"
+						style="width:15%; align:center;">
+						<h:outputText value="#{item2.vciDscCorta}" />
+					</p:column>
+
+					<p:column headerText="Cod Descuento"
+						style="width:20%; align:center;">
+						<h:outputText value="#{item2.vciDscLarga}" />
+					</p:column>
+
+					<p:column headerText="Descuento" style="width:15%; align:center;">
+						<h:outputText value="#{item2.cciCodDestino}" />
+					</p:column>
+
+					<p:column headerText="Cantidad Reg."
+						style="width:15%; align:center;">
+						<h:outputText value="#{item2.cciCodMef}" />
+					</p:column>
+
+					<p:column headerText="Porcentaje" style="width:20%; align:center;">
+						<h:outputText value="#{item2.sipreTipoPlanilla.vtpDsc}" />
+					</p:column>
+
+
+				</p:dataTable>
+
+			</div>
+		</div>
+
+	</h:form>
+
+
+
+</ui:composition>
