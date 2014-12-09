@@ -2,14 +2,18 @@ package pe.mil.ejercito.sipr.ejb;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
+
 
 public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 
@@ -103,7 +107,7 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	}
 
 	@Override
-	public T persist(T object) {
+	public T persist(T object) throws EJBTransactionRolledbackException  {
 		em.persist(object);
 		return object;
 	}

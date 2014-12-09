@@ -2,6 +2,7 @@ package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -33,9 +34,18 @@ public class SipreTmpGuardia implements Serializable {
     private String ctgIndSituacion;
     @Column(name = "NTG_MTO_REINTEGRO")
     private BigDecimal ntgMtoReintegro;
+    
+    @Basic(optional = false)
+    @Column(name = "NTG_MTO_DESCUENTO")
+    private BigDecimal ntgMtoDescuento;
+    
     @Basic(optional = false)
     @Column(name = "MES_PROCESO")
     private String mesProceso;
+    
+    @Basic(optional = false)
+    @Column(name = "CTG_MES_REINTEGRO")
+    private String ctgMesReintegro;
 
     public SipreTmpGuardia() {
     }
@@ -108,8 +118,28 @@ public class SipreTmpGuardia implements Serializable {
     public void setMesProceso(String mesProceso) {
         this.mesProceso = mesProceso;
     }
+    
+    
 
-    @Override
+    public BigDecimal getNtgMtoDescuento() {
+		return ntgMtoDescuento;
+	}
+
+	public void setNtgMtoDescuento(BigDecimal ntgMtoDescuento) {
+		this.ntgMtoDescuento = ntgMtoDescuento;
+	}
+	
+	
+
+	public String getCtgMesReintegro() {
+		return ctgMesReintegro;
+	}
+
+	public void setCtgMesReintegro(String ctgMesReintegro) {
+		this.ctgMesReintegro = ctgMesReintegro;
+	}
+
+	@Override
     public int hashCode() {
         int hash = 0;
         hash += (sipreTmpGuardiaPK != null ? sipreTmpGuardiaPK.hashCode() : 0);
