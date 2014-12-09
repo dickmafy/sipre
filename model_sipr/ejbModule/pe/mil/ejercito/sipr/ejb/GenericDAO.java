@@ -1,7 +1,13 @@
 package pe.mil.ejercito.sipr.ejb;
 
 import java.io.Serializable;
+import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
+
+import javax.ejb.EJBTransactionRolledbackException;
+import javax.persistence.PersistenceException;
+
+
 
 public interface GenericDAO<T extends Serializable> {
 
@@ -13,7 +19,7 @@ public interface GenericDAO<T extends Serializable> {
 
 	long countAll();
 
-	T persist(T bean);
+	T persist(T bean)throws EJBTransactionRolledbackException ;
 
 	void remove(T bean);
 

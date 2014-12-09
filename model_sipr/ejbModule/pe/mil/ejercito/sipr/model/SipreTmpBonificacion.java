@@ -49,6 +49,9 @@ public class SipreTmpBonificacion implements Serializable {
 	@Size(min = 1, max = 6)
 	@Column(name = "MES_PROCESO")
 	private String						mesProceso;
+    
+    @Column(name = "DEDUCCION")
+    private Double deduccion;
 
 	@Size(min = 1, max = 6)
 	@Column(name = "MES_REINTEGRO")
@@ -129,6 +132,16 @@ public class SipreTmpBonificacion implements Serializable {
 
 	public void setMesReintegro(String mesReintegro) {
 		this.mesReintegro = mesReintegro;
+	}
+	
+	
+
+	public Double getDeduccion() {
+		return deduccion;
+	}
+
+	public void setDeduccion(Double deduccion) {
+		this.deduccion = deduccion;
 	}
 
 	@Override
