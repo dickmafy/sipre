@@ -9,6 +9,12 @@
 			<div id="titulo_formulario">Procesar Planilla</div>
 			<div id="contenido">
 				<p:messages id="messages" autoUpdate="true" closable="true" />
+				
+				
+			<p:outputLabel value="Tiempo Total  : "/>
+			<p:outputLabel id="tiempoTotal" value="#{progressBar.tiempoTotal}"/>
+			
+				
 				<p:fieldset>
 					<p:outputLabel value="Mes del Proceso " />
 					<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
@@ -31,7 +37,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="1 Numero de Hijos" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso1}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -39,7 +45,7 @@
 												style="margin-top:0px;" ajax="true"
 												disabled="#{!procesarPlanillaMb.habilitarProceso[1]}"
 												actionListener="#{procesarPlanillaMb.p1NumeroHijos()}"
-												update=":frm:dt, :frmPb"
+												update=":frm:dt :frmPb"
 												onclick="PF('wvProgressBar').show()"
 												onstart="PF('barraProgreso').start();PF('wblockui').show();"
 												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
@@ -50,7 +56,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="2 Lista Revista" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso2}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -58,7 +64,7 @@
 												style="margin-top:0px;" ajax="true"
 												disabled="#{!procesarPlanillaMb.habilitarProceso[2]}"
 												actionListener="#{procesarPlanillaMb.p2ListaRevista()}"
-												update=":frm:dt, :frmPb"
+												update=":frm:dt :frmPb"
 												onclick="PF('wvProgressBar').show()"
 												onstart="PF('barraProgreso').start();PF('wblockui').show();"
 												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
@@ -70,7 +76,7 @@
 								<table class="tbl_contenido">
 									<tr>
 										<td><p:outputLabel
-												value="3 Calcular Ingresos por Persona" /></td>
+												value="#{constantesUtil.proceso3}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -89,7 +95,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="4 Calcular Descuento de Ley" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso4}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -109,7 +115,7 @@
 								<table class="tbl_contenido">
 									<tr>
 										<td><p:outputLabel
-												value="5 Calcular Guardias Hospitalarias" /></td>
+												value="#{constantesUtil.proceso5}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -127,7 +133,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="6 Combustible" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso6}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -148,7 +154,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="7 Chofer y Mayordomo" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso7}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -167,7 +173,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="8 Ex Comabiente del 41" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso8}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -186,7 +192,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="9 Ex Comabiente Cenepa" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso9}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -205,7 +211,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="10 Subsidio DL 1132" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso10}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -223,7 +229,7 @@
 							</td>
 							<td><table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="11 Bonificacion DL 1132" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso11}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -240,7 +246,7 @@
 								</table></td>
 							<td><table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="12 Bonificacion DU 040" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso12}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -260,7 +266,7 @@
 							<td><table class="tbl_contenido">
 									<tr>
 										<td><p:outputLabel
-												value="13 Subsidio por invalidez o póstumo" /></td>
+												value="#{constantesUtil.proceso13}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -278,7 +284,7 @@
 							<td><table class="tbl_contenido">
 									<tr>
 										<td><p:outputLabel
-												value="14 Bonificación por Cumplir 65 años" /></td>
+												value="#{constantesUtil.proceso14}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -296,7 +302,7 @@
 							<td><table class="tbl_contenido">
 									<tr>
 										<td><p:outputLabel
-												value="15 Calcular Impuesto a la renta" /></td>
+												value="#{constantesUtil.proceso15}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -313,7 +319,7 @@
 								</table></td>
 							<td><table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="16 Actualizar Descuento" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso16}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -331,7 +337,7 @@
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="17 Calcular Boleta" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso17}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
@@ -431,32 +437,15 @@
 			<!-- PROGRES INICIO -->
 			<!-- Si se print infinitos post, revisar los ajax true y en java updateComponente("dt"); 
 				-->
-			<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000"
+			<p:progressBar widgetVar="barraProgreso" ajax="true" interval="1000" 
 				id="barraProgreso" value="#{progressBar.contador}"
 				labelTemplate="{value}%" styleClass="animated" global="false"
 				style="width:700px">
 				<p:ajax event="complete" listener="#{progressBar.onComplete}"
-					update=":frmPb:barraProgreso" />
+					update=":frmPb:barraProgreso :frm:tiempoTotal" />
 			</p:progressBar>
 			<!-- PROGRES FIN-->
 		</p:dialog>
 	</h:form>
-	<!-- 
-					<p:column headerText="Proceso">
-					</p:column>
-					<p:column headerText="Tipo Planilla" resizable="true">
-					</p:column>
-					<p:column headerText="Concepto" resizable="true">
-					</p:column>
-					<p:column headerText="CIP" resizable="true">
-					</p:column>
-					<p:column headerText="Grado" resizable="true">
-					</p:column>
-					<p:column headerText="Especialidad" resizable="true">
-					</p:column>
-					<p:column headerText="Nombres" resizable="true">
-					</p:column>
-					<p:column headerText="Unidad" resizable="true">
-					</p:column>
-					 -->
+	
 </ui:composition>
