@@ -1,6 +1,5 @@
 package pe.mil.ejercito.sipr.importacion;
 
-import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,8 +8,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLIntegrityConstraintViolationException;
+import java.math.BigDecimal;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,14 +21,8 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-
-
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -46,31 +38,30 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.GenericResponseBean;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.TmpBonificacionEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.TmpGuardiaEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
 import pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK;
+import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
+import pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK;
 
 
-
-@ManagedBean(name = "bonificacionPersonal")
+@ManagedBean(name = "guardia")
 @ViewScoped
-public class BonificacionPersonalMb extends MainContext implements Serializable{
-
-	private static final long serialVersionUID = 1L;
-	private TmpBonificacionEjbRemote ejbBonificacion;
+public class GuardiaMb extends MainContext implements Serializable{
 	
-	private GenericResponseBean<SipreTmpBonificacion> sessionBean ; 
-	public static final String		JBOSS_CATALINA		= "catalina.home";
-	public static final String		JBOSS_TEMP			= "tmpFiles";
-
+	private static final long serialVersionUID = 1L;
+	private TmpGuardiaEjbRemote ejbGuardia;
+	
 	private String mes;
 	private String anio;
 	private List<SelectItem> lstAnios;
 	private List<SelectItem> lstMeses;
 	
-	public BonificacionPersonalMb(){
+	
+	public GuardiaMb(){
 		super();
 		try{
-			ejbBonificacion = (TmpBonificacionEjbRemote) findServiceRemote(TmpBonificacionEjbRemote.class);
+			ejbGuardia = (TmpGuardiaEjbRemote) findServiceRemote(TmpGuardiaEjbRemote.class);
 		}catch(Exception e){
 			e.printStackTrace();
 		}
@@ -118,7 +109,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 			System.out.println("foo seleccionado::"+mes);
 			
 				try {
-				 List<SipreTmpBonificacion> lstbean=new ArrayList<>();
+				 List<SipreTmpGuardia> lstbean=new ArrayList<>();
 					String fileOldName = event.getFile().getFileName();
 					Workbook wb = null;
 					String fileExt = null;
@@ -140,8 +131,8 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 						XSSFWorkbook hwb = new XSSFWorkbook(fileIS);
 					    lstbean = readExcelNew(hwb, fileIS,mesProceso);
 					    if(lstbean!=null && !lstbean.isEmpty()){
-					    	for(SipreTmpBonificacion bean:lstbean){
-					    		ejbBonificacion.persist(bean);
+					    	for(SipreTmpGuardia bean:lstbean){
+					    		ejbGuardia.persist(bean);
 					    	}
 					    	
 					    }
@@ -150,8 +141,8 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 						wb = new HSSFWorkbook(fileIS);
 						lstbean = readOldExcel(wb, fileIS,mesProceso);
 						 if(lstbean!=null && !lstbean.isEmpty()){
-						    	for(SipreTmpBonificacion bean:lstbean){
-						    		ejbBonificacion.persist(bean);
+						    	for(SipreTmpGuardia bean:lstbean){
+						    		ejbGuardia.persist(bean);
 						    	}
 						    }
 					}
@@ -222,56 +213,27 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	
 	
 	
-	private List<SipreTmpBonificacion> readOldExcel(Workbook wb, FileInputStream fileIS,String mesProceso) throws NullPointerException, Exception{
+	private List<SipreTmpGuardia> readOldExcel(Workbook wb, FileInputStream fileIS,String mesProceso) throws NullPointerException, Exception{
 		
 		Sheet sheet = wb.getSheetAt(0);
-	
-		 Iterator<Row> rowIterator = sheet.iterator();
-		 List<SipreTmpBonificacion> lstResult=getLstBean(rowIterator,mesProceso);
-		/*int totalRow=sheet.getPhysicalNumberOfRows();
-		for(int i=ConstantesUtil.EXCEL_ROW_INICIO_DTLL ;i<totalRow;i++){
-			Row row=sheet.getRow(i);
-			Cell cellAnioMes= row.getCell(ConstantesUtil.EXCEL_COLUMN_ANIO_MES);
-			Cell cellCip= row.getCell(ConstantesUtil.EXCEL_COLUMN_CIP);
-			Cell cellAplld= row.getCell(ConstantesUtil.EXCEL_COLUMN_NOMBRES);
-			Cell cellCncpto= row.getCell(ConstantesUtil.EXCEL_COLUMN_CONCEPTO);
-			Cell cellMonto= row.getCell(ConstantesUtil.EXCEL_COLUMN_MONTO);
-			Cell cellSituacion= row.getCell(ConstantesUtil.EXCEL_COLUMN_SITUACION);
-			Cell cellMes= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO);
-			Cell cellDeduccion= row.getCell(ConstantesUtil.EXCEL_COLUMN_DEDUCCION);
-			
-			SipreTmpBonificacion bean=new SipreTmpBonificacion();
-			SipreTmpBonificacionPK pk=new SipreTmpBonificacionPK();
-			pk.setCtbMesBonificacion(getValueCell(cellAnioMes,ConstantesUtil.EXCEL_COLUMN_ANIO_MES,row));
-			pk.setCpersonaNroAdm(getValueCell(cellCip,ConstantesUtil.EXCEL_COLUMN_CIP,row));
-			pk.setCciCodigo(getValueCell(cellCncpto,ConstantesUtil.EXCEL_COLUMN_CONCEPTO,row));
-			bean.setSipreTmpBonificacionPK(pk);
-			bean.setVtbApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES,row));
-			bean.setNtbMonto(Double.parseDouble(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row)));
-			bean.setCtbIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION,row));
-			bean.setMesReintegro(getValueCell(cellMes,ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO,row));
-			bean.setDeduccion(Double.parseDouble(getValueCell(cellDeduccion,ConstantesUtil.EXCEL_COLUMN_DEDUCCION,row)));
-			
-			lstResult.add(bean);
-			
-		}*/
-		
+	     Iterator<Row> rowIterator = sheet.iterator();
+		 List<SipreTmpGuardia> lstResult=getLstBean(rowIterator,mesProceso);
 		System.out.println("lista result::"+lstResult.size());
 		
 		return lstResult;
 	}
 	
-	private List<SipreTmpBonificacion> readExcelNew(XSSFWorkbook wb, FileInputStream fileIS,String mesProceso) throws NullPointerException, Exception{
+	private List<SipreTmpGuardia> readExcelNew(XSSFWorkbook wb, FileInputStream fileIS,String mesProceso) throws NullPointerException, Exception{
 		
 		XSSFSheet sheet = wb.getSheetAt(0);
 	    Iterator<Row> rowIterator = sheet.iterator();
-	    List<SipreTmpBonificacion> lstResult=getLstBean(rowIterator,mesProceso);
+	    List<SipreTmpGuardia> lstResult=getLstBean(rowIterator,mesProceso);
 		System.out.println("lista result::"+lstResult.size());
 		return lstResult;
 	}
 	
-	private List<SipreTmpBonificacion> getLstBean(Iterator<Row> rowIterator,String mesProceso)throws NullPointerException, Exception{
-		List<SipreTmpBonificacion> lstResult=new ArrayList<>();
+	private List<SipreTmpGuardia> getLstBean(Iterator<Row> rowIterator,String mesProceso)throws NullPointerException, Exception{
+		List<SipreTmpGuardia> lstResult=new ArrayList<>();
 		int i=0;
         while(rowIterator.hasNext()) {
         	Row row = rowIterator.next();
@@ -281,23 +243,29 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
     			Cell cellAplld= row.getCell(ConstantesUtil.EXCEL_COLUMN_NOMBRES);
     			Cell cellCncpto= row.getCell(ConstantesUtil.EXCEL_COLUMN_CONCEPTO);
     			Cell cellMonto= row.getCell(ConstantesUtil.EXCEL_COLUMN_MONTO);
-    			Cell cellSituacion= row.getCell(ConstantesUtil.EXCEL_COLUMN_SITUACION);
-    			Cell cellMesBonif= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_BONIF);
-    			Cell cellMesReint= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO);
-    			Cell cellDeduccion= row.getCell(ConstantesUtil.EXCEL_COLUMN_DEDUCCION);
+    			Cell cellDescuento= row.getCell(ConstantesUtil.EXCEL_COLUMN_DESCUENTO);
+    			Cell cellPagar= row.getCell(ConstantesUtil.EXCEL_COLUMN_PAGAR);
     			
-    			SipreTmpBonificacion bean=new SipreTmpBonificacion();
-    			SipreTmpBonificacionPK pk=new SipreTmpBonificacionPK();
+    			Cell cellSituacion= row.getCell(ConstantesUtil.EXCEL_COLUMN_SITUACION_GUARDIA);
+    			Cell cellMesGuardia= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_GUARDIA);
+    			Cell cellMesReint= row.getCell(ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA);
+    			
+    			
+    			SipreTmpGuardia bean=new SipreTmpGuardia();
+    			SipreTmpGuardiaPK pk=new SipreTmpGuardiaPK();
     			bean.setMesProceso(getValueCell(cellAnioMes,ConstantesUtil.EXCEL_COLUMN_ANIO_MES,row,ConstantesUtil.EXCEL_NAME_ANIO_MES,mesProceso));
-    			pk.setCtbMesBonificacion(getValueCell(cellMesBonif,ConstantesUtil.EXCEL_COLUMN_MES_BONIF,row,ConstantesUtil.EXCEL_NAME_MES_BONIF,mesProceso));
+    			pk.setCtgMesGuardia(getValueCell(cellMesGuardia,ConstantesUtil.EXCEL_COLUMN_MES_GUARDIA,row,ConstantesUtil.EXCEL_NAME_MES_GUARDIA,mesProceso));
     			pk.setCpersonaNroAdm(getValueCell(cellCip,ConstantesUtil.EXCEL_COLUMN_CIP,row,ConstantesUtil.EXCEL_NAME_CIP,mesProceso));
     			pk.setCciCodigo(getValueCell(cellCncpto,ConstantesUtil.EXCEL_COLUMN_CONCEPTO,row,ConstantesUtil.EXCEL_NAME_CONCEPTO,mesProceso));
-    			bean.setSipreTmpBonificacionPK(pk);
-    			bean.setVtbApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES,row,ConstantesUtil.EXCEL_NAME_NOMBRES,mesProceso));
-    			bean.setNtbMonto(Double.parseDouble(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row,ConstantesUtil.EXCEL_NAME_MONTO,mesProceso)));
-    			bean.setCtbIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION,row,ConstantesUtil.EXCEL_NAME_SITUACION,mesProceso));
-    			bean.setMesReintegro(getValueCell(cellMesReint,ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO,row,ConstantesUtil.EXCEL_NAME_MES_REINTEGRO,mesProceso));
-    			bean.setDeduccion(Double.parseDouble(getValueCell(cellDeduccion,ConstantesUtil.EXCEL_COLUMN_DEDUCCION,row,ConstantesUtil.EXCEL_NAME_DEDUCCION,mesProceso)));
+    			
+    			bean.setSipreTmpGuardiaPK(pk);
+    			bean.setVtgApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES,row,ConstantesUtil.EXCEL_NAME_NOMBRES,mesProceso));
+    			bean.setNtgMtoGestion(new BigDecimal(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row,ConstantesUtil.EXCEL_NAME_MONTO,mesProceso)));
+    			bean.setNtgMtoDescuento(new BigDecimal(getValueCell(cellDescuento,ConstantesUtil.EXCEL_COLUMN_DESCUENTO,row,ConstantesUtil.EXCEL_NAME_DESCUENTO,mesProceso)));
+    			bean.setNtgMtoPagado(new BigDecimal(getValueCell(cellPagar,ConstantesUtil.EXCEL_COLUMN_PAGAR,row,ConstantesUtil.EXCEL_NAME_PAGAR,mesProceso)));
+    			
+    			bean.setCtgIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION_GUARDIA,row,ConstantesUtil.EXCEL_NAME_SITUACION_GUARDIA,mesProceso));
+    			bean.setCtgMesReintegro(getValueCell(cellMesReint,ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA,row,ConstantesUtil.EXCEL_NAME_MES_REINTEGRO_GUARDIA,mesProceso));
     			
     			lstResult.add(bean);
             }
@@ -312,7 +280,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 		boolean isread=true;
 		String valueReturn=null;
 		if(cell.getCellType() ==  Cell.CELL_TYPE_BLANK){
-			if(nro== ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO ){
+			if(nro== ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA ){
 				isread=false;
 			}else {
 				isread=false;
@@ -334,17 +302,18 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 		if(isread){
 			switch (nro){
 			case ConstantesUtil.EXCEL_COLUMN_ANIO_MES : 
-			case ConstantesUtil.EXCEL_COLUMN_SITUACION : 
-			case ConstantesUtil.EXCEL_COLUMN_MES_BONIF : 
-			case ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO :{
+			case ConstantesUtil.EXCEL_COLUMN_SITUACION_GUARDIA : 
+			case ConstantesUtil.EXCEL_COLUMN_MES_GUARDIA : 
+			case ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA :{
 				System.out.println("value nmero::"+cell.getNumericCellValue());
 				Double value=cell.getNumericCellValue();
 				valueReturn=value.intValue()+"";
 				
 				break;
 			}
-			case ConstantesUtil.EXCEL_COLUMN_MONTO : ;
-	     	case ConstantesUtil.EXCEL_COLUMN_DEDUCCION :{
+			case ConstantesUtil.EXCEL_COLUMN_MONTO : 
+	     	case ConstantesUtil.EXCEL_COLUMN_DESCUENTO :
+	     	case ConstantesUtil.EXCEL_COLUMN_PAGAR :{
 	     		System.out.println("value: double:"+cell.getNumericCellValue());
 				Double value=cell.getNumericCellValue();
 				valueReturn= value.toString();
@@ -396,9 +365,5 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	
 	
 
-	
-	
-	
-	
 
 }

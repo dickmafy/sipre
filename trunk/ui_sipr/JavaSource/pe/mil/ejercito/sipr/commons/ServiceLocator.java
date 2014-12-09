@@ -28,15 +28,10 @@ public class ServiceLocator extends Faces{
 		Object obj = null;
 		try {
 			String nbreCse = c.getSimpleName();
-			int pos = nbreCse.lastIndexOf(UProperties
-					.getMessage(UParametro.PROP_CONFIGURACIONES,
-							UParametro.SFJO_EJB_REMOTO));
-			String nbreCseBean = nbreCse.substring(0, pos).concat(
-					UProperties.getMessage(UParametro.PROP_CONFIGURACIONES,
-							UParametro.SFJO_EJB_BEAN));
+			int pos = nbreCse.lastIndexOf(UProperties.getMessage(UParametro.PROP_CONFIGURACIONES,UParametro.SFJO_EJB_REMOTO));
+			String nbreCseBean = nbreCse.substring(0, pos).concat(UProperties.getMessage(UParametro.PROP_CONFIGURACIONES,UParametro.SFJO_EJB_BEAN));
 			Context context = new InitialContext(jndiProperties);
-			obj = context.lookup("ejb:ear_sipr/model_sipr//" + nbreCseBean
-					+ "!" + c.getName());
+			obj = context.lookup("ejb:ear_sipr/model_sipr//" + nbreCseBean+ "!" + c.getName());
 		} catch (NamingException e) {
 			e.printStackTrace();
 		}

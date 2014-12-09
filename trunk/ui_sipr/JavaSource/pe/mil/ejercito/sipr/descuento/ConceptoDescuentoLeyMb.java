@@ -7,8 +7,6 @@ import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
 
-//import com.sun.org.apache.xalan.internal.xsltc.compiler.sym;
-
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.ejbremote.ConceptoDescuentoEjbRemote;

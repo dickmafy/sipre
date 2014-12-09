@@ -168,8 +168,14 @@ public class Main extends MainContext {
 		case 34:
 			contenidoDefault = "/modules/importacion/judicialCrediticia";
 			break;
+		case 35:
+			contenidoDefault = "/modules/importacion/guardia";
+			break;
 		case 85:
 			contenidoDefault = "/modules/boleta/generarBoleta";
+			break;
+		case 86:
+			contenidoDefault = "/modules/boleta/procesarBoleta";
 			break;
 		}
 		return "";

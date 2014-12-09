@@ -1,11 +1,11 @@
 package pe.mil.ejercito.sipr.boleta;
 
 
-import java.io.FileNotFoundException;
 
+import java.io.FileNotFoundException;
 import java.io.Serializable;
-import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -17,13 +17,11 @@ import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 
-
 import net.sf.jasperreports.engine.JRException;
-
 import net.sf.jasperreports.engine.JasperExportManager;
 import net.sf.jasperreports.engine.JasperFillManager;
 
-
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.StreamedContent;
 
 import pe.mil.ejercito.sipr.commons.ConexionORCL;
@@ -32,7 +30,8 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UDate;
-
+import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 
@@ -49,10 +48,19 @@ private static final long serialVersionUID = 1L;
 	private StreamedContent file;
 	private String nameBoleta;
 	private PlanillaEjbRemote ejbPlanilla;
+	private PlanillaDescuentoEjbRemote ejbPlanillaDescuento;
+	private PlanillaDetalleEjbRemote ejbPlanillaDetalle;
 	
 	private String nroAdm;
 	private List<SelectItem> lstNames;
 	private boolean seEnvia;//true 
+	
+	private String mes;
+	private String anio;
+	private List<SelectItem> lstAnios;
+	private List<SelectItem> lstMeses;
+	
+	 
 	
 	public BoletaMb(){
 		try{
@@ -85,40 +93,41 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
+	@PostConstruct
+	public void loadAnioMes(){
+		String[] meses={"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"};
+		
+		lstAnios=new ArrayList<SelectItem>();
+		int year = Calendar.getInstance().get(Calendar.YEAR);
+		int month = Calendar.getInstance().get(Calendar.MONTH);
+		for(int i=0;i<10;i++){
+			SelectItem si=new SelectItem();
+			si.setLabel((year+i)+"");
+			si.setValue((year+i));
+			lstAnios.add(si);
+		}
+		
+		lstMeses=new ArrayList<SelectItem>();
+		for(int i=0;i<meses.length;i++){
+			SelectItem si=new SelectItem();
+			si.setLabel(meses[i]);
+			si.setValue(i+1);
+			lstMeses.add(si);
+		}
+		anio=year+"";
+		System.out.println("mes preselccionado::"+month);
+		mes=(month+1)+"";
+		
+		
+		
+	}
+	
+	public void procesarBoleta(){
+		System.out.println("Procesando ....");
+	}
+	
 	public String generarRpt() throws FileNotFoundException {
-		String   print = null;
-
-        try {
-            print = imprimir(file);
-
-            if (print != null) {
-                 try {
-                	System.out.println("name::>"+nameBoleta);
-                	System.out.println("PRINT::>"+print);
-                
-                	//JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-                	//JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+"/"+nameBoleta );
-                	//expPdf.exportReport();
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-              
-            }
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
-
-        
-        
-         setNameBoleta("boleta.pdf");
-        
-        return "";
-    }
-
-    public String   imprimir(StreamedContent file) {
-    	String    print = null;
-        try{
+		 try {
         	System.out.println("persona cod:"+nroAdm);
         	System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
         	System.out.println("se envia:"+seEnvia);
@@ -126,27 +135,28 @@ private static final long serialVersionUID = 1L;
         	 String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA);
         	 nameBoleta="boleta"+"_"+nroAdm+".pdf";
         	 if (ConexionORCL.conectar()) {
-        		 System.out.println("CONECTOOO!!"+ConexionORCL.conectar());
+        		
              Map<String,Object> parametro = new HashMap<String, Object>();
-             parametro.put("LOGO_EJERCITO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.LOGO));
-             parametro.put("ANO_MES_PROCESO",UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
-           
-             parametro.put("NRO_ADM", nroAdm);
+             parametro.put("ANO_MES_PROCESO",(UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM)).toString().trim());
+             parametro.put("LOGO_EJERCITO",ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.LOGO));
+             parametro.put("NRO_ADM",nroAdm.toString().trim());
              parametro.put("SUB_RPT_DESCUENTO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_DESCUENTO));
              parametro.put("SUB_RPT_PERCIBO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_INGRESO));
              parametro.put("SUB_RPT_APORTE", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_APORTE));
              
               try{
-            	//  JasperReport   jasperReport = JasperCompileManager.compileReport(ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA_JXML));//REPORT_BOLETA_JXML
-            	// print= JasperFillManager.fillReport(jasperReport,parametro,ConexionORCL.getConexion());
-            	print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
+            	  
+            	 String print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
             	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-               if(seEnvia){
+            	setNameBoleta(nameBoleta);
+            	if(seEnvia){
             	   String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
                    ArrayList<String[]> lista = new ArrayList<>();
                    Correo.enviarCorreo( lista,ConfiguracionDefault.TO_EMAIL , ConfiguracionDefault.TITULO_MENSAJE, cuerpoMensaje, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta,nameBoleta); 
                }
             	
+            	RequestContext.getCurrentInstance().execute("PF('wvviewpdf').show()");
+                RequestContext.getCurrentInstance().update("frm:dlgviewpdf");
               }catch(JRException ex){
             	ex.printStackTrace(); 
              }finally{
@@ -154,17 +164,16 @@ private static final long serialVersionUID = 1L;
      		}
              
          }
-        	 
-       }catch(SQLException ex){
-        	ex.printStackTrace();
-        
-        }catch(Exception e){
-        	e.printStackTrace();
-        }
-       
 
-        return print;
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+
+        
+        return "";
     }
+
+   
 
 	public Date getFechaProceso() {
 		return fechaProceso;
@@ -212,6 +221,38 @@ private static final long serialVersionUID = 1L;
 
 	public void setSeEnvia(boolean seEnvia) {
 		this.seEnvia = seEnvia;
+	}
+
+	public String getMes() {
+		return mes;
+	}
+
+	public void setMes(String mes) {
+		this.mes = mes;
+	}
+
+	public String getAnio() {
+		return anio;
+	}
+
+	public void setAnio(String anio) {
+		this.anio = anio;
+	}
+
+	public List<SelectItem> getLstAnios() {
+		return lstAnios;
+	}
+
+	public void setLstAnios(List<SelectItem> lstAnios) {
+		this.lstAnios = lstAnios;
+	}
+
+	public List<SelectItem> getLstMeses() {
+		return lstMeses;
+	}
+
+	public void setLstMeses(List<SelectItem> lstMeses) {
+		this.lstMeses = lstMeses;
 	}
     
     
