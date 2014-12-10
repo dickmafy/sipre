@@ -10,6 +10,8 @@ import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
 @Remote
 public interface PlanillaDetalleEjbRemote extends GenericDAO<SiprePlanillaDetalle> {
 
-	BigDecimal getSueldoPorPersona(String cpersonaNroAdm, Integer numeroProceso, String cplanillaMesProceso);
+
+
+	BigDecimal getSueldoPorPersona(String cpersonaNroAdm, Integer nplanillaNumProceso, String cplanillaMesProceso);
 
 }

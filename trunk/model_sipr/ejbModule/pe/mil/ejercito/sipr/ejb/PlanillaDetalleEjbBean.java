@@ -16,6 +16,9 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 	@PersistenceContext(unitName = "model_sipre")
 	EntityManager	em;
 
+	/**
+	 * El sueldo de la persona, por todos los Conceptos de ingreso que tiene.
+	 */
 	@Override
 	public BigDecimal getSueldoPorPersona(String cpersonaNroAdm, Integer nplanillaNumProceso, String cplanillaMesProceso) {
 
@@ -33,17 +36,20 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 		sb.append(" and  o.siprePlanillaDetallePK.cplanillaMesProceso=:cplanillaMesProceso  ");
 		sb.append(" and  o.siprePlanillaDetallePK.ctpCodigo=:ctpCodigo ");
 		sb.append(" and  o.siprePlanillaDetallePK.cpersonaNroAdm=:cpersonaNroAdm ");
+		//sb.append(" and  o.siprePlanillaDetallePK.cpersonaNroAdm=:cciCodigo ");
 
 		sb.append(" GROUP BY o.siprePlanillaDetallePK.ctpCodigo ");
 		sb.append(" ,o.siprePlanillaDetallePK.cpersonaNroAdm ");
 		sb.append(" ,o.siprePlanillaDetallePK.cplanillaMesProceso ");
 		sb.append(" ,o.siprePlanillaDetallePK.nplanillaNumProceso ");
+		//sb.append(" ,o.siprePlanillaDetallePK.cciCodigo ");
 		Query q = em.createQuery(sb.toString());
 		// situacion administrativa
 		// q.setParameter("ctpCodigo", ctpCodigo); /
 		q.setParameter("cpersonaNroAdm", cpersonaNroAdm);
 		q.setParameter("nplanillaNumProceso", nplanillaNumProceso);
 		q.setParameter("cplanillaMesProceso", cplanillaMesProceso);
+		//q.setParameter("cciCodigo", cciCodigo);
 		q.setParameter("ctpCodigo", "01");
 		q.getResultList();
 		BigDecimal resultado = (BigDecimal) q.getSingleResult();
