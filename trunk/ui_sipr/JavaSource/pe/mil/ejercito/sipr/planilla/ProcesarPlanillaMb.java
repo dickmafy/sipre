@@ -2,11 +2,7 @@ package pe.mil.ejercito.sipr.planilla;
 
 import java.io.Serializable;
 import java.math.BigDecimal;
-
-import java.sql.SQLIntegrityConstraintViolationException;
-
 import java.math.RoundingMode;
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -16,7 +12,6 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
-import javax.persistence.PersistenceException;
 
 import org.apache.log4j.Logger;
 
@@ -694,7 +689,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		pk.setNplanillaNumProceso(numeroProceso);
 		sipreCalculoDescuentoLey.setSipreCalculoDescuentoLeyPK(pk);
 
-		sipreCalculoDescuentoLey.setNcdlMtoAplicable(new BigDecimal(99));
+		BigDecimal sueldo = ejbPlanillaDetalle.getSueldoPorPersona(tmpCIp, numeroProceso, mesProceso);
+		sipreCalculoDescuentoLey.setNcdlMtoAplicable(sueldo.multiply(itemConceptoDL.getNcdlPorEmpleado()));
 		sipreCalculoDescuentoLey.setNcdlMtoEmpleado(itemConceptoDL.getNcdlPorEmpleado());
 		sipreCalculoDescuentoLey.setNcdlMtoEmpleador(itemConceptoDL.getNcdlPorEmpleador());
 		try {
