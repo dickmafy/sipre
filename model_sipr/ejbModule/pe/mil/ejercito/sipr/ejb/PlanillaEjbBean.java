@@ -27,11 +27,12 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 	}
 
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<SiprePlanilla> getListPlanillaByNroAdm() {
 		try{
 			Query q=em.createQuery("Select p from SiprePlanilla p where 1=1 order by p.vplanillaApeNom ");
-			
+			System.out.println( q.getResultList().size());
 			return q.getResultList();
 			
 		}catch(Exception e){
