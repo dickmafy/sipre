@@ -56,16 +56,20 @@ public class ConfiguracionDefault implements Serializable {
 
 		REPORT_BOLETA_JXML = "jasper\\report_boleta.jrxml";
 
-		/*IP = "localhost";
-		INSTANCIA = "xe";
+		//LOCALHOST
+		IP = "localhost";
+		INSTANCIA = "XE";
 		USUARIO = "US_SIPRE";
 		PASSWORD = "SIPRE";
-		PUERTO = "1521";*/
+		PUERTO = "1521";
+
+		//COPERE
+		/*
 		IP = "10.64.6.60";
 		INSTANCIA = "DITELE";
 		USUARIO = "US_SIPRE";
 		PASSWORD = "SIPRE";
-		PUERTO = "1531";
+		PUERTO = "1531";*/
 
 		HOST = "mail.cs4-engineering.com";
 		STARTTLS_ENABLE = "false";
@@ -81,9 +85,9 @@ public class ConfiguracionDefault implements Serializable {
 		CHARSET = "utf-8";
 		CONTENT_TYPE = "html";
 		VARIABLE_CONFIRMACION = "key";
-		TO_EMAIL="diego.matos.b@gmail.com";
+		TO_EMAIL = "diego.matos.b@gmail.com";
 		
-		TITULO_MENSAJE = "EJERCITO DEL PERÚ – Boleta generada";
+		TITULO_MENSAJE = "EJERCITO DEL PERï¿½ ï¿½ Boleta generada";
         CUERPO_MENSAJE="Sr. (Sra.) (Srta.): : <br /><br/>"
     			+ "Se ha completado adjuntado la Boleta del mes en curso<br /><br />";
 	}
