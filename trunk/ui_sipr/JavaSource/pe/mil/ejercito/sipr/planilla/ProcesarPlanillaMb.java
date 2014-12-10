@@ -701,7 +701,7 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		}
 	}
 
-	public void procesarGuardiaHospitalaria() {
+	public void p5() {
 		cleanBeanGmList();
 		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_5, SEVERITY_INFO);
 

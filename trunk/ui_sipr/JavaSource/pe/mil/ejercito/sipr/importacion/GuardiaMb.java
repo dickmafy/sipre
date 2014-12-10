@@ -35,12 +35,8 @@ import org.apache.poi.xssf.usermodel.XSSFWorkbook;
 import org.primefaces.event.FileUploadEvent;
 
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
-import pe.mil.ejercito.sipr.commons.GenericResponseBean;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.ejbremote.TmpBonificacionEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.TmpGuardiaEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreTmpBonificacion;
-import pe.mil.ejercito.sipr.model.SipreTmpBonificacionPK;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardia;
 import pe.mil.ejercito.sipr.model.SipreTmpGuardiaPK;
 
@@ -98,7 +94,7 @@ public class GuardiaMb extends MainContext implements Serializable{
 	
 	public void changeValue(AjaxBehaviorEvent event) {
 		System.out.println("change value");
-		System.out.println("valor al año::"+anio);
+		System.out.println("valor al aï¿½o::"+anio);
 		System.out.println("valor al mes::"+mes);
 	}
 	
@@ -158,7 +154,7 @@ public class GuardiaMb extends MainContext implements Serializable{
 				} catch (NullPointerException e) {
 					showMessage(e.toString(), SEVERITY_ERROR);
 				} catch (EJBTransactionRolledbackException e) {
-					showMessage("Existe información duplicada", SEVERITY_ERROR);
+					showMessage("Existe informaciï¿½n duplicada", SEVERITY_ERROR);
 				}catch (Exception e) {
 					e.printStackTrace();
 					showMessage("No se copio el contenido del Excel correctamente.", SEVERITY_ERROR);
@@ -261,11 +257,12 @@ public class GuardiaMb extends MainContext implements Serializable{
     			bean.setSipreTmpGuardiaPK(pk);
     			bean.setVtgApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES,row,ConstantesUtil.EXCEL_NAME_NOMBRES,mesProceso));
     			bean.setNtgMtoGestion(new BigDecimal(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row,ConstantesUtil.EXCEL_NAME_MONTO,mesProceso)));
-    			bean.setNtgMtoDescuento(new BigDecimal(getValueCell(cellDescuento,ConstantesUtil.EXCEL_COLUMN_DESCUENTO,row,ConstantesUtil.EXCEL_NAME_DESCUENTO,mesProceso)));
+				//bean.setNtgMtoDescuento(new BigDecimal(getValueCell(cellDescuento,ConstantesUtil.EXCEL_COLUMN_DESCUENTO,row,ConstantesUtil.EXCEL_NAME_DESCUENTO,mesProceso)));
     			bean.setNtgMtoPagado(new BigDecimal(getValueCell(cellPagar,ConstantesUtil.EXCEL_COLUMN_PAGAR,row,ConstantesUtil.EXCEL_NAME_PAGAR,mesProceso)));
     			
     			bean.setCtgIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION_GUARDIA,row,ConstantesUtil.EXCEL_NAME_SITUACION_GUARDIA,mesProceso));
-    			bean.setCtgMesReintegro(getValueCell(cellMesReint,ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA,row,ConstantesUtil.EXCEL_NAME_MES_REINTEGRO_GUARDIA,mesProceso));
+				bean.setMesReintegro(getValueCell(cellMesReint, ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO_GUARDIA, row,
+						ConstantesUtil.EXCEL_NAME_MES_REINTEGRO_GUARDIA, mesProceso));
     			
     			lstResult.add(bean);
             }
@@ -296,7 +293,7 @@ public class GuardiaMb extends MainContext implements Serializable{
 				isread=true;
 			}else{
 				System.out.println("SON DIFERENTES");
-				throw new NullPointerException("El mes y año del proceso de la celda "+nameCell+(row.getRowNum()+1)+ " no coindiden con el seleccionado");
+				throw new NullPointerException("El mes y aï¿½o del proceso de la celda "+nameCell+(row.getRowNum()+1)+ " no coindiden con el seleccionado");
 			}
 		}
 		if(isread){
