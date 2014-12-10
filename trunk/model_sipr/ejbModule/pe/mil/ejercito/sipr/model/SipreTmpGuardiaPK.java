@@ -1,6 +1,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -84,8 +85,8 @@ public class SipreTmpGuardiaPK implements Serializable {
 
     @Override
 	public String toString() {
-		return "SipreTmpGuardiaPK [cpersonaNroAdm=" + cpersonaNroAdm + ", cciCodigo=" + cciCodigo + ", ctgMesGuardia=" + ctgMesGuardia
-				+ "]";
+		return String.format("SipreTmpGuardiaPK [cpersonaNroAdm=%s, cciCodigo=%s, ctgMesGuardia=%s]", cpersonaNroAdm, cciCodigo,
+				ctgMesGuardia);
 	}
     
 }
