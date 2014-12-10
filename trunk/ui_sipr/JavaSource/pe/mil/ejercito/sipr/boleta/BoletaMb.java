@@ -71,14 +71,14 @@ private static final long serialVersionUID = 1L;
 			 if (!ConexionORCL.isInstance()) {
 	                new ConexionORCL().setValores(ConfiguracionDefault.IP, ConfiguracionDefault.INSTANCIA, ConfiguracionDefault.PUERTO, ConfiguracionDefault.USUARIO, ConfiguracionDefault.PASSWORD);
 	           }
-			
+			 loadPersonal();
 		}catch(Exception e){
 			e.printStackTrace();
 		}
 		
 	}
 	
-	@PostConstruct
+	
 	public void loadPersonal(){
 		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm();
 		lstNames=new ArrayList<SelectItem>();
