@@ -131,7 +131,9 @@ public class ConstantesUtil {
 	public static final String		EXCEL_NAME_MES_REINTEGRO_GUARDIA					= "J";
 	public static final String		EXCEL_NAME_SITUACION_GUARDIA					= "K";
 	
-	
+	public static final int		TIPO_LEY_JUDICIAL							= 1;
+	public static final int		TIPO_GENERAL							= 2;
+
 
 	public static String getRutaFiles(FacesContext facesContext, String carpeta) {
 		ServletContext servletContext = (ServletContext) facesContext.getExternalContext().getContext();

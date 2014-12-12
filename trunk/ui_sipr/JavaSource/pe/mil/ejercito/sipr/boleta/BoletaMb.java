@@ -4,6 +4,7 @@ package pe.mil.ejercito.sipr.boleta;
 
 import java.io.FileNotFoundException;
 import java.io.Serializable;
+import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -30,10 +31,18 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UDate;
+import pe.mil.ejercito.sipr.dto.UsuarioDto;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
+import pe.mil.ejercito.sipr.model.SipreBoletaCabecera;
+import pe.mil.ejercito.sipr.model.SipreBoletaCabeceraPK;
+import pe.mil.ejercito.sipr.model.SipreBoletaDetalle;
+import pe.mil.ejercito.sipr.model.SipreBoletaDetallePK;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDescuento;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
+import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 
 
@@ -50,6 +59,7 @@ private static final long serialVersionUID = 1L;
 	private PlanillaEjbRemote ejbPlanilla;
 	private PlanillaDescuentoEjbRemote ejbPlanillaDescuento;
 	private PlanillaDetalleEjbRemote ejbPlanillaDetalle;
+   
 	
 	private String nroAdm;
 	private List<SelectItem> lstNames;
@@ -80,7 +90,7 @@ private static final long serialVersionUID = 1L;
 	
 	
 	public void loadPersonal(){
-		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm();
+		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(null);
 		lstNames=new ArrayList<SelectItem>();
 		if(lstPlanilla!=null & !lstPlanilla.isEmpty()){
 			for(SiprePlanilla pl:lstPlanilla){
@@ -123,6 +133,85 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	public void procesarBoleta(){
+		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(anio+""+mes);
+		List<SiprePlanillaDetalle> lstIngresos=ejbPlanillaDetalle.getListPlanillaDetalle(anio+""+mes);
+		List<SiprePlanillaDescuento> lstDescLeyJud=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_LEY_JUDICIAL);
+		List<SiprePlanillaDescuento> lstDescOtros=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_GENERAL);
+		List<SipreBoletaDetalle> lstBoletaDet=null;
+		List<SipreBoletaCabecera> lstBoletaCab=null;
+		if(lstPlanilla!=null && !lstPlanilla.isEmpty() ){
+			for(SiprePlanilla plnPers:lstPlanilla){
+				BigDecimal totalIng=new BigDecimal(0);
+				BigDecimal totalDesLeyJud=new BigDecimal(0);
+				BigDecimal neto=new BigDecimal(0);
+				for(int i=0 ;i<lstIngresos.size();i++){
+					if(lstIngresos.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+						totalIng.add(lstIngresos.get(i).getNpdMtoConcepto());
+					}
+				}
+                for(int i=0 ;i<lstDescLeyJud.size();i++){
+                	if(lstDescLeyJud.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+                		totalDesLeyJud.add(lstDescLeyJud.get(i).getNpdMtoEmpleado());
+					}
+				}
+                neto=totalIng.subtract(totalDesLeyJud);
+                
+				SipreBoletaCabecera cb=new SipreBoletaCabecera();
+				SipreBoletaCabeceraPK pkCb=new SipreBoletaCabeceraPK();
+				pkCb.setCbcMesProceso(anio+""+mes);
+				pkCb.setCbcNroAdm(plnPers.getId().getCpersonaNroAdm());
+				pkCb.setNbcNumProceso(plnPers.getId().getNplanillaNumProceso());
+				cb.setSipreBoletaCabeceraPK(pkCb);
+				
+				cb.setCbcCodGraEfec(plnPers.getSipreCargo().getCcargoCodigo());
+				//cb.setCbcCodGraPens(plnPers.get);
+				cb.setCbcCodUnidad(plnPers.getSipreUnidad().getCunidadCodigo());
+				cb.setCbcDni(plnPers.getCplanillaDni());
+				//cb.setCbcIndActPens(cbcIndActPens);
+				cb.setDbcFecReg(new Date());
+				cb.setNbcMtoEgreso(totalDesLeyJud);
+				cb.setNbcMtoIngreso(neto);
+				//cb.setNbcNumBoleta(nbcNumBoleta);
+				//cb.setSipreBoletaDetalleList(sipreBoletaDetalleList);
+				cb.setSipreUsuario(new SipreUsuario());
+				//cb.setTcbTipPersona(tcbTipPersona);
+				cb.setVbcDesBanco(plnPers.getSipreBanco().getVbancoDsc());
+				//cb.setVbcDesGraEfec(vbcDesGraEfec);
+				//cb.setVbcDesGraPens(vbcDesGraPens);
+				cb.setVbcDesUnidad(plnPers.getSipreUnidad().getVunidadDscCorta());
+				//cb.setVbcLugar(plnPers.);
+				//cb.setVbcRegPens(vbcRegPens);
+				//cb.setVbcRegRemun(vbcRegRemun);
+				List<SipreBoletaDetalle> lstDetalle=new ArrayList<SipreBoletaDetalle>();
+				 for(int i=0 ;i<lstDescOtros.size();i++){
+					 SipreBoletaDetalle dtl=new SipreBoletaDetalle();
+	                	if(lstDescOtros.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+	                		if(neto.compareTo(lstDescOtros.get(i).getNpdMtoEmpleado())== 1){
+	                		   neto.subtract(lstDescOtros.get(i).getNpdMtoEmpleado());
+	                		   SipreBoletaDetallePK pk =new SipreBoletaDetallePK();
+	                		   pk.setCbcMesProceso(anio+""+mes);
+	                		   pk.setCbcNroAdm(plnPers.getId().getCpersonaNroAdm());
+	                		   pk.setNbcNumProceso(plnPers.getId().getNplanillaNumProceso());
+	                		   pk.setCbdTipPlanilla(lstDescOtros.get(i).getSipreTipoPlanilla().getCtpCodigo());
+	                		   dtl.setSipreBoletaDetallePK(pk);
+	                		 /*  dtl.setCbdCodIngDesc(lstDescOtros.get(i).get);
+	                		   dtl.setCbdCodMef(cbdCodMef);
+	                		   dtl.setCbdIndSubtitulo(cbdIndSubtitulo);
+	                		   dtl.setCbdTipConcpto(cbdTipConcpto);
+	                		   dtl.setNbdMonto(nbdMonto);
+	                		   dtl.setNbdNumCuoPagada(nbdNumCuoPagada);
+	                		   dtl.setNbdNumCuoTotal(nbdNumCuoTotal);
+	                		   dtl.setVbdDscIngDesc(vbdDscIngDesc);
+	                		   dtl.setSipreBoletaCabecera(cb);*/
+	                		   lstDetalle.add(dtl);
+	                		}
+						}
+					}
+				
+			}
+		}
+		
+		
 		System.out.println("Procesando ....");
 	}
 	
