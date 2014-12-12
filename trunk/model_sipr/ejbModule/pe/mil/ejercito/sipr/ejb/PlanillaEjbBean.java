@@ -29,10 +29,21 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<SiprePlanilla> getListPlanillaByNroAdm() {
+	public List<SiprePlanilla> getListPlanillaByNroAdm(String mesProceso) {
 		try{
-			Query q=em.createQuery("Select p from SiprePlanilla p where 1=1 order by p.vplanillaApeNom ");
+			StringBuilder sb=new StringBuilder();
+			sb.append("Select p from SiprePlanilla p where 1=1 ");
+			if(mesProceso!=null && !mesProceso.isEmpty()){
+				sb.append(" and p.id.cplanillaMesProceso =:mes ");
+			}
+			sb.append(" order by p.vplanillaApeNom ");
 			System.out.println( q.getResultList().size());
+			Query q=em.createQuery(sb.toString());
+			if(mesProceso!=null && !mesProceso.isEmpty()){
+				q.setParameter("mes",mesProceso.trim());
+			}
+			
+			
 			return q.getResultList();
 			
 		}catch(Exception e){

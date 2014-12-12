@@ -31,7 +31,7 @@ public class SipreBoletaDetallePK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NBC_NUM_PROCESO")
-    private short nbcNumProceso;
+    private Integer nbcNumProceso;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
@@ -45,7 +45,7 @@ public class SipreBoletaDetallePK implements Serializable {
     public SipreBoletaDetallePK() {
     }
 
-    public SipreBoletaDetallePK(String cbcMesProceso, String cbcNroAdm, short nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
+    public SipreBoletaDetallePK(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
         this.cbcMesProceso = cbcMesProceso;
         this.cbcNroAdm = cbcNroAdm;
         this.nbcNumProceso = nbcNumProceso;
@@ -69,11 +69,11 @@ public class SipreBoletaDetallePK implements Serializable {
         this.cbcNroAdm = cbcNroAdm;
     }
 
-    public short getNbcNumProceso() {
+    public Integer getNbcNumProceso() {
         return nbcNumProceso;
     }
 
-    public void setNbcNumProceso(short nbcNumProceso) {
+    public void setNbcNumProceso(Integer nbcNumProceso) {
         this.nbcNumProceso = nbcNumProceso;
     }
 
