@@ -12,7 +12,7 @@ public interface PlanillaEjbRemote extends
 		GenericDAO<SiprePlanilla> {
 
 	Long siPersonaExisteEnPlanillaPrincipal(String cip);
-	List<SiprePlanilla> getListPlanillaByNroAdm();
+	List<SiprePlanilla> getListPlanillaByNroAdm(String mesProceso);
 	
 	
 

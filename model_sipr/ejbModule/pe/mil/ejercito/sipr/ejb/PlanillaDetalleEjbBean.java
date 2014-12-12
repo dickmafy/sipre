@@ -1,6 +1,7 @@
 package pe.mil.ejercito.sipr.ejb;
 
 import java.math.BigDecimal;
+import java.util.List;
 
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -54,6 +55,30 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 		q.getResultList();
 		BigDecimal resultado = (BigDecimal) q.getSingleResult();
 		return resultado;
+	}
+
+	@Override
+	public List<SiprePlanillaDetalle> getListPlanillaDetalle(String mesproceso) {
+		try{
+			StringBuilder sb=new StringBuilder();
+			sb.append("Select p from SiprePlanillaDetalle p where 1=1 ");
+			if(mesproceso!=null && !mesproceso.isEmpty()){
+				sb.append(" and p.siprePlanillaDetallePK.cplanillaMesProceso =:mes ");
+			}
+			sb.append(" order by p.siprePlanillaDetallePK.cpersonaNroAdm ");
+			
+			Query q=em.createQuery(sb.toString());
+			if(mesproceso!=null && !mesproceso.isEmpty()){
+				q.setParameter("mes",mesproceso.trim());
+			}
+			
+			
+			return q.getResultList();
+			
+		}catch(Exception e){
+			e.printStackTrace();
+			return null;
+		}
 	}
 
 }
