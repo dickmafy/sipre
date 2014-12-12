@@ -64,6 +64,11 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 	private List<SelectItem>				lstMeses;
 	private File							file;
 
+
+	private List<SipreTmpJudicial>			beanJList;
+	private List<SipreTmpEntidadCrediticia>	beanECList;
+
+
 	public JudicialCrediticiaMb() {
 		super();
 		try {
@@ -71,11 +76,17 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 			ejbJudicial = (TmpJudicialEjbRemote) findServiceRemote(TmpJudicialEjbRemote.class);
 			ejbEntidad = (TmpEntidadCrediticiaEjbRemote) findServiceRemote(TmpEntidadCrediticiaEjbRemote.class);
 			tipoArchivo = ConstantesUtil.TIPO_FILE_ENTIDAD + "";
-
+			cleanBeanGmList();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
+
+	private void cleanBeanGmList() {
+		updateComponente("dt");
+		updateComponente("dt2");
+	}
+
 
 	@PostConstruct
 	public void loadAnioMes() {
@@ -139,11 +150,17 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 				//CREDITICIA 
 				ejbEntidad.removeAll();
 				readDbf(is, tipoArchivo != null ? Integer.parseInt(tipoArchivo) : null);
+				beanECList = ejbEntidad.findAll();
+				updateComponente("dt");
+				updateComponente("dt2");
 				break;
 			case "1":
 				//JUDICIAL
 				ejbJudicial.removeAll();
 				generarDeTxtDBF(is, file);
+				beanJList = ejbJudicial.findAll();
+				updateComponente("dt");
+				updateComponente("dt2");
 				break;
 			}
 
@@ -175,66 +192,67 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 				SipreTmpEntidadCrediticiaPK pk = new SipreTmpEntidadCrediticiaPK();
 				int numbColumn = 0;
 				for (int i = 0; i < rowObjects.length; i++) {
-					switch (i) {
-					//case 0:{numbColumn++;} break;
-					case 1: {
-						pk.setCtecTipoMovim(String.valueOf(rowObjects[i]));
-						numbColumn++;
-					}
-						break;
-					case 2: {
-						pk.setCpersonaNroAdm(String.valueOf(rowObjects[i]));
-						numbColumn++;
-					}
-						break;
-					case 3: {
-						pk.setCecCodigo(String.valueOf(rowObjects[i]));
-						numbColumn++;
-					}
-						break;
-					case 4: {
-						ent.setNtecMonto(new BigDecimal(rowObjects[i].toString()));
-						numbColumn++;
-					}
-						break;
-					case 5: {
-						ent.setNtecMtoAnterior(new BigDecimal(rowObjects[i].toString()));
-						numbColumn++;
-					}
-						break;
-					case 6: {
-						ent.setNtecNroCuota((new BigDecimal(rowObjects[i].toString())).intValue());
-						numbColumn++;
-					}
-						break;
-					//case 6:{ent.setNtecNroCuota(Integer.parseInt(rowObjects[i].toString()));numbColumn++;}break;
-					//case 7:{numbColumn++;} break;
-					//case 8:{numbColumn++;} break;
-					case 9: {
-						pk.setCtecMesProceso(String.valueOf(rowObjects[i]));
-						numbColumn++;
-					}
-						break;
-					}
+					try {
+						switch (i) {
+						//case 0:{numbColumn++;} break;
+						case 1: {
+							pk.setCtecTipoMovim(String.valueOf(rowObjects[i]));
+							numbColumn++;
+						}
+							break;
+						case 2: {
+							pk.setCpersonaNroAdm(String.valueOf(rowObjects[i]));
+							numbColumn++;
+						}
+							break;
+						case 3: {
+							pk.setCecCodigo(String.valueOf(rowObjects[i]));
+							numbColumn++;
+						}
+							break;
+						case 4: {
+							ent.setNtecMonto(new BigDecimal(rowObjects[i].toString()));
+							numbColumn++;
+						}
+							break;
+						case 5: {
+							ent.setNtecMtoAnterior(new BigDecimal(rowObjects[i].toString()));
+							numbColumn++;
+						}
+							break;
+						case 6: {
+							ent.setNtecNroCuota((new BigDecimal(rowObjects[i].toString())).intValue());
+							numbColumn++;
+						}
+							break;
+						//case 6:{ent.setNtecNroCuota(Integer.parseInt(rowObjects[i].toString()));numbColumn++;}break;
+						//case 7:{numbColumn++;} break;
+						//case 8:{numbColumn++;} break;
+						case 9: {
+							pk.setCtecMesProceso(String.valueOf(rowObjects[i]));
+							numbColumn++;
+						}
+							break;
+						}
 
-					if ((i + 1) == numberOfFields) {
-						System.out.println("guardando....");
-						numbColumn = 0;
-						ent.setSipreTmpEntidadCrediticiaPK(pk);
-						try {
+						if ((i + 1) == numberOfFields) {
+							System.out.println("guardando....");
+							numbColumn = 0;
+							ent.setSipreTmpEntidadCrediticiaPK(pk);
+
 							ejbEntidad.persist(ent);
 							System.out.println("saliendo de persisnt....");
-						} catch (EJBTransactionRolledbackException e) {
-							e.printStackTrace();
-						} catch (Exception e) {
-							e.printStackTrace();
+
+							ent = new SipreTmpEntidadCrediticia();
+							pk = new SipreTmpEntidadCrediticiaPK();
+
 						}
-						ent = new SipreTmpEntidadCrediticia();
-						pk = new SipreTmpEntidadCrediticiaPK();
-
+						System.out.println(rowObjects[i] + "==>nro columna:" + i + "-" + numbColumn);
+					} catch (EJBTransactionRolledbackException e) {
+						e.printStackTrace();
+					} catch (Exception e) {
+						e.printStackTrace();
 					}
-					System.out.println(rowObjects[i] + "==>nro columna:" + i + "-" + numbColumn);
-
 				}
 
 			}
@@ -265,7 +283,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 			//DBFReader dbfreader = new DBFReader("E:\\hexiong\\work\\project\\book2.dbf");
 			//String nombreDBF = "N:\\test_text_to_dbf.dbf";
-			String nombreDBF = "C:\\test_text_to_dbf.dbf";
+			String nombreDBF = "C:\\DBF_ARCHIVO_JUDICIAL.dbf";
 			//String nombreText = "test.txt";
 
 			DBFWriter dbfwriter = new DBFWriter(nombreDBF, fields);
@@ -278,7 +296,6 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 				if (texto.trim().length() > 0 && texto.length() == LONGITUD_OBLIGATORIA) {
 					// SUBSTRING : texto >= X && >=Y
 					LOG.info("###INICIO - FILA : " + contador);
-
 
 					MES_PROCESO = texto.substring(0, 6);
 					LOG.info("MES_PROCESO:      " + MES_PROCESO);
@@ -391,12 +408,12 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 	}
 
-	public String getTipoArchivo() {
-		return tipoArchivo;
+	public UsuarioEjbRemote getEjbUsuario() {
+		return ejbUsuario;
 	}
 
-	public void setTipoArchivo(String tipoArchivo) {
-		this.tipoArchivo = tipoArchivo;
+	public void setEjbUsuario(UsuarioEjbRemote ejbUsuario) {
+		this.ejbUsuario = ejbUsuario;
 	}
 
 	public Date getAnioMes() {
@@ -405,6 +422,30 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 	public void setAnioMes(Date anioMes) {
 		this.anioMes = anioMes;
+	}
+
+	public TmpJudicialEjbRemote getEjbJudicial() {
+		return ejbJudicial;
+	}
+
+	public void setEjbJudicial(TmpJudicialEjbRemote ejbJudicial) {
+		this.ejbJudicial = ejbJudicial;
+	}
+
+	public TmpEntidadCrediticiaEjbRemote getEjbEntidad() {
+		return ejbEntidad;
+	}
+
+	public void setEjbEntidad(TmpEntidadCrediticiaEjbRemote ejbEntidad) {
+		this.ejbEntidad = ejbEntidad;
+	}
+
+	public String getTipoArchivo() {
+		return tipoArchivo;
+	}
+
+	public void setTipoArchivo(String tipoArchivo) {
+		this.tipoArchivo = tipoArchivo;
 	}
 
 	public String getMes() {
@@ -438,5 +479,30 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 	public void setLstMeses(List<SelectItem> lstMeses) {
 		this.lstMeses = lstMeses;
 	}
+
+	public File getFile() {
+		return file;
+	}
+
+	public void setFile(File file) {
+		this.file = file;
+	}
+
+	public List<SipreTmpJudicial> getBeanJList() {
+		return beanJList;
+	}
+
+	public void setBeanJList(List<SipreTmpJudicial> beanJList) {
+		this.beanJList = beanJList;
+	}
+
+	public List<SipreTmpEntidadCrediticia> getBeanECList() {
+		return beanECList;
+	}
+
+	public void setBeanECList(List<SipreTmpEntidadCrediticia> beanECList) {
+		this.beanECList = beanECList;
+	}
+
 
 }
