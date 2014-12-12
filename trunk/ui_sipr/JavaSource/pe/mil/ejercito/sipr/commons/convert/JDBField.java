@@ -36,9 +36,9 @@ public class JDBField {
    * @throws JDBFException 如果与字段类型定义不合，则会抛出异常
    */
   public JDBField(String s, char c, int i, int j) throws JDBFException {
-    if (s.length() > 10) {
+    if (s.length() > 20) {
       throw new JDBFException(
-          "The field name is more than 10 characters long: " + s);
+          "The field name is more than 20 characters long: " + s);
     }
     if (c != 'C' && c != 'N' && c != 'L' && c != 'D' && c != 'F') {
       throw new JDBFException("The field type is not a valid. Got: " + c);
@@ -63,7 +63,7 @@ public class JDBField {
     }
     if (c == 'D' && i != 8) {
       throw new JDBFException(
-          "DOUBLE The field length should be 8 characaters for date fields. Got: " + i);
+          "DATE The field length should be 8 characaters for date fields. Got: " + i);
     }
     if (c == 'F' && i >= 21) {
       throw new JDBFException("FLOAT  - The field length should be less than 21 digits for floating point fields. Got: " +
