@@ -39,9 +39,9 @@
 						</h:panelGrid>
 						<p:panelGrid columns="1">
 							<p:fileUpload sizeLimit="100000000" auto="true" label="Subir Archivo "
-								cancelLabel="cancel" uploadLabel="update" fileLimit="1"
+								cancelLabel="cancel" uploadLabel="update"
 								fileUploadListener="#{judicialCrediticiaMb.handleFileUpload}" dragDropSupport="false"
-								mode="advanced" allowTypes="/(\.|\/)(dbf|DBF)$/" id="uploadFile">
+								mode="advanced" allowTypes="/(\.|\/)(dbf|DBF|xls|xlsx|XLS|XLSX|txt|TXT)$/" id="uploadFile">
 								
 								 <f:attribute name="typeFile" value="#{judicialCrediticiaMb.tipoArchivo}" />
 								 <f:attribute name="year" value="#{judicialCrediticiaMb.anio}" />
