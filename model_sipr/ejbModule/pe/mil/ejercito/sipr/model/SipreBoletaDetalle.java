@@ -65,7 +65,7 @@ public class SipreBoletaDetalle implements Serializable {
         this.sipreBoletaDetallePK = sipreBoletaDetallePK;
     }
 
-    public SipreBoletaDetalle(String cbcMesProceso, String cbcNroAdm, short nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
+    public SipreBoletaDetalle(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
         this.sipreBoletaDetallePK = new SipreBoletaDetallePK(cbcMesProceso, cbcNroAdm, nbcNumProceso, cbdTipPlanilla, nbdSec);
     }
 
