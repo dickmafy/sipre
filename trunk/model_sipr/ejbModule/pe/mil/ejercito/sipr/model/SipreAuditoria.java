@@ -7,6 +7,7 @@ package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
 import java.util.Date;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -18,6 +19,8 @@ import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import pe.mil.ejercito.sipr.commons.UDate;
 
 /**
  *
@@ -82,7 +85,11 @@ public class SipreAuditoria implements Serializable {
     public Date getAudFecha() {
         return audFecha;
     }
-
+    
+    public String getAudFechaToString(){
+		return UDate.toStringfecha(audFecha, UDate.FORMATO_DD_MM_AA);
+    }
+    
     public void setAudFecha(Date audFecha) {
         this.audFecha = audFecha;
     }
