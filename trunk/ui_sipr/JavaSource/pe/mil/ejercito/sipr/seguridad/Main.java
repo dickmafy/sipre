@@ -67,7 +67,12 @@ public class Main extends MainContext {
 			menuLateral = "/modules/menu/importacion";
 			contenidoDefault = "/modules/blank_page";
 			break;
+		case 20:
+			menuLateral = "/modules/menu/entidadCrediticia";
+			contenidoDefault = "/modules/blank_page";
+			break;
 		}
+
 		return "";
 	}
 
@@ -120,9 +125,7 @@ public class Main extends MainContext {
 		case 60:
 			contenidoDefault = "/modules/planilla/procesarPlanilla";
 			break;
-		case 61:
-			contenidoDefault = "/modules/planilla/crediticia";
-			break;
+
 		case 62:
 			contenidoDefault = "/modules/planilla/judicial";
 			break;
@@ -176,6 +179,19 @@ public class Main extends MainContext {
 			break;
 		case 86:
 			contenidoDefault = "/modules/boleta/procesarBoleta";
+			break;
+		//110 CREDITICIA
+		case 110:
+			contenidoDefault = "/modules/entidadCrediticia/crediticia";
+			break;
+		case 111:
+			contenidoDefault = "/modules/entidadCrediticia/autorizacionPersonal";
+			break;
+		case 112:
+			contenidoDefault = "/modules/entidadCrediticia/consultaAutorizaciones";
+			break;
+		case 113:
+			contenidoDefault = "/modules/entidadCrediticia/reporte";
 			break;
 		}
 		return "";
