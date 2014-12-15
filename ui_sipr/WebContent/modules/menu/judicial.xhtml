@@ -1,0 +1,17 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frm_opciones">
+		<p:menu style="width:100%" id="mnuJudicial">
+			<p:submenu label="Judicial">
+				<p:menuitem value="Gestion Judicial alimentos"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(87)}" ajax="false"
+					update=":pnlContenido" />
+					
+					
+			</p:submenu>
+		</p:menu>
+	</h:form>
+</ui:composition>
