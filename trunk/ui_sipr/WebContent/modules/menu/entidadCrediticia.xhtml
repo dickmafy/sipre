@@ -1,0 +1,30 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frm_opciones">
+		<p:menu style="width:100%" id="mnuParametrizacion">
+			<p:submenu label="PLANILLA">
+
+				<p:menuitem value="Crediticia Registro" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(110)}"
+					ajax="false" update=":pnlContenido" />
+					
+				<p:menuitem value="Autorizacion Personal a Entidad Crediticia"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(111)}" ajax="false"
+					update=":pnlContenido" />
+					
+				<p:menuitem value="Consulta de Autorizaciones" icon="ui-icon-key"
+					async="true" actionListener="#{mainMb.redireccionaContent(112)}"
+					ajax="false" update=":pnlContenido" />
+					
+				<p:menuitem value="Reportes de Entidades Crediticias(18)"
+					icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(113)}" ajax="false"
+					update=":pnlContenido" />
+
+			</p:submenu>
+		</p:menu>
+	</h:form>
+</ui:composition>
