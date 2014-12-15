@@ -9,6 +9,7 @@ import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -101,7 +102,7 @@ public class SipreBoletaCabecera implements Serializable {
         this.sipreBoletaCabeceraPK = sipreBoletaCabeceraPK;
     }
 
-    public SipreBoletaCabecera(String cbcMesProceso, Integer nbcNumProceso, String cbcNroAdm) {
+	public SipreBoletaCabecera(String cbcMesProceso, Integer nbcNumProceso, String cbcNroAdm) {
         this.sipreBoletaCabeceraPK = new SipreBoletaCabeceraPK(cbcMesProceso, nbcNumProceso, cbcNroAdm);
     }
 

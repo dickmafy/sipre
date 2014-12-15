@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -40,12 +41,12 @@ public class SipreBoletaDetallePK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NBD_SEC")
-    private short nbdSec;
+	private Integer	nbdSec;
 
     public SipreBoletaDetallePK() {
     }
 
-    public SipreBoletaDetallePK(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
+	public SipreBoletaDetallePK(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, Integer nbdSec) {
         this.cbcMesProceso = cbcMesProceso;
         this.cbcNroAdm = cbcNroAdm;
         this.nbcNumProceso = nbcNumProceso;
@@ -85,11 +86,11 @@ public class SipreBoletaDetallePK implements Serializable {
         this.cbdTipPlanilla = cbdTipPlanilla;
     }
 
-    public short getNbdSec() {
+	public Integer getNbdSec() {
         return nbdSec;
     }
 
-    public void setNbdSec(short nbdSec) {
+	public void setNbdSec(Integer nbdSec) {
         this.nbdSec = nbdSec;
     }
 
@@ -98,9 +99,9 @@ public class SipreBoletaDetallePK implements Serializable {
         int hash = 0;
         hash += (cbcMesProceso != null ? cbcMesProceso.hashCode() : 0);
         hash += (cbcNroAdm != null ? cbcNroAdm.hashCode() : 0);
-        hash += (int) nbcNumProceso;
+        hash += nbcNumProceso;
         hash += (cbdTipPlanilla != null ? cbdTipPlanilla.hashCode() : 0);
-        hash += (int) nbdSec;
+        hash += nbdSec;
         return hash;
     }
 
