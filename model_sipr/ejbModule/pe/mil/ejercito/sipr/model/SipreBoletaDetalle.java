@@ -42,9 +42,9 @@ public class SipreBoletaDetalle implements Serializable {
     @Column(name = "NBD_MONTO")
     private BigDecimal nbdMonto;
     @Column(name = "NBD_NUM_CUO_TOTAL")
-    private Short nbdNumCuoTotal;
+    private Integer nbdNumCuoTotal;
     @Column(name = "NBD_NUM_CUO_PAGADA")
-    private Short nbdNumCuoPagada;
+    private Integer nbdNumCuoPagada;
     @Column(name = "CBD_IND_SUBTITULO")
     private Character cbdIndSubtitulo;
     @JoinColumns({
@@ -65,7 +65,7 @@ public class SipreBoletaDetalle implements Serializable {
         this.sipreBoletaDetallePK = sipreBoletaDetallePK;
     }
 
-    public SipreBoletaDetalle(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, short nbdSec) {
+    public SipreBoletaDetalle(String cbcMesProceso, String cbcNroAdm, Integer nbcNumProceso, String cbdTipPlanilla, Integer nbdSec) {
         this.sipreBoletaDetallePK = new SipreBoletaDetallePK(cbcMesProceso, cbcNroAdm, nbcNumProceso, cbdTipPlanilla, nbdSec);
     }
 
@@ -109,19 +109,19 @@ public class SipreBoletaDetalle implements Serializable {
         this.nbdMonto = nbdMonto;
     }
 
-    public Short getNbdNumCuoTotal() {
+    public Integer getNbdNumCuoTotal() {
         return nbdNumCuoTotal;
     }
 
-    public void setNbdNumCuoTotal(Short nbdNumCuoTotal) {
+    public void setNbdNumCuoTotal(Integer nbdNumCuoTotal) {
         this.nbdNumCuoTotal = nbdNumCuoTotal;
     }
 
-    public Short getNbdNumCuoPagada() {
+    public Integer getNbdNumCuoPagada() {
         return nbdNumCuoPagada;
     }
 
-    public void setNbdNumCuoPagada(Short nbdNumCuoPagada) {
+    public void setNbdNumCuoPagada(Integer nbdNumCuoPagada) {
         this.nbdNumCuoPagada = nbdNumCuoPagada;
     }
 
