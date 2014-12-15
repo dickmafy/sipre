@@ -31,7 +31,7 @@ import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UDate;
-import pe.mil.ejercito.sipr.dto.UsuarioDto;
+
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaEjbRemote;
