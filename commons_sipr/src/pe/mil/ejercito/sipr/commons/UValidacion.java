@@ -10,6 +10,7 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Locale;
 import java.util.SimpleTimeZone;
+import java.util.TimeZone;
 
 public class UValidacion {
 	private static SimpleDateFormat	DATE_FORMAT	= null;
@@ -444,7 +445,7 @@ public class UValidacion {
 		return resultado + "";
 	}
 
-	public static String getSMHDEntreFechasString(String vinicio, String vfinal) {
+	public static String getDateYMDHMSEntreFechasString(String vinicio, String vfinal) {
 		Date dinicio = null, dfinal = null;
 		long milis1, milis2, diff;
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy/MM/dd HH:mm:ss");
@@ -479,6 +480,27 @@ public class UValidacion {
 		//System.out.println("En dias: " + diffdias + " dias.");
 		String devolver = String.valueOf(diffHoras + "H " + restominutos + "m " + diffSegundos + "s ");
 		return devolver;
+	}
+
+	/**
+	 * da la fecha hasta el segundo asi : CONVERTIDO_TXT_A_DBF_2014-12-15_11-47-20.dbf 
+	 * @return
+	 */
+	public static String getDateNameForFileSavedYMD_HMS() {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
+		df.setTimeZone(TimeZone.getTimeZone("GMT-5:00"));
+		return df.format(new Date());
+	}
+
+	/**
+	 * da la fecha hasta el segundo asi : CONVERTIDO_TXT_A_DBF_20141215234729.dbf 
+	 * @return
+	 */
+	public static String getDateNameForFileyyyyMMddHHmmss() {
+		SimpleDateFormat fileId = new SimpleDateFormat("yyyyMMddHHmmss");
+		String fileNewName = fileId.format(new Date());
+		//EJEMPLO 20141215234729
+		return fileNewName;
 	}
 
 }
