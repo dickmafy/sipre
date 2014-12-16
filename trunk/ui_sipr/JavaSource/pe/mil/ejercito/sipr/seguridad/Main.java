@@ -197,7 +197,7 @@ public class Main extends MainContext {
 
 		//110 CREDITICIA
 		case 110:
-			contenidoDefault = "/modules/entidadCrediticia/crediticia";
+			contenidoDefault = "/modules/entidadCrediticia/registroEntidadCrediticia";
 			break;
 		case 111:
 			contenidoDefault = "/modules/entidadCrediticia/autorizacionPersonal";
@@ -208,7 +208,12 @@ public class Main extends MainContext {
 		case 113:
 			contenidoDefault = "/modules/entidadCrediticia/reporte";
 			break;
-
+		case 114:
+			contenidoDefault = "/modules/entidadCrediticia/crediticiaConversion";
+			break;
+		case 115:
+			contenidoDefault = "/modules/entidadCrediticia/ingresoDocumentos";
+			break;
 		}
 		return "";
 	}

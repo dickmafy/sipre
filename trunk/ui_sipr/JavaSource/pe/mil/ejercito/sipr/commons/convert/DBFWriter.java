@@ -206,7 +206,7 @@ public class DBFWriter {
     public void addRecord(Object aobj[]) throws JDBFException {
         if (aobj.length != fields.length) {
             throw new JDBFException(
-                    "Error adding record: Wrong number of values. Expected Columns"
+"Error adding record: Wrong number of values. Expected Columns "
                     + fields.length + ", got Columns  " + aobj.length + " deben ser igual las columnas.");
         }
         int i = 0;
