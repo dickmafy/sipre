@@ -6,118 +6,85 @@
 	<h:form id="frmList" ajaxSubmit="false">
 		<div id="contenido_formulario">
 			<div id="page_flow">Crediticia</div>
-			<div id="titulo_formulario">Autorizacion Personal a Entidad Crediticia</div>
+			<div id="titulo_formulario">Autorizacion Personal a Entidad
+				Crediticia</div>
 			<div id="contenido">
 				<p:panel header="Autorizacion Personal a Entidad Crediticia ">
+					<p:messages id="messages" autoUpdate="true" closable="true" />
+
 
 					<h:form>
-						<p:panel header="DATOS DEL DOCUMENTO ORIGINAL">
-							<p:panelGrid columns="6">
+						<p:panel header="Entidad Crediticia:">
+							<p:panelGrid columns="2">
 
-								<p:outputLabel value="Origen" />
-								<p:inputText value="4" />
-
-								<p:outputLabel value="Tipo Documento" />
-								<p:inputText value="001" />
-
-								<p:outputLabel value="Clasificacion" />
-								<p:inputText value="01" />
-
-								<p:outputLabel value="N doc" />
-								<p:inputText value="000001" />
-
-								<p:outputLabel value="Indicativo" />
-								<p:inputText value="01" />
-
-
-								<p:outputLabel value="Fecha Doc" />
-								<p:inputText value="11/11/11" />
-
-
-								<p:outputLabel value="Post-Firma Doc" />
-								<p:inputText value=" - " />
-
-								<p:outputLabel value="Observacion" />
-								<p:inputTextarea rows="2" cols="10" value=" - " />
-
-								<p:outputLabel value="Asunto" />
-								<p:inputTextarea rows="2" cols="10" value=" - " />
-
-								<p:outputLabel value="Prioridad:" />
-								<p:selectOneMenu >
-									<f:selectItem itemValue="RUTINA" itemLabel="RUTINA" />
-									<f:selectItem itemValue="NORMAL" itemLabel="NORMAL" />
-								</p:selectOneMenu>
-
-								<p:outputLabel value="Legajos" />
-								<p:inputText value=" - " />
-
-								<p:outputLabel value="Folios" />
-								<p:inputText value=" - " />
-							</p:panelGrid>
-						</p:panel>
-
-
-
-						<p:panel header="Ingrese las referencias del Documento">
-							<p:panelGrid columns="6">
-
-								<p:outputLabel value="Año RA" />
-								<p:inputText value=" - " />
-
-								<p:outputLabel value="Tipos doc RA" />
-								<p:inputText value=" - " />
-
-
-								<p:outputLabel value="N# RA" />
-								<p:inputText rows="2" cols="2" value=" - " />
-
-
-								<p:outputLabel value="Reg SIAF" />
-								<p:inputText value=" - " />
-
-
-								<p:outputLabel value="Monto RA" />
-								<p:inputText value=" - " />
-
+								<p:outputLabel value="Entidad Crediticia " />
+								<p:inputText value="#{autorizacionPersonalCrediticia.entidad}" />
 
 							</p:panelGrid>
 						</p:panel>
 
 
+						<p:commandButton value="Buscar"
+							actionListener="#{autorizacionPersonalCrediticia.newBean}"></p:commandButton>
 
-						<p:panel header="Datos Adicionales">
-							<p:panelGrid columns="6">
-								<p:outputLabel value="Codificacion Interna del Documento" />
-								<p:inputText value="01" />
-
-								<p:outputLabel value="Llenar si es documento original final" />
-								<p:inputText value="" />
-
-								<p:outputLabel value="Total MM S/." />
-								<p:inputText value="" />
-
-								<p:outputLabel value="TOTAL ME US$ " />
-								<p:inputText value="" />
-
-								<p:outputLabel value="Registro de Resolucion Jefatural" />
-								<p:inputText value="" />
-
-								<p:outputLabel value="PTO" />
-								<p:inputText value="" />
-
-								<p:outputLabel value="Nr Año NRO" />
-								<p:inputText value="" />
-
-								<p:outputLabel value="yyymmm" />
-								<p:inputText value="" />
-
-							</p:panelGrid>
-						</p:panel>
-
-
+						<p:commandButton value="Nuevo"></p:commandButton>
 						<p:commandButton value="Guardar"></p:commandButton>
-						<p:commandButton value="Limpiar"></p:commandButton>
+
+
+
+						<!-- DATATABLE-->
+						<p:dataTable id="dt" var="item" widgetVar="wdt"
+							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+							rows="20" paginatorPosition="top"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+
+
+							<p:column headerText="Cod Administrativo" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Cod CPMP" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Apellidos y Nombres" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Marcado Autorizado" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Fecha Registro" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+							<p:column headerText="Persona Caja Ejercito" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Cod Regime Pension" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Regime Descripcion" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Nro Autorizacion" width="2%">
+								<h:outputText value="123" />
+							</p:column>
+
+							<p:column headerText="Autorizar?" width="2%">
+								<p:selectBooleanCheckbox value="#{selectBooleanView.value2}">
+								</p:selectBooleanCheckbox>
+							</p:column>
+
+
+						</p:dataTable>
+
+
+
 
 
 

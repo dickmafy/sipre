@@ -1,0 +1,122 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Crediticia</div>
+			<div id="titulo_formulario">Ingreso de Documentos</div>
+			<div id="contenido">
+				<p:panel header="Ingreso de Documentos">
+					<p:messages id="messages" autoUpdate="true" closable="true" />
+					<h:form>
+
+						<p:panel header="Datos Generales">
+							<p:panelGrid columns="2">
+
+								<p:outputLabel value="MESA DE PARTES : INGRESO N*" />
+								<p:outputLabel value="-" />
+
+
+								<p:outputLabel value="Año" />
+								<p:inputText value="#{ingresoDocumentoCrediticia.anio}" />
+
+								<p:outputLabel value="Numero" />
+								<p:inputText value="#{ingresoDocumentoCrediticia.numero}" />
+							</p:panelGrid>
+						</p:panel>
+
+						<p:panel header="DATOS DE LA ENTIDAD">
+							<p:panelGrid columns="2">
+
+								<p:outputLabel value="Tipo De Documento" />
+								<p:inputText />
+
+								<p:outputLabel value="Entidad Crediticia" />
+								<p:inputText  />
+
+								<p:outputLabel value="Tipo de Entidad" />
+								<p:inputText  />
+
+								<p:outputLabel value="Clase de Entidad" />
+								<p:inputText  />
+							</p:panelGrid>
+						</p:panel>
+
+						<p:panel header="DATOS DEL DOCUMENTO">
+							<p:panelGrid columns="4">
+
+								<p:outputLabel value="Referencia" />
+								<p:inputText />
+
+								<p:outputLabel value="Remitente" />
+								<p:inputText  />
+
+								<p:outputLabel value="SIGLA" />
+								<p:inputText  />
+
+								<p:outputLabel value="Nro Del Documento" />
+								<p:inputText  />
+
+								<p:outputLabel value="Fecha(DD/MM/YY)" />
+								<p:inputText  />
+
+								<p:outputLabel value="N Hojas" />
+								<p:inputText  />
+
+								<p:outputLabel value="Hoja de CORD" />
+								<p:inputText  />
+
+								<p:outputLabel value="Fecha Coord" />
+								<p:inputText  />
+							</p:panelGrid>
+						</p:panel>
+
+						<p:commandButton value="Guardar"
+							actionListener="#{ingresoDocumentoCrediticia.newBean()}"></p:commandButton>
+						<p:commandButton value="Limpiar" actionListener="#{ingresoDocumentoCrediticia.newBean}"></p:commandButton>
+
+						<!-- DATATABLE-->
+						<p:dataTable id="dt" var="item" widgetVar="wdt"
+							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+							rows="20" paginatorPosition="top"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+							<f:facet name="header">
+								<p:outputPanel>
+									<h:outputText value="Buscar en la Tabla " />
+									<p:inputText id="globalFilter" onkeyup="PF('wdt').filter()" />
+								</p:outputPanel>
+							</f:facet>
+
+							<p:column headerText="Campo Proceso" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Tipo Mensaje" width="1%"
+								filterBy="#{item.tipoMensaje}" filterMatchMode="contains">
+								<h:outputText value="#{item.tipoMensaje}"
+									style="background-color : #{item.tipoMensaje eq constantesUtil.mensajeGenericTipoMensajeInfo ? '#81F781' 
+							:item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeError ? '#F78181' 
+							: item.tipoMensaje eq  constantesUtil.mensajeGenericTipoMensajeWarning ? '#FFFF00' : '' }" />
+							</p:column>
+							<p:column headerText="Mensaje" width="10%"
+								filterBy="#{item.mensaje}" filterMatchMode="contains">
+								<h:outputText value="#{item.mensaje}" />
+							</p:column>
+
+
+						</p:dataTable>
+
+
+
+
+
+
+					</h:form>
+				</p:panel>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
