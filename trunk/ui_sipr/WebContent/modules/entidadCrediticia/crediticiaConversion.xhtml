@@ -1,0 +1,123 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core">
+
+	<h:form id="frm">
+		<div id="contenido_formulario">
+
+			<div id="page_flow">Calidad /Importación / Proceso Judical y
+				Crediticio</div>
+			<div id="titulo_formulario">Proceso Judical y Crediticio</div>
+			<div id="contenido">
+				<p:messages id="messages" showIcon="true" showSummary="true"
+					autoUpdate="true" closable="true" />
+
+				<div>
+
+					<p:fieldset style="margin-bottom:20px">
+						<h:panelGrid columns="3" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel value="Tipo de archivo:" />
+							<p:selectOneRadio id="tipo" 
+								value="#{crediticiaConversionMb.tipoArchivo}"
+								valueChangeListener="#{crediticiaConversionMb.seteandoTipo}">
+								<p:ajax listener="#{crediticiaConversionMb.changeValueRadio}" />
+								<f:selectItem itemLabel="Judiciales(Txt)" itemValue="1"  />
+							</p:selectOneRadio>
+						</h:panelGrid>
+						<h:panelGrid columns="4" style="margin-bottom:10px"
+							cellpadding="5">
+							<p:outputLabel for="cmbanio" value="Año proceso:" />
+							<p:selectOneMenu effect="drop" id="cmbanio"
+								value="#{crediticiaConversionMb.anio}" label="Año:">
+								<p:ajax listener="#{crediticiaConversionMb.changeValue}" />
+								<f:selectItems value="#{crediticiaConversionMb.lstAnios}" />
+							</p:selectOneMenu>
+							<p:outputLabel for="cmbmes" value="Mes proceso :" />
+							<p:selectOneMenu effect="drop" id="cmbmes"
+								value="#{crediticiaConversionMb.mes}" label="Mes :">
+								<p:ajax listener="#{crediticiaConversionMb.changeValue}" />
+								<f:selectItems value="#{crediticiaConversionMb.lstMeses}" />
+							</p:selectOneMenu>
+						</h:panelGrid>
+
+						<h:panelGrid columns="1">
+							<h:outputLabel value="C:\\DBF_ARCHIVO_JUDICIAL.dbf" />
+						</h:panelGrid>
+
+
+						<p:spacer width="100" height="5" />
+						<p:blockUI block="frm:uploadFile" widgetVar="wblockui" />
+
+
+						<p:panelGrid columns="1">
+							<p:fileUpload sizeLimit="100000000" auto="true"
+								label="Subir Archivo " cancelLabel="cancel" uploadLabel="update"
+								fileUploadListener="#{crediticiaConversionMb.handleFileUpload}"
+								dragDropSupport="false" mode="advanced"
+								allowTypes="/(\.|\/)(dbf|DBF|xls|xlsx|XLS|XLSX|txt|TXT)$/"
+								id="uploadFile" onstart="PF('wblockui').show();"
+								oncomplete="PF('wblockui').hide();" update=":frm:dt">
+
+								<f:attribute name="typeFile"
+									value="#{crediticiaConversionMb.tipoArchivo}" />
+								<f:attribute name="year" value="#{crediticiaConversionMb.anio}" />
+								<f:attribute name="month" value="#{crediticiaConversionMb.mes}" />
+							</p:fileUpload>
+						</p:panelGrid>
+
+
+					</p:fieldset>
+				</div>
+			</div>
+		</div>
+		<p:panelGrid columns="4">
+			<p:dataTable id="dt" var="item" widgetVar="wdt"
+				value="#{crediticiaConversionMb.beanECList}"
+				emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+				rows="20" paginatorPosition="top"
+				paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+				<p:column headerText="CIP" width="2%">
+					<h:outputText
+						value="#{item.sipreTmpEntidadCrediticiaPK.cpersonaNroAdm}" />
+				</p:column>
+				<p:column headerText="MesProce" width="2%">
+					<h:outputText
+						value="#{item.sipreTmpEntidadCrediticiaPK.ctecMesProceso}" />
+				</p:column>
+				<p:column headerText="EntidadCred." width="2%">
+					<h:outputText value="#{item.sipreTmpEntidadCrediticiaPK.cecCodigo}" />
+				</p:column>
+				<p:column headerText="T.Movi" width="2%">
+					<h:outputText
+						value="#{item.sipreTmpEntidadCrediticiaPK.ctecTipoMovim}" />
+				</p:column>
+				<p:column headerText="Monto" width="2%">
+					<h:outputText value="#{item.ntecMonto}" />
+				</p:column>
+				<p:column headerText="MontoAnterior" width="2%">
+					<h:outputText value="#{item.ntecMtoAnterior}" />
+				</p:column>
+				<p:column headerText="Cuota" width="2%">
+					<h:outputText value="#{item.ntecNroCuota}" />
+				</p:column>
+
+			</p:dataTable>
+			<h:commandLink value="Importacion Crediticia">
+				<p:graphicImage value="/images/excel.jpg" width="40" height="40" />
+				<p:dataExporter type="xls" target="dt"
+					fileName="ImportacionCrediticia" pageOnly="true" />
+			</h:commandLink>
+
+
+
+		</p:panelGrid>
+
+	</h:form>
+
+
+
+
+</ui:composition>

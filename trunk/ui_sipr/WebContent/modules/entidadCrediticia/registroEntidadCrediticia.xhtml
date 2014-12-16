@@ -1,0 +1,217 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Crediticia</div>
+			<div id="titulo_formulario">Registro de Entidades Crediticias</div>
+			<div id="contenido">
+				<p:panel header="Registro de Entidades Crediticias">
+					<p:messages id="messages" autoUpdate="true" closable="true" />
+
+
+					<h:form>
+						<p:panel header="Registro de Entidad Crediticia">
+							<p:panelGrid columns="4">
+
+								<p:outputLabel value="Cod Clasificacdor de la Ent Cred  " />
+								<p:inputText />
+
+								<p:outputLabel value="Dsco Por Mandato Judicial  " />
+								<p:inputText />
+
+								<p:outputLabel value="Descripcion del Dscto " />
+								<p:inputText />
+								<p:outputLabel value="Codigo de entidad Crediticia  " />
+								<p:inputText />
+
+								<p:outputLabel value="Razon Social  " />
+								<p:inputTextarea rows="5" cols="5" />
+
+								<p:outputLabel value="Sigla de Entidad " />
+								<p:inputText />
+
+								<p:outputLabel value="Nro de RUC " />
+								<p:inputText />
+
+								<p:outputLabel value="Nro de Fax" />
+								<p:inputText />
+
+								<p:outputLabel value="Nro de Telefono " />
+								<p:inputText />
+
+								<p:outputLabel value="Cod del tipo de Ent Cred " />
+								<p:inputText />
+
+
+								<p:outputLabel value="Otras Entidades " />
+								<p:inputText />
+
+								<p:outputLabel value="Direccion :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Departamento :  " />
+								<p:inputText />
+								<p:outputLabel value="Provincia :  " />
+								<p:inputText />
+								<p:outputLabel value="Disrito :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Cantidad de Socios :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Situacion de los Oficios a Remitirles :  " />
+								<p:selectOneMenu>
+									<f:selectItem itemValue="RUTINA" itemLabel="Activo" />
+									<f:selectItem itemValue="NORMAL" itemLabel="Anulado" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Email :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Presidente de la Entidad :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Gerente de la entidad :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Consejo Directivo:  " />
+								<p:inputText />
+
+								<p:outputLabel value="Fecha Inicio :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Fecha Fin :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Representante de la Entidad:  " />
+								<p:inputText />
+
+								<p:outputLabel value="Nro De resolucion de Acreditacion :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Fecha de Resolucion de ACreditacion :  " />
+								<p:inputText />
+
+								<p:outputLabel value="Situacion de la Entidad  :  " />
+								<p:selectOneMenu>
+									<f:selectItem itemValue="RUTINA" itemLabel="Activa" />
+									<f:selectItem itemValue="NORMAL" itemLabel="Cancelada" />
+								</p:selectOneMenu>
+
+
+
+								<p:outputLabel value="Entidad Subjeta a Dscto OGCOE-RDR :  " />
+								<p:selectOneMenu>
+									<f:selectItem itemValue="Si" itemLabel="SI" />
+									<f:selectItem itemValue="NORMAL" itemLabel="NO" />
+								</p:selectOneMenu>
+
+								<p:outputLabel value="Codigo de CONO :  " />
+								<p:inputText />
+
+
+
+								<h:outputText value="DITELE " />
+								<p:selectBooleanCheckbox value="DITELE">
+								</p:selectBooleanCheckbox>
+								<h:outputText value="CPMP " />
+								<p:selectBooleanCheckbox value="CPMP">
+								</p:selectBooleanCheckbox>
+							</p:panelGrid>
+						</p:panel>
+
+
+						<p:panel header="Responsables de la Documentacion">
+							<p:panelGrid columns="2">
+								<p:outputLabel
+									value="1 Responsable de Recibir la Documentacion :  " />
+								<p:inputText />
+								<p:outputLabel value="Telef:  " />
+								<p:inputText />
+								<p:outputLabel value="DNI :  " />
+								<p:inputText />
+
+								<p:outputLabel
+									value="2 Responsable de Recibir la Documentacion :  " />
+								<p:inputText />
+								<p:outputLabel value="Telef:  " />
+								<p:inputText />
+								<p:outputLabel value="DNI :  " />
+								<p:inputText />
+							</p:panelGrid>
+						</p:panel>
+
+						<p:commandButton value="Guardar"
+							actionListener="#{autorizacionPersonalCrediticia.newBean}"></p:commandButton>
+
+						<p:commandButton value="Nuevo"></p:commandButton>
+						<p:commandButton value="DITELE"></p:commandButton>
+						<p:commandButton value="CPMP"></p:commandButton>
+
+
+
+						<!-- DATATABLE-->
+						<p:dataTable id="dt" var="item" widgetVar="wdt"
+							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+							rows="20" paginatorPosition="top"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+
+
+							<p:column headerText="Cod Administrativo" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Cod CPMP" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Apellidos y Nombres" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Marcado Autorizado" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Fecha Registro" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+							<p:column headerText="Persona Caja Ejercito" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Cod Regime Pension" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Regime Descripcion" width="2%">
+								<h:outputText value="#{item.campo}" />
+							</p:column>
+
+							<p:column headerText="Nro Autorizacion" width="2%">
+								<h:outputText value="123" />
+							</p:column>
+
+							<p:column headerText="Autorizar?" width="2%">
+								<p:selectBooleanCheckbox value="#{selectBooleanView.value2}">
+								</p:selectBooleanCheckbox>
+							</p:column>
+
+
+						</p:dataTable>
+
+
+
+
+
+
+					</h:form>
+				</p:panel>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>
