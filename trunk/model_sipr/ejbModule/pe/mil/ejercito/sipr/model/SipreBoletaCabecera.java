@@ -37,7 +37,7 @@ public class SipreBoletaCabecera implements Serializable {
     @EmbeddedId
     protected SipreBoletaCabeceraPK sipreBoletaCabeceraPK;
     @Column(name = "CBC_IND_ACT_PENS")
-    private Character cbcIndActPens;
+    private String cbcIndActPens;
     @Column(name = "NBC_NUM_BOLETA")
     private Integer nbcNumBoleta;
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
@@ -64,7 +64,7 @@ public class SipreBoletaCabecera implements Serializable {
     @Column(name = "VBC_DES_UNIDAD")
     private String vbcDesUnidad;
     @Column(name = "TCB_TIP_PERSONA")
-    private Character tcbTipPersona;
+    private String tcbTipPersona;
     @Size(max = 30)
     @Column(name = "VBC_LUGAR")
     private String vbcLugar;
@@ -114,11 +114,11 @@ public class SipreBoletaCabecera implements Serializable {
         this.sipreBoletaCabeceraPK = sipreBoletaCabeceraPK;
     }
 
-    public Character getCbcIndActPens() {
+    public String getCbcIndActPens() {
         return cbcIndActPens;
     }
 
-    public void setCbcIndActPens(Character cbcIndActPens) {
+    public void setCbcIndActPens(String cbcIndActPens) {
         this.cbcIndActPens = cbcIndActPens;
     }
 
@@ -194,11 +194,11 @@ public class SipreBoletaCabecera implements Serializable {
         this.vbcDesUnidad = vbcDesUnidad;
     }
 
-    public Character getTcbTipPersona() {
+    public String getTcbTipPersona() {
         return tcbTipPersona;
     }
 
-    public void setTcbTipPersona(Character tcbTipPersona) {
+    public void setTcbTipPersona(String tcbTipPersona) {
         this.tcbTipPersona = tcbTipPersona;
     }
 
