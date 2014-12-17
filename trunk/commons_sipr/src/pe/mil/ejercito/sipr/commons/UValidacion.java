@@ -492,7 +492,7 @@ public class UValidacion {
 		return df.format(new Date());
 	}
 
-	/**
+	/** 
 	 * da la fecha hasta el segundo asi : CONVERTIDO_TXT_A_DBF_20141215234729.dbf 
 	 * @return
 	 */
