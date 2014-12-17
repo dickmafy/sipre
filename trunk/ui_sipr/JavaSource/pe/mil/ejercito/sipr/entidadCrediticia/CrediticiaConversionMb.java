@@ -172,8 +172,8 @@ public class CrediticiaConversionMb extends MainContext implements Serializable 
 
 			//DBFReader dbfreader = new DBFReader("E:\\hexiong\\work\\project\\book2.dbf");
 			//String nombreDBF = "N:\\test_text_to_dbf.dbf";
+			//test MIERCOLES 12
 			String nombreDBF = "C:\\1_CONVERTIDO_TXT_A_DBF_" + UValidacion.getDateNameForFileSavedYMD_HMS() + ".dbf";
-			//String nombreText = "test.txt";
 
 			dbfwriter = new DBFWriter(nombreDBF, fields);
 			Object[][] records = new Object[numeroFilas][numeroColumnas];
