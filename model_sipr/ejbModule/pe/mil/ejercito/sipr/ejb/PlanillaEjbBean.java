@@ -36,15 +36,17 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 			if(mesProceso!=null && !mesProceso.isEmpty()){
 				sb.append(" and p.id.cplanillaMesProceso =:mes ");
 			}
+			sb.append(" and p.id.cpersonaNroAdm =:dd ");
 			sb.append(" order by p.vplanillaApeNom ");
 
 			Query q=em.createQuery(sb.toString());
-			System.out.println(q.getResultList().size());
+			
 			if(mesProceso!=null && !mesProceso.isEmpty()){
 				q.setParameter("mes",mesProceso.trim());
 			}
+			q.setParameter("dd","123632600");
 			
-			
+			System.out.println(q.getResultList().size());
 			return q.getResultList();
 			
 		}catch(Exception e){
