@@ -484,7 +484,7 @@ public class UValidacion {
 
 	/**
 	 * da la fecha hasta el segundo asi : CONVERTIDO_TXT_A_DBF_2014-12-15_11-47-20.dbf 
-	 * @return
+	 * //test MIERCOLES 12
 	 */
 	public static String getDateNameForFileSavedYMD_HMS() {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd_hh-mm-ss");
