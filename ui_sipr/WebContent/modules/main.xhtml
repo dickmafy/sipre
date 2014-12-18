@@ -61,10 +61,6 @@
 												icon="ui-icon-arrowthickstop-1-s"
 												actionListener="#{mainMb.redireccionaMnu(14)}" ajax="true"
 												async="true" update=":frm_opciones, :pnlContenido" />
-											<p:menuitem value="Judicial"
-												icon="ui-icon-arrowthickstop-1-s"
-												actionListener="#{mainMb.redireccionaMnu(15)}" ajax="true"
-												async="true" update=":frm_opciones, :pnlContenido" />
 										</p:submenu>
 
 										<p:submenu label="Crediticia / Judicial"
@@ -95,6 +91,21 @@
 											async="true" update=":frm_opciones, :pnlContenido" />
 										<p:menuitem value="Gestión" icon="ui-icon-calendar"
 											actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+									</p:submenu>
+									
+									<p:submenu label="ENTIDAD CREDITICIA"
+										icon="ui-icon-circle-check">
+										<p:menuitem value="Entidad Crediticia - Gestion"
+											icon="ui-icon-check"
+											actionListener="#{mainMb.redireccionaMnu(20)}" ajax="true"
+											async="true" update=":frm_opciones, :pnlContenido" />
+									</p:submenu>
+
+									<p:submenu label="JUDICIAL" icon="ui-icon-circle-check">
+										<p:menuitem value="Judicial  - Gestion"
+											icon="ui-icon-check"
+											actionListener="#{mainMb.redireccionaMnu(15)}" ajax="true"
 											async="true" update=":frm_opciones, :pnlContenido" />
 									</p:submenu>
 

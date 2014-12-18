@@ -5,10 +5,19 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuJudicial">
 			<p:submenu label="Judicial">
-				<p:menuitem value="Gestion judicial alimentos"
-					icon="ui-icon-calculator" async="true"
-					actionListener="#{mainMb.redireccionaContent(87)}" ajax="false"
+
+				<p:menuitem value="Gestion Judicial - Alimentos" icon="ui-icon-calculator"
+					async="true" actionListener="#{mainMb.redireccionaContent(87)}"
+					ajax="false" update=":pnlContenido" />
+
+				<p:menuitem value="Judicial" icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(88)}" ajax="false"
 					update=":pnlContenido" />
+					
+					<p:menuitem value="Asignacion" icon="ui-icon-key" async="true"
+					actionListener="#{mainMb.redireccionaContent(89)}" ajax="false"
+					update=":pnlContenido" />
+					
 			</p:submenu>
 		</p:menu>
 	</h:form>
