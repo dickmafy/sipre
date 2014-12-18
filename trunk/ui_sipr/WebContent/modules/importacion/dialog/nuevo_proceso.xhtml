@@ -1,0 +1,57 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:p="http://primefaces.org/ui">
+	<h:form id="frmNuevoProceso" enctype="multipart/form-data">
+		<p:dialog appendTo="@(body)" id="dlgNuevoProceso"
+			widgetVar="wvNuevoProceso" header="Nuevo Proceso"
+			closeOnEscape="true" resizable="false" modal="true">
+			<table>
+				<tr>
+					<td class="label"><p:outputLabel value="Tipo de archivo" /></td>
+					<td><p:selectOneRadio id="tipo" widgetVar="lstTipoArchivo"
+							value="#{judicialCrediticiaMb.tipoArchivo}">
+							<f:selectItem itemLabel="Judiciales" itemValue="1" />
+							<f:selectItem itemLabel="Entidades Crediticias" itemValue="2" />
+						</p:selectOneRadio></td>
+				</tr>
+				<tr>
+					<td class="label"><p:outputLabel for="cmbanio" value="Año proceso" /></td>
+					<td><p:selectOneMenu effect="drop" id="cmbanio"
+							value="#{judicialCrediticiaMb.anio}" label="Año:">
+							<p:ajax listener="#{judicialCrediticiaMb.changeValue}" />
+							<f:selectItems value="#{judicialCrediticiaMb.lstAnios}" />
+						</p:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td class="label"><p:outputLabel for="cmbmes" value="Mes proceso " /></td>
+					<td><p:selectOneMenu effect="drop" id="cmbmes"
+							value="#{judicialCrediticiaMb.mes}" label="Mes :">
+							<p:ajax listener="#{judicialCrediticiaMb.changeValue}" />
+							<f:selectItems value="#{judicialCrediticiaMb.lstMeses}" />
+						</p:selectOneMenu></td>
+				</tr>
+				<tr>
+					<td class="label"><p:outputLabel for="uploadFile" value="Archivo" /></td>
+					<td><p:fileUpload sizeLimit="100000000" auto="true"
+							label="Subir Archivo " cancelLabel="cancel" uploadLabel="update"
+							dragDropSupport="false" mode="simple" 
+							allowTypes="/(\.|\/)(dbf|DBF|xls|xlsx|XLS|XLSX|txt|TXT)$/"
+							id="uploadFile"  update=":frm:dt :frm:dt2" oncomplete="PF('wvNuevoProceso').hide();">
+							<!-- 
+							<f:attribute name="typeFile"
+								value="#{judicialCrediticiaMb.tipoArchivo}" />
+							<f:attribute name="year" value="#{judicialCrediticiaMb.anio}" />
+							<f:attribute name="month" value="#{judicialCrediticiaMb.mes}" />  -->
+						</p:fileUpload></td>
+				</tr>
+				<tr>
+					<td class="footer_dialog" colspan="2">
+						<p:commandButton actionListener="#{judicialCrediticiaMb.handleFileUpload}" update=":frm" styleClass="boton_botonera" value="Aceptar" icon="_ui-icon-save" ajax="false"/>
+					</td>
+				</tr>
+			</table>
+		</p:dialog>
+	</h:form>
+</ui:composition>
