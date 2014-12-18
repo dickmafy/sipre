@@ -26,6 +26,7 @@ import javax.faces.model.SelectItem;
 
 import org.apache.log4j.Logger;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.UploadedFile;
 
 import pe.mil.ejercito.sipr.commons.ConfiguracionDefault;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
@@ -46,28 +47,27 @@ import com.linuxense.javadbf.DBFReader;
 @ManagedBean(name = "judicialCrediticiaMb")
 @ViewScoped
 public class JudicialCrediticiaMb extends MainContext implements Serializable {
-	private static Logger					LOG					= Logger.getLogger(JudicialCrediticiaMb.class);
-	private static final long				serialVersionUID	= 1L;
-	private UsuarioEjbRemote				ejbUsuario;
-	private Date							anioMes;
+	private static Logger LOG = Logger.getLogger(JudicialCrediticiaMb.class);
+	private static final long serialVersionUID = 1L;
+	private UsuarioEjbRemote ejbUsuario;
+	private Date anioMes;
 
-	private TmpJudicialEjbRemote			ejbJudicial;
-	private TmpEntidadCrediticiaEjbRemote	ejbEntidad;
-	private String							tipoArchivo;
+	private TmpJudicialEjbRemote ejbJudicial;
+	private TmpEntidadCrediticiaEjbRemote ejbEntidad;
+	private String tipoArchivo;
+	private UploadedFile fileUploaded;
 
-	public static final String				JBOSS_CATALINA		= "catalina.home";
-	public static final String				JBOSS_TEMP			= "tmpFiles";
+	public static final String JBOSS_CATALINA = "catalina.home";
+	public static final String JBOSS_TEMP = "tmpFiles";
 
-	private String							mes;
-	private String							anio;
-	private List<SelectItem>				lstAnios;
-	private List<SelectItem>				lstMeses;
-	private File							file;
+	private String mes;
+	private String anio;
+	private List<SelectItem> lstAnios;
+	private List<SelectItem> lstMeses;
+	private File file;
 
-
-	private List<SipreTmpJudicial>			beanJList;
-	private List<SipreTmpEntidadCrediticia>	beanECList;
-
+	private List<SipreTmpJudicial> beanJList;
+	private List<SipreTmpEntidadCrediticia> beanECList;
 
 	public JudicialCrediticiaMb() {
 		super();
@@ -87,11 +87,11 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 		updateComponente("dt2");
 	}
 
-
 	@PostConstruct
 	public void loadAnioMes() {
-		String[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Setiembre", "Octubre", "Noviembre",
-				"Diciembre" };
+		String[] meses = { "Enero", "Febrero", "Marzo", "Abril", "Mayo",
+				"Junio", "Julio", "Agosto", "Setiembre", "Octubre",
+				"Noviembre", "Diciembre" };
 
 		lstAnios = new ArrayList<SelectItem>();
 		int year = Calendar.getInstance().get(Calendar.YEAR);
@@ -125,37 +125,35 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 	public void changeValueRadio(AjaxBehaviorEvent event) {
 		System.out.println("change value radio");
 		System.out.println("valor al tipo archivo::" + tipoArchivo);
-
 	}
 
-	public void seteandoTipo() {
-		System.out.println("tipoArchivo::" + tipoArchivo);
-	}
-
-	public void handleFileUpload(FileUploadEvent event) {
+	public String handleFileUpload() {
 		try {
 
 			showMessage("Procesando el archivo subido.", SEVERITY_INFO);
 
-			tipoArchivo = (String) event.getComponent().getAttributes().get("typeFile");
-			anio = (String) event.getComponent().getAttributes().get("year");
-			mes = (String) event.getComponent().getAttributes().get("month");
+			tipoArchivo = (String) fileUploaded.getContentType();
+			// anio = (String) event.getComponent().getAttributes().get("year");
+			// mes = (String) event.getComponent().getAttributes().get("month");
 			System.out.println("foo seleccionado::" + anio);
 			System.out.println("foo seleccionado::" + mes);
 
-			file = transferFile(event);
-			InputStream is = event.getFile().getInputstream();
+			file = transferFile(fileUploaded.getFileName(),
+					fileUploaded.getInputstream());
+			// InputStream is = event.getFile().getInputstream();
+			InputStream is = fileUploaded.getInputstream();
 			switch (tipoArchivo) {
 			case "2":
-				//CREDITICIA 
+				// CREDITICIA
 				ejbEntidad.removeAll();
-				readDbf(is, tipoArchivo != null ? Integer.parseInt(tipoArchivo) : null);
+				readDbf(is, tipoArchivo != null ? Integer.parseInt(tipoArchivo)
+						: null);
 				beanECList = ejbEntidad.findAll();
 				updateComponente("dt");
 				updateComponente("dt2");
 				break;
 			case "1":
-				//JUDICIAL
+				// JUDICIAL
 				ejbJudicial.removeAll();
 				generarDeTxtDBF(is, file);
 				beanJList = ejbJudicial.findAll();
@@ -170,8 +168,10 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 			showMessage("No se pudo leer el archivo.", SEVERITY_ERROR);
 			e.printStackTrace();
 		} catch (Exception e) {
-			showMessage("No se copio el contenido del Excel correctamente.", SEVERITY_ERROR);
+			showMessage("No se copio el contenido del Excel correctamente.",
+					SEVERITY_ERROR);
 		}
+		return "";
 
 	}
 
@@ -194,7 +194,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 				for (int i = 0; i < rowObjects.length; i++) {
 					try {
 						switch (i) {
-						//case 0:{numbColumn++;} break;
+						// case 0:{numbColumn++;} break;
 						case 1: {
 							pk.setCtecTipoMovim(String.valueOf(rowObjects[i]));
 							numbColumn++;
@@ -211,23 +211,27 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 						}
 							break;
 						case 4: {
-							ent.setNtecMonto(new BigDecimal(rowObjects[i].toString()));
+							ent.setNtecMonto(new BigDecimal(rowObjects[i]
+									.toString()));
 							numbColumn++;
 						}
 							break;
 						case 5: {
-							ent.setNtecMtoAnterior(new BigDecimal(rowObjects[i].toString()));
+							ent.setNtecMtoAnterior(new BigDecimal(rowObjects[i]
+									.toString()));
 							numbColumn++;
 						}
 							break;
 						case 6: {
-							ent.setNtecNroCuota((new BigDecimal(rowObjects[i].toString())).intValue());
+							ent.setNtecNroCuota((new BigDecimal(rowObjects[i]
+									.toString())).intValue());
 							numbColumn++;
 						}
 							break;
-						//case 6:{ent.setNtecNroCuota(Integer.parseInt(rowObjects[i].toString()));numbColumn++;}break;
-						//case 7:{numbColumn++;} break;
-						//case 8:{numbColumn++;} break;
+						// case
+						// 6:{ent.setNtecNroCuota(Integer.parseInt(rowObjects[i].toString()));numbColumn++;}break;
+						// case 7:{numbColumn++;} break;
+						// case 8:{numbColumn++;} break;
 						case 9: {
 							pk.setCtecMesProceso(String.valueOf(rowObjects[i]));
 							numbColumn++;
@@ -247,7 +251,8 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 							pk = new SipreTmpEntidadCrediticiaPK();
 
 						}
-						System.out.println(rowObjects[i] + "==>nro columna:" + i + "-" + numbColumn);
+						System.out.println(rowObjects[i] + "==>nro columna:"
+								+ i + "-" + numbColumn);
 					} catch (EJBTransactionRolledbackException e) {
 						e.printStackTrace();
 					} catch (Exception e) {
@@ -274,17 +279,22 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 			int numeroColumnas = 6;
 			int numeroFilas = 100;
-			//C STRING; ; L BOOLEAN , D DATE, N NUMBER  , F FLOAT
-			JDBField[] fields = { new JDBField("MES_PROCESO", 'C', 100, 0), new JDBField("CIP", 'C', 100, 0),
-					new JDBField("TIPO_PLAN", 'C', 100, 0), new JDBField("ENT_CRE", 'C', 100, 0), new JDBField("MONTO", 'C', 13, 0),
+			// C STRING; ; L BOOLEAN , D DATE, N NUMBER , F FLOAT
+			JDBField[] fields = { new JDBField("MES_PROCESO", 'C', 100, 0),
+					new JDBField("CIP", 'C', 100, 0),
+					new JDBField("TIPO_PLAN", 'C', 100, 0),
+					new JDBField("ENT_CRE", 'C', 100, 0),
+					new JDBField("MONTO", 'C', 13, 0),
 					new JDBField("PORCENJAJE", 'C', 6, 0),
-			//new JDBField("TestF", 'F', 20, 6),new JDBField("TestD", 'D', 8, 0)
+			// new JDBField("TestF", 'F', 20, 6),new JDBField("TestD", 'D', 8,
+			// 0)
 			};
 
-			//DBFReader dbfreader = new DBFReader("E:\\hexiong\\work\\project\\book2.dbf");
-			//String nombreDBF = "N:\\test_text_to_dbf.dbf";
+			// DBFReader dbfreader = new
+			// DBFReader("E:\\hexiong\\work\\project\\book2.dbf");
+			// String nombreDBF = "N:\\test_text_to_dbf.dbf";
 			String nombreDBF = "C:\\DBF_ARCHIVO_JUDICIAL.dbf";
-			//String nombreText = "test.txt";
+			// String nombreText = "test.txt";
 
 			DBFWriter dbfwriter = new DBFWriter(nombreDBF, fields);
 			Object[][] records = new Object[numeroFilas][numeroColumnas];
@@ -293,7 +303,8 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 			String texto;
 			while ((texto = br.readLine()) != null) {
 				contador++;
-				if (texto.trim().length() > 0 && texto.length() == LONGITUD_OBLIGATORIA) {
+				if (texto.trim().length() > 0
+						&& texto.length() == LONGITUD_OBLIGATORIA) {
 					// SUBSTRING : texto >= X && >=Y
 					LOG.info("###INICIO - FILA : " + contador);
 
@@ -317,10 +328,11 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 					LOG.info("################");
 
-					//Object[][] matrix = new Object[rows][cols];
-					/*Double d1 = new Double(0000000000000.0D);
-					d1 = Double.parseDouble(NTJ_MONTO);
-					*/
+					// Object[][] matrix = new Object[rows][cols];
+					/*
+					 * Double d1 = new Double(0000000000000.0D); d1 =
+					 * Double.parseDouble(NTJ_MONTO);
+					 */
 					Object v1 = MES_PROCESO;
 					Object v2 = CIP;
 					Object v3 = CTP_CODIGO;
@@ -328,7 +340,7 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 					Object v5 = NTJ_MONTO;
 					Object v6 = NTJ_PORCENJAJE;
 
-					//for (int filas = 0; filas < numeroFilas; filas++) {
+					// for (int filas = 0; filas < numeroFilas; filas++) {
 					// for (int i = 0; i < 3; i++) {
 					records[contador - 1][0] = v1;
 					records[contador - 1][1] = v2;
@@ -336,8 +348,8 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 					records[contador - 1][3] = v4;
 					records[contador - 1][4] = v5;
 					records[contador - 1][5] = v6;
-					//}
-					//}
+					// }
+					// }
 					try {
 						SipreTmpJudicial bean = new SipreTmpJudicial();
 						SipreTmpJudicialPK judicialPK = new SipreTmpJudicialPK();
@@ -355,7 +367,9 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 					}
 
 				} else {
-					System.out.println("El archivo no cumple la longitud permitida. El Archivo tiene: " + texto.length());
+					System.out
+							.println("El archivo no cumple la longitud permitida. El Archivo tiene: "
+									+ texto.length());
 				}
 			}
 
@@ -374,19 +388,20 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 
 	private File transferFile(FileUploadEvent event) {
 		String fileOldName = event.getFile().getFileName();
-
 		File archivo = null;
 		String rutaGuardar = null;
 		SimpleDateFormat fileId = null;
 		String fileNewName = null;
-
 		try {
-			rutaGuardar = FacesContext.getCurrentInstance().getExternalContext().getRealPath("/");
-
+			rutaGuardar = FacesContext.getCurrentInstance()
+					.getExternalContext().getRealPath("/");
 			fileId = new SimpleDateFormat("yyyyMMddHHmmss");
-			fileNewName = fileId.format(new Date()) + fileOldName + fileOldName.substring(event.getFile().getFileName().lastIndexOf('.'));
-
-			archivo = new File(rutaGuardar + "/" + ConfiguracionDefault.RUTA_FILE_SYSTEM + fileNewName);
+			fileNewName = fileId.format(new Date())
+					+ fileOldName
+					+ fileOldName.substring(event.getFile().getFileName()
+							.lastIndexOf('.'));
+			archivo = new File(rutaGuardar + "/"
+					+ ConfiguracionDefault.RUTA_FILE_SYSTEM + fileNewName);
 			System.out.println("path :" + rutaGuardar);
 			InputStream is = event.getFile().getInputstream();
 			OutputStream out = new FileOutputStream(archivo);
@@ -396,16 +411,44 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 				out.write(buf, 0, len);
 			is.close();
 			out.close();
-
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		} finally {
-
 		}
 		return archivo;
+	}
 
+	@SuppressWarnings("unused")
+	private File transferFile(String nameFile, InputStream is) {
+		File archivo = null;
+		String rutaGuardar = null;
+		SimpleDateFormat fileId = null;
+		String fileNewName = null;
+		try {
+			rutaGuardar = FacesContext.getCurrentInstance()
+					.getExternalContext().getRealPath("/");
+			fileId = new SimpleDateFormat("yyyyMMddHHmmss");
+			fileNewName = fileId.format(new Date()) + nameFile
+					+ nameFile.substring(nameFile.lastIndexOf('.'));
+			archivo = new File(rutaGuardar + "/"
+					+ ConfiguracionDefault.RUTA_FILE_SYSTEM + fileNewName);
+			System.out.println("path :" + rutaGuardar);
+			OutputStream out = new FileOutputStream(archivo);
+			byte buf[] = new byte[1024];
+			int len;
+			while ((len = is.read(buf)) > 0)
+				out.write(buf, 0, len);
+			is.close();
+			out.close();
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
+		} finally {
+		}
+		return archivo;
 	}
 
 	public UsuarioEjbRemote getEjbUsuario() {
@@ -504,5 +547,12 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 		this.beanECList = beanECList;
 	}
 
+	public UploadedFile getFileUploaded() {
+		return fileUploaded;
+	}
+
+	public void setFileUploaded(UploadedFile fileUploaded) {
+		this.fileUploaded = fileUploaded;
+	}
 
 }
