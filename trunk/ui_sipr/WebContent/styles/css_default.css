@@ -196,12 +196,6 @@ body {
 	background-color: #F0F0F0;
 }
 
-.mnuPersonal .ui-menu {
-	padding: 0px;
-	background: none;
-	top: 0px;
-}
-
 .mnuPersonal ul li ul li a span.ui-menuitem-text {
 	color: #4f4f4f;
 }
@@ -229,7 +223,7 @@ menu_configuracion {
 }
 
 .ui-menu {
-	padding: 0px;
+	padding: 0px 10px 0px 10px;
 	top: 20px;
 	position: absolute;
 	background: none;
