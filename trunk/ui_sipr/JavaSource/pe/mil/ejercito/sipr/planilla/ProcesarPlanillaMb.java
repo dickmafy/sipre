@@ -704,7 +704,8 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 	public void p5() {
 		cleanBeanGmList();
 		showMessage("###INICIANDO  " + ConstantesUtil.PROCESO_5, SEVERITY_INFO);
-
+		addGenericMensaje("  Registrando Guardias Hospitalarias.", ConstantesUtil.PROCESO_5,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 		/*
 		 * TALBA INGRESO_GRADO GRADO y CONCEPTO INGRESO obtener el monto que gana esa persona y guardarlo en detalle.
 		 */
@@ -715,6 +716,9 @@ public class ProcesarPlanillaMb extends MainContext implements Serializable {
 		} else {
 			// no, indicador de tmpbonificacion se actualiza ,aceptado?
 		}
+
+		addGenericMensaje("Finalizando Guardias Hospitalarias.", ConstantesUtil.PROCESO_5,
+				ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_INFO, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
 
 	}
 
