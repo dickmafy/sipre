@@ -9,7 +9,7 @@ import pe.mil.ejercito.sipr.model.SipreBoletaCabecera;
 public interface BoletaCabeceraEjbRemote extends GenericDAO<SipreBoletaCabecera> {
 	
 
-	
+	SipreBoletaCabecera saveCabecera(SipreBoletaCabecera boleta);
 
 	
 }

@@ -58,6 +58,7 @@ public class SipreBoletaDetalle implements Serializable {
     @Column(name = "CBD_COD_MEF")
     private String cbdCodMef;
 
+   
     public SipreBoletaDetalle() {
     }
 
