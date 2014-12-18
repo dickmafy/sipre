@@ -3,6 +3,7 @@ package pe.mil.ejercito.sipr.parametro;
 import java.io.Serializable;
 import java.util.List;
 
+import javax.annotation.PostConstruct;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.event.ActionEvent;
@@ -44,6 +45,11 @@ public class ParametroDetalleMb extends MainContext implements Serializable {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	@PostConstruct
+	public void init() {
+		System.out.println("@PostConstruct-ParametroDetalleMb");
 	}
 
 	public void newBean(ActionEvent event) {

@@ -304,7 +304,7 @@ private static final long serialVersionUID = 1L;
         	System.out.println("se envia:"+seEnvia);
         	
         	 String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA);
-        	 nameBoleta="boleta"+"_"+nroAdm+".pdf";
+			nameBoleta = UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM) + "boleta" + "_" + nroAdm + ".pdf";
         	 if (ConexionORCL.conectar()) {
         		
              Map<String,Object> parametro = new HashMap<String, Object>();
@@ -319,7 +319,7 @@ private static final long serialVersionUID = 1L;
             	  
             	 String print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
             	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-            	setNameBoleta(nameBoleta);
+					setNameBoleta(nameBoleta);
             	if(seEnvia){
             	   String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
                    ArrayList<String[]> lista = new ArrayList<>();
