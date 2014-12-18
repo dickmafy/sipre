@@ -148,9 +148,9 @@ private static final long serialVersionUID = 1L;
 		idDescuento.setCplanillaMesProceso((anio+""+mes).trim());
 		
 		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(anio+""+mes);
-		List<SiprePlanillaDetalle> lstIngresos=ejbPlanillaDetalle.getListPlanillaDetalle(idDetalle);
-		List<SiprePlanillaDescuento> lstDescLeyJud=ejbPlanillaDescuento.getListPlanillaDescuento(idDescuento, ConstantesUtil.TIPO_LEY_JUDICIAL);
-		List<SiprePlanillaDescuento> lstDescOtros=ejbPlanillaDescuento.getListPlanillaDescuento(idDescuento, ConstantesUtil.TIPO_GENERAL);
+		List<SiprePlanillaDetalle> lstIngresos=ejbPlanillaDetalle.getListPlanillaDetalle(anio+""+mes);
+		List<SiprePlanillaDescuento> lstDescLeyJud=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_LEY_JUDICIAL);
+		List<SiprePlanillaDescuento> lstDescOtros=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_GENERAL);
 		
 		System.out.println("lstPlanilla::"+lstPlanilla.size());
 		System.out.println("lstIngresos::"+lstIngresos.size());
@@ -159,11 +159,12 @@ private static final long serialVersionUID = 1L;
 		
 		if(lstPlanilla!=null && !lstPlanilla.isEmpty() ){
 			for(SiprePlanilla plnPers:lstPlanilla){
+				System.out.println("PROCESO PERSONA****"+plnPers.getId().getCpersonaNroAdm());
 				BigDecimal totalIng=new BigDecimal(0);
 				BigDecimal totalDesLeyJud=new BigDecimal(0);
 				BigDecimal neto=new BigDecimal(0);
 				for(int i=0 ;i<lstIngresos.size();i++){
-					if(lstIngresos.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+					if(lstIngresos.get(i).getSiprePlanillaDetallePK().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
 						if(lstIngresos.get(i).getSipreTipoPlanilla().getCtpIndAfeNeto().equals("S")){
 							totalIng.add(lstIngresos.get(i).getNpdMtoConcepto());
 						}
@@ -172,7 +173,7 @@ private static final long serialVersionUID = 1L;
 				}
 				System.out.println("totalIng ::"+totalIng);
                 for(int i=0 ;i<lstDescLeyJud.size();i++){
-                	if(lstDescLeyJud.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+                	if(lstDescLeyJud.get(i).getSiprePlanillaDescuentoPK().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
                 		totalDesLeyJud.add(lstDescLeyJud.get(i).getNpdMtoEmpleado());
 					}
 				}
@@ -189,7 +190,7 @@ private static final long serialVersionUID = 1L;
 				pkCb.setNbcNumProceso(plnPers.getId().getNplanillaNumProceso());
 				cb.setSipreBoletaCabeceraPK(pkCb);
 				
-				cb.setCbcCodGraEfec(plnPers.getSipreCargo().getCcargoCodigo());
+				cb.setCbcCodGraEfec("");
 				cb.setCbcCodGraPens(plnPers.getCplanillaCodGraPen());
 				cb.setCbcCodUnidad(plnPers.getSipreUnidad().getCunidadCodigo());
 				cb.setCbcDni(plnPers.getCplanillaDni());
@@ -208,13 +209,17 @@ private static final long serialVersionUID = 1L;
 				cb.setVbcLugar(plnPers.getSipreUnidad().getVunidadDscGuar());
 				cb.setVbcRegPens("");
 				cb.setVbcRegRemun("");
-				
-				ejbBoletaCabecera.persist(cb);
+				SipreUsuario us=new SipreUsuario();
+				us.setCusuarioCodigo("1");
+				cb.setSipreUsuario(us);
+				cb.setDbcFecReg(new Date());
+				//ejbBoletaCabecera.persist(cb);
+				ejbBoletaCabecera.saveCabecera(cb);
 				List<SipreBoletaDetalle> lstDetalle=new ArrayList<SipreBoletaDetalle>();
 				int secDt=1;
 				 for(int i=0 ;i<lstDescOtros.size();i++){
 					 SipreBoletaDetalle dtl=new SipreBoletaDetalle();
-	                	if(lstDescOtros.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+	                	if(lstDescOtros.get(i).getSiprePlanillaDescuentoPK().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
 	                		
 	                		if(neto.compareTo(lstDescOtros.get(i).getNpdMtoEmpleado())== 1){
 	                		   neto.subtract(lstDescOtros.get(i).getNpdMtoEmpleado());
@@ -250,7 +255,7 @@ private static final long serialVersionUID = 1L;
 				 
 				 for(int i=0 ;i<lstIngresos.size();i++){
 					 SipreBoletaDetalle dtl=new SipreBoletaDetalle();
-	                	if(lstIngresos.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
+	                	if(lstIngresos.get(i).getSiprePlanillaDetallePK().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
 	                	       int sec=2;
 	                		   SipreBoletaDetallePK pk =new SipreBoletaDetallePK();
 	                		   pk.setCbcMesProceso(anio+""+mes);
@@ -281,7 +286,8 @@ private static final long serialVersionUID = 1L;
 					}
 				 
 				  for(SipreBoletaDetalle detalle:lstDetalle){
-					  ejbBoletaDetalle.persist(detalle);
+					  ejbBoletaDetalle.saveDetalle(detalle);
+					  //ejbBoletaDetalle.persist(detalle);
 				  }
 				
 			}
