@@ -14,7 +14,7 @@
 
 					<h:form>
 						<p:panel header="Registro de Entidad Crediticia">
-							<p:panelGrid columns="4">
+							<p:panelGrid columns="6">
 
 								<p:outputLabel value="Cod Clasificacdor de la Ent Cred  " />
 								<p:inputText />
@@ -44,7 +44,6 @@
 
 								<p:outputLabel value="Cod del tipo de Ent Cred " />
 								<p:inputText />
-
 
 								<p:outputLabel value="Otras Entidades " />
 								<p:inputText />
@@ -101,8 +100,6 @@
 									<f:selectItem itemValue="NORMAL" itemLabel="Cancelada" />
 								</p:selectOneMenu>
 
-
-
 								<p:outputLabel value="Entidad Subjeta a Dscto OGCOE-RDR :  " />
 								<p:selectOneMenu>
 									<f:selectItem itemValue="Si" itemLabel="SI" />
@@ -111,8 +108,6 @@
 
 								<p:outputLabel value="Codigo de CONO :  " />
 								<p:inputText />
-
-
 
 								<h:outputText value="DITELE " />
 								<p:selectBooleanCheckbox value="DITELE">
@@ -145,7 +140,7 @@
 						</p:panel>
 
 						<p:commandButton value="Guardar"
-							actionListener="#{autorizacionPersonalCrediticia.newBean}"></p:commandButton>
+							actionListener="#{registroEntidadCrediticia.newBean}"></p:commandButton>
 
 						<p:commandButton value="Nuevo"></p:commandButton>
 						<p:commandButton value="DITELE"></p:commandButton>
@@ -155,60 +150,48 @@
 
 						<!-- DATATABLE-->
 						<p:dataTable id="dt" var="item" widgetVar="wdt"
+						value="#{registroEntidadCrediticia.beanList}"
 							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
 							rows="20" paginatorPosition="top"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-
-
-							<p:column headerText="Cod Administrativo" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Cod Clasificador Ent Cred." width="2%">
+								<h:outputText value="#{item.codClasificadorEntCred}" />
 							</p:column>
 
-							<p:column headerText="Cod CPMP" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Entidad Crediticia" width="2%">
+								<h:outputText value="#{item.codEntidadCrediticia}" />
 							</p:column>
 
-							<p:column headerText="Apellidos y Nombres" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Direccion" width="2%">
+								<h:outputText value="#{item.direccion}" />
 							</p:column>
 
-							<p:column headerText="Marcado Autorizado" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Email" width="2%">
+								<h:outputText value="#{item.email}" />
 							</p:column>
 
-							<p:column headerText="Fecha Registro" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Razon Social" width="2%">
+								<h:outputText value="#{item.razonSocial}" />
 							</p:column>
-							<p:column headerText="Persona Caja Ejercito" width="2%">
-								<h:outputText value="#{item.campo}" />
-							</p:column>
-
-							<p:column headerText="Cod Regime Pension" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Representante Entidad" width="2%">
+								<h:outputText value="#{item.representanteEntidad}" />
 							</p:column>
 
-							<p:column headerText="Regime Descripcion" width="2%">
-								<h:outputText value="#{item.campo}" />
+							<p:column headerText="Ruc" width="2%">
+								<h:outputText value="#{item.ruc}" />
 							</p:column>
 
-							<p:column headerText="Nro Autorizacion" width="2%">
-								<h:outputText value="123" />
+							<p:column headerText="Situacion Entidad" width="2%">
+								<h:outputText value="#{item.situacionEntidad}" />
 							</p:column>
 
-							<p:column headerText="Autorizar?" width="2%">
-								<p:selectBooleanCheckbox value="#{selectBooleanView.value2}">
-								</p:selectBooleanCheckbox>
+							<p:column headerText="Sujeto a Descuento" width="2%">
+								<h:outputText value="#{item.sujetaDescuento}" />
 							</p:column>
 
-
+						
 						</p:dataTable>
-
-
-
-
-
-
 					</h:form>
 				</p:panel>
 			</div>

@@ -1,0 +1,77 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+	xmlns:p="http://primefaces.org/ui"
+	xmlns:f="http://java.sun.com/jsf/core"
+	xmlns:h="http://java.sun.com/jsf/html"
+	xmlns:ui="http://java.sun.com/jsf/facelets">
+	<h:form id="frmList" ajaxSubmit="false">
+		<div id="contenido_formulario">
+			<div id="page_flow">Judicial</div>
+			<div id="titulo_formulario">Asignacion Judicial</div>
+			<div id="contenido">
+				<p:panel header="Asignacion Judicial ">
+					<p:messages id="messages" autoUpdate="true" closable="true" />
+
+
+					<h:form>
+						<p:panel header="Entidad Crediticia:">
+							<p:panelGrid columns="2">
+
+								<p:outputLabel value="CIP" />
+								<p:inputText value="327475600" />
+								
+								<p:outputLabel value="NOMBRE" />
+								<p:inputText value="Alarcon Jauregui Edwin Freyre" />
+
+							</p:panelGrid>
+						</p:panel>
+
+
+						<p:commandButton value="Buscar"
+							actionListener="#{asignacionJudicial.newBean}"></p:commandButton>
+
+
+						<!-- DATATABLE-->
+						<p:dataTable id="dt" var="item" widgetVar="wdt"
+							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+							value="#{asignacionJudicial.beanList}"
+							rows="20" paginatorPosition="top"
+							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
+
+							<p:column headerText="COD ASIGNACION" width="2%">
+								<h:outputText value="#{item.codAsig}" />
+							</p:column>
+
+							<p:column headerText="NOMBRE Y APELLIDOS" width="2%">
+								<h:outputText value="#{item.nombreApellido}" />
+							</p:column>
+
+							<p:column headerText="BANCO" width="2%">
+								<h:outputText value="#{item.banco}" />
+							</p:column>
+
+							<p:column headerText="COD LUG" width="2%">
+								<h:outputText value="#{item.codLugar}" />
+							</p:column>
+
+							<p:column headerText="COD LUG" width="2%">
+								<h:outputText value="#{item.codLugar}" />
+							</p:column>
+							<p:column headerText="LUGAR" width="2%">
+								<h:outputText value="#{item.lugar}" />
+							</p:column>
+
+							<p:column headerText="DNI" width="2%">
+								<h:outputText value="#{item.dni}" />
+							</p:column>
+
+							<p:column headerText="FEC PROCESO" width="2%">
+								<h:outputText value="#{item.fecProces}" />
+							</p:column>
+						</p:dataTable>
+
+					</h:form>
+				</p:panel>
+			</div>
+		</div>
+	</h:form>
+</ui:composition>

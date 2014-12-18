@@ -30,40 +30,39 @@
 						<!-- DATATABLE-->
 						<p:dataTable id="dt" var="item" widgetVar="wdt"
 							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
+							value="#{consultaAutorizacionesCrediticia.beanList}"
 							rows="20" paginatorPosition="top"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
 
-
-
 							<p:column headerText="Nro Autorizacion" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.nroAutorizacion}" />
 							</p:column>
 
 							<p:column headerText="Cod Entidad" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codentidad}" />
 							</p:column>
 
 							<p:column headerText="Razon Social" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.razonSocial}" />
 							</p:column>
 
 							<p:column headerText="Fecha Alta Autorizacion" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.fechaAlta}" />
 							</p:column>
 
 							<p:column headerText="Fecha Baja Autorizacion" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.fechaBaja}" />
 							</p:column>
 							<p:column headerText="Situacion Autorizacion" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.situacionAuto}" />
 							</p:column>
 
 							<p:column headerText="Cod Caja Militar" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codCajaMilitar}" />
 							</p:column>
 
 							<p:column headerText="Cod Descuento Caja" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codDscCaja}" />
 							</p:column>
 						</p:dataTable>
 

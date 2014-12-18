@@ -34,6 +34,7 @@
 
 						<!-- DATATABLE-->
 						<p:dataTable id="dt" var="item" widgetVar="wdt"
+							value="#{autorizacionPersonalCrediticia.beanList}"
 							emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
 							rows="20" paginatorPosition="top"
 							paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
@@ -41,53 +42,41 @@
 
 
 							<p:column headerText="Cod Administrativo" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codAdmin}" />
 							</p:column>
 
 							<p:column headerText="Cod CPMP" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codCPMP}" />
 							</p:column>
 
 							<p:column headerText="Apellidos y Nombres" width="2%">
-								<h:outputText value="#{item.campo}" />
-							</p:column>
-
-							<p:column headerText="Marcado Autorizado" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.nombre}" />
 							</p:column>
 
 							<p:column headerText="Fecha Registro" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.fechaRegistro}" />
 							</p:column>
 							<p:column headerText="Persona Caja Ejercito" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.personalCajaEjercito}" />
 							</p:column>
 
 							<p:column headerText="Cod Regime Pension" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codRegimen}" />
 							</p:column>
 
 							<p:column headerText="Regime Descripcion" width="2%">
-								<h:outputText value="#{item.campo}" />
+								<h:outputText value="#{item.codregimenDescripcion}" />
 							</p:column>
 
 							<p:column headerText="Nro Autorizacion" width="2%">
-								<h:outputText value="123" />
+								<h:outputText value="#{item.nroAutorizacion}" />
 							</p:column>
 
-							<p:column headerText="Autorizar?" width="2%">
-								<p:selectBooleanCheckbox value="#{selectBooleanView.value2}">
+							<p:column headerText="Autorizado?" width="2%">
+								<p:selectBooleanCheckbox >
 								</p:selectBooleanCheckbox>
 							</p:column>
-
-
 						</p:dataTable>
-
-
-
-
-
-
 					</h:form>
 				</p:panel>
 			</div>
