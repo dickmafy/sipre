@@ -44,9 +44,7 @@ public class Index extends MainContext {
 			rtnoPgna = redirecciona(UProperties.getMessage(
 					UParametro.PROP_CONFIGURACIONES, UParametro.PGNA_PCPAL));
 		} else {
-			ejbAuditoria.persist(getAuditoria("INGRESO AL SISTEMA", new Date(),
-					"USUARIO", usuarioDto.getNickname(), null,
-					"CREDENCIALES INCORRECTAS", null));
+			ejbAuditoria.persist(getAuditoria("INGRESO AL SISTEMA", new Date(), "USUARIO", usuarioDto.getNickname(), null, "CREDENCIALES INCORRECTAS", null));
 			showMessage(UProperties.getMessage(UParametro.PROP_MENSAJES,
 					UParametro.MSJE_ERROR_USRIO_CVE_ICRTO),
 					Faces.SEVERITY_ERROR);
