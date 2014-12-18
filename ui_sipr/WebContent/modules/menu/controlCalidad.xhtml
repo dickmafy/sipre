@@ -4,17 +4,15 @@
 	xmlns:p="http://primefaces.org/ui">
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuReporte">
-			<p:submenu label="CONTROL DE CALIDAD">
-				<p:menuitem value="Verificar Información a Procesar (COPERE)"
-					icon="ui-icon-person" async="true"
+			<p:submenu label="CONTROL DE CALIDAD - COPERE">
+				<p:menuitem value="Verif. información a procesar"
+					icon="ui-icon-check" async="true"
 					actionListener="#{mainMb.redireccionaContent(83)}" ajax="true"
 					update=":pnlContenido" />
-				<p:menuitem value="Importar Informacion (COPERE)"
-					icon="ui-icon-person" async="true"
+				<p:menuitem value="Importar información"
+					icon="ui-icon-arrowthickstop-1-s" async="true"
 					actionListener="#{mainMb.redireccionaContent(84)}" ajax="true"
 					update=":pnlContenido" />
-
-
 			</p:submenu>
 		</p:menu>
 	</h:form>

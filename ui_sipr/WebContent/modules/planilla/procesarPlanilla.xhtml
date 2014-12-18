@@ -373,7 +373,7 @@
 						</p:outputPanel>
 					</f:facet>
 
-					<p:column headerText="Campo Proceso" width="2%">
+					<p:column headerText="Campo Proceso" width="2%" rendered="false">
 						<h:outputText value="#{item.campo}" />
 					</p:column>
 
@@ -433,7 +433,7 @@
 	</h:form>
 	<h:form id="frmPb">
 		<p:dialog widgetVar="wvProgressBar" id="dlgProgressBar" modal="true"
-			appendTo="@(body)" closable="false">
+			appendTo="@(body)" closable="false" resizable="false">
 			<!-- PROGRES INICIO -->
 			<!-- Si se print infinitos post, revisar los ajax true y en java updateComponente("dt"); 
 				-->
