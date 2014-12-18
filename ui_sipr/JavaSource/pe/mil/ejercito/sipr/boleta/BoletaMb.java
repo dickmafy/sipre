@@ -141,7 +141,7 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	public void procesarBoleta(){
-		System.out.println("AÑO /MES ::"+anio+""+mes);
+		System.out.println("Aï¿½O /MES ::"+anio+""+mes);
 		SiprePlanillaDetallePK idDetalle=new SiprePlanillaDetallePK();
 		SiprePlanillaDescuentoPK idDescuento=new SiprePlanillaDescuentoPK();
 		idDetalle.setCplanillaMesProceso((anio+""+mes).trim());
