@@ -10,27 +10,25 @@ and open the template in the editor.
 body {
 	margin: 0px;
 	padding: 0px;
-	font-family: SegoeUI-Regular-final, "Segoe UI", Segoe, Tahoma, Helvetica,
-		Arial, Sans-Serif;
+	font-family: Helvetica, Tahoma, Arial, SegoeUI-Regular-final, "Segoe UI",
+		Segoe, Sans-Serif;
 	font-size: 11px;
 }
 
 #lySouth {
 	height: 18px !important;
 	padding: 9px 0px 3px 0px;
-	color: #ffffff;
+	color: #666;
 	text-align: center;
-	background-image: url("../images/fndo_fter.jpg");
+	background: #D6D6D6;
 }
 
 #lyNorth {
-	height: 60px !important;
-	max-height: 60px !important;
-	background-image: url("../images/fnd_bnner.jpg");
-	background-repeat: repeat-x;
+	height: 46px !important;
+	max-height: 46px !important;
 	z-index: 3 !important;
 	overflow: visible !important;
-	background-image: url("../images/fnd_bnner.jpg");
+	background: #D6D6D6;
 }
 
 #lyLeft {
@@ -40,7 +38,7 @@ body {
 
 #lyNorth.ui-widget-content {
 	border: none;
-	color: #ffffff;
+	color: #565656;
 }
 
 #lyLeft.ui-widget-content,#lyCenter.ui-widget-content {
@@ -77,7 +75,6 @@ body {
 }
 
 #lyLeft {
-	max-width: 180px;
 	width: 180px;
 }
 
@@ -199,9 +196,10 @@ body {
 	background-color: #F0F0F0;
 }
 
-.mnuPersonal.ui-menu {
+.mnuPersonal .ui-menu {
 	padding: 0px;
 	background: none;
+	top: 0px;
 }
 
 .mnuPersonal ul li ul li a span.ui-menuitem-text {
@@ -210,10 +208,6 @@ body {
 
 .mnuPersonal.ui-widget-content {
 	border: none;
-}
-
-.mnuPersonal.ui-widget-content a {
-	color: #ffffff;
 }
 
 .ui-menu .ui-menuitem {
@@ -236,7 +230,9 @@ menu_configuracion {
 
 .ui-menu {
 	padding: 0px;
-	background: #F0F0F0;
+	top: 20px;
+	position: absolute;
+	background: none;
 }
 
 .ui-menu .ui-menuitem {
@@ -422,6 +418,7 @@ div#titulo_formulario div#botonera {
 	float: right;
 	position: relative;
 	height: 34px;
+	padding: 4px 0px 0px 0px;
 }
 
 .ui-fieldset {
@@ -559,8 +556,8 @@ select.ui-state-default {
 }
 
 .ui-dialog-content .ui-icon {
-	width: 32px;
-	height: 32px;
+	width: 16px;
+	height: 16px;
 }
 
 .ui-confirm-dialog-message {
@@ -838,7 +835,7 @@ table.separador tr td {
 	border: none;
 }
 
-#pnlContenido.ui-corner-all {
+#pnlContenido.ui-corner-all,button .ui-icon {
 	-moz-border-radius: 0px;
 	-webkit-border-radius: 0px;
 	border-radius: 0px;
@@ -866,14 +863,21 @@ table.separador tr td {
 	left: 20px;
 }
 
-.boton_botonera {
-	position: relative;
-	margin-top: 10px;
+#botonera button .ui-button-icon-left{
+	left: 5px;
+}
+
+
+
+.ui-button-text-icon-left .ui-button-text {
+	padding: .3em 1em .3em 2.1em;
 }
 
 .boton_botonera .ui-button-text {
 	font-size: 12px !important;
 	text-transform: uppercase;
+	color: #FFF;
+	background: #4169E1;
 }
 
 .ui-widget-header {
@@ -887,22 +891,114 @@ table.separador tr td {
 	padding: 0px;
 }
 
-table.tbl_contenido, table.tbl_contenido tr, table.tbl_contenido tr td{
+table.tbl_contenido,table.tbl_contenido tr,table.tbl_contenido tr td {
 	border: 0px;
 	padding: 0px;
 	margin: 0px;
 }
 
-table.tbl_contenido{
+table.tbl_contenido {
 	border: solid 1px #CCC;
-	border-radius:3px;
+	border-radius: 3px;
 	background-color: #F5F5F5;
 }
 
-table.tbl_contenido tr td{
+table.tbl_contenido tr td {
 	padding: 2px;
 	text-align: center;
 	width: 150px;
 	height: 28px;
 	vertical-align: middle;
+}
+
+.ui-datatable thead th,.ui-datatable tbody td,.ui-datatable tfoot td {
+	padding: 2px 10px;
+}
+
+.ui-state-default,button .ui-button-icon-left {
+	-moz-box-shadow: none;
+	-webkit-box-shadow: none;
+	box-shadow: none;
+}
+
+button .ui-button-icon-left {
+	width: 16px !important;
+	height: 16px !important;
+}
+
+.footer_dialog {
+	border-top: solid 2px #D0D0D0;
+	padding: 0px;
+	text-align: right;
+	padding: 0px;
+}
+
+.label {
+	font-weight: bold;
+}
+
+#sipre_name,#sipre_name_large {
+	position: absolute;
+	top: 8px;
+	font-family: inherit;
+	font-weight: lighter;
+	height: 30px;
+}
+
+#sipre_name {
+	width: 80px;
+	left: 16px;
+	font-size: 26px;
+}
+
+#sipre_name_large {
+	font-size: 13px;
+	left: 96px;
+	border-left: solid 1px #FFF;
+	padding: 0px 0px 0px 10px;
+	width: 240px;
+}
+
+#sipre_name_large span {
+	position: absolute;
+	width: 100%;
+}
+
+
+.ui-layout-resizer-north{
+	top: 48px !important;
+}
+
+#frm_opciones .ui-menu{
+	top: 0px;
+} 
+
+#perfil, #perfil_usuario, #nombre_usuario{
+	position: absolute;
+	font-weight: lighter;
+	font-size: 20px;
+}
+
+#perfil{
+	right: 0px;
+	height: 46px;
+	background: #4169E1;
+	color: #FFF;
+}
+
+#perfil_usuario, #nombre_usuario{
+	padding: 0px 10px 0px 10px;
+}
+
+#perfil_usuario{
+	font-weight:normal;
+	top: 5px;
+	position:relative;
+	
+}
+
+#nombre_usuario{
+	position:relative;
+	top:5px;
+	font-size: 13px;
 }
