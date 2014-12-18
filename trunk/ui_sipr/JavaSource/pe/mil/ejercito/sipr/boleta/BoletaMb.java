@@ -42,7 +42,9 @@ import pe.mil.ejercito.sipr.model.SipreBoletaDetalle;
 import pe.mil.ejercito.sipr.model.SipreBoletaDetallePK;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDescuento;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDescuentoPK;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
+import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
 
 
@@ -140,11 +142,20 @@ private static final long serialVersionUID = 1L;
 	
 	public void procesarBoleta(){
 		System.out.println("AÑO /MES ::"+anio+""+mes);
-		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(anio+""+mes);
-		List<SiprePlanillaDetalle> lstIngresos=ejbPlanillaDetalle.getListPlanillaDetalle(anio+""+mes);
-		List<SiprePlanillaDescuento> lstDescLeyJud=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_LEY_JUDICIAL);
-		List<SiprePlanillaDescuento> lstDescOtros=ejbPlanillaDescuento.getListPlanillaDescuento(anio+""+mes, ConstantesUtil.TIPO_GENERAL);
+		SiprePlanillaDetallePK idDetalle=new SiprePlanillaDetallePK();
+		SiprePlanillaDescuentoPK idDescuento=new SiprePlanillaDescuentoPK();
+		idDetalle.setCplanillaMesProceso((anio+""+mes).trim());
+		idDescuento.setCplanillaMesProceso((anio+""+mes).trim());
 		
+		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(anio+""+mes);
+		List<SiprePlanillaDetalle> lstIngresos=ejbPlanillaDetalle.getListPlanillaDetalle(idDetalle);
+		List<SiprePlanillaDescuento> lstDescLeyJud=ejbPlanillaDescuento.getListPlanillaDescuento(idDescuento, ConstantesUtil.TIPO_LEY_JUDICIAL);
+		List<SiprePlanillaDescuento> lstDescOtros=ejbPlanillaDescuento.getListPlanillaDescuento(idDescuento, ConstantesUtil.TIPO_GENERAL);
+		
+		System.out.println("lstPlanilla::"+lstPlanilla.size());
+		System.out.println("lstIngresos::"+lstIngresos.size());
+		System.out.println("lstDescLeyJud::"+lstDescLeyJud.size());
+		System.out.println("lstDescOtros::"+lstDescOtros.size());
 		
 		if(lstPlanilla!=null && !lstPlanilla.isEmpty() ){
 			for(SiprePlanilla plnPers:lstPlanilla){
@@ -153,7 +164,10 @@ private static final long serialVersionUID = 1L;
 				BigDecimal neto=new BigDecimal(0);
 				for(int i=0 ;i<lstIngresos.size();i++){
 					if(lstIngresos.get(i).getSiprePlanilla().getId().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
-						totalIng.add(lstIngresos.get(i).getNpdMtoConcepto());
+						if(lstIngresos.get(i).getSipreTipoPlanilla().getCtpIndAfeNeto().equals("S")){
+							totalIng.add(lstIngresos.get(i).getNpdMtoConcepto());
+						}
+						
 					}
 				}
 				System.out.println("totalIng ::"+totalIng);
@@ -183,15 +197,15 @@ private static final long serialVersionUID = 1L;
 				cb.setDbcFecReg(new Date());
 				cb.setNbcMtoEgreso(totalDesLeyJud);
 				cb.setNbcMtoIngreso(neto);
-				cb.setNbcNumBoleta(50);
+				cb.setNbcNumBoleta(1);
 				//cb.setSipreBoletaDetalleList(sipreBoletaDetalleList);
 				cb.setSipreUsuario(new SipreUsuario());
-				cb.setTcbTipPersona("M");
+				cb.setTcbTipPersona(plnPers.getCplanillaIndActPen());
 				cb.setVbcDesBanco(plnPers.getSipreBanco().getVbancoDsc());
 				cb.setVbcDesGraEfec(plnPers.getSipreGrado().getVgradoDscCorta());
 				cb.setVbcDesGraPens(plnPers.getCplanillaCodGraPen());
 				cb.setVbcDesUnidad(plnPers.getSipreUnidad().getVunidadDscCorta());
-				cb.setVbcLugar("San Borja");
+				cb.setVbcLugar(plnPers.getSipreUnidad().getVunidadDscGuar());
 				cb.setVbcRegPens("");
 				cb.setVbcRegRemun("");
 				
@@ -212,15 +226,22 @@ private static final long serialVersionUID = 1L;
 	                		   dtl.setSipreBoletaDetallePK(pk);
 	                		//  dtl.setCbdCodIngDesc(lstDescOtros.get(i).getSipreTmpPlanillaDescuento().getSipreTmpPlanillaDescuentoPK().get);
 	                		   dtl.setCbdCodMef(lstDescOtros.get(i).getSipreEntidadCrediticia().getCecCodMef());
-	                		   //dtl.setCbdIndSubtitulo(cbdIndSubtitulo);
-	                		   dtl.setCbdTipConcpto("D".charAt(0));
-	                		   dtl.setNbdMonto(lstDescOtros.get(i).getNpdMtoEmpleado());
+	                		   dtl.setCbdIndSubtitulo(lstDescOtros.get(i).getSipreEntidadCrediticia().getCecTipoDcto());
+	                		   if(lstDescOtros.get(i).getNpdMtoEmpleador()!=null && lstDescOtros.get(i).getNpdMtoEmpleador().compareTo(new BigDecimal(0))>1 ){
+	                			   dtl.setCbdTipConcpto("A".charAt(0));
+	                			   dtl.setNbdMonto(lstDescOtros.get(i).getNpdMtoEmpleador());
+	                		   }else{
+	                			   dtl.setCbdTipConcpto("D".charAt(0));   
+	                			   dtl.setNbdMonto(lstDescOtros.get(i).getNpdMtoEmpleado());
+	                		   }
+	                		   
+	                		   
 	                		   dtl.setNbdNumCuoPagada(lstDescOtros.get(i).getNpdNumCuota().intValue());
 	                		   dtl.setNbdNumCuoTotal(lstDescOtros.get(i).getNpdNumTotCuota().intValue());
 	                		  // dtl.setVbdDscIngDesc(lstDescOtros.get(i).get);
 	                		   dtl.setSipreBoletaCabecera(cb);
 	                		   pk.setNbdSec(secDt);secDt++;
-	                		    lstDetalle.add(dtl);
+	                		   lstDetalle.add(dtl);
 	                		    
 	                		}
 						}
@@ -239,7 +260,7 @@ private static final long serialVersionUID = 1L;
 	                		   dtl.setSipreBoletaDetallePK(pk);
 	                		  dtl.setCbdCodIngDesc(lstIngresos.get(i).getSipreConceptoIngreso().getCciCodigo());
 	                		   dtl.setCbdCodMef(lstIngresos.get(i).getSipreConceptoIngreso().getCciCodMef());
-	                		   if(lstIngresos.get(i).getSipreConceptoIngreso().getCciCodigo().equalsIgnoreCase("0002") && lstIngresos.get(i).getSipreConceptoIngreso().getCciCodDestino().equalsIgnoreCase("0001") ){
+	                		   if(lstIngresos.get(i).getSipreConceptoIngreso().getCciCodigo().startsWith("BASICA")){
 	                			 dtl.setCbdIndSubtitulo("1".charAt(0)); 
 	                			 pk.setNbdSec(1);
 	                			}else{
