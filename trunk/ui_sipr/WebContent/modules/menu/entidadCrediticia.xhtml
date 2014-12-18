@@ -4,34 +4,31 @@
 	xmlns:p="http://primefaces.org/ui">
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuParametrizacion">
-			<p:submenu label="PLANILLA">
-
-
-
-				<p:menuitem value="Conversion Txt a DBF" icon="ui-icon-key"
+			<p:submenu label="CREDITICIA">
+				<p:menuitem value="Conversion TXT a DBF" icon="ui-icon-transferthick-e-w"
 					async="true" actionListener="#{mainMb.redireccionaContent(114)}"
 					ajax="false" update=":pnlContenido" />
 					
-					<p:menuitem value="Ingreso de Documentos" icon="ui-icon-key"
+					<p:menuitem value="Ingreso de documentos" icon="ui-icon-document"
 					async="true" actionListener="#{mainMb.redireccionaContent(115)}"
 					ajax="false" update=":pnlContenido" />
 
 
-				<p:menuitem value="Crediticia Registro" icon="ui-icon-key"
+				<p:menuitem value="Crediticia registro" icon="ui-icon-cart"
 					async="true" actionListener="#{mainMb.redireccionaContent(110)}"
 					ajax="false" update=":pnlContenido" />
 
-				<p:menuitem value="Autorizacion Personal a Entidad Crediticia"
-					icon="ui-icon-key" async="true"
+				<p:menuitem value="Aut. personal a Ent. crediticia"
+					icon="ui-icon-check" async="true"
 					actionListener="#{mainMb.redireccionaContent(111)}" ajax="false"
 					update=":pnlContenido" />
 
-				<p:menuitem value="Consulta de Autorizaciones" icon="ui-icon-key"
+				<p:menuitem value="Consulta de autorizaciones" icon="ui-icon-note"
 					async="true" actionListener="#{mainMb.redireccionaContent(112)}"
 					ajax="false" update=":pnlContenido" />
 
-				<p:menuitem value="Reportes de Entidades Crediticias(18)"
-					icon="ui-icon-key" async="true"
+				<p:menuitem value="Rep. Entidades Crediticias(18)"
+					icon="ui-icon-document-b" async="true"
 					actionListener="#{mainMb.redireccionaContent(113)}" ajax="false"
 					update=":pnlContenido" />
 

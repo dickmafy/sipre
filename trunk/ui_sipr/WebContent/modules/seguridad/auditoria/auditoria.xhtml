@@ -67,6 +67,7 @@
 								</p:selectOneMenu></td>
 							<td><p:spacer width="20" height="10"></p:spacer></td>
 							<td><p:commandButton value="CONSULTAR"
+									styleClass="boton_botonera"
 									icon="_ui-icon-search"
 									action="#{auditoriaMb.consultarAuditoria}"
 									update=":tblAuditoria" /></td>
@@ -79,7 +80,7 @@
 				emptyMessage="No se encontraron registros"
 				value="#{auditoriaMb.audList}" var="a">
 				<p:column headerText="FECHA" width="10%">
-				#{a.audFecha}
+				#{a.audFechaToString}
 				</p:column>
 				<p:column headerText="TABLA" width="15%">
 				#{a.audTabla}

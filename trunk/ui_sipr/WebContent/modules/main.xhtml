@@ -16,12 +16,18 @@
 	<pe:layout id="fullPage" stateCookie="true" widgetVar="fpLayoutWidget"
 		fullPage="true">
 		<pe:layoutPane position="north" resizable="false" closable="false"
-			id="lyNorth">
+			size="48" id="lyNorth">
 			<div style="width: 100%; min-width: 1280px;">
 				<table cellpadding="0" cellspacing="0" style="width: 100%;">
 					<tr>
-						<td style="width: 30%; min-width: 300px;"><p:graphicImage
-								value="/images/bn_saic_main.png" id="imgBanner" height="60p" /></td>
+						<td style="width: 25%; min-width: 300px;">
+							<div id="sipre_name">SIPRE</div>
+							<div id="sipre_name_large">
+								<span>Sistema de Información de Pagos y<br />
+									Remuneraciones del Personal del Ejército
+								</span>
+							</div>
+						</td>
 						<td
 							style="width: 50%; min-width: 640px; vertical-align: bottom; text-align: center;">
 							<h:form id="frm_menu">
@@ -46,52 +52,63 @@
 										<p:menuitem value="Boleta" icon="ui-icon-clipboard"
 											actionListener="#{mainMb.redireccionaMnu(13)}" ajax="true"
 											async="true" update=":frm_opciones, :pnlContenido" />
+
+										<p:submenu label="Calidad" icon="ui-icon-transferthick-e-w">
+											<p:menuitem value="Control de calidad" icon="ui-icon-check"
+												actionListener="#{mainMb.redireccionaMnu(12)}" ajax="true"
+												async="true" update=":frm_opciones, :pnlContenido" />
+											<p:menuitem value="Importación"
+												icon="ui-icon-arrowthickstop-1-s"
+												actionListener="#{mainMb.redireccionaMnu(14)}" ajax="true"
+												async="true" update=":frm_opciones, :pnlContenido" />
+											<p:menuitem value="Judicial"
+												icon="ui-icon-arrowthickstop-1-s"
+												actionListener="#{mainMb.redireccionaMnu(15)}" ajax="true"
+												async="true" update=":frm_opciones, :pnlContenido" />
+										</p:submenu>
+
+										<p:submenu label="Crediticia / Judicial"
+											icon="ui-icon-suitcase">
+											<p:menuitem value="Entidad Crediticia" icon="ui-icon-check"
+												actionListener="#{mainMb.redireccionaMnu(20)}" ajax="true"
+												async="true" update=":frm_opciones, :pnlContenido" />
+										</p:submenu>
+
 										<p:menuitem value="Reportes" icon="ui-icon-document"
 											actionListener="#{mainMb.redireccionaMnu(11)}" ajax="true"
 											async="true" update=":frm_opciones, :pnlContenido" />
 									</p:submenu>
 									<p:submenu label="MANTENIMIENTO" icon="ui-icon-wrench">
-										<p:menuitem value="Parametrización" icon="ui-icon-arrow-4-diag"
+										<p:submenu label="Sistemas externos" icon="ui-icon-extlink">
+											<p:menuitem value="Personal militar"
+												icon="ui-icon-contact" async="true" ajax="false"
+												update=":pnlContenido" target="_blank"
+												url="http://10.64.88.8:8080/MILITAR2/" />
+											<p:menuitem value="Personal civil"
+												icon="ui-icon-person" async="true" ajax="false" target="_blank"
+												update=":pnlContenido" url="http://10.64.88.8:8080/CIVIL2/" />
+										</p:submenu>
+
+										<p:menuitem value="Parametrización"
+											icon="ui-icon-arrow-4-diag"
 											actionListener="#{mainMb.redireccionaMnu(1)}" ajax="true"
 											async="true" update=":frm_opciones, :pnlContenido" />
 										<p:menuitem value="Gestión" icon="ui-icon-calendar"
 											actionListener="#{mainMb.redireccionaMnu(2)}" ajax="true"
 											async="true" update=":frm_opciones, :pnlContenido" />
 									</p:submenu>
-									<p:submenu label="CALIDAD" icon="ui-icon-circle-check">
-										<p:menuitem value="Control de calidad" icon="ui-icon-check"
-											actionListener="#{mainMb.redireccionaMnu(12)}" ajax="true"
-											async="true" update=":frm_opciones, :pnlContenido" />
-										<p:menuitem value="Importación" icon="ui-icon-arrowthickstop-1-s"
-											actionListener="#{mainMb.redireccionaMnu(14)}" ajax="true"
-											async="true" update=":frm_opciones, :pnlContenido" />
-										
-										<p:menuitem value="Judicial" icon="ui-icon-arrowthickstop-1-s"
-											actionListener="#{mainMb.redireccionaMnu(15)}" ajax="true"
-											async="true" update=":frm_opciones, :pnlContenido" />
-									</p:submenu>
-									<p:submenu label="ENTIDAD CREDITICIA" icon="ui-icon-circle-check">
-										<p:menuitem value="Entidad Crediticia Registro" icon="ui-icon-check"
-											actionListener="#{mainMb.redireccionaMnu(20)}" ajax="true"
-											async="true" update=":frm_opciones, :pnlContenido" />
-										
-									</p:submenu>
+
+									<p:menuitem value="CERRAR SESIÓN" icon="ui-icon-power"
+										onclick="PF('wvCerrarSesion').show();" />
 								</p:menubar>
 							</h:form>
 						</td>
-						<td style="width: 20%; vertical-align: top; min-width: 340px;">
-							<table cellpadding="0" cellspacing="0" border="0" id="tbl_perfil">
-								<tr>
-									<td rowspan="2"><p:graphicImage
-											value="/images/user_man.png" /></td>
-									<td class="perfil_bnr">ADMINISTRADOR</td>
-								</tr>
-								<tr>
-									<td class="nombre_usuario_bnr">Ericson Huamani Mantilla <p:commandLink
-											onclick="PF('wvCerrarSesion').show();">(cerrar sesión)</p:commandLink>
-									</td>
-								</tr>
-							</table>
+						<td
+							style="width: 25%; vertical-align: top; min-width: 300px; background: #888;">
+							<div id="perfil">
+								<div id="perfil_usuario">Administrador</div>
+								<div id="nombre_usuario">ERICSON HUAMANI MANTILLA</div>
+							</div>
 						</td>
 					</tr>
 				</table>
@@ -121,21 +138,18 @@
 	</pe:layout>
 	<p:dialog widgetVar="wvCerrarSesion" id="dlgCerrarSesion"
 		showEffect="fade" hideEffect="fade" header="Cerrar sesión"
-		modal="true" resizable="false">
+		closeOnEscape="true" modal="true" resizable="false">
 		<h:form id="frmCerrarSesion">
 			<table>
 				<tr>
 					<td><p:graphicImage value="/images/icons/logout_32.png" /></td>
-					<td>#{mainMb.sessionUser.vusuarioNom}, <b>¿Desea cerrar su
-							sesión actual?</b></td>
+					<td>#{mainMb.sessionUser.vusuarioNom}, <b> ¿Desea cerrar
+							su sesión actual?</b></td>
 				</tr>
 				<tr>
-					<td colspan="2"><p:commandButton value="Cancelar"
-							styleClass="boton_botonera" icon="_ui-icon-back"
-							onclick="PF('wvCerrarSesion').hide();" /> <p:commandButton
-							value="Cerrar sesión" styleClass="boton_botonera"
-							icon="_ui-icon-logout" action="#{mainMb.cerrarSesion}"
-							ajax="false" /></td>
+					<td colspan="2" class="footer_dialog"><p:commandButton
+							value="Salir" styleClass="boton_botonera" icon="_ui-icon-logout"
+							action="#{mainMb.cerrarSesion}" ajax="false" /></td>
 				</tr>
 			</table>
 		</h:form>

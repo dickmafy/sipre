@@ -5,16 +5,11 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="Boleta">
-				
-			  
-					
-				 <p:menuitem value="Procesar Boleta"
-					icon="ui-icon-key" async="true"
-					actionListener="#{mainMb.redireccionaContent(86)}" ajax="false"
-					update=":pnlContenido" />
-					
-					  <p:menuitem value="Generar Boleta"
-					icon="ui-icon-key" async="true"
+				<p:menuitem value="Procesar Boleta" icon="ui-icon-contact"
+					async="true" actionListener="#{mainMb.redireccionaContent(86)}"
+					ajax="false" update=":pnlContenido" />
+
+				<p:menuitem value="Generar Boleta" icon="ui-icon-print" async="true"
 					actionListener="#{mainMb.redireccionaContent(85)}" ajax="false"
 					update=":pnlContenido" />
 			</p:submenu>
