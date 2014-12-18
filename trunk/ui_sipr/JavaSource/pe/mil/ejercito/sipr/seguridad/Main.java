@@ -132,11 +132,7 @@ public class Main extends MainContext {
 		case 60:
 			contenidoDefault = "/modules/planilla/procesarPlanilla";
 			break;
-
-		case 62:
-			contenidoDefault = "/modules/planilla/judicial";
-			break;
-		// PLANILLA
+		// GESTION
 		case 70:
 			contenidoDefault = "/modules/ingresoDescuento/conceptoDescuentoLey";
 			break;
@@ -188,12 +184,7 @@ public class Main extends MainContext {
 			contenidoDefault = "/modules/boleta/procesarBoleta";
 			break;
 
-		case 87:
-			contenidoDefault = "/modules/judicial/gestionJudicial";
-			break;
-		case 88:
-			contenidoDefault = "/modules/judicial/judicialAlimento";
-			break;
+
 
 		//110 CREDITICIA
 		case 110:
@@ -214,6 +205,17 @@ public class Main extends MainContext {
 		case 115:
 			contenidoDefault = "/modules/entidadCrediticia/ingresoDocumentos";
 			break;
+
+		// JUDICIAL
+		case 87:
+			contenidoDefault = "/modules/judicial/gestionJudicial";
+			break;
+		case 88:
+			contenidoDefault = "/modules/judicial/judicialAlimento";
+			break;
+		case 89:
+			contenidoDefault = "/modules/judicial/asignacionJudicial";
+
 		}
 		return "";
 	}
