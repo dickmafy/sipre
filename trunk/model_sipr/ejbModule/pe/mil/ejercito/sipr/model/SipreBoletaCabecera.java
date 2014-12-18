@@ -22,6 +22,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
+import javax.persistence.Transient;
 import javax.validation.constraints.Size;
 
 /**
@@ -48,13 +49,13 @@ public class SipreBoletaCabecera implements Serializable {
     @Size(max = 3)
     @Column(name = "CBC_COD_GRA_EFEC")
     private String cbcCodGraEfec;
-    @Size(max = 10)
+    @Size(max = 20)
     @Column(name = "VBC_DES_GRA_EFEC")
     private String vbcDesGraEfec;
     @Size(max = 3)
     @Column(name = "CBC_COD_GRA_PENS")
     private String cbcCodGraPens;
-    @Size(max = 10)
+    @Size(max = 20)
     @Column(name = "VBC_DES_GRA_PENS")
     private String vbcDesGraPens;
     @Size(max = 6)
@@ -91,6 +92,7 @@ public class SipreBoletaCabecera implements Serializable {
     private Date dbcFecMod;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreBoletaCabecera")
     private List<SipreBoletaDetalle> sipreBoletaDetalleList;
+   
     @JoinColumn(name = "CUSUARIO_CODIGO", referencedColumnName = "CUSUARIO_CODIGO")
     @ManyToOne(optional = false)
     private SipreUsuario sipreUsuario;

@@ -39,9 +39,9 @@ public class SipreTipoPlanilla implements Serializable {
     @Column(name = "VTP_DSC")
     private String vtpDsc;
     @Column(name = "CTP_IND_AFE_NETO")
-    private Character ctpIndAfeNeto;
+    private String ctpIndAfeNeto;
     @Column(name = "CTP_IND_AFE_IRENTA")
-    private Character ctpIndAfeIrenta;
+    private String ctpIndAfeIrenta;
     @OneToMany(mappedBy = "sipreTipoPlanilla")
     private List<SipreConceptoIngreso> sipreConceptoIngresoList;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "sipreTipoPlanilla")
@@ -82,19 +82,19 @@ public class SipreTipoPlanilla implements Serializable {
         this.vtpDsc = vtpDsc;
     }
 
-    public Character getCtpIndAfeNeto() {
+    public String getCtpIndAfeNeto() {
         return ctpIndAfeNeto;
     }
 
-    public void setCtpIndAfeNeto(Character ctpIndAfeNeto) {
+    public void setCtpIndAfeNeto(String ctpIndAfeNeto) {
         this.ctpIndAfeNeto = ctpIndAfeNeto;
     }
 
-    public Character getCtpIndAfeIrenta() {
+    public String getCtpIndAfeIrenta() {
         return ctpIndAfeIrenta;
     }
 
-    public void setCtpIndAfeIrenta(Character ctpIndAfeIrenta) {
+    public void setCtpIndAfeIrenta(String ctpIndAfeIrenta) {
         this.ctpIndAfeIrenta = ctpIndAfeIrenta;
     }
 
