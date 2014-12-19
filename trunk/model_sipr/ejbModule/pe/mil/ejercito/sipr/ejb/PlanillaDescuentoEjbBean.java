@@ -55,7 +55,7 @@ public class PlanillaDescuentoEjbBean extends GenericDAOImpl<SiprePlanillaDescue
 			if(mesproceso!=null && !mesproceso.isEmpty()){
 			  sb.append(" and CPLANILLA_MES_PROCESO = '"+mesproceso+"'");
 			}
-			sb.append(" order by CPERSONA_NRO_ADM ");
+			sb.append(" order by CPERSONA_NRO_ADM,NPD_COD_SEC ");
 			
 			Query q=em.createNativeQuery(sb.toString());
 			
