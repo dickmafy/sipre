@@ -27,7 +27,7 @@ FROM SIPRE_BOLETA_DETALLE BD
 WHERE BD.CBD_TIP_CONCPTO='D'
 AND BD.CBC_MES_PROCESO=$P{ANO_MES_PROCESO}
 AND BD.CBC_NRO_ADM=$P{NRO_ADM}
-ORDER BY BD.CBD_IND_SUBTITULO,BD.NBD_SEC]]>
+ORDER BY BD.NBD_SEC,BD.CBD_IND_SUBTITULO]]>
 	</queryString>
 	<field name="CBC_MES_PROCESO" class="java.lang.String"/>
 	<field name="CBC_NRO_ADM" class="java.lang.String"/>
@@ -48,15 +48,15 @@ ORDER BY BD.CBD_IND_SUBTITULO,BD.NBD_SEC]]>
 	<group name="SUBTITULO">
 		<groupExpression><![CDATA[$F{CBD_IND_SUBTITULO}]]></groupExpression>
 		<groupHeader>
-			<band height="17">
+			<band height="18">
 				<textField isBlankWhenNull="true">
 					<reportElement x="1" y="0" width="271" height="15" uuid="e8a569ba-6731-48ad-8fc0-79c6d9e705ae"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
 						<font fontName="Arial" size="9" isBold="true"/>
 					</textElement>
-					<textFieldExpression><![CDATA[($F{CBD_IND_SUBTITULO}=="3"?"APORTACIONES DE LEY / IMPUESTO":
-                                      ($F{CBD_IND_SUBTITULO}=="1"?"MANDATO JUDICIAL":
-                                               ($F{CBD_IND_SUBTITULO}=="2"?"FACULTATIVO":"SIN GRUPO")
+					<textFieldExpression><![CDATA[($F{CBD_IND_SUBTITULO}=="1" ?"APORTACIONES DE LEY / IMPUESTO":
+                                      ($F{CBD_IND_SUBTITULO}=="2"?"MANDATO JUDICIAL":
+                                               ($F{CBD_IND_SUBTITULO}=="4"?"FACULTATIVO":"")
                                        )
 )]]></textFieldExpression>
 				</textField>
