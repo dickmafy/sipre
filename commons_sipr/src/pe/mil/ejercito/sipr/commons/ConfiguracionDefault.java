@@ -85,7 +85,7 @@ public class ConfiguracionDefault implements Serializable {
 		CHARSET = "utf-8";
 		CONTENT_TYPE = "html";
 		VARIABLE_CONFIRMACION = "key";
-		TO_EMAIL = "diego.matos.b@gmail.com";
+		TO_EMAIL = "hm.ericson@gmail.com";
 		
 		TITULO_MENSAJE = "EJERCITO DEL PER� � Boleta generada";
         CUERPO_MENSAJE="Sr. (Sra.) (Srta.): : <br /><br/>"
