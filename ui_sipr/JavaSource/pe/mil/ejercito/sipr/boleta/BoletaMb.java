@@ -96,7 +96,11 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
-	
+	@PostConstruct
+	public void loadCombos(){
+		loadPersonal();
+		loadAnioMes();
+	}
 	public void loadPersonal(){
 		List<SiprePlanilla> lstPlanilla=ejbPlanilla.getListPlanillaByNroAdm(null);
 		lstNames=new ArrayList<SelectItem>();
@@ -111,7 +115,7 @@ private static final long serialVersionUID = 1L;
 		
 	}
 	
-	@PostConstruct
+	
 	public void loadAnioMes(){
 		String[] meses={"Enero","Febrero","Marzo","Abril","Mayo","Junio","Julio","Agosto","Setiembre","Octubre","Noviembre","Diciembre"};
 		
@@ -141,7 +145,7 @@ private static final long serialVersionUID = 1L;
 	}
 	
 	public void procesarBoleta(){
-		System.out.println("A�O /MES ::"+anio+""+mes);
+		System.out.println("ANIO/MES ::"+anio+""+mes);
 		SiprePlanillaDetallePK idDetalle=new SiprePlanillaDetallePK();
 		SiprePlanillaDescuentoPK idDescuento=new SiprePlanillaDescuentoPK();
 		idDetalle.setCplanillaMesProceso((anio+""+mes).trim());
@@ -302,13 +306,15 @@ private static final long serialVersionUID = 1L;
         	System.out.println("persona cod:"+nroAdm);
         	System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
         	System.out.println("se envia:"+seEnvia);
+        	System.out.println("ANIO/MES ::"+anio+""+mes);
         	
         	 String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA);
 			nameBoleta = UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM) + "boleta" + "_" + nroAdm + ".pdf";
         	 if (ConexionORCL.conectar()) {
         		
              Map<String,Object> parametro = new HashMap<String, Object>();
-             parametro.put("ANO_MES_PROCESO",(UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM)).toString().trim());
+             //parametro.put("ANO_MES_PROCESO",(UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM)).toString().trim());
+             parametro.put("ANO_MES_PROCESO",(anio+""+mes).toString().trim());
              parametro.put("LOGO_EJERCITO",ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.LOGO));
              parametro.put("NRO_ADM",nroAdm.toString().trim());
              parametro.put("SUB_RPT_DESCUENTO", ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_DESCUENTO));
