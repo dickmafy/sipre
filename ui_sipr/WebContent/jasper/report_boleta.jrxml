@@ -2,7 +2,7 @@
 <jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="report_boleta" language="groovy" pageWidth="595" pageHeight="842" columnWidth="555" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="5" uuid="86247a0b-c41c-42b9-9a94-20887e598908">
 	<property name="ireport.zoom" value="1.5"/>
 	<property name="ireport.x" value="0"/>
-	<property name="ireport.y" value="200"/>
+	<property name="ireport.y" value="4"/>
 	<parameter name="LOGO_EJERCITO" class="java.lang.String"/>
 	<parameter name="ANO_MES_PROCESO" class="java.lang.String">
 		<defaultValueExpression><![CDATA[]]></defaultValueExpression>
@@ -83,7 +83,7 @@ AND CBC_NRO_ADM =$P{NRO_ADM}]]>
 				<textElement textAlignment="Center" verticalAlignment="Middle">
 					<font fontName="Arial" size="12" isBold="true" isItalic="false" isUnderline="true"/>
 				</textElement>
-				<text><![CDATA[BOLETA DE PAGO I]]></text>
+				<text><![CDATA[BOLETA DE PAGO ]]></text>
 			</staticText>
 			<staticText>
 				<reportElement x="407" y="0" width="74" height="15" uuid="7658e59d-7824-4d52-adbd-b3302b0ed97e"/>

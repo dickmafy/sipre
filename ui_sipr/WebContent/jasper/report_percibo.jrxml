@@ -52,13 +52,12 @@ ORDER BY BD.CBD_IND_SUBTITULO,BD.NBD_SEC]]>
 				<textField isBlankWhenNull="true">
 					<reportElement x="1" y="0" width="271" height="15" uuid="78a2e1c7-cbaa-4ccd-84b0-7f29f8c770f0"/>
 					<textElement textAlignment="Center" verticalAlignment="Middle">
-						<font fontName="Arial" size="9" isBold="true"/>
+						<font fontName="Arial" size="9" isBold="true" isItalic="false"/>
 					</textElement>
 					<textFieldExpression><![CDATA[$F{CBD_IND_SUBTITULO}!=null?
 $F{CBD_IND_SUBTITULO}=="1"?"REMUNERACIÓN":
-$F{CBD_IND_SUBTITULO}=="2"?"BONIFICACIÓN/ASIGNACIONES":"SIN GRUPO"
-:"SIN GRUPO"
-]]></textFieldExpression>
+$F{CBD_IND_SUBTITULO}=="2"?"BONIFICACIÓN/ASIGNACIONES":""
+:""]]></textFieldExpression>
 				</textField>
 			</band>
 		</groupHeader>
