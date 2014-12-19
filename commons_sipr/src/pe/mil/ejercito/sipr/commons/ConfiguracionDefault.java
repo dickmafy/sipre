@@ -87,7 +87,7 @@ public class ConfiguracionDefault implements Serializable {
 		VARIABLE_CONFIRMACION = "key";
 		TO_EMAIL = "hm.ericson@gmail.com";
 		
-		TITULO_MENSAJE = "EJERCITO DEL PER� � Boleta generada";
+		TITULO_MENSAJE = "EJERCITO DEL PERU Boleta generada";
         CUERPO_MENSAJE="Sr. (Sra.) (Srta.): : <br /><br/>"
     			+ "Se ha completado adjuntado la Boleta del mes en curso<br /><br />";
 	}
