@@ -30,7 +30,7 @@ import pe.mil.ejercito.sipr.commons.ConfiguracionDefault;
 import pe.mil.ejercito.sipr.commons.ConstantesUtil;
 import pe.mil.ejercito.sipr.commons.Correo;
 import pe.mil.ejercito.sipr.commons.MainContext;
-import pe.mil.ejercito.sipr.commons.UDate;
+
 import pe.mil.ejercito.sipr.ejbremote.BoletaCabeceraEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.BoletaDetalleEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
@@ -184,7 +184,7 @@ private static final long serialVersionUID = 1L;
                 
                 System.out.println("totalIng ::"+totalDesLeyJud);
                 neto=totalIng.subtract(totalDesLeyJud);
-                
+                Double netoArestar=0.50 * (neto.doubleValue());
                 System.out.println("neto ::"+neto);
                 
 				SipreBoletaCabecera cb=new SipreBoletaCabecera();
@@ -224,7 +224,7 @@ private static final long serialVersionUID = 1L;
 				 for(int i=0 ;i<lstDescOtros.size();i++){
 					 SipreBoletaDetalle dtl=new SipreBoletaDetalle();
 	                	if(lstDescOtros.get(i).getSiprePlanillaDescuentoPK().getCpersonaNroAdm().equalsIgnoreCase(plnPers.getId().getCpersonaNroAdm())){
-	                		
+	                		//netoArestar
 	                		if(neto.compareTo(lstDescOtros.get(i).getNpdMtoEmpleado())== 1){
 	                		   neto.subtract(lstDescOtros.get(i).getNpdMtoEmpleado());
 	                		   SipreBoletaDetallePK pk =new SipreBoletaDetallePK();
@@ -304,12 +304,15 @@ private static final long serialVersionUID = 1L;
 	public String generarRpt() throws FileNotFoundException {
 		 try {
         	System.out.println("persona cod:"+nroAdm);
-        	System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
+        	//System.out.println("fecha cod:"+fechaProceso+"::::-::::"+UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM));
         	System.out.println("se envia:"+seEnvia);
         	System.out.println("ANIO/MES ::"+anio+""+mes);
         	
         	 String path = ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.REPORT_BOLETA);
-			nameBoleta = UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM) + "boleta" + "_" + nroAdm + ".pdf";
+			//nameBoleta = UDate.toStringfecha(fechaProceso, UDate.FORMATO_AA_MM) + "boleta" + "_" + nroAdm + ".pdf";
+			nameBoleta = anio+""+mes+ "boleta" + "_" + nroAdm + ".pdf";
+			
+			//nameBoleta = "boleta" +".pdf";
         	 if (ConexionORCL.conectar()) {
         		
              Map<String,Object> parametro = new HashMap<String, Object>();
@@ -325,7 +328,7 @@ private static final long serialVersionUID = 1L;
             	  
             	 String print= JasperFillManager.fillReportToFile(path,parametro,ConexionORCL.getConexion()); 
             	JasperExportManager.exportReportToPdfFile(print, ConstantesUtil.getRutaFiles(FacesContext.getCurrentInstance(), ConfiguracionDefault.RUTA_REPORT_FILE)+nameBoleta);
-					setNameBoleta(nameBoleta);
+				setNameBoleta(nameBoleta);
             	if(seEnvia){
             	   String cuerpoMensaje=ConfiguracionDefault.CUERPO_MENSAJE;
                    ArrayList<String[]> lista = new ArrayList<>();
