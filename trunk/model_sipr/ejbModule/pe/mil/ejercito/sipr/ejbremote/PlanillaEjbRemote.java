@@ -8,12 +8,10 @@ import pe.mil.ejercito.sipr.ejb.GenericDAO;
 import pe.mil.ejercito.sipr.model.SiprePlanilla;
 
 @Remote
-public interface PlanillaEjbRemote extends
-		GenericDAO<SiprePlanilla> {
+public interface PlanillaEjbRemote extends GenericDAO<SiprePlanilla> {
 
 	Long siPersonaExisteEnPlanillaPrincipal(String cip);
+
 	List<SiprePlanilla> getListPlanillaByNroAdm(String mesProceso);
-	
-	
 
 }

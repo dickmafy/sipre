@@ -15,7 +15,6 @@ import pe.mil.ejercito.sipr.model.SipreArma;
 import pe.mil.ejercito.sipr.model.SipreBanco;
 import pe.mil.ejercito.sipr.model.SipreCargo;
 import pe.mil.ejercito.sipr.model.SipreCedula;
-import pe.mil.ejercito.sipr.model.SipreEntidadCrediticia;
 import pe.mil.ejercito.sipr.model.SipreEspecialidadAlterna;
 import pe.mil.ejercito.sipr.model.SipreEstadoCivil;
 import pe.mil.ejercito.sipr.model.SipreGrado;
@@ -190,6 +189,18 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 		
 	}
 
-	
+	@Override
+	public void deleteProcesoDelMes(String clase, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("delete from " + clase + " o ");
+		sb.append(" where o." + nombreCampoMes + "=:cplanillaMesProceso");
+		sb.append(" and o." + nombreCampoNumero + "=:nplanillaNumProceso");
+		Query q = em.createQuery(sb.toString());
+		q.setParameter("cplanillaMesProceso", cplanillaMesProceso);
+		q.setParameter("nplanillaNumProceso", nplanillaNumProceso);
+		q.executeUpdate();
+
+	}
 	
 }

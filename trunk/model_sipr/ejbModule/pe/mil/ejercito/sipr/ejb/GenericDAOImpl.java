@@ -2,30 +2,30 @@ package pe.mil.ejercito.sipr.ejb;
 
 import java.io.Serializable;
 import java.lang.reflect.ParameterizedType;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.ejb.EJBTransactionRolledbackException;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.persistence.PersistenceException;
 import javax.persistence.Query;
 import javax.persistence.criteria.CriteriaBuilder;
 import javax.persistence.criteria.CriteriaQuery;
 import javax.persistence.criteria.Root;
 
-
 public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 
-	private Class<T>	clazz;
+	private String			nombreClazz;
+	private final Class<T>	clazz;
 	@PersistenceContext(unitName = "model_sipre")
-	EntityManager		em;
+	EntityManager			em;
 
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public GenericDAOImpl() {
 		ParameterizedType genericSuperclass = (ParameterizedType) getClass().getGenericSuperclass();
 		this.clazz = (Class) genericSuperclass.getActualTypeArguments()[0];
+
 	}
+
 
 	@Override
 	public T findById(Long id) {
@@ -55,13 +55,13 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll() {
-		return (List<T>) em.createQuery("from " + clazz.getName()).getResultList();
+		return em.createQuery("from " + clazz.getName()).getResultList();
 	}
 
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<T> findAll(int maxRowReturn) {
-		return (List<T>) em.createQuery("from " + clazz.getName()).setMaxResults(maxRowReturn).getResultList();
+		return em.createQuery("from " + clazz.getName()).setMaxResults(maxRowReturn).getResultList();
 	}
 
 	@Override
@@ -107,7 +107,7 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	}
 
 	@Override
-	public T persist(T object) throws EJBTransactionRolledbackException  {
+	public T persist(T object) throws EJBTransactionRolledbackException {
 		em.persist(object);
 		return object;
 	}
@@ -150,7 +150,48 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	@Override
 	public T findByPkCompuesta(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException {
 		Class<?> cls = Class.forName("pe.mil.ejercito.sipr.model." + nombreClasePadre);
-		return  (T) em.find(cls, clasePkHija);
+		return (T) em.find(cls, clasePkHija);
+	}
+
+	/*
+		public T findObjectByField(String nombreCampo, Object valorCampo) {
+			Criteria criteria = em.createCriteria(clazz.getName());
+			T object = criteria.add(Restrictions.eq(nombreCampo, valorCampo)).uniqueResult();
+			return object;
+		}
+	*/
+
+	@SuppressWarnings("unchecked")
+	public List<T> findObjectByField(String nombreCampo, Object valorCampo) {
+		final Query query = em.createQuery("SELECT o FROM +" + clazz.getName() + " + as m WHERE m." + nombreCampo + " = :" + nombreCampo);
+		query.setParameter(nombreCampo, valorCampo);
+		return query.getResultList();
+	}
+
+	public List<T> findObjectByField(String nombreCampo, Object valorCampo, String nombreClasePadre) {
+		List<T> list;
+		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
+		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
+		Root<T> from = query.from(clazz);
+		query.where(criteriaBuilder.equal(from.get(nombreCampo), valorCampo));
+		query.select(from);
+		list = em.createQuery(query).getResultList();
+		return list;
+	}
+
+	@Override
+	public void deleteProcesoDelMes(String nombreTabla, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
+
+		StringBuilder sb = new StringBuilder();
+		sb.append("delete from " + nombreTabla + " o ");
+		sb.append(" where o." + nombreCampoMes + "=:" + "nombreCampoMes");
+		sb.append(" and o." + nombreCampoNumero + "=:" + "nombreCampoNumero");
+		Query q = em.createQuery(sb.toString());
+		q.setParameter("nombreCampoMes", cplanillaMesProceso);
+		q.setParameter("nombreCampoNumero", nplanillaNumProceso);
+		q.executeUpdate();
+
 	}
 
 }

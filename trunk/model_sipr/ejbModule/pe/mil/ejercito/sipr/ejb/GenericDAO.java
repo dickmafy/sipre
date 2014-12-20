@@ -1,11 +1,9 @@
 package pe.mil.ejercito.sipr.ejb;
 
 import java.io.Serializable;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
 import javax.ejb.EJBTransactionRolledbackException;
-import javax.persistence.PersistenceException;
 
 
 
@@ -38,5 +36,8 @@ public interface GenericDAO<T extends Serializable> {
 	boolean findPkExist(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException;
 
 	T findByPkCompuesta(String nombreClasePadre, Object clasePkHija) throws ClassNotFoundException;
+
+	void deleteProcesoDelMes(String nombreTabla, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
+			Integer nplanillaNumProceso);
 
 }

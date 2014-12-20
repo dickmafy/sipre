@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -21,7 +22,7 @@ public class SiprePlanillaDescuentoPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NPD_COD_SEC")
-    private short npdCodSec;
+	private Integer	npdCodSec;
     @Basic(optional = false)
     @NotNull
     @Size(min = 1, max = 2)
@@ -45,12 +46,13 @@ public class SiprePlanillaDescuentoPK implements Serializable {
     @Basic(optional = false)
     @NotNull
     @Column(name = "NPLANILLA_NUM_PROCESO")
-    private short nplanillaNumProceso;
+	private Integer	nplanillaNumProceso;
 
     public SiprePlanillaDescuentoPK() {
     }
 
-    public SiprePlanillaDescuentoPK(short npdCodSec, String ctpCodigo, String cecCodigo, String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+	public SiprePlanillaDescuentoPK(Integer npdCodSec, String ctpCodigo, String cecCodigo, String cpersonaNroAdm,
+			String cplanillaMesProceso, Integer nplanillaNumProceso) {
         this.npdCodSec = npdCodSec;
         this.ctpCodigo = ctpCodigo;
         this.cecCodigo = cecCodigo;
@@ -59,11 +61,11 @@ public class SiprePlanillaDescuentoPK implements Serializable {
         this.nplanillaNumProceso = nplanillaNumProceso;
     }
 
-    public short getNpdCodSec() {
+	public Integer getNpdCodSec() {
         return npdCodSec;
     }
 
-    public void setNpdCodSec(short npdCodSec) {
+	public void setNpdCodSec(Integer npdCodSec) {
         this.npdCodSec = npdCodSec;
     }
 
@@ -99,23 +101,23 @@ public class SiprePlanillaDescuentoPK implements Serializable {
         this.cplanillaMesProceso = cplanillaMesProceso;
     }
 
-    public short getNplanillaNumProceso() {
+	public Integer getNplanillaNumProceso() {
         return nplanillaNumProceso;
     }
 
-    public void setNplanillaNumProceso(short nplanillaNumProceso) {
+	public void setNplanillaNumProceso(Integer nplanillaNumProceso) {
         this.nplanillaNumProceso = nplanillaNumProceso;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
-        hash += (int) npdCodSec;
+        hash += npdCodSec;
         hash += (ctpCodigo != null ? ctpCodigo.hashCode() : 0);
         hash += (cecCodigo != null ? cecCodigo.hashCode() : 0);
         hash += (cpersonaNroAdm != null ? cpersonaNroAdm.hashCode() : 0);
         hash += (cplanillaMesProceso != null ? cplanillaMesProceso.hashCode() : 0);
-        hash += (int) nplanillaNumProceso;
+        hash += nplanillaNumProceso;
         return hash;
     }
 

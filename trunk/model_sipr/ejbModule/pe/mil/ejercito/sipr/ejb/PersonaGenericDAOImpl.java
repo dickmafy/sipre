@@ -149,4 +149,11 @@ public class PersonaGenericDAOImpl<T extends Serializable> implements GenericDAO
 		return  (T) em.find(cls, clasePkHija);
 	}
 
+	@Override
+	public void deleteProcesoDelMes(String nombreTabla, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
+		// TODO Auto-generated method stub
+
+	}
+
 }
