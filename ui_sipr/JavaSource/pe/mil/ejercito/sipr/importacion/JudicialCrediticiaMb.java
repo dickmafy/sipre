@@ -127,12 +127,12 @@ public class JudicialCrediticiaMb extends MainContext implements Serializable {
 		System.out.println("valor al tipo archivo::" + tipoArchivo);
 	}
 
-	public String handleFileUpload() {
+	public String handleFileUpload(FileUploadEvent event) {
 		try {
 
 			showMessage("Procesando el archivo subido.", SEVERITY_INFO);
 
-			tipoArchivo = (String) fileUploaded.getContentType();
+			tipoArchivo = fileUploaded.getContentType();
 			// anio = (String) event.getComponent().getAttributes().get("year");
 			// mes = (String) event.getComponent().getAttributes().get("month");
 			System.out.println("foo seleccionado::" + anio);

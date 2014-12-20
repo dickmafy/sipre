@@ -18,7 +18,7 @@ public class ConstantesUtil {
 	//PLANILLA - PLANILLA DETALLE
 	public static final String	PROCESAR_PLANILLA_CODIGO_PLANILLA_PRINCIPAL_01	= "01";
 	public static final String	PROCESAR_PLANILLA_CODIGO_PRINCIPAL_CCI_0080		= "0080";
-	public static final String	PROCESAR_PLANILLA_CODIGO_ESTADO_ACTIVIDAD	= "01";
+	public static final String	PROCESAR_PLANILLA_CODIGO_CSA_ACTIVIDAD_PRESENTE	= "01";
 
 	//Procesar Planilla - > codigos
 	public static final String	PROCESAR_PLANILLA_CODIGO_1					= "01";
