@@ -12,16 +12,11 @@ import javax.persistence.Query;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreConceptoDescuento;
 import pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLey;
-import pe.mil.ejercito.sipr.model.SipreConceptoDescuentoLeyPK;
-import pe.mil.ejercito.sipr.model.SipreConceptoIngreso;
-import pe.mil.ejercito.sipr.model.SipreDescuentoLey;
 import pe.mil.ejercito.sipr.model.SipreDescuentoLeyDet;
 import pe.mil.ejercito.sipr.model.SipreDescuentoLeyDetPK;
 import pe.mil.ejercito.sipr.model.SipreEntidadCrediticia;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDescuento;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDescuentoPK;
-import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
-import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
  
 @Stateless
@@ -68,16 +63,16 @@ public class PlanillaDescuentoEjbBean extends GenericDAOImpl<SiprePlanillaDescue
 					SiprePlanillaDescuentoPK pk=new SiprePlanillaDescuentoPK();
 					pk.setCpersonaNroAdm(obj[0] == null ? "" : (obj[0].toString()));
 					pk.setCplanillaMesProceso(obj[1] == null ? "" : (obj[1].toString()));
-					pk.setNplanillaNumProceso(obj[2] == null ? null :Short.parseShort(obj[2].toString()));
-					pk.setNpdCodSec(obj[3] == null ? null : Short.valueOf(obj[3].toString()));
+					pk.setNplanillaNumProceso(obj[2] == null ? null : Integer.parseInt(obj[2].toString()));
+					pk.setNpdCodSec(obj[3] == null ? null : Integer.valueOf(obj[3].toString()));
 					pl.setSiprePlanillaDescuentoPK(pk);
 					
 					pl.setNpdMtoEmpleado(obj[4] == null ? null :new BigDecimal((obj[4].toString())));
 					pl.setNpdMtoEmpleador(obj[5] == null ? null :new BigDecimal((obj[5].toString())));
-					pl.setNpdNumCuota(obj[6] == null ? null :Short.valueOf((obj[6].toString())));
+					pl.setNpdNumCuota(obj[6] == null ? null : Integer.valueOf((obj[6].toString())));
 					pl.setCpdNroCheque(obj[7] == null ? "" : (obj[7].toString()));
 					pl.setNpdMtoDescontado(obj[8] == null ? null :new BigDecimal((obj[8].toString())));
-					pl.setNpdNumTotCuota(obj[9] == null ? null :Short.valueOf((obj[9].toString())));
+					pl.setNpdNumTotCuota(obj[9] == null ? null : Integer.valueOf((obj[9].toString())));
 					
 					SipreConceptoDescuentoLey cdl=new SipreConceptoDescuentoLey();
 					//cdl.setSipreConceptoDescuentoLeyPK(new SipreConceptoDescuentoLeyPK(cdldCodigo, cdlCodigo, ccdCodigo)); 

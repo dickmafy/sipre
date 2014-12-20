@@ -10,22 +10,10 @@ import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
 
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDetalleEjbRemote;
-import pe.mil.ejercito.sipr.model.SipreAgrupador;
-import pe.mil.ejercito.sipr.model.SipreArma;
-import pe.mil.ejercito.sipr.model.SipreBanco;
-import pe.mil.ejercito.sipr.model.SipreCargo;
-import pe.mil.ejercito.sipr.model.SipreCedula;
 import pe.mil.ejercito.sipr.model.SipreConceptoIngreso;
-import pe.mil.ejercito.sipr.model.SipreEspecialidadAlterna;
-import pe.mil.ejercito.sipr.model.SipreEstadoCivil;
-import pe.mil.ejercito.sipr.model.SipreGrado;
-import pe.mil.ejercito.sipr.model.SiprePlanilla;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDetalle;
 import pe.mil.ejercito.sipr.model.SiprePlanillaDetallePK;
-import pe.mil.ejercito.sipr.model.SiprePlanillaPK;
-import pe.mil.ejercito.sipr.model.SipreSituacionCausal;
 import pe.mil.ejercito.sipr.model.SipreTipoPlanilla;
-import pe.mil.ejercito.sipr.model.SipreUnidad;
 
 @Stateless
 public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle> implements PlanillaDetalleEjbRemote {
@@ -135,6 +123,20 @@ public class PlanillaDetalleEjbBean extends GenericDAOImpl<SiprePlanillaDetalle>
 			e.printStackTrace();
 			return null;
 		}
+	}
+
+	@Override
+	public void deleteProcesoDelMes(String clase, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
+		StringBuilder sb = new StringBuilder();
+		sb.append("delete from " + clase + " o ");
+		sb.append(" where o." + nombreCampoMes + "=:cplanillaMesProceso");
+		sb.append(" and o." + nombreCampoNumero + "=:nplanillaNumProceso");
+		Query q = em.createQuery(sb.toString());
+		q.setParameter("cplanillaMesProceso", cplanillaMesProceso);
+		q.setParameter("nplanillaNumProceso", nplanillaNumProceso);
+		q.executeUpdate();
+
 	}
 
 }

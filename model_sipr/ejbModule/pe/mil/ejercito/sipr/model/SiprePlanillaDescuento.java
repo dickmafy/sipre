@@ -8,6 +8,7 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
+
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -41,14 +42,14 @@ public class SiprePlanillaDescuento implements Serializable {
     @Column(name = "NPD_MTO_EMPLEADOR")
     private BigDecimal npdMtoEmpleador;
     @Column(name = "NPD_NUM_CUOTA")
-    private Short npdNumCuota;
+	private Integer						npdNumCuota;
     @Size(max = 10)
     @Column(name = "CPD_NRO_CHEQUE")
     private String cpdNroCheque;
     @Column(name = "NPD_MTO_DESCONTADO")
     private BigDecimal npdMtoDescontado;
     @Column(name = "NPD_NUM_TOT_CUOTA")
-    private Short npdNumTotCuota;
+	private Integer						npdNumTotCuota;
     @Size(max = 9)
     @Column(name = "CPD_USU_MOD")
     private String cpdUsuMod;
@@ -89,7 +90,8 @@ public class SiprePlanillaDescuento implements Serializable {
         this.siprePlanillaDescuentoPK = siprePlanillaDescuentoPK;
     }
 
-    public SiprePlanillaDescuento(short npdCodSec, String ctpCodigo, String cecCodigo, String cpersonaNroAdm, String cplanillaMesProceso, short nplanillaNumProceso) {
+	public SiprePlanillaDescuento(Integer npdCodSec, String ctpCodigo, String cecCodigo, String cpersonaNroAdm, String cplanillaMesProceso,
+			Integer nplanillaNumProceso) {
         this.siprePlanillaDescuentoPK = new SiprePlanillaDescuentoPK(npdCodSec, ctpCodigo, cecCodigo, cpersonaNroAdm, cplanillaMesProceso, nplanillaNumProceso);
     }
 
@@ -117,11 +119,11 @@ public class SiprePlanillaDescuento implements Serializable {
         this.npdMtoEmpleador = npdMtoEmpleador;
     }
 
-    public Short getNpdNumCuota() {
+	public Integer getNpdNumCuota() {
         return npdNumCuota;
     }
 
-    public void setNpdNumCuota(Short npdNumCuota) {
+	public void setNpdNumCuota(Integer npdNumCuota) {
         this.npdNumCuota = npdNumCuota;
     }
 
@@ -141,11 +143,11 @@ public class SiprePlanillaDescuento implements Serializable {
         this.npdMtoDescontado = npdMtoDescontado;
     }
 
-    public Short getNpdNumTotCuota() {
+	public Integer getNpdNumTotCuota() {
         return npdNumTotCuota;
     }
 
-    public void setNpdNumTotCuota(Short npdNumTotCuota) {
+	public void setNpdNumTotCuota(Integer npdNumTotCuota) {
         this.npdNumTotCuota = npdNumTotCuota;
     }
 
