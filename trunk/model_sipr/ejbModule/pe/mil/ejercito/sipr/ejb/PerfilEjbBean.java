@@ -1,6 +1,5 @@
 package pe.mil.ejercito.sipr.ejb;
 
-import java.math.BigDecimal;
 import java.util.List;
 
 import javax.ejb.Stateless;
@@ -10,12 +9,27 @@ import javax.persistence.Query;
 
 import pe.mil.ejercito.sipr.ejbremote.PerfilEjbRemote;
 import pe.mil.ejercito.sipr.model.SiprePerfil;
+import pe.mil.ejercito.sipr.view.VwOpcionPerfil;
 
 @Stateless
 public class PerfilEjbBean implements PerfilEjbRemote{
 
 	@PersistenceContext(unitName = "model_sipre")
 	EntityManager em;
+	
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<VwOpcionPerfil> getPerfil(Long idPerfil){
+		List<VwOpcionPerfil> retorno=null;
+		try{
+			Query q = em.createNamedQuery("VwOpcionPerfil.findById");
+			q.setParameter("idPerfil", idPerfil);
+			retorno = (List<VwOpcionPerfil>)q.getResultList();
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return retorno;
+	}
 	
 	@SuppressWarnings("unchecked")
 	@Override

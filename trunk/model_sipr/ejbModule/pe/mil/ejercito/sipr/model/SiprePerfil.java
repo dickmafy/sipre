@@ -6,15 +6,21 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+import java.util.List;
+
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
+
+import org.jboss.resteasy.spi.touri.MappedBy;
 
 /**
  *
@@ -38,6 +44,8 @@ public class SiprePerfil implements Serializable {
     @Size(max = 160)
     @Column(name = "DESCRIPCION_PERFIL")
     private String descripcionPerfil;
+    @OneToMany(mappedBy="siprePerfil")
+    private List<SipreUsuario> usuarioList;
 
     public SiprePerfil() {
     }
@@ -94,5 +102,13 @@ public class SiprePerfil implements Serializable {
     public String toString() {
         return "pe.mil.ejercito.sipr.model.SiprePerfil[ codigoPerfil=" + codigoPerfil + " ]";
     }
+
+	public List<SipreUsuario> getUsuarioList() {
+		return usuarioList;
+	}
+
+	public void setUsuarioList(List<SipreUsuario> usuarioList) {
+		this.usuarioList = usuarioList;
+	}
     
 }

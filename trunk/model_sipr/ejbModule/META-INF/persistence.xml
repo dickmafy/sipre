@@ -5,6 +5,7 @@
 
 	<persistence-unit name="model_sipre">
 		<jta-data-source>java:jboss/datasources/xeDS</jta-data-source>
+		<class>pe.mil.ejercito.sipr.view.VwOpcionPerfil</class>
 		<properties>
 			<property name="hibernate.dialect" value="org.hibernate.dialect.Oracle10gDialect" />
 		</properties>
