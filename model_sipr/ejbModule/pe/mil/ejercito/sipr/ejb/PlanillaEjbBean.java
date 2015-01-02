@@ -73,7 +73,6 @@ public class PlanillaEjbBean extends GenericDAOImpl<SiprePlanilla> implements Pl
 				//sb.append(" and p.id.cplanillaMesProceso =:mes ");
 				sb.append(" AND CP.CPLANILLA_MES_PROCESO = '"+mesProceso+"'");
 			}
-
 			//sb.append(" and p.id.cpersonaNroAdm =:dd ");
 			sb.append(" order by CP.VPLANILLA_APE_NOM ");
 

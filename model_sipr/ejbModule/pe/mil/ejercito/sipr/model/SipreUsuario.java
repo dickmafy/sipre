@@ -8,14 +8,15 @@ package pe.mil.ejercito.sipr.model;
 import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
+
 import javax.persistence.Basic;
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -56,6 +57,10 @@ public class SipreUsuario implements Serializable {
     @Column(name = "DUSUARIO_FEC_MOD")
     @Temporal(TemporalType.TIMESTAMP)
     private Date dusuarioFecMod;
+    @ManyToOne()
+    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
+    private SiprePerfil siprePerfil;
+    
     @JoinTable(name = "SIPRE_USUARIO_ROL", joinColumns = {
         @JoinColumn(name = "CUSUARIO_CODIGO", referencedColumnName = "CUSUARIO_CODIGO")}, inverseJoinColumns = {
         @JoinColumn(name = "CROL_CODIGO", referencedColumnName = "CROL_CODIGO")})
@@ -118,7 +123,7 @@ public class SipreUsuario implements Serializable {
         this.dusuarioFecMod = dusuarioFecMod;
     }
 
-    public List<SipreRol> getSipreRolList() {
+	public List<SipreRol> getSipreRolList() {
         return sipreRolList;
     }
 
@@ -151,5 +156,13 @@ public class SipreUsuario implements Serializable {
     public String toString() {
         return "pe.mil.ejercito.sipr.model.SipreUsuario[ cusuarioCodigo=" + cusuarioCodigo + " ]";
     }
+
+	public SiprePerfil getSiprePerfil() {
+		return siprePerfil;
+	}
+
+	public void setSiprePerfil(SiprePerfil siprePerfil) {
+		this.siprePerfil = siprePerfil;
+	}
     
 }
