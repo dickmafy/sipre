@@ -1,6 +1,7 @@
 package pe.mil.ejercito.sipr.seguridad;
 
 import java.util.Date;
+import java.util.List;
 
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.RequestScoped;
@@ -11,9 +12,11 @@ import pe.mil.ejercito.sipr.commons.MainContext;
 import pe.mil.ejercito.sipr.commons.UParametro;
 import pe.mil.ejercito.sipr.commons.UProperties;
 import pe.mil.ejercito.sipr.dto.UsuarioDto;
+import pe.mil.ejercito.sipr.ejbremote.PerfilEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.UsuarioEjbRemote;
 import pe.mil.ejercito.sipr.model.SipreAuditoria;
 import pe.mil.ejercito.sipr.model.SipreUsuario;
+import pe.mil.ejercito.sipr.view.VwOpcionPerfil;
 
 @ManagedBean(name = "indexBean")
 @RequestScoped
@@ -21,11 +24,13 @@ public class Index extends MainContext {
 	private static final long serialVersionUID = 1L;
 	private UsuarioDto usuarioDto;
 	private UsuarioEjbRemote usrioEjb;
+	private PerfilEjbRemote perfilEjb;
 
 	public Index() {
 		super();
 		setUsuarioDto(new UsuarioDto());
 		usrioEjb = (UsuarioEjbRemote) findServiceRemote(UsuarioEjbRemote.class);
+		perfilEjb = (PerfilEjbRemote) findServiceRemote(PerfilEjbRemote.class);
 	}
 
 	public String validarIngreso() {
@@ -36,7 +41,11 @@ public class Index extends MainContext {
 		SipreUsuario usuario = usrioEjb.getUsuario(usuarioDto);
 
 		if (usuario != null) {
+			List<VwOpcionPerfil> perfil = perfilEjb.getPerfil(usuario.getSiprePerfil().getCodigoPerfil());
+			
+			registrarVariable(UParametro.SSION_VRBLE_PERFIL, perfil);
 			registrarVariable(UParametro.SSION_VRBLE_USRIO, usuario);
+			
 			ejbAuditoria.persist(getAuditoria("INGRESO AL SISTEMA", new Date(),
 					"USUARIO", usuarioDto.getNickname(), null,
 					"ACCESO AL SISTEMA", usuario.getCusuarioCodigo()));
