@@ -1,5 +1,7 @@
 package pe.mil.ejercito.sipr.commons;
 
+import java.util.List;
+
 public class UParametro {
 	public UParametro() {
 		super();
@@ -30,6 +32,7 @@ public class UParametro {
 	public static final String PGNA_PCPAL;
 	
 	public static final String SSION_VRBLE_USRIO;
+	public static final String SSION_VRBLE_PERFIL;
 	
 	public static final String SSION_FTER_RDRCNA;
 	public static final String TTLO_STMA;
@@ -61,7 +64,7 @@ public class UParametro {
 		PGNA_PCPAL="PGNA_PCPAL";
 		
 		SSION_VRBLE_USRIO="usuario";
-		
+		SSION_VRBLE_PERFIL="perfil";
 		SSION_FTER_RDRCNA="SSION_FTER_RDRCNA";
 		
 		CTNDO_DFULT="CTNDO_DFULT";
