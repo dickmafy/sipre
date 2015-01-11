@@ -156,4 +156,10 @@ public class PersonaGenericDAOImpl<T extends Serializable> implements GenericDAO
 
 	}
 
+	@Override
+	public List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

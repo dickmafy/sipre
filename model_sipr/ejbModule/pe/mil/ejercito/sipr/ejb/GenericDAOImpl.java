@@ -154,11 +154,11 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	}
 
 	/*
-		public T findObjectByField(String nombreCampo, Object valorCampo) {
-			Criteria criteria = em.createCriteria(clazz.getName());
-			T object = criteria.add(Restrictions.eq(nombreCampo, valorCampo)).uniqueResult();
-			return object;
-		}
+			public T findObjectByField(String nombreCampo, Object valorCampo) {
+				Criteria criteria = em.createCriteria(clazz.getName());
+				T object = criteria.add(Restrictions.eq(nombreCampo, valorCampo)).uniqueResult();
+				return object;
+			}
 	*/
 
 	@SuppressWarnings("unchecked")
@@ -168,12 +168,14 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 		return query.getResultList();
 	}
 
-	public List<T> findObjectByField(String nombreCampo, Object valorCampo, String nombreClasePadre) {
+	@Override
+	public List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo) {
 		List<T> list;
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
 		Root<T> from = query.from(clazz);
 		query.where(criteriaBuilder.equal(from.get(nombreCampo), valorCampo));
+		//query.where(criteriaBuilder.equal(from.get(nombreCampo), valorCampo));
 		query.select(from);
 		list = em.createQuery(query).getResultList();
 		return list;

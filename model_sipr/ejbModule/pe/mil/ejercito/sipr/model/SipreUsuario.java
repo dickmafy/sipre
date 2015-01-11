@@ -19,7 +19,6 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -58,7 +57,7 @@ public class SipreUsuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dusuarioFecMod;
     @ManyToOne()
-    @JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
+	@JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
     private SiprePerfil siprePerfil;
     
     @JoinTable(name = "SIPRE_USUARIO_ROL", joinColumns = {
