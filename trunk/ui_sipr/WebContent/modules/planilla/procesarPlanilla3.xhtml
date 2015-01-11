@@ -5,8 +5,8 @@
 	xmlns:f="http://java.sun.com/jsf/core">
 	<h:form id="frm">
 		<div id="contenido_formulario">
-			<div id="page_flow">Planilla / Procesar Planilla</div>
-			<div id="titulo_formulario">Procesar Planilla</div>
+			<div id="page_flow">Planilla / Procesar Planilla Calculo</div>
+			<div id="titulo_formulario">Procesar Planilla Calculo</div>
 			<div id="contenido">
 				<p:messages id="messages" autoUpdate="true" closable="true" />
 
@@ -18,13 +18,13 @@
 
 				<p:fieldset>
 					<p:outputLabel value="Mes del Proceso " />
-					<p:selectOneMenu value="#{procesarPlanillaMb.mesProceso}">
+					<p:selectOneMenu value="#{procesarPlanillaMb3.mesProceso}">
 						<f:selectItem itemValue="201411" itemLabel="201411" />
 						<f:selectItem itemValue="201412" itemLabel="201412" />
 					</p:selectOneMenu>
 					<p:spacer width="20"></p:spacer>
 					<p:outputLabel value="Numero del Proceso " />
-					<p:selectOneMenu value="#{procesarPlanillaMb.numeroProceso}">
+					<p:selectOneMenu value="#{procesarPlanillaMb3.numeroProceso}">
 						<f:selectItem itemValue="1" itemLabel="1" />
 						<f:selectItem itemValue="2" itemLabel="2" />
 						<f:selectItem itemValue="3" itemLabel="3" />
@@ -35,127 +35,124 @@
 				<p:panel header="PROCESAR PLANILLA" id="panelProcesoPlanilla">
 					<table>
 						<tr>
-							<td>
-								<table class="tbl_contenido">
-									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso1}" /></td>
-									</tr>
-									<tr>
-										<td><p:commandButton icon="ui-icon-play"
-												styleClass="boton_botonera" value="Procesar"
-												style="margin-top:0px;" ajax="true"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[1]}"
-												actionListener="#{procesarPlanillaMb.p1()}"
-												update=":frm:dt :frmPb" onclick="PF('wvProgressBar').show()"
-												onstart="PF('barraProgreso').start();PF('wblockui').show();"
-												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
-												id="p1" /></td>
-									</tr>
-								</table>
-							</td>
-							<td>
-								<table class="tbl_contenido">
-									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso2}" /></td>
-									</tr>
-									<tr>
-										<td><p:commandButton icon="ui-icon-play"
-												styleClass="boton_botonera" value="Procesar"
-												style="margin-top:0px;" ajax="true"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[2]}"
-												actionListener="#{procesarPlanillaMb.p2()}"
-												update=":frm:dt :frmPb" onclick="PF('wvProgressBar').show()"
-												onstart="PF('barraProgreso').start();PF('wblockui').show();"
-												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
-												id="p2" /></td>
-									</tr>
-								</table>
-							</td>
-							<td>
-								<table class="tbl_contenido">
-									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso3}" /></td>
-									</tr>
-									<tr>
-										<td><p:commandButton icon="ui-icon-play"
-												styleClass="boton_botonera" value="Procesar"
-												style="margin-top:0px;"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[3]}"
-												actionListener="#{procesarPlanillaMb.p3()}"
-												update=":frm:dt, :frmPb"
-												onclick="PF('wvProgressBar').show()"
-												onstart="PF('barraProgreso').start();PF('wblockui').show();"
-												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
-												id="p3" /></td>
-									</tr>
-								</table>
-							</td>
 
 							<td>
 								<table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso5}" /></td>
-									</tr>
-									<tr>
-										<td><p:commandButton icon="ui-icon-play"
-												styleClass="boton_botonera" value="Procesar"
-												style="margin-top:0px;" id="p5"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[5]}"
-												actionListener="#{procesarPlanillaMb.p5()}"
-												update=":frm:dt, :frmPb"
-												onclick="PF('wvProgressBar').show()"
-												onstart="PF('barraProgreso').start();PF('wblockui').show();"
-												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();" /></td>
-									</tr>
-								</table>
-							</td>
-							<td>
-								<table class="tbl_contenido">
-									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso6}" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso13}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
 												styleClass="boton_botonera" value="Procesar"
 												style="margin-top:0px;"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[6]}"
-												actionListener="#{procesarPlanillaMb.p6}"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[13]}"
+												actionListener="#{procesarPlanillaMb3.p13}"
 												update=":frm:dt, :frmPb"
 												onclick="PF('wvProgressBar').show()"
 												onstart="PF('barraProgreso').start();PF('wblockui').show();"
 												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
-												id="p6" /></td>
+												id="p13" /></td>
 									</tr>
 								</table>
 							</td>
-							<td>
-								<table class="tbl_contenido">
+							<td><table class="tbl_contenido">
 									<tr>
-										<td><p:outputLabel value="#{constantesUtil.proceso7}" /></td>
+										<td><p:outputLabel value="#{constantesUtil.proceso14}" /></td>
 									</tr>
 									<tr>
 										<td><p:commandButton icon="ui-icon-play"
 												styleClass="boton_botonera" value="Procesar"
 												style="margin-top:0px;"
-												disabled="#{!procesarPlanillaMb.habilitarProceso[7]}"
-												actionListener="#{procesarPlanillaMb.p7}"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[14]}"
+												actionListener="#{procesarPlanillaMb3.p14}"
 												update=":frm:dt, :frmPb"
 												onclick="PF('wvProgressBar').show()"
 												onstart="PF('barraProgreso').start();PF('wblockui').show();"
 												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
-												id="p7" /></td>
+												id="p14" /></td>
+									</tr>
+								</table></td>
+							<td>
+								<table class="tbl_contenido">
+									<tr>
+										<td><p:outputLabel value="#{constantesUtil.proceso4}" /></td>
+									</tr>
+									<tr>
+										<td><p:commandButton icon="ui-icon-play"
+												styleClass="boton_botonera" value="Procesar"
+												style="margin-top:0px;"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[4]}"
+												actionListener="#{procesarPlanillaMb3.p4DescuentoLey()}"
+												update=":frm:dt, :frmPb"
+												onclick="PF('wvProgressBar').show()"
+												onstart="PF('barraProgreso').start();PF('wblockui').show();"
+												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
+												id="p4" /></td>
 									</tr>
 								</table>
-
 							</td>
+							<td><table class="tbl_contenido">
+									<tr>
+										<td><p:outputLabel value="#{constantesUtil.proceso15}" /></td>
+									</tr>
+									<tr>
+										<td><p:commandButton icon="ui-icon-play"
+												styleClass="boton_botonera" value="Procesar"
+												style="margin-top:0px;"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[15]}"
+												actionListener="#{procesarPlanillaMb3.p15}"
+												update=":frm:dt, :frmPb"
+												onclick="PF('wvProgressBar').show()"
+												onstart="PF('barraProgreso').start();PF('wblockui').show();"
+												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
+												id="p15" /></td>
+									</tr>
+								</table></td>
+							<td><table class="tbl_contenido">
+									<tr>
+										<td><p:outputLabel value="#{constantesUtil.proceso16}" /></td>
+									</tr>
+									<tr>
+										<td><p:commandButton icon="ui-icon-play"
+												styleClass="boton_botonera" value="Procesar"
+												style="margin-top:0px;"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[16]}"
+												actionListener="#{procesarPlanillaMb3.p4DescuentoLey()}"
+												update=":frm:dt, :frmPb"
+												onclick="PF('wvProgressBar').show()"
+												onstart="PF('barraProgreso').start();PF('wblockui').show();"
+												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
+												id="p16" /></td>
+									</tr>
+								</table></td>
+							<td>
+								<table class="tbl_contenido">
+									<tr>
+										<td><p:outputLabel value="#{constantesUtil.proceso17}" /></td>
+									</tr>
+									<tr>
+										<td><p:commandButton icon="ui-icon-play"
+												styleClass="boton_botonera" value="Procesar"
+												style="margin-top:0px;"
+												disabled="#{!procesarPlanillaMb3.habilitarProceso[17]}"
+												actionListener="#{procesarPlanillaMb3.p17}"
+												update=":frm:dt, :frmPb"
+												onclick="PF('wvProgressBar').show()"
+												onstart="PF('barraProgreso').start();PF('wblockui').show();"
+												oncomplete="PF('wvProgressBar').hide();PF('wblockui').hide();PF('wdt').clearFilters();"
+												id="p17" /></td>
+									</tr>
+								</table>
+							</td>
+							<td></td>
 						</tr>
 					</table>
 				</p:panel>
 
 				<!-- DATATABLE-->
 				<p:dataTable id="dt" var="item" widgetVar="wdt"
-					filteredValue="#{procesarPlanillaMb.beanGmListBusqueda}"
-					value="#{procesarPlanillaMb.beanGmList}"
+					filteredValue="#{procesarPlanillaMb3.beanGmListBusqueda}"
+					value="#{procesarPlanillaMb3.beanGmList}"
 					emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
 					rows="20" paginatorPosition="top"
 					paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">
@@ -189,7 +186,7 @@
 							title="Detalle del Proceso" styleClass="ui-icon ui-icon-search"
 							style="float:left;margin-right:10px">
 							<f:setPropertyActionListener value="#{item}"
-								target="#{procesarPlanillaMb.beanGm}" />
+								target="#{procesarPlanillaMb3.beanGm}" />
 							Detalle del Proceso
 						</p:commandLink>
 					</p:column>
@@ -202,8 +199,8 @@
 
 					<p:dataTable id="dtd" var="detalle" widgetVar="wdtd"
 						tableStyle="width:400px"
-						filteredValue="#{procesarPlanillaMb.beanGm.listaObjeto}"
-						value="#{procesarPlanillaMb.beanGm.listaObjeto}"
+						filteredValue="#{procesarPlanillaMb3.beanGm.listaObjeto}"
+						value="#{procesarPlanillaMb3.beanGm.listaObjeto}"
 						emptyMessage="#{constantesUtil.LIST_EMPTY}" paginator="true"
 						rows="20" paginatorPosition="top"
 						paginatorTemplate="{CurrentPageReport}  {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} ">

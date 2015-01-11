@@ -5,12 +5,20 @@
 	<h:form id="frm_opciones">
 		<p:menu style="width:100%" id="mnuParametrizacion">
 			<p:submenu label="PLANILLA">
+
 				<p:menuitem value="Procesar Planilla" icon="ui-icon-note"
 					async="true" actionListener="#{mainMb.redireccionaContent(60)}"
-					ajax="true" update=":pnlContenido" />
-				<p:menuitem value="Reintegro de Personal" icon="ui-icon-cart"
-					async="true" actionListener="#{mainMb.redireccionaContent(31)}"
 					ajax="false" update=":pnlContenido" />
+
+				<p:menuitem value="Procesar Planilla - 2"
+					icon="ui-icon-note" async="true"
+					actionListener="#{mainMb.redireccionaContent(61)}" ajax="false"
+					update=":pnlContenido" />
+
+				<p:menuitem value="Procesar Planilla - 3" icon="ui-icon-note"
+					async="true" actionListener="#{mainMb.redireccionaContent(62)}"
+					ajax="false" update=":pnlContenido" />
+
 			</p:submenu>
 		</p:menu>
 	</h:form>
