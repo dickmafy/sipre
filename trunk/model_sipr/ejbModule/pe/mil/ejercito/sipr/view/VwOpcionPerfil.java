@@ -1,7 +1,13 @@
 package pe.mil.ejercito.sipr.view;
 
 import java.io.Serializable;
-import javax.persistence.*;
+
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
+import javax.persistence.Table;
 
 
 /**
@@ -34,7 +40,7 @@ public class VwOpcionPerfil implements Serializable {
 	@Column(name="ID_PADRE")
 	private Long idPadre;
 
-	@Column(name="ID_PERFIL")
+	@Column(name = "CODIGO_PERFIL")
 	private Long idPerfil;
 
 	private Long nivel;

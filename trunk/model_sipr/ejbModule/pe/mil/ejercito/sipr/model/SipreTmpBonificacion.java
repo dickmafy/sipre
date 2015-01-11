@@ -6,6 +6,7 @@
 package pe.mil.ejercito.sipr.model;
 
 import java.io.Serializable;
+import java.math.BigDecimal;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -30,7 +31,7 @@ public class SipreTmpBonificacion implements Serializable {
 	protected SipreTmpBonificacionPK	sipreTmpBonificacionPK;
 	// @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
 	@Column(name = "NTB_MONTO")
-	private Double						ntbMonto;
+	private BigDecimal						ntbMonto;
 	@Size(max = 80)
 	@Column(name = "VTB_APE_NOM")
 	private String						vtbApeNom;
@@ -51,7 +52,7 @@ public class SipreTmpBonificacion implements Serializable {
 	private String						mesProceso;
     
     @Column(name = "DEDUCCION")
-    private Double deduccion;
+	private BigDecimal					deduccion;
 
 	@Size(min = 1, max = 6)
 	@Column(name = "MES_REINTEGRO")
@@ -76,13 +77,7 @@ public class SipreTmpBonificacion implements Serializable {
 		this.sipreTmpBonificacionPK = sipreTmpBonificacionPK;
 	}
 
-	public Double getNtbMonto() {
-		return ntbMonto;
-	}
 
-	public void setNtbMonto(Double ntbMonto) {
-		this.ntbMonto = ntbMonto;
-	}
 
 	public String getVtbApeNom() {
 		return vtbApeNom;
@@ -134,15 +129,6 @@ public class SipreTmpBonificacion implements Serializable {
 		this.mesReintegro = mesReintegro;
 	}
 	
-	
-
-	public Double getDeduccion() {
-		return deduccion;
-	}
-
-	public void setDeduccion(Double deduccion) {
-		this.deduccion = deduccion;
-	}
 
 	@Override
 	public int hashCode() {
@@ -176,6 +162,22 @@ public class SipreTmpBonificacion implements Serializable {
 
 	public void setCtpCodigo(String ctpCodigo) {
 		this.ctpCodigo = ctpCodigo;
+	}
+
+	public BigDecimal getNtbMonto() {
+		return ntbMonto;
+	}
+
+	public void setNtbMonto(BigDecimal ntbMonto) {
+		this.ntbMonto = ntbMonto;
+	}
+
+	public BigDecimal getDeduccion() {
+		return deduccion;
+	}
+
+	public void setDeduccion(BigDecimal deduccion) {
+		this.deduccion = deduccion;
 	}
 
 }

@@ -37,7 +37,7 @@ public class PersonaEjbBean extends GenericDAOImpl<SiprePersona> implements Pers
 		sb.append(" and (o.sipreSituacionAdm.csaCodigo in (:p1,:p2,:p3,:p4,:p5,:p6,:p7)");
 		// PARA PRUEBAS-> 
 		sb.append(" and o.cpersonaNroAdm in ('114513400','618853200','618722600','621731100','623293000','623088100','318700400','307209600','331730700','330043900','618440500','614744100','104311020') )");
-		sb.append(" or o.dpersonaFecIng BETWEEN  '01/10/2014' AND '31/12/2014'   ");
+		//sb.append(" or o.dpersonaFecIng BETWEEN  '01/10/2014' AND '31/12/2014'   ");
 		Query q = em.createQuery(sb.toString());
 		q.setParameter("p1", "01");
 		q.setParameter("p5", "50");

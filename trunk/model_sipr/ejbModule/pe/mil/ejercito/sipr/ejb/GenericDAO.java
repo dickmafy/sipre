@@ -40,4 +40,6 @@ public interface GenericDAO<T extends Serializable> {
 	void deleteProcesoDelMes(String nombreTabla, String nombreCampoMes, String nombreCampoNumero, String cplanillaMesProceso,
 			Integer nplanillaNumProceso);
 
+	List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo);
+
 }
