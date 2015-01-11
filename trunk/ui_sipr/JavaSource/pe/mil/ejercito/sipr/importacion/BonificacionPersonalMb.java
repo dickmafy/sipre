@@ -1,6 +1,5 @@
 package pe.mil.ejercito.sipr.importacion;
 
-import java.awt.Desktop.Action;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -9,8 +8,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
 import java.io.Serializable;
-import java.sql.SQLClientInfoException;
-import java.sql.SQLIntegrityConstraintViolationException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -23,14 +20,8 @@ import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ViewScoped;
 import javax.faces.context.FacesContext;
-
-
-
 import javax.faces.event.AjaxBehaviorEvent;
-import javax.faces.event.ValueChangeEvent;
 import javax.faces.model.SelectItem;
-import javax.persistence.PersistenceException;
-import javax.validation.ConstraintViolationException;
 
 import org.apache.commons.io.FilenameUtils;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
@@ -107,7 +98,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 	
 	public void changeValue(AjaxBehaviorEvent event) {
 		System.out.println("change value");
-		System.out.println("valor al año::"+anio);
+		System.out.println("valor al aï¿½o::"+anio);
 		System.out.println("valor al mes::"+mes);
 	}
 	
@@ -167,7 +158,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 				} catch (NullPointerException e) {
 					showMessage(e.toString(), SEVERITY_ERROR);
 				} catch (EJBTransactionRolledbackException e) {
-					showMessage("Existe información duplicada", SEVERITY_ERROR);
+					showMessage("Existe informaciï¿½n duplicada", SEVERITY_ERROR);
 				}catch (Exception e) {
 					e.printStackTrace();
 					showMessage("No se copio el contenido del Excel correctamente.", SEVERITY_ERROR);
@@ -294,10 +285,10 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
     			pk.setCciCodigo(getValueCell(cellCncpto,ConstantesUtil.EXCEL_COLUMN_CONCEPTO,row,ConstantesUtil.EXCEL_NAME_CONCEPTO,mesProceso));
     			bean.setSipreTmpBonificacionPK(pk);
     			bean.setVtbApeNom(getValueCell(cellAplld,ConstantesUtil.EXCEL_COLUMN_NOMBRES,row,ConstantesUtil.EXCEL_NAME_NOMBRES,mesProceso));
-    			bean.setNtbMonto(Double.parseDouble(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row,ConstantesUtil.EXCEL_NAME_MONTO,mesProceso)));
+				//bean.setNtbMonto(Double.parseDouble(getValueCell(cellMonto,ConstantesUtil.EXCEL_COLUMN_MONTO,row,ConstantesUtil.EXCEL_NAME_MONTO,mesProceso)));
     			bean.setCtbIndSituacion(getValueCell(cellSituacion,ConstantesUtil.EXCEL_COLUMN_SITUACION,row,ConstantesUtil.EXCEL_NAME_SITUACION,mesProceso));
     			bean.setMesReintegro(getValueCell(cellMesReint,ConstantesUtil.EXCEL_COLUMN_MES_REINTEGRO,row,ConstantesUtil.EXCEL_NAME_MES_REINTEGRO,mesProceso));
-    			bean.setDeduccion(Double.parseDouble(getValueCell(cellDeduccion,ConstantesUtil.EXCEL_COLUMN_DEDUCCION,row,ConstantesUtil.EXCEL_NAME_DEDUCCION,mesProceso)));
+				//bean.setDeduccion(Double.parseDouble(getValueCell(cellDeduccion,ConstantesUtil.EXCEL_COLUMN_DEDUCCION,row,ConstantesUtil.EXCEL_NAME_DEDUCCION,mesProceso)));
     			
     			lstResult.add(bean);
             }
@@ -328,7 +319,7 @@ public class BonificacionPersonalMb extends MainContext implements Serializable{
 				isread=true;
 			}else{
 				System.out.println("SON DIFERENTES");
-				throw new NullPointerException("El mes y año del proceso de la celda "+nameCell+(row.getRowNum()+1)+ " no coindiden con el seleccionado");
+				throw new NullPointerException("El mes y aï¿½o del proceso de la celda "+nameCell+(row.getRowNum()+1)+ " no coindiden con el seleccionado");
 			}
 		}
 		if(isread){
