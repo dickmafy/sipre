@@ -40,7 +40,7 @@ public class VwOpcionPerfil implements Serializable {
 	@Column(name="ID_PADRE")
 	private Long idPadre;
 
-	@Column(name = "CODIGO_PERFIL")
+	@Column(name = "ID_PERFIL")
 	private Long idPerfil;
 
 	private Long nivel;

@@ -57,7 +57,7 @@ public class SipreUsuario implements Serializable {
     @Temporal(TemporalType.TIMESTAMP)
     private Date dusuarioFecMod;
     @ManyToOne()
-	@JoinColumn(name = "CODIGO_PERFIL", referencedColumnName = "CODIGO_PERFIL")
+	@JoinColumn(name = "ID_PERFIL", referencedColumnName = "ID_PERFIL")
     private SiprePerfil siprePerfil;
     
     @JoinTable(name = "SIPRE_USUARIO_ROL", joinColumns = {

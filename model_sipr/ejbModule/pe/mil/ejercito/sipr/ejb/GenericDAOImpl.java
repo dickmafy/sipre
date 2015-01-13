@@ -169,13 +169,13 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 	}
 
 	@Override
-	public List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo) {
+	public List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo, String nombreCampo2, Object valorCampo2) {
 		List<T> list;
 		CriteriaBuilder criteriaBuilder = em.getCriteriaBuilder();
 		CriteriaQuery<T> query = criteriaBuilder.createQuery(clazz);
 		Root<T> from = query.from(clazz);
 		query.where(criteriaBuilder.equal(from.get(nombreCampo), valorCampo));
-		//query.where(criteriaBuilder.equal(from.get(nombreCampo), valorCampo));
+		query.where(criteriaBuilder.equal(from.get(nombreCampo2), valorCampo2));
 		query.select(from);
 		list = em.createQuery(query).getResultList();
 		return list;
@@ -194,6 +194,12 @@ public class GenericDAOImpl<T extends Serializable> implements GenericDAO<T> {
 		q.setParameter("nombreCampoNumero", nplanillaNumProceso);
 		q.executeUpdate();
 
+	}
+
+	@Override
+	public List<T> findObjectByFieldCriteria(String nombreCampo, Object valorCampo) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

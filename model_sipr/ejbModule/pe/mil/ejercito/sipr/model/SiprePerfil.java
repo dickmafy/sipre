@@ -12,15 +12,12 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
-
-import org.jboss.resteasy.spi.touri.MappedBy;
 
 /**
  *
@@ -36,7 +33,7 @@ public class SiprePerfil implements Serializable {
     @Id
     @Basic(optional = false)
     @NotNull
-    @Column(name = "CODIGO_PERFIL")
+	@Column(name = "ID_PERFIL")
     private Long codigoPerfil;
     @Size(max = 30)
     @Column(name = "NOMBRE_PERFIL")
