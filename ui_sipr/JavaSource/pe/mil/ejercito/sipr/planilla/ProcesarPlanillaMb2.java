@@ -7,6 +7,7 @@ import java.util.Date;
 import java.util.List;
 
 import javax.annotation.PostConstruct;
+import javax.ejb.EJBTransactionRolledbackException;
 import javax.faces.bean.ManagedBean;
 import javax.faces.bean.ManagedProperty;
 import javax.faces.bean.ViewScoped;
@@ -24,6 +25,7 @@ import pe.mil.ejercito.sipr.ejbremote.ConceptoIngresoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.DescuentoLeyPersonaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.GradoEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.IngresoGradoEjbRemote;
+import pe.mil.ejercito.sipr.ejbremote.PermanenteEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PersonaEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaAdicionalEjbRemote;
 import pe.mil.ejercito.sipr.ejbremote.PlanillaDescuentoEjbRemote;
@@ -64,6 +66,7 @@ public class ProcesarPlanillaMb2 extends MainContext implements Serializable {
 	private PlanillaDetalleEjbRemote		ejbPlanillaDetalle;
 	private PlanillaAdicionalEjbRemote		ejbPlanillaAdicional;
 	private PlanillaDescuentoEjbRemote		ejbPlanillaDescuento;
+	private PermanenteEjbRemote				ejbPermanente;
 
 	private ConceptoIngresoEjbRemote		ejbConceptoIngreso;
 	private GradoEjbRemote					ejbGrado;
@@ -120,6 +123,7 @@ public class ProcesarPlanillaMb2 extends MainContext implements Serializable {
 			ejbPlanillaDetalle = (PlanillaDetalleEjbRemote) findServiceRemote(PlanillaDetalleEjbRemote.class);
 			ejbPlanillaAdicional = (PlanillaAdicionalEjbRemote) findServiceRemote(PlanillaAdicionalEjbRemote.class);
 			ejbPlanillaDescuento = (PlanillaDescuentoEjbRemote) findServiceRemote(PlanillaDescuentoEjbRemote.class);
+			ejbPermanente = (PermanenteEjbRemote) findServiceRemote(PermanenteEjbRemote.class);
 
 			ejbTmpGuardia = (TmpGuardiaEjbRemote) findServiceRemote(TmpGuardiaEjbRemote.class);
 			ejbTmpBonificacion = (TmpBonificacionEjbRemote) findServiceRemote(TmpBonificacionEjbRemote.class);
@@ -285,7 +289,7 @@ public class ProcesarPlanillaMb2 extends MainContext implements Serializable {
 
 	}
 
-	public void p11() {
+	public void p11() throws EJBTransactionRolledbackException, ClassNotFoundException {
 		//CONFIGURACION
 		cleanBeanGmList();
 		addGenericMensaje("Iniciando " + ConstantesUtil.PROCESO_11, ConstantesUtil.PROCESO_11,
@@ -385,7 +389,101 @@ public class ProcesarPlanillaMb2 extends MainContext implements Serializable {
 						}
 
 					}
-				}
+				} else {
+					//1.SI NO EXISTE en el TMPBONIFICACION
+					List<SiprePlanillaDetalle> listPermanenciaTmp = null;
+
+					//1.1 ver si existe en PERMANENCIA la persona y el concepto por lo que se procedera con ese valor solo si es mayor el 
+					//monto del la tabla Permanencia.
+					listPermanenciaTmp = ejbPlanillaDetalle.findObjectByFieldCriteria("CIP", tmpCip, "CONCEPTO", itemTmpBonificacion
+							.getSipreConceptoIngreso().getCciCodigo());
+					if (null != listPermanenciaTmp && listPermanenciaTmp.size() >= 1) {
+
+						//si el MONTO DE GRADO  es mayor que el monto de PERMANENTE, USAR MONTO DE GRADO
+						BigDecimal montoPorGrado = new BigDecimal(100);
+						if (montoPorGrado.compareTo(listPermanenciaTmp.get(0).getNpdMtoConcepto()) > 0) {
+
+							planillaDetalle = new SiprePlanillaDetalle();
+							pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+							// PK DETALLE
+							pkPlanillaDetalle.setCtpCodigo("0314");
+							pkPlanillaDetalle.setCpersonaNroAdm(itemPlanilla.getSiprePersona().getCpersonaNroAdm());
+							pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+							pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+							//QUE CONCEPTO VA ? = 'REMUNERACION POR RACIONAMIENTO DS 040 2003'
+							pkPlanillaDetalle.setCciCodigo(listPermanenciaTmp.get(0).getSipreConceptoIngreso().getCciCodigo());
+
+							// DETALLE
+							planillaDetalle.setIndProceso(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_11);
+							planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+							planillaDetalle.setCpdConDestino(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_PRINCIPAL_CCI_0080);
+							planillaDetalle.setNpdMtoConcepto(montoPorGrado);
+							if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+								ejbPlanillaDetalle.persist(planillaDetalle);
+								cExito++;
+							} else {
+								addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							}
+
+						} else {
+							//SI EL MONTO DE PERMANENTE ES MAYOR  QUE EL MONTO DE GRADO, USAR EL MONTO DE PERMANENTE
+							planillaDetalle = new SiprePlanillaDetalle();
+							pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+							// PK DETALLE
+							pkPlanillaDetalle.setCtpCodigo("0314");
+							pkPlanillaDetalle.setCpersonaNroAdm(itemPlanilla.getSiprePersona().getCpersonaNroAdm());
+							pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+							pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+							//QUE CONCEPTO VA ? = 'REMUNERACION POR RACIONAMIENTO DS 040 2003'
+							pkPlanillaDetalle.setCciCodigo(listPermanenciaTmp.get(0).getSipreConceptoIngreso().getCciCodigo());
+
+							// DETALLE
+							planillaDetalle.setIndProceso(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_11);
+							planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+							planillaDetalle.setCpdConDestino(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_PRINCIPAL_CCI_0080);
+							planillaDetalle.setNpdMtoConcepto(listPermanenciaTmp.get(0).getNpdMtoConcepto());
+							if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+								ejbPlanillaDetalle.persist(planillaDetalle);
+								cExito++;
+							} else {
+								addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+										ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+							}
+
+						}
+
+
+					} else {
+
+						//1.2 no EXISTE en PERMANENCIA , SE USA LOS VALORES ORIGINALES
+						planillaDetalle = new SiprePlanillaDetalle();
+						pkPlanillaDetalle = new SiprePlanillaDetallePK();
+
+						// PK DETALLE
+						pkPlanillaDetalle.setCtpCodigo(itemTmpBonificacion.getSipreConceptoIngreso().getCciCodDestino());
+						pkPlanillaDetalle.setCpersonaNroAdm(itemPlanilla.getSiprePersona().getCpersonaNroAdm());
+						pkPlanillaDetalle.setCplanillaMesProceso(mesProceso);
+						pkPlanillaDetalle.setNplanillaNumProceso(numeroProceso);
+						//QUE CONCEPTO VA ? = 'REMUNERACION POR RACIONAMIENTO DS 040 2003'
+						pkPlanillaDetalle.setCciCodigo(itemTmpBonificacion.getSipreConceptoIngreso().getCciCodigo());
+
+						// DETALLE
+						planillaDetalle.setIndProceso(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_11);
+						planillaDetalle.setSiprePlanillaDetallePK(pkPlanillaDetalle);
+						planillaDetalle.setCpdConDestino(ConstantesUtil.PROCESAR_PLANILLA_CODIGO_PRINCIPAL_CCI_0080);
+						planillaDetalle.setNpdMtoConcepto(itemTmpBonificacion.getNtbMonto());
+						if (!ejbPlanillaDetalle.findPkExist("SiprePlanillaDetalle", pkPlanillaDetalle)) {
+							ejbPlanillaDetalle.persist(planillaDetalle);
+							cExito++;
+						} else {
+							addGenericMensaje("Ya existe el registro : " + itemPlanilla.toString(), ConstantesUtil.PROCESO_12,
+									ConstantesUtil.MENSAJE_GENERIC_TIPO_MENSAJE_WARNING, ConstantesUtil.GENERIC_MENSAJE_DT_PADRE);
+						}
+					}//else
+				}//else
 			}//bonificacion
 		}//planilla
 		addGenericMensaje("Registrados correctamente : " + list.size() + " / " + list.size(), ConstantesUtil.PROCESO_11,
